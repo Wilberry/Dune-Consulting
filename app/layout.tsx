@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Manrope } from "next/font/google";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
+import { company } from "@/data/company";
 import "./globals.css";
 
 const inter = Inter({
@@ -16,21 +17,19 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.duneconsulting.example"),
+  metadataBase: new URL(company.websiteUrl),
   title: {
     default: "Dune Consulting | HSE Training and Event Safety Management",
-    template: "%s | Dune Consulting",
+    template: `%s | ${company.name}`,
   },
   description:
     "Dune Consulting provides event safety management, tailored HSE training, safety personnel outsourcing and professional HSE mentorship in Nigeria.",
-  alternates: { canonical: "/" },
   robots: { index: true, follow: true },
   openGraph: {
     type: "website",
     locale: "en_NG",
-    url: "/",
-    siteName: "Dune Consulting",
-    title: "Dune Consulting | HSE Training and Event Safety Management",
+    siteName: company.name,
+    title: `${company.name} | HSE Training and Event Safety Management`,
     description:
       "Practical HSE solutions for events, workplaces and projects across Nigeria.",
   },

@@ -22,6 +22,8 @@ npm run build
 ## Editing content
 
 - Navigation and service menu: `data/navigation.ts`
+- Company contact, domain and social details: `data/company.ts`
+- Approved supporting routes and their metadata: `data/routes.ts`
 - Service cards: `data/services.ts`
 - Impact figures: `data/statistics.ts`
 - Project cards: `data/portfolio.ts`
@@ -60,3 +62,5 @@ Approved client logos are also required for Jameson, TechCabal, Africa Finance C
 - Long-form content for supporting pages
 
 No environment variables are currently required, so `.env.example` is intentionally omitted.
+
+Pull requests and pushes to `main` run linting, TypeScript checks, Prettier verification and the production build through `.github/workflows/quality.yml`.

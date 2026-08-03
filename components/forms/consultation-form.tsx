@@ -7,29 +7,13 @@ import { consultationSchema, type ConsultationInput } from "@/lib/validations";
 const fields =
   "mt-2 w-full rounded-md border border-line bg-white px-4 py-3 text-ink placeholder:text-muted/70 focus:border-navy";
 export function ConsultationForm() {
-  const [submitted, setSubmitted] = useState(false);
+  const [configurationNotice, setConfigurationNotice] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<ConsultationInput>({ resolver: zodResolver(consultationSchema) });
-  const onSubmit = () => setSubmitted(true);
-  if (submitted)
-    return (
-      <div
-        role="status"
-        className="border-success/30 bg-success/5 rounded-xl border p-8"
-      >
-        <h2 className="text-navy text-2xl font-bold">
-          Thank you for your enquiry.
-        </h2>
-        <p className="text-muted mt-3">
-          Form delivery will be activated when the client supplies an approved
-          inbox or form endpoint. Please use the contact details on this page in
-          the meantime.
-        </p>
-      </div>
-    );
+  const onSubmit = () => setConfigurationNotice(true);
   return (
     <form
       id="consultation"
@@ -41,6 +25,11 @@ export function ConsultationForm() {
       <p className="text-muted mt-2 text-sm">
         Tell us what support you need. All fields marked * are required.
       </p>
+      <div className="border-amber/40 bg-amber/10 text-muted mt-5 rounded-md border p-4 text-sm leading-6">
+        <strong className="text-navy block">Configuration notice</strong>
+        This preview validates enquiries but does not send them. An approved
+        form endpoint must be connected before launch.
+      </div>
       <div className="mt-7 grid gap-5 sm:grid-cols-2">
         <Field label="Full name *" error={errors.name?.message}>
           <input className={fields} autoComplete="name" {...register("name")} />
@@ -80,12 +69,26 @@ export function ConsultationForm() {
           <textarea className={fields} rows={5} {...register("message")} />
         </Field>
       </div>
+      {configurationNotice && (
+        <div
+          role="status"
+          className="border-amber/50 bg-amber/10 mt-6 rounded-md border p-4"
+        >
+          <strong className="text-navy block">
+            Enquiry validated — not sent
+          </strong>
+          <span className="text-muted mt-1 block text-sm">
+            The form data is valid, but delivery is not configured. Please use
+            the listed telephone number or email address for now.
+          </span>
+        </div>
+      )}
       <button
         disabled={isSubmitting}
         className="bg-amber text-deep-navy hover:bg-amber-hover mt-6 min-h-12 rounded-md px-6 py-3 font-bold disabled:opacity-60"
         type="submit"
       >
-        Send enquiry
+        Validate enquiry
       </button>
     </form>
   );

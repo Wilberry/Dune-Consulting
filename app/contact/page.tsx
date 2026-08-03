@@ -2,10 +2,18 @@ import type { Metadata } from "next";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { ConsultationForm } from "@/components/forms/consultation-form";
 import { Container } from "@/components/ui/container";
+import { company } from "@/data/company";
+const pageDescription =
+  "Speak with Dune Consulting about event safety, HSE training, safety personnel or mentorship support.";
 export const metadata: Metadata = {
   title: "Contact",
-  description:
-    "Speak with Dune Consulting about event safety, HSE training, safety personnel or mentorship support.",
+  description: pageDescription,
+  alternates: { canonical: "/contact" },
+  openGraph: {
+    url: "/contact",
+    title: "Contact Dune Consulting",
+    description: pageDescription,
+  },
 };
 export default function ContactPage() {
   return (
@@ -30,21 +38,18 @@ export default function ContactPage() {
           <ul className="mt-8 space-y-5 text-sm">
             <li className="flex gap-3">
               <MapPin className="text-amber-hover" />
-              Lagos, Nigeria
+              {company.location}
             </li>
             <li>
-              <a className="flex gap-3" href="tel:+2340000000000">
+              <a className="flex gap-3" href={`tel:${company.telephoneHref}`}>
                 <Phone className="text-amber-hover" />
-                +234 (0) 000 000 0000
+                {company.telephone}
               </a>
             </li>
             <li>
-              <a
-                className="flex gap-3"
-                href="mailto:hello@duneconsulting.example"
-              >
+              <a className="flex gap-3" href={`mailto:${company.email}`}>
                 <Mail className="text-amber-hover" />
-                hello@duneconsulting.example
+                {company.email}
               </a>
             </li>
           </ul>

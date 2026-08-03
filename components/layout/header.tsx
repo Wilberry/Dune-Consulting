@@ -5,6 +5,7 @@ import { ChevronDown, Mail, MapPin, Menu, Phone, X } from "lucide-react";
 import { Brand } from "./brand";
 import { Container } from "@/components/ui/container";
 import { navigation, serviceNavigation } from "@/data/navigation";
+import { company } from "@/data/company";
 import { cn } from "@/lib/utils";
 
 export function Header() {
@@ -30,21 +31,21 @@ export function Header() {
           <div className="flex items-center gap-4">
             <span className="flex items-center gap-1.5">
               <MapPin size={13} aria-hidden="true" />
-              Lagos, Nigeria
+              {company.location}
             </span>
             <a
               className="hidden items-center gap-1.5 hover:text-white sm:flex"
-              href="tel:+2340000000000"
+              href={`tel:${company.telephoneHref}`}
             >
               <Phone size={13} aria-hidden="true" />
-              +234 (0) 000 000 0000
+              {company.telephone}
             </a>
             <a
               className="hidden items-center gap-1.5 hover:text-white md:flex"
-              href="mailto:hello@duneconsulting.example"
+              href={`mailto:${company.email}`}
             >
               <Mail size={13} aria-hidden="true" />
-              hello@duneconsulting.example
+              {company.email}
             </a>
           </div>
           <Link

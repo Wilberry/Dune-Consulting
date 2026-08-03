@@ -1,34 +1,31 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { Container } from "@/components/ui/container";
-import { navigation, serviceNavigation } from "@/data/navigation";
+import { serviceNavigation } from "@/data/navigation";
+import { getSupportedRoute } from "@/data/routes";
 
 type Props = { params: Promise<{ slug: string[] }> };
-const names: Record<string, string> = {
-  about: "About Dune Consulting",
-  services: "HSE Services",
-  portfolio: "Events and Projects",
-  mentorship: "HSE Mentorship Programme",
-  insights: "HSE Insights",
-  privacy: "Privacy Policy",
-  terms: "Terms",
-  "event-safety-management": "Event Safety Management",
-  "hse-training": "Tailored HSE Training",
-  "personnel-outsourcing": "HSE Personnel Outsourcing",
-};
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const title = names[slug.at(-1) ?? ""] ?? "Page";
+  const route = getSupportedRoute(slug);
+  if (!route) notFound();
   return {
-    title,
-    description: `${title} from Dune Consulting, a Lagos-based Health, Safety and Environment consultancy.`,
+    title: route.title,
+    description: route.description,
+    alternates: { canonical: route.path },
+    openGraph: {
+      url: route.path,
+      title: route.title,
+      description: route.description,
+    },
   };
 }
 export default async function ContentPage({ params }: Props) {
   const { slug } = await params;
-  const key = slug.at(-1) ?? "";
-  const title = names[key] ?? "Dune Consulting";
-  const isService = slug[0] === "services" && slug.length > 1;
+  const route = getSupportedRoute(slug);
+  if (!route) notFound();
+  const isService = route.path.startsWith("/services/");
   return (
     <main id="main-content">
       <section className="bg-navy py-16 text-white">
@@ -36,7 +33,9 @@ export default async function ContentPage({ params }: Props) {
           <p className="text-amber text-xs font-bold tracking-[.18em] uppercase">
             Dune Consulting
           </p>
-          <h1 className="mt-3 text-4xl font-extrabold sm:text-5xl">{title}</h1>
+          <h1 className="mt-3 text-4xl font-extrabold sm:text-5xl">
+            {route.title}
+          </h1>
           <p className="mt-5 max-w-2xl text-white/70">
             This supporting page is ready for approved long-form content. The
             complete service overview is available from the homepage.
@@ -60,7 +59,7 @@ export default async function ContentPage({ params }: Props) {
             Return to {isService ? "all services" : "homepage"}
           </Link>
         </div>
-        {key === "services" && (
+        {route.path === "/services" && (
           <div className="mt-10 grid gap-4 sm:grid-cols-3">
             {serviceNavigation.map((item) => (
               <Link
@@ -72,15 +71,6 @@ export default async function ContentPage({ params }: Props) {
               </Link>
             ))}
           </div>
-        )}
-        {key === "about" && (
-          <nav className="sr-only" aria-label="Site pages">
-            {navigation.map((item) => (
-              <Link key={item.href} href={item.href}>
-                {item.label}
-              </Link>
-            ))}
-          </nav>
         )}
       </Container>
     </main>

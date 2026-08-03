@@ -3,6 +3,7 @@ import { Instagram, Linkedin, Mail, MapPin, Phone } from "lucide-react";
 import { Brand } from "./brand";
 import { Container } from "@/components/ui/container";
 import { serviceNavigation } from "@/data/navigation";
+import { company } from "@/data/company";
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -17,15 +18,15 @@ export function Footer() {
           </p>
           <div className="mt-6 flex gap-3">
             <a
-              href="https://www.linkedin.com/"
-              aria-label="Dune Consulting on LinkedIn"
+              href={company.linkedinUrl}
+              aria-label={`${company.name} on LinkedIn`}
               className="hover:border-amber hover:text-amber rounded border border-white/20 p-2"
             >
               <Linkedin size={19} />
             </a>
             <a
-              href="https://www.instagram.com/"
-              aria-label="Dune Consulting on Instagram"
+              href={company.instagramUrl}
+              aria-label={`${company.name} on Instagram`}
               className="hover:border-amber hover:text-amber rounded border border-white/20 p-2"
             >
               <Instagram size={19} />
@@ -77,24 +78,24 @@ export function Footer() {
           <ul className="mt-5 space-y-4 text-sm text-white/70">
             <li className="flex gap-3">
               <MapPin className="text-amber shrink-0" size={18} />
-              Lagos, Nigeria
+              {company.location}
             </li>
             <li>
               <a
                 className="flex gap-3 hover:text-white"
-                href="tel:+2340000000000"
+                href={`tel:${company.telephoneHref}`}
               >
                 <Phone className="text-amber shrink-0" size={18} />
-                +234 (0) 000 000 0000
+                {company.telephone}
               </a>
             </li>
             <li>
               <a
                 className="flex gap-3 hover:text-white"
-                href="mailto:hello@duneconsulting.example"
+                href={`mailto:${company.email}`}
               >
                 <Mail className="text-amber shrink-0" size={18} />
-                hello@duneconsulting.example
+                {company.email}
               </a>
             </li>
           </ul>
@@ -102,7 +103,9 @@ export function Footer() {
       </Container>
       <div className="border-t border-white/10">
         <Container className="flex flex-col gap-3 py-5 text-xs text-white/50 sm:flex-row sm:items-center sm:justify-between">
-          <p>© {year} Dune Consulting. All rights reserved.</p>
+          <p>
+            © {year} {company.name}. All rights reserved.
+          </p>
           <div className="flex gap-5">
             <Link href="/privacy">Privacy Policy</Link>
             <Link href="/terms">Terms</Link>
