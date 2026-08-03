@@ -2,13 +2,14 @@
 
 ## Deployment record
 
-- Preview URL: Not deployed—Vercel CLI/authentication was unavailable in the working environment
+- Vercel project: Connected to the GitHub repository
+- Preview URL: Pending the first branch preview deployment
 - Source baseline at preparation: `a09d874eba7752d284717c0c85c880ddb6bd201d`
 - Deployment date: Not applicable
 - Report prepared: 3 August 2026
 - Environment: Local production build and Chromium emulation
 
-The final pushed commit is recorded in PR #1 and in the implementation handoff. When an authorised owner creates a Vercel preview, add its URL, deployment ID, date, and exact commit here in a follow-up acceptance update.
+The Vercel project is now connected to the GitHub repository and is awaiting its first preview deployment from `feature/initial-website`. The final pushed commit is recorded in PR #1 and in the implementation handoff. When the branch preview completes, add its URL, deployment ID, date, and exact commit here in a follow-up acceptance update.
 
 A local production build using `VERCEL_ENV=preview` and `NEXT_PUBLIC_REVIEW_MODE=true` confirmed the review notice, `noindex` metadata, crawl blocking, production-domain canonical fallback, security headers, and disabled preview email delivery.
 
