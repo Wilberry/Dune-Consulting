@@ -1,0 +1,44 @@
+import { cn } from "@/lib/utils";
+export function SectionHeading({
+  eyebrow,
+  title,
+  copy,
+  align = "left",
+  inverse = false,
+}: {
+  eyebrow?: string;
+  title: string;
+  copy?: string;
+  align?: "left" | "center";
+  inverse?: boolean;
+}) {
+  return (
+    <div
+      className={cn("max-w-3xl", align === "center" && "mx-auto text-center")}
+    >
+      {eyebrow && (
+        <p className="text-amber mb-3 text-xs font-extrabold tracking-[.18em] uppercase">
+          {eyebrow}
+        </p>
+      )}
+      <h2
+        className={cn(
+          "text-3xl font-extrabold text-balance sm:text-4xl lg:text-5xl",
+          inverse ? "text-white" : "text-navy",
+        )}
+      >
+        {title}
+      </h2>
+      {copy && (
+        <p
+          className={cn(
+            "mt-5 text-base leading-7 sm:text-lg",
+            inverse ? "text-white/70" : "text-muted",
+          )}
+        >
+          {copy}
+        </p>
+      )}
+    </div>
+  );
+}

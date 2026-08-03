@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-navy: #10233f;
+  --color-deep-navy: #08172b;
+  --color-amber: #f5b400;
+  --color-amber-hover: #d99c00;
+  --color-off-white: #f7f8fa;
+  --color-ink: #172033;
+  --color-muted: #667085;
+  --color-line: #e4e7ec;
+  --color-success: #168a55;
+  --font-sans: var(--font-inter);
+  --font-heading: var(--font-manrope);
+}
+
+* {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  margin: 0;
+  background: white;
+  color: var(--color-ink);
+  font-family: var(--font-inter), sans-serif;
+}
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-manrope), sans-serif;
+  letter-spacing: -0.025em;
+}
+a,
+button,
+input,
+textarea,
+select {
+  outline-offset: 3px;
+}
+:focus-visible {
+  outline: 3px solid var(--color-amber);
+}
+::selection {
+  background: var(--color-amber);
+  color: var(--color-deep-navy);
+}
+
+.grid-pattern {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 36px 36px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,35 @@
+import Link from "next/link";
+import { ArrowUpRight, MapPin } from "lucide-react";
+import type { Project } from "@/data/portfolio";
+import { ImagePlaceholder } from "./image-placeholder";
+export function ProjectCard({ project }: { project: Project }) {
+  return (
+    <article className="group border-line overflow-hidden rounded-xl border bg-white">
+      <div className="aspect-[4/3] overflow-hidden">
+        <ImagePlaceholder
+          src={project.image}
+          alt={`Image placeholder for ${project.title}`}
+          className="min-h-0 transition duration-500 group-hover:scale-105"
+        />
+      </div>
+      <div className="p-6">
+        <p className="text-amber-hover text-xs font-bold tracking-wider uppercase">
+          {project.category}
+        </p>
+        <h3 className="text-navy mt-2 text-xl font-extrabold">
+          {project.title}
+        </h3>
+        <p className="text-muted mt-3 flex items-center gap-2 text-sm">
+          <MapPin size={15} aria-hidden="true" />
+          {project.location}
+        </p>
+        <Link
+          href={project.href}
+          className="text-navy mt-5 inline-flex items-center gap-2 text-sm font-bold"
+        >
+          View Project <ArrowUpRight size={16} />
+        </Link>
+      </div>
+    </article>
+  );
+}
