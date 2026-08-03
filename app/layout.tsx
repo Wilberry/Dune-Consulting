@@ -1,20 +1,8 @@
 import type { Metadata } from "next";
-import { Inter, Manrope } from "next/font/google";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { company } from "@/data/company";
 import "./globals.css";
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
-const manrope = Manrope({
-  subsets: ["latin"],
-  variable: "--font-manrope",
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL(company.websiteUrl),
@@ -25,6 +13,8 @@ export const metadata: Metadata = {
   description:
     "Dune Consulting provides event safety management, tailored HSE training, safety personnel outsourcing and professional HSE mentorship in Nigeria.",
   robots: { index: true, follow: true },
+  manifest: "/manifest.webmanifest",
+  icons: { icon: "/icon.svg", apple: "/apple-icon" },
   openGraph: {
     type: "website",
     locale: "en_NG",
@@ -45,7 +35,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${manrope.variable}`}>
+    <html lang="en">
       <body>
         <a
           href="#main-content"

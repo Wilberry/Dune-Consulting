@@ -12,9 +12,18 @@ import {
   ServiceDetailPage,
   ServicesOverviewPage,
 } from "@/components/pages/services-page";
-import { getSupportedRoute } from "@/data/routes";
+import { StructuredData } from "@/components/seo/structured-data";
+import { company } from "@/data/company";
+import { serviceDetails } from "@/data/page-content";
+import { getSupportedRoute, supportedRoutes } from "@/data/routes";
 
 type Props = { params: Promise<{ slug: string[] }> };
+export const dynamicParams = false;
+export function generateStaticParams() {
+  return Object.values(supportedRoutes).map((route) => ({
+    slug: route.path.split("/").filter(Boolean),
+  }));
+}
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const route = getSupportedRoute(slug);
@@ -35,18 +44,81 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
   };
 }
+
 export default async function ContentPage({ params }: Props) {
   const { slug } = await params;
   const route = getSupportedRoute(slug);
   if (!route) notFound();
   const key = slug.join("/");
-  if (key === "about") return <AboutPage />;
-  if (key === "services") return <ServicesOverviewPage />;
-  if (key.startsWith("services/")) return <ServiceDetailPage slug={slug[1]} />;
-  if (key === "portfolio") return <PortfolioPage />;
-  if (key.startsWith("portfolio/")) return <ProjectDetailPage slug={slug[1]} />;
-  if (key === "mentorship") return <MentorshipPage />;
-  if (key === "insights") return <InsightsPage />;
-  if (key === "privacy" || key === "terms") return <LegalPage type={key} />;
-  notFound();
+  let content: React.ReactNode;
+  if (key === "about") content = <AboutPage />;
+  else if (key === "services") content = <ServicesOverviewPage />;
+  else if (key.startsWith("services/"))
+    content = <ServiceDetailPage slug={slug[1]} />;
+  else if (key === "portfolio") content = <PortfolioPage />;
+  else if (key.startsWith("portfolio/"))
+    content = <ProjectDetailPage slug={slug[1]} />;
+  else if (key === "mentorship") content = <MentorshipPage />;
+  else if (key === "insights") content = <InsightsPage />;
+  else if (key === "privacy" || key === "terms")
+    content = <LegalPage type={key} />;
+  else notFound();
+
+  const segments = route.path.split("/").filter(Boolean);
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: company.websiteUrl,
+      },
+      ...segments.map((segment, index) => ({
+        "@type": "ListItem",
+        position: index + 2,
+        name:
+          index === segments.length - 1
+            ? route.title
+            : segment === "services"
+              ? "Services"
+              : "Portfolio",
+        item: `${company.websiteUrl}/${segments.slice(0, index + 1).join("/")}`,
+      })),
+    ],
+  };
+  const service = key.startsWith("services/")
+    ? serviceDetails[slug[1]]
+    : undefined;
+  const pageSchema: Record<string, unknown> | undefined = service
+    ? {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        name: service.title,
+        description: service.summary,
+        provider: {
+          "@type": "Organization",
+          name: company.name,
+          url: company.websiteUrl,
+        },
+        areaServed: { "@type": "Country", name: "Nigeria" },
+        url: `${company.websiteUrl}${route.path}`,
+      }
+    : key === "insights"
+      ? {
+          "@context": "https://schema.org",
+          "@type": "Blog",
+          name: "Dune Consulting HSE Insights",
+          url: `${company.websiteUrl}/insights`,
+          description: route.description,
+        }
+      : undefined;
+  return (
+    <>
+      <StructuredData data={breadcrumbSchema} />
+      {pageSchema && <StructuredData data={pageSchema} />}
+      {content}
+    </>
+  );
 }

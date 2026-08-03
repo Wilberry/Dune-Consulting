@@ -1,5 +1,6 @@
 import { ImageIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { getSiteImage } from "@/data/images";
 export function ImagePlaceholder({
   src,
   alt,
@@ -9,10 +10,27 @@ export function ImagePlaceholder({
   alt: string;
   className?: string;
 }) {
+  const manifestImage = getSiteImage(src);
+  const accessibleAlt = alt || manifestImage?.alt || "Image awaiting approval";
+  if (manifestImage?.status === "approved") {
+    return (
+      <div
+        className={cn("relative h-full min-h-64 overflow-hidden", className)}
+      >
+        <Image
+          src={src}
+          alt={accessibleAlt}
+          fill
+          sizes="(max-width: 768px) 100vw, 50vw"
+          className="object-cover"
+        />
+      </div>
+    );
+  }
   return (
     <div
       role="img"
-      aria-label={alt}
+      aria-label={accessibleAlt}
       className={cn(
         "relative flex h-full min-h-64 items-center justify-center overflow-hidden bg-[#dfe5ea]",
         className,
@@ -31,3 +49,4 @@ export function ImagePlaceholder({
     </div>
   );
 }
+import Image from "next/image";

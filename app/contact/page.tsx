@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { ConsultationForm } from "@/components/forms/consultation-form";
+import { StructuredData } from "@/components/seo/structured-data";
 import { Container } from "@/components/ui/container";
 import { company } from "@/data/company";
 const pageDescription =
@@ -23,6 +24,26 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <main id="main-content">
+      <StructuredData
+        data={{
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            {
+              "@type": "ListItem",
+              position: 1,
+              name: "Home",
+              item: company.websiteUrl,
+            },
+            {
+              "@type": "ListItem",
+              position: 2,
+              name: "Contact",
+              item: `${company.websiteUrl}/contact`,
+            },
+          ],
+        }}
+      />
       <section className="bg-navy py-16 text-white">
         <Container>
           <p className="text-amber text-xs font-bold tracking-[.18em] uppercase">

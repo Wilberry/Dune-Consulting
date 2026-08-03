@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { ChevronDown, Mail, MapPin, Menu, Phone, X } from "lucide-react";
 import { Brand } from "./brand";
@@ -12,6 +12,9 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const mobileDialogRef = useRef<HTMLElement>(null);
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
     onScroll();
@@ -23,6 +26,34 @@ export function Header() {
     return () => {
       document.body.style.overflow = "";
     };
+  }, [open]);
+  useEffect(() => {
+    if (!open) return;
+    closeButtonRef.current?.focus();
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+        menuButtonRef.current?.focus();
+      }
+      if (event.key === "Tab") {
+        const focusable =
+          mobileDialogRef.current?.querySelectorAll<HTMLElement>(
+            "a[href], button:not([disabled])",
+          );
+        if (!focusable?.length) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
   }, [open]);
   return (
     <>
@@ -108,6 +139,7 @@ export function Header() {
             Request a Quote
           </Link>
           <button
+            ref={menuButtonRef}
             className="text-navy rounded p-2 lg:hidden"
             onClick={() => setOpen(true)}
             aria-label="Open navigation menu"
@@ -126,18 +158,25 @@ export function Header() {
         aria-hidden="true"
       />
       <aside
+        ref={mobileDialogRef}
         className={cn(
           "fixed inset-y-0 right-0 z-[70] w-[min(90vw,390px)] bg-white p-6 shadow-2xl transition-transform lg:hidden",
           open ? "translate-x-0" : "translate-x-full",
         )}
         aria-label="Mobile navigation"
         aria-hidden={!open}
+        role="dialog"
+        aria-modal="true"
       >
         <div className="flex items-center justify-between">
           <Brand />
           <button
+            ref={closeButtonRef}
             className="text-navy rounded p-2"
-            onClick={() => setOpen(false)}
+            onClick={() => {
+              setOpen(false);
+              menuButtonRef.current?.focus();
+            }}
             aria-label="Close navigation menu"
           >
             <X />
