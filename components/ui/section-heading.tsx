@@ -17,7 +17,9 @@ export function SectionHeading({
       className={cn("max-w-3xl", align === "center" && "mx-auto text-center")}
     >
       {eyebrow && (
-        <p className="text-amber mb-3 text-xs font-extrabold tracking-[.18em] uppercase">
+        <p
+          className={`${inverse ? "text-amber" : "text-amber-text"} mb-3 text-xs font-extrabold tracking-[.18em] uppercase`}
+        >
           {eyebrow}
         </p>
       )}

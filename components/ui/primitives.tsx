@@ -13,7 +13,7 @@ export function Badge({
     <span
       className={cn(
         "inline-flex rounded-full px-3 py-1 text-[11px] font-extrabold tracking-[.14em] uppercase",
-        inverse ? "text-amber bg-white/10" : "bg-amber/15 text-amber-hover",
+        inverse ? "text-amber bg-white/10" : "bg-amber/15 text-amber-text",
       )}
     >
       {children}

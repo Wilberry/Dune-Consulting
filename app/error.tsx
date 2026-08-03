@@ -12,7 +12,7 @@ export default function ErrorPage({
       className="bg-off-white flex min-h-[65vh] items-center px-5 py-16"
     >
       <div className="border-line mx-auto max-w-xl rounded-2xl border bg-white p-8 text-center shadow-sm">
-        <p className="text-amber-hover text-xs font-extrabold tracking-[.18em] uppercase">
+        <p className="text-amber-text text-xs font-extrabold tracking-[.18em] uppercase">
           Something went wrong
         </p>
         <h1 className="text-navy mt-3 text-3xl font-extrabold">

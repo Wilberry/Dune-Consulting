@@ -167,6 +167,7 @@ export function Header() {
         aria-hidden={!open}
         role="dialog"
         aria-modal="true"
+        inert={!open}
       >
         <div className="flex items-center justify-between">
           <Brand />

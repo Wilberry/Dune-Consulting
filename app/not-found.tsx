@@ -19,7 +19,7 @@ export default function NotFound() {
           <div className="flex justify-center">
             <Brand />
           </div>
-          <p className="text-amber-hover font-heading mt-9 text-sm font-extrabold tracking-[.2em] uppercase">
+          <p className="text-amber-text font-heading mt-9 text-sm font-extrabold tracking-[.2em] uppercase">
             Error 404
           </p>
           <h1 className="text-navy mt-3 text-4xl font-extrabold sm:text-5xl">

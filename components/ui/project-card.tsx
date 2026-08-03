@@ -13,7 +13,7 @@ export function ProjectCard({ project }: { project: Project }) {
         />
       </div>
       <div className="p-6">
-        <p className="text-amber-hover text-xs font-bold tracking-wider uppercase">
+        <p className="text-amber-text text-xs font-bold tracking-wider uppercase">
           {project.category}
         </p>
         <h3 className="text-navy mt-2 text-xl font-extrabold">

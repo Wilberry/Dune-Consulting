@@ -19,7 +19,9 @@ export function Brand({ inverse = false }: { inverse?: boolean }) {
       >
         DUNE
         <br />
-        <span className="text-amber text-[10px] tracking-[.2em]">
+        <span
+          className={`${inverse ? "text-amber" : "text-amber-text"} text-[10px] tracking-[.2em]`}
+        >
           CONSULTING
         </span>
       </span>

@@ -194,7 +194,7 @@ export function MentorshipPage() {
       <section className="bg-amber py-16">
         <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-8 px-5 sm:px-8 lg:flex-row lg:items-center lg:px-10">
           <div>
-            <p className="text-deep-navy/65 text-xs font-extrabold tracking-[.18em] uppercase">
+            <p className="text-deep-navy text-xs font-extrabold tracking-[.18em] uppercase">
               Applications
             </p>
             <h2 className="text-deep-navy mt-3 max-w-2xl text-3xl font-extrabold sm:text-4xl">

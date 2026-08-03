@@ -69,7 +69,7 @@ export function Clients() {
           {clients.map((client) => (
             <div
               key={client}
-              className="border-line bg-off-white font-heading text-navy/60 flex min-h-16 items-center justify-center rounded border px-3 text-center text-xs font-extrabold"
+              className="border-line bg-off-white font-heading text-navy flex min-h-16 items-center justify-center rounded border px-3 text-center text-xs font-extrabold"
             >
               {client}
               <span className="sr-only"> logo placeholder</span>

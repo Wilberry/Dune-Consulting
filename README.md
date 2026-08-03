@@ -1,6 +1,6 @@
 # Dune Consulting website
 
-Production-ready corporate website foundation for Dune Consulting, a Lagos-based Health, Safety and Environment consultancy. Built with Next.js App Router, TypeScript, Tailwind CSS, React Hook Form, Zod, Lucide and Framer Motion-ready dependencies.
+Production-ready corporate website foundation for Dune Consulting, a Lagos-based Health, Safety and Environment consultancy. Built with Next.js App Router, TypeScript, Tailwind CSS, React Hook Form, Zod and Lucide.
 
 ## Local setup
 
@@ -20,6 +20,19 @@ npm run typecheck
 npm run test
 npm run build
 ```
+
+For the browser and launch-readiness suites, install Playwright's Chromium build once and run:
+
+```bash
+npx playwright install chromium
+npm run e2e
+npm run accessibility
+npm run e2e:visual
+npm run lighthouse
+npm run content:audit
+```
+
+`npm run verify` runs the non-visual automated suite. `content:audit:strict` intentionally fails while launch blockers remain. See [testing and preview guidance](docs/testing-and-preview.md), the [client acceptance checklist](docs/client-acceptance-checklist.md) and the [release checklist](docs/release-checklist.md).
 
 ## Editing content
 
