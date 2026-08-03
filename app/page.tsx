@@ -26,6 +26,11 @@ export const metadata: Metadata = {
     title: pageTitle,
     description: pageDescription,
   },
+  twitter: {
+    card: "summary_large_image",
+    title: pageTitle,
+    description: pageDescription,
+  },
 };
 
 const organisationSchema = {

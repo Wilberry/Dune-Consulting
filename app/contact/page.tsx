@@ -14,6 +14,11 @@ export const metadata: Metadata = {
     title: "Contact Dune Consulting",
     description: pageDescription,
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Contact Dune Consulting",
+    description: pageDescription,
+  },
 };
 export default function ContactPage() {
   return (

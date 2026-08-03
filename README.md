@@ -27,6 +27,7 @@ npm run build
 - Service cards: `data/services.ts`
 - Impact figures: `data/statistics.ts`
 - Project cards: `data/portfolio.ts`
+- About, service, mentorship and insights content: `data/page-content.ts`
 - Approved testimonials: `data/testimonials.ts`
 - Homepage section copy: `components/sections/`
 - Contact details: utility bar, footer, contact page and organisation schema in `app/page.tsx`
@@ -47,6 +48,15 @@ Supply authorised, web-optimised JPG images using these exact paths. Until suppl
 - `public/images/projects/project-04.jpg`
 - `public/images/projects/project-05.jpg`
 - `public/images/projects/project-06.jpg`
+
+Supporting pages also use clearly labelled placeholders under:
+
+- `public/images/about/`
+- `public/images/services/`
+- `public/images/mentorship/`
+- `public/images/portfolio/`
+- `public/images/insights/`
+- project gallery files matching `public/images/projects/{project-slug}-{1..3}.jpg`
 
 Approved client logos are also required for Jameson, TechCabal, Africa Finance Corporation, Martell, Zedcrest and Aproko Nation. The current logo strip contains labelled text placeholders and does not reproduce protected artwork.
 

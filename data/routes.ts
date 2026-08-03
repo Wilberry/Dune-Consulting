@@ -63,6 +63,42 @@ export const supportedRoutes = {
     title: "Terms",
     description: "Terms for using the Dune Consulting website.",
   },
+  "portfolio/jameson-distillery-on-tour": {
+    path: "/portfolio/jameson-distillery-on-tour",
+    title: "Jameson Distillery on Tour",
+    description:
+      "Selected event safety project from Dune Consulting. Project details are subject to client approval.",
+  },
+  "portfolio/moonshot-by-techcabal": {
+    path: "/portfolio/moonshot-by-techcabal",
+    title: "Moonshot by TechCabal",
+    description:
+      "Selected event safety project from Dune Consulting. Project details are subject to client approval.",
+  },
+  "portfolio/afc-staff-retreat": {
+    path: "/portfolio/afc-staff-retreat",
+    title: "Africa Finance Corporation Staff Retreat",
+    description:
+      "Selected event safety project from Dune Consulting. Project details are subject to client approval.",
+  },
+  "portfolio/aproko-nation-fiesta": {
+    path: "/portfolio/aproko-nation-fiesta",
+    title: "Aproko Nation Fiesta",
+    description:
+      "Selected event safety project from Dune Consulting. Project details are subject to client approval.",
+  },
+  "portfolio/martell-davido-launch": {
+    path: "/portfolio/martell-davido-launch",
+    title: "Martell × Davido Launch",
+    description:
+      "Selected event safety project from Dune Consulting. Project details are subject to client approval.",
+  },
+  "portfolio/zedcrest-launchpad": {
+    path: "/portfolio/zedcrest-launchpad",
+    title: "Zedcrest Launchpad",
+    description:
+      "Selected event safety project from Dune Consulting. Project details are subject to client approval.",
+  },
 } as const satisfies Record<string, SupportedRoute>;
 
 export type SupportedRouteKey = keyof typeof supportedRoutes;

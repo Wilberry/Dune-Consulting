@@ -9,7 +9,7 @@ export function ProjectCard({ project }: { project: Project }) {
         <ImagePlaceholder
           src={project.image}
           alt={`Image placeholder for ${project.title}`}
-          className="min-h-0 transition duration-500 group-hover:scale-105"
+          className="min-h-0 transition duration-300 group-hover:scale-105"
         />
       </div>
       <div className="p-6">
