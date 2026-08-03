@@ -40,6 +40,9 @@ jobs:
       - name: Tests
         run: npm run test
 
+      - name: Content and asset audit
+        run: npm run content:audit && npm run assets:audit
+
       - name: Production build
         run: npm run build
 

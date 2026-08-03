@@ -11,6 +11,14 @@ export type EmailEnvironment = z.infer<typeof emailEnvironmentSchema>;
 export function getEmailEnvironment():
   | { configured: true; values: EmailEnvironment }
   | { configured: false; missing: string[] } {
+  if (
+    process.env.VERCEL_ENV === "preview" &&
+    process.env.ENABLE_PREVIEW_EMAIL_DELIVERY !== "true"
+  )
+    return {
+      configured: false,
+      missing: ["ENABLE_PREVIEW_EMAIL_DELIVERY"],
+    };
   const values = {
     RESEND_API_KEY: process.env.RESEND_API_KEY,
     CONTACT_RECIPIENT_EMAIL: process.env.CONTACT_RECIPIENT_EMAIL,

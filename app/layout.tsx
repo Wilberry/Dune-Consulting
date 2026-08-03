@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
+import { ReviewBanner } from "@/components/layout/review-banner";
 import { company } from "@/data/company";
+import { deploymentEnv } from "@/lib/env";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -12,7 +14,9 @@ export const metadata: Metadata = {
   },
   description:
     "Dune Consulting provides event safety management, tailored HSE training, safety personnel outsourcing and professional HSE mentorship in Nigeria.",
-  robots: { index: true, follow: true },
+  robots: deploymentEnv.isVercelPreview
+    ? { index: false, follow: false, nocache: true }
+    : { index: true, follow: true },
   manifest: "/manifest.webmanifest",
   icons: { icon: "/icon.svg", apple: "/apple-icon" },
   openGraph: {
@@ -43,6 +47,7 @@ export default function RootLayout({
         >
           Skip to content
         </a>
+        <ReviewBanner />
         <Header />
         {children}
         <Footer />

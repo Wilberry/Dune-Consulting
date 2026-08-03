@@ -25,6 +25,12 @@ export const publicEnv = {
     process.env.NEXT_PUBLIC_INSTAGRAM_URL,
     fallback.instagramUrl,
   ),
+  reviewMode: process.env.NEXT_PUBLIC_REVIEW_MODE === "true",
+} as const;
+
+export const deploymentEnv = {
+  isVercelPreview: process.env.VERCEL_ENV === "preview",
+  isVercelProduction: process.env.VERCEL_ENV === "production",
 } as const;
 
 export const publicEnvFallbacks = fallback;

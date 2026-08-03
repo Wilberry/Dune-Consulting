@@ -10,3 +10,6 @@ playwright-report/
 test-results/
 .lighthouse/
 .lighthouseci/
+.vercel/
+trace.zip
+docs/review-screenshots/local-*

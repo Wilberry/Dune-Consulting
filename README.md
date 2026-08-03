@@ -30,9 +30,10 @@ npm run accessibility
 npm run e2e:visual
 npm run lighthouse
 npm run content:audit
+npm run assets:audit
 ```
 
-`npm run verify` runs the non-visual automated suite. `content:audit:strict` intentionally fails while launch blockers remain. See [testing and preview guidance](docs/testing-and-preview.md), the [client acceptance checklist](docs/client-acceptance-checklist.md) and the [release checklist](docs/release-checklist.md).
+`npm run verify` runs the non-visual automated suite. `content:audit:strict` and `assets:audit:strict` intentionally fail while launch blockers remain. See [testing and preview guidance](docs/testing-and-preview.md), the [content handoff](docs/content-handoff.md), the [preview acceptance report](docs/preview-acceptance-report.md), the [client acceptance checklist](docs/client-acceptance-checklist.md) and the [release checklist](docs/release-checklist.md).
 
 ## Editing content
 
