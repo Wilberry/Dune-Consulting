@@ -13,8 +13,7 @@ export function Footer() {
         <div>
           <Brand inverse />
           <p className="mt-5 max-w-sm leading-7 text-white/65">
-            Practical Health, Safety and Environment solutions for events,
-            workplaces and projects.
+            Dune Consulting helps organisations manage HSE risk, prepare their people and deliver safer workplaces and events through practical training, specialist consulting and competent HSE personnel.
           </p>
           <div className="mt-6 flex gap-3">
             <a
