@@ -3,7 +3,7 @@ export function SectionHeading({
   eyebrow,
   title,
   copy,
-  align = "left",
+  align = "center",
   inverse = false,
 }: {
   eyebrow?: string;
@@ -14,7 +14,10 @@ export function SectionHeading({
 }) {
   return (
     <div
-      className={cn("max-w-3xl", align === "center" && "mx-auto text-center")}
+      className={cn(
+        "max-w-3xl",
+        align === "center" && "mx-auto text-center sm:text-left sm:mx-0",
+      )}
     >
       {eyebrow && (
         <p

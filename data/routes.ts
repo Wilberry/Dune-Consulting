@@ -15,19 +15,19 @@ export const supportedRoutes = {
     path: "/services",
     title: "HSE Services",
     description:
-      "Explore event safety management, tailored HSE training and safety personnel outsourcing from Dune Consulting.",
+      "Explore event safety management, HSE Training, HSE Personnel Outsourcing and HSE Mentorship Program from Dune Consulting.",
   },
   "services/event-safety-management": {
     path: "/services/event-safety-management",
     title: "Event Safety Management",
     description:
-      "Practical event safety planning, personnel coordination, supervision and reporting from Dune Consulting.",
+      "End-to-end event safety planning, risk assessment and on-site coordination from Dune Consulting.",
   },
   "services/hse-training": {
     path: "/services/hse-training",
     title: "HSE Training",
     description:
-      "Build practical competence through customised workplace, fire, first-aid and emergency-response training.",
+      "Practical and customised workplace safety training to strengthen competence, emergency preparedness and confident response.",
   },
   "services/personnel-outsourcing": {
     path: "/services/personnel-outsourcing",
@@ -43,7 +43,7 @@ export const supportedRoutes = {
   },
   mentorship: {
     path: "/mentorship",
-    title: "HSE Mentorship Programme",
+    title: "HSE Mentorship Program",
     description:
       "Build practical safety skills through structured guidance, industry insight and career development support.",
   },
@@ -65,39 +65,39 @@ export const supportedRoutes = {
   },
   "portfolio/jameson-distillery-on-tour": {
     path: "/portfolio/jameson-distillery-on-tour",
-    title: "Jameson Distillery on Tour",
+    title: "Jameson Distillery on Tour Lagos",
     description:
-      "Selected event safety project from Dune Consulting. Project details are subject to client approval.",
+      "Dune Consulting provided event safety support for this approved portfolio engagement.",
   },
   "portfolio/moonshot-by-techcabal": {
     path: "/portfolio/moonshot-by-techcabal",
     title: "Moonshot by TechCabal",
     description:
-      "Selected event safety project from Dune Consulting. Project details are subject to client approval.",
+      "Dune Consulting provided event safety support for this approved portfolio engagement.",
   },
   "portfolio/afc-staff-retreat": {
     path: "/portfolio/afc-staff-retreat",
-    title: "Africa Finance Corporation Staff Retreat",
+    title: "Africa Finance Corporation Annual Staff Retreat 2026",
     description:
-      "Selected event safety project from Dune Consulting. Project details are subject to client approval.",
+      "Dune Consulting provided event safety support for this approved portfolio engagement.",
   },
   "portfolio/aproko-nation-fiesta": {
     path: "/portfolio/aproko-nation-fiesta",
     title: "Aproko Nation Fiesta",
     description:
-      "Selected event safety project from Dune Consulting. Project details are subject to client approval.",
+      "Dune Consulting provided event safety support for this approved portfolio engagement.",
   },
   "portfolio/martell-davido-launch": {
     path: "/portfolio/martell-davido-launch",
-    title: "Martell × Davido Launch",
+    title: "Martell x Davido Launch",
     description:
-      "Selected event safety project from Dune Consulting. Project details are subject to client approval.",
+      "Dune Consulting provided event safety support for this approved portfolio engagement.",
   },
   "portfolio/zedcrest-launchpad": {
     path: "/portfolio/zedcrest-launchpad",
-    title: "Zedcrest Launchpad",
+    title: "Zedcrest Launchpad 2.0",
     description:
-      "Selected event safety project from Dune Consulting. Project details are subject to client approval.",
+      "Dune Consulting provided event safety support for this approved portfolio engagement.",
   },
 } as const satisfies Record<string, SupportedRoute>;
 

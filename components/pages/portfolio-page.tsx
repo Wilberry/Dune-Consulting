@@ -15,11 +15,12 @@ export function PortfolioPage() {
   return (
     <main id="main-content">
       <PageHero
-        eyebrow="Selected Work"
-        title="Safety support behind ambitious events and projects."
-        copy="Explore selected engagements supported by Dune Consulting. Project descriptions remain factual and avoid unapproved performance claims."
+        eyebrow="Our Event Portfolio"
+        title="Selected Events and Organisations We Have Supported"
+        copy="Our event safety portfolio includes corporate gatherings, conferences, launches, festivals and large-audience experiences supported through practical planning, coordination and on-site safety management."
         breadcrumbs={[{ label: "Portfolio" }]}
-        image="/images/portfolio/portfolio-hero.jpg"
+        image={featured.image}
+        imageAlt={`${featured.title} event artwork`}
       />
       <Section>
         <SectionHeading eyebrow="Featured Project" title={featured.title} />
@@ -27,7 +28,7 @@ export function PortfolioPage() {
           <div className="aspect-[4/3] lg:aspect-auto">
             <ImagePlaceholder
               src={featured.image}
-              alt={`Project image placeholder for ${featured.title}`}
+              alt={`Event image for ${featured.title}`}
             />
           </div>
           <div className="flex flex-col justify-center p-8 sm:p-10">
@@ -37,9 +38,7 @@ export function PortfolioPage() {
               {featured.location}
             </p>
             <p className="text-muted mt-5 leading-7">
-              A detailed, approved project narrative—including scope,
-              challenges, delivery and outcome—will be added after client
-              review.
+              This featured portfolio entry uses an approved event name and neutral project context while avoiding unverified delivery claims.
             </p>
             <Button href={featured.href} className="mt-7 self-start" arrow>
               View project
@@ -72,7 +71,7 @@ export function ProjectDetailPage({ slug }: { slug: string }) {
       <PageHero
         eyebrow={project.category}
         title={project.title}
-        copy="A selected Dune Consulting engagement. Detailed project information will be published only after client approval."
+        copy={`Dune Consulting provided event safety support for ${project.title}. This portfolio entry uses approved event naming while preserving neutral project detail.`}
         breadcrumbs={[
           { label: "Portfolio", href: "/portfolio" },
           { label: project.title },
@@ -84,13 +83,10 @@ export function ProjectDetailPage({ slug }: { slug: string }) {
           <div>
             <SectionHeading
               eyebrow="Project Summary"
-              title="Engagement details prepared for client-approved content"
+              title="Approved portfolio project structure"
             />
             <p className="text-muted mt-6 leading-7">
-              This project page provides the final editorial structure while
-              deliberately withholding unconfirmed scope, dates, locations and
-              outcomes. Approved information can be inserted without redesigning
-              the experience.
+              Dune Consulting provided event safety support for {project.title}. The entry is part of our approved event safety portfolio and focuses on factual, neutral project context.
             </p>
           </div>
           <div className="border-line bg-off-white rounded-xl border p-6">
@@ -120,49 +116,39 @@ export function ProjectDetailPage({ slug }: { slug: string }) {
       <Section className="bg-navy">
         <SectionHeading
           eyebrow="Services Provided"
-          title="Approved scope to be confirmed"
+          title="Service category is shown above"
           inverse
         />
         <div className="mt-8">
           <EmptyState
-            title="Service scope awaiting approval"
-            copy="Specific services delivered on this engagement will be listed here once the client approves publication."
+            title="Approved portfolio context"
+            copy="This page highlights the verified project name, category and imagery while preserving discretion over detailed delivery information."
           />
         </div>
       </Section>
       <Section>
         <SectionHeading
-          eyebrow="Project Gallery"
-          title="A closer look at the engagement"
+          eyebrow="Project Summary"
+          title="Neutral portfolio context"
         />
-        <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {[1, 2, 3].map((number) => (
-            <div
-              key={number}
-              className="aspect-[4/3] overflow-hidden rounded-xl"
-            >
-              <ImagePlaceholder
-                src={`/images/projects/${project.slug}-${number}.jpg`}
-                alt={`Gallery placeholder ${number} for ${project.title}`}
-              />
-            </div>
-          ))}
-        </div>
+        <p className="mt-6 text-muted leading-7">
+          Dune Consulting provided event safety support for {project.title}. This portfolio entry focuses on verified naming, imagery and category without adding unapproved delivery details.
+        </p>
       </Section>
       <Section className="bg-off-white">
         <div className="grid gap-6 lg:grid-cols-3">
           {[
             [
               "Challenge",
-              "The approved operational context and risk challenge will be documented here.",
+              "This section is reserved for approved factual details about the operational context.",
             ],
             [
               "Solution",
-              "Dune's approved response, coordination and service delivery will be described here.",
+              "This section is reserved for approved factual details about the service delivery and coordination.",
             ],
             [
               "Outcome",
-              "Verified outcomes will be added after client approval; no result has been invented.",
+              "This section is reserved for approved factual details about the engagement result.",
             ],
           ].map(([title, copy]) => (
             <article

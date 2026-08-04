@@ -9,6 +9,7 @@ export function PageHero({
   copy,
   breadcrumbs,
   image,
+  imageAlt,
   cta,
 }: {
   eyebrow: string;
@@ -16,14 +17,16 @@ export function PageHero({
   copy: string;
   breadcrumbs: BreadcrumbItem[];
   image?: string;
+  imageAlt?: string;
   cta?: { label: string; href: string };
 }) {
+  const altText = imageAlt || `${eyebrow} image`;
   return (
     <section className="grid-pattern bg-deep-navy overflow-hidden text-white">
       <Container
         className={`grid items-center gap-10 py-14 sm:py-18 ${image ? "lg:grid-cols-[1.08fr_.92fr]" : ""}`}
       >
-        <div>
+        <div className="text-center lg:text-left">
           <Breadcrumb items={breadcrumbs} inverse />
           <p className="text-amber mt-8 text-xs font-extrabold tracking-[.18em] uppercase">
             {eyebrow}
@@ -42,10 +45,7 @@ export function PageHero({
         </div>
         {image && (
           <div className="aspect-[4/3] overflow-hidden rounded-xl border border-white/10 shadow-2xl">
-            <ImagePlaceholder
-              src={image}
-              alt={`Image placeholder for ${title}`}
-            />
+            <ImagePlaceholder src={image} alt={altText} />
           </div>
         )}
       </Container>

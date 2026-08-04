@@ -23,6 +23,21 @@ const image = (
   status: "placeholder",
 });
 
+const approvedImage = (
+  pathname: SiteImage["pathname"],
+  alt: string,
+  page: string,
+  recommendedDimensions: SiteImage["recommendedDimensions"] = "1600×1200px",
+  aspectRatio = "4:3",
+): SiteImage => ({
+  pathname,
+  alt,
+  page,
+  recommendedDimensions,
+  aspectRatio,
+  status: "approved",
+});
+
 export const siteImages: SiteImage[] = [
   image(
     "/images/hero-event-safety.jpg",
@@ -90,12 +105,47 @@ export const siteImages: SiteImage[] = [
     "Dune Consulting event safety project",
     "Portfolio",
   ),
-  ...Array.from({ length: 6 }, (_, index) =>
-    image(
-      `/images/projects/project-0${index + 1}.jpg` as SiteImage["pathname"],
-      `Authorised project photograph ${index + 1}`,
-      "Portfolio",
-    ),
+  approvedImage(
+    "/images/portfolio/jameson-distillery-tour.jpg",
+    "Jameson Distillery on Tour Lagos event artwork",
+    "Portfolio",
+    "1024×768px",
+    "4:3",
+  ),
+  approvedImage(
+    "/images/portfolio/moonshot-techcabal.jpg",
+    "Moonshot by TechCabal event artwork",
+    "Portfolio",
+    "800×1000px",
+    "4:5",
+  ),
+  approvedImage(
+    "/images/portfolio/afc-staff-retreat-2026.jpg",
+    "Africa Finance Corporation Annual Staff Retreat 2026 artwork",
+    "Portfolio",
+    "630×412px",
+    "~1.53:1",
+  ),
+  approvedImage(
+    "/images/portfolio/aproko-nation-fiesta.jpg",
+    "Aproko Nation Fiesta event artwork",
+    "Portfolio",
+    "1024×1280px",
+    "4:5",
+  ),
+  approvedImage(
+    "/images/portfolio/martell-davido-launch.jpg",
+    "Martell x Davido Launch event artwork",
+    "Portfolio",
+    "1920×1080px",
+    "16:9",
+  ),
+  approvedImage(
+    "/images/portfolio/zedcrest-launchpad-2.jpg",
+    "Zedcrest Launchpad 2.0 event artwork",
+    "Portfolio",
+    "1080×1350px",
+    "4:5",
   ),
   image(
     "/images/insights/insights-hero.jpg",

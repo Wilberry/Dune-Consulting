@@ -1,7 +1,7 @@
 import type { Statistic } from "@/data/statistics";
 export function StatCard({ stat }: { stat: Statistic }) {
   return (
-    <div className="border-amber border-l-2 pl-5">
+    <div className="border-amber border-l-2 pl-5 text-center sm:text-left">
       <strong className="font-heading block text-4xl font-extrabold text-white sm:text-5xl">
         {stat.value}
       </strong>

@@ -18,7 +18,11 @@ export const metadata: Metadata = {
     ? { index: false, follow: false, nocache: true }
     : { index: true, follow: true },
   manifest: "/manifest.webmanifest",
-  icons: { icon: "/icon.svg", apple: "/apple-icon" },
+  icons: {
+    icon: "/images/mainlogo.png",
+    shortcut: "/images/mainlogo.png",
+    apple: "/images/mainlogo.png",
+  },
   openGraph: {
     type: "website",
     locale: "en_NG",

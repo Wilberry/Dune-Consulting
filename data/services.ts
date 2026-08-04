@@ -12,28 +12,28 @@ export const services: Service[] = [
   {
     title: "Event Safety Management",
     description:
-      "Comprehensive safety planning and on-site coordination for conferences, concerts, festivals, launches and corporate gatherings.",
+      "End-to-end safety planning, risk assessment, coordination and on-site monitoring for professionally managed events.",
     href: "/services/event-safety-management",
     icon: ShieldCheck,
   },
   {
-    title: "Tailored HSE Training",
+    title: "HSE Training",
     description:
-      "Practical, industry-relevant training designed around your workforce, operational risks and compliance requirements.",
+      "Practical and customised workplace safety training designed to strengthen competence, emergency preparedness and confident response.",
     href: "/services/hse-training",
     icon: GraduationCap,
   },
   {
     title: "HSE Personnel Outsourcing",
     description:
-      "Qualified safety professionals deployed to support events, projects and business operations on temporary or long-term assignments.",
+      "Competent HSE professionals deployed to support projects, facilities, workplaces and events.",
     href: "/services/personnel-outsourcing",
     icon: Users,
   },
   {
-    title: "HSE Mentorship Programme",
+    title: "HSE Mentorship Program",
     description:
-      "Structured guidance, practical exposure and career development for emerging Health, Safety and Environment professionals.",
+      "Structured professional guidance for early-career HSE practitioners seeking stronger workplace confidence, judgement and career direction.",
     href: "/mentorship",
     icon: Compass,
   },

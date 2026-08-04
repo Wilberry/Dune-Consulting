@@ -4,12 +4,13 @@ import type { Project } from "@/data/portfolio";
 import { ImagePlaceholder } from "./image-placeholder";
 export function ProjectCard({ project }: { project: Project }) {
   return (
-    <article className="group border-line overflow-hidden rounded-xl border bg-white">
-      <div className="aspect-[4/3] overflow-hidden">
+    <article className="group border-line overflow-hidden rounded-xl border bg-white text-center transition hover:-translate-y-1 hover:shadow-xl sm:text-left">
+      <div className="aspect-[4/3] overflow-hidden bg-off-white">
         <ImagePlaceholder
           src={project.image}
-          alt={`Image placeholder for ${project.title}`}
+          alt={`${project.title} event artwork`}
           className="min-h-0 transition duration-300 group-hover:scale-105"
+          fit="contain"
         />
       </div>
       <div className="p-6">

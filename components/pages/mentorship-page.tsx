@@ -35,10 +35,10 @@ export function MentorshipPage() {
   return (
     <main id="main-content">
       <PageHero
-        eyebrow="Dune HSE Mentorship Programme"
+        eyebrow="Dune HSE Mentorship Program"
         title="Build practical judgement for a meaningful career in safety."
-        copy="A learning-focused programme for emerging HSE professionals who want guidance, industry context and greater confidence applying what they know."
-        breadcrumbs={[{ label: "HSE Mentorship" }]}
+        copy="A learning-focused program for emerging HSE professionals who want guidance, industry context and greater confidence applying what they know."
+        breadcrumbs={[{ label: "HSE Mentorship Program" }]}
         image="/images/mentorship/mentorship-hero.jpg"
         cta={{ label: "Express your interest", href: "/contact#consultation" }}
       />
@@ -46,25 +46,24 @@ export function MentorshipPage() {
         <div className="grid gap-12 lg:grid-cols-[1.1fr_.9fr] lg:items-center">
           <div>
             <SectionHeading
-              eyebrow="Programme Overview"
+              eyebrow="Program Overview"
               title="Move from knowing concepts to thinking like a practitioner"
             />
             <p className="text-muted mt-6 leading-7">
-              The Dune HSE Mentorship Programme is designed to help emerging
+              The Dune HSE Mentorship Program is designed to help emerging
               professionals connect foundational safety knowledge with the
               judgement, communication and accountability required in real work
               environments.
             </p>
             <p className="text-muted mt-4 leading-7">
-              The final programme format, schedule and application cycle will be
-              published after approval. No unconfirmed certification or
-              placement outcome is implied.
+              Confirmed cohort details will be published once the next program
+              schedule is finalised.
             </p>
           </div>
-          <Callout title="Programme details awaiting confirmation">
+          <Callout title="Program details are being finalised">
             <p>
-              Approved dates, delivery format, fees, eligibility criteria and
-              cohort size will be added before applications open.
+              Dates, delivery format, fees, eligibility criteria and cohort size
+              will be added once the next intake is confirmed.
             </p>
           </Callout>
         </div>
@@ -103,7 +102,7 @@ export function MentorshipPage() {
       </Section>
       <Section>
         <SectionHeading
-          eyebrow="Programme Benefits"
+          eyebrow="Program Benefits"
           title="Development that supports the person and the profession"
         />
         <div className="mt-10">

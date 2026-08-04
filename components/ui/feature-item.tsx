@@ -9,7 +9,7 @@ export function FeatureItem({
   icon: LucideIcon;
 }) {
   return (
-    <article>
+    <article className="text-center sm:text-left">
       <div className="text-amber mb-5 flex size-11 items-center justify-center rounded-full border border-white/20">
         <Icon size={21} aria-hidden="true" />
       </div>

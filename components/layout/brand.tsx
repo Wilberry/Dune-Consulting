@@ -1,30 +1,21 @@
 import Image from "next/image";
 import Link from "next/link";
-export function Brand({ inverse = false }: { inverse?: boolean }) {
+
+type BrandProps = {
+  inverse?: boolean;
+  variant?: "primary" | "footer";
+};
+
+export function Brand({ variant = "primary" }: BrandProps) {
+  const src = variant === "footer" ? "/images/logo2.png" : "/images/mainlogo.png";
+
   return (
     <Link
       href="/"
-      className="flex shrink-0 items-center gap-3"
+      className="flex shrink-0 items-center"
       aria-label="Dune Consulting home"
     >
-      <Image
-        src="/icons/dune-mark.svg"
-        alt=""
-        width={42}
-        height={42}
-        priority
-      />
-      <span
-        className={`font-heading text-[17px] leading-none font-extrabold tracking-tight ${inverse ? "text-white" : "text-navy"}`}
-      >
-        DUNE
-        <br />
-        <span
-          className={`${inverse ? "text-amber" : "text-amber-text"} text-[10px] tracking-[.2em]`}
-        >
-          CONSULTING
-        </span>
-      </span>
+      <Image src={src} alt="Dune Consulting" width={56} height={84} priority />
     </Link>
   );
 }

@@ -26,13 +26,13 @@ import { services } from "@/data/services";
 import { statistics } from "@/data/statistics";
 import { testimonials } from "@/data/testimonials";
 
-const clients = [
-  "Jameson",
-  "TechCabal",
-  "Africa Finance Corporation",
-  "Martell",
-  "Zedcrest",
-  "Aproko Nation",
+const portfolioItems = [
+  "Jameson Distillery on Tour Lagos",
+  "Moonshot by TechCabal",
+  "Africa Finance Corporation Annual Staff Retreat 2026",
+  "Aproko Nation Fiesta",
+  "Martell x Davido Launch",
+  "Zedcrest Launchpad 2.0",
 ];
 const process = [
   [
@@ -55,24 +55,33 @@ const process = [
 export function Clients() {
   return (
     <section
-      aria-labelledby="clients-title"
+      aria-labelledby="portfolio-preview-title"
       className="border-line border-b bg-white py-10"
     >
       <Container>
-        <h2
-          id="clients-title"
-          className="text-muted text-center text-sm font-bold tracking-wide"
-        >
-          Trusted on Events and Projects Across Nigeria
-        </h2>
-        <div className="mt-7 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
-          {clients.map((client) => (
+        <div className="max-w-3xl text-center mx-auto">
+          <p className="text-amber mb-3 text-xs font-extrabold tracking-[.18em] uppercase">
+            Our Event Portfolio
+          </p>
+          <h2
+            id="portfolio-preview-title"
+            className="text-navy text-2xl font-extrabold sm:text-3xl"
+          >
+            Selected Events and Organisations We Have Supported
+          </h2>
+          <p className="text-muted mt-4 text-sm leading-7">
+            Our event safety portfolio includes corporate gatherings, conferences,
+            launches, festivals and large audience experiences supported through
+            practical planning, coordination and on-site safety management.
+          </p>
+        </div>
+        <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {portfolioItems.map((item) => (
             <div
-              key={client}
-              className="border-line bg-off-white font-heading text-navy flex min-h-16 items-center justify-center rounded border px-3 text-center text-xs font-extrabold"
+              key={item}
+              className="border-line bg-off-white text-navy rounded-xl border px-4 py-4 text-sm font-semibold"
             >
-              {client}
-              <span className="sr-only"> logo placeholder</span>
+              {item}
             </div>
           ))}
         </div>
@@ -286,19 +295,19 @@ export function Mentorship() {
           <div className="relative min-h-80">
             <ImagePlaceholder
               src="/images/hse-mentorship.jpg"
-              alt="Emerging safety professionals participating in the Dune HSE Mentorship Programme"
+              alt="Emerging safety professionals participating in the Dune HSE Mentorship Program"
               className="absolute inset-0"
             />
           </div>
           <div className="p-8 sm:p-12 lg:p-14">
             <p className="text-amber mb-3 text-xs font-extrabold tracking-[.18em] uppercase">
-              HSE Mentorship Programme
+              HSE Mentorship Program
             </p>
             <h2 className="text-3xl font-extrabold sm:text-4xl">
               Build Practical Skills for a Career in HSE
             </h2>
             <p className="mt-5 leading-7 text-white/70">
-              The Dune HSE Mentorship Programme supports emerging safety
+              The Dune HSE Mentorship Program supports emerging safety
               professionals through structured guidance, practical learning and
               career-focused development.
             </p>
@@ -314,7 +323,7 @@ export function Mentorship() {
               ))}
             </ul>
             <Button href="/mentorship" className="mt-8">
-              Explore the Mentorship Programme
+              Explore the Mentorship Program
             </Button>
           </div>
         </div>

@@ -9,9 +9,9 @@ export function Footer() {
   const year = new Date().getFullYear();
   return (
     <footer className="bg-deep-navy text-white">
-      <Container className="grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1.15fr]">
+      <Container className="grid gap-10 text-center sm:text-left py-14 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1.15fr]">
         <div>
-          <Brand inverse />
+          <Brand inverse variant="footer" />
           <p className="mt-5 max-w-sm leading-7 text-white/65">
             Dune Consulting helps organisations manage HSE risk, prepare their people and deliver safer workplaces and events through practical training, specialist consulting and competent HSE personnel.
           </p>
@@ -65,7 +65,7 @@ export function Footer() {
             ))}
             <li>
               <Link href="/mentorship" className="hover:text-white">
-                HSE Mentorship Programme
+                HSE Mentorship Program
               </Link>
             </li>
           </ul>
