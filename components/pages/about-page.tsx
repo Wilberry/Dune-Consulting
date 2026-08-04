@@ -182,7 +182,7 @@ export function AboutPage() {
             <div className="flex items-start gap-3">
               <Award className="text-amber-hover shrink-0" />
               <p className="text-sm">
-                Dune's leadership demonstrates commitment through consistent delivery of practical HSE results, professional development support and dependable client partnerships.
+                Dune&apos;s leadership demonstrates commitment through consistent delivery of practical HSE results, professional development support and dependable client partnerships.
               </p>
             </div>
           </Callout>

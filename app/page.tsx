@@ -13,7 +13,7 @@ import { company } from "@/data/company";
 
 const pageTitle = "HSE Consulting, Event Safety & Training | Dune Consulting";
 const pageDescription =
-  "Dune Consulting provides practical HSE training, event safety management and outsourced HSE personnel for organisations and events.";
+  "Dune Consulting provides practical HSE training, event safety management, outsourced HSE personnel and professional mentorship for organisations and emerging HSE practitioners.";
 
 export const metadata: Metadata = {
   title: { absolute: pageTitle },

@@ -179,8 +179,8 @@ Each page is rated 1–5 on these dimensions:
 **Issue 2: Services presented as equal rather than tiered**
 - File: `components/sections/home-sections.tsx` (ServicesSection)
 - Current copy: "Complete HSE Support, From Planning to Execution"
-- Problem: Mentorship is positioned as service #4 alongside commercial offerings, but should be semantically and visually distinct. Dune has **three primary commercial services** (Event Safety Management, HSE Training, HSE Personnel Outsourcing) and **one separate professional-development offering** (HSE Mentorship Programme).
-- Recommended: Clarify in heading, copy, and visual hierarchy that mentorship is a professional-development programme for emerging practitioners, not a commercial consulting service for organizations.
+- Problem: The approved service architecture now contains four official key services: three organisation-facing HSE services (Event Safety Management, HSE Training, HSE Personnel Outsourcing) and one professional-development service (HSE Mentorship Program). The website should make that distinction clear without removing mentorship from the core service structure.
+- Recommended: Present the four services together while making mentorship visually distinct as the professional-development offering for emerging practitioners.
 
 **Issue 3: No business case or outcome-focused messaging**
 - File: `components/sections/home-sections.tsx` (WhyChooseUs)

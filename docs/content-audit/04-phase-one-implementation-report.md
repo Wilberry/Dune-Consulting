@@ -10,6 +10,8 @@
 
 Phase 1 implementation successfully repositioned Dune Consulting from a training-service provider to an HSE consultancy. Core messaging, global company copy, navigation, footer, homepage hero, About page, and key metadata have been updated to reflect consulting-first positioning with the new brand message: **"Safer Workplaces. Safer Events. Stronger HSE Teams."**
 
+The client has now approved the four official services, six portfolio entries, and the approved logo assets. The site now presents approved event portfolio content, standardises the four official services, and uses the client-approved brand assets for header, footer and favicon.
+
 All code quality checks pass (ESLint, TypeScript, unit tests). Unverified content (statistics, placeholder testimonials) has been removed from public-facing pages.
 
 ---
@@ -102,12 +104,12 @@ All code quality checks pass (ESLint, TypeScript, unit tests). Unverified conten
 
 ### Remaining Homepage Structure
 1. Hero
-2. Clients (trusted organizations)
-3. Services (3 commercial cards)
+2. Approved event portfolio preview
+3. Services (4 official cards)
 4. About Preview
 5. Why Choose Us
 6. Process (6-step timeline)
-7. Featured Projects (3 projects)
+7. Featured Projects (approved portfolio items)
 8. Mentorship Spotlight
 9. Final CTA
 

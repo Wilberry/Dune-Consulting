@@ -139,11 +139,11 @@ export const serviceDetails: Record<string, ServiceDetail> = {
   },
   "hse-training": {
     slug: "hse-training",
-    title: "Tailored HSE Training",
+    title: "HSE Training",
     eyebrow: "Learning designed for real work",
     image: "/images/services/hse-training.jpg",
     summary:
-      "Practical HSE learning shaped around your people, operational context and priority risks.",
+      "Practical and customised workplace safety training designed to strengthen competence, emergency preparedness and confident response.",
     overview: [
       "Generic slides rarely change behaviour. Our training starts with the work people actually do, the decisions they make and the hazards they encounter.",
       "We translate safety expectations into clear, relevant learning experiences that help teams recognise risk, act responsibly and contribute to a stronger safety culture.",
@@ -210,7 +210,7 @@ export const serviceDetails: Record<string, ServiceDetail> = {
     eyebrow: "The right expertise, where you need it",
     image: "/images/services/personnel-outsourcing.jpg",
     summary:
-      "Qualified safety personnel deployed for events, projects and ongoing operational assignments.",
+      "Competent HSE professionals deployed to support projects, facilities, workplaces and events.",
     overview: [
       "The need for capable HSE support can change quickly. Dune Consulting helps organisations fill short-term, project-based and longer-term safety roles without compromising expectations.",
       "We focus on role clarity, appropriate experience, responsive communication and integration with the client team.",

@@ -162,9 +162,9 @@ export function ConsultationForm() {
               Select a service
             </option>
             <option>Event Safety Management</option>
-            <option>Tailored HSE Training</option>
+            <option>HSE Training</option>
             <option>HSE Personnel Outsourcing</option>
-            <option>HSE Mentorship Programme</option>
+            <option>HSE Mentorship Program</option>
             <option>Other HSE Support</option>
           </select>
         </Field>

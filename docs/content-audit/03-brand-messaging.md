@@ -169,10 +169,10 @@ dependable client support.
 
 | Service | Approved Name | Variants (if used) | Where Used | Purpose |
 |---------|---|---|---|---|
-| 1 | **HSE Training** | "Tailored HSE Training" (on services page only), "Practical HSE Training" (in body copy) | All pages, navigation, forms | Corporate and workplace safety training; induction, refresher, specialized modules |
-| 2 | **Event Safety Management** | "Event Safety", "Event Safety Planning" (in body copy) | All pages, navigation, forms | End-to-end event safety coordination; from planning to post-event reporting |
-| 3 | **HSE Personnel Outsourcing** | "Safety Personnel Deployment" (in body copy) | All pages, navigation, forms | Temporary or long-term deployment of qualified HSE professionals |
-| 4 | **HSE Mentorship Programme** | "Mentorship Programme" (in body copy), "Professional Development" (in high-level positioning) | Separate section from "Services"; distinct audience | Structured professional development for emerging HSE practitioners |
+| 1 | **HSE Training** | "Practical HSE training" (in body copy) | All pages, navigation, forms | Practical and customised workplace safety training; competence building, emergency preparedness and confident response |
+| 2 | **Event Safety Management** | "Event safety planning" (in body copy) | All pages, navigation, forms | End-to-end safety planning, risk assessment, coordination and on-site monitoring for professionally managed events |
+| 3 | **HSE Personnel Outsourcing** | "HSE professionals deployed" (in body copy) | All pages, navigation, forms | Competent HSE professionals deployed to support projects, facilities, workplaces and events |
+| 4 | **HSE Mentorship Program** | "Professional development" (in body copy) | Homepage service grid, mentorship page, related CTA | Structured professional guidance for early-career HSE practitioners seeking stronger workplace confidence, judgement and career direction |
 
 **Usage Rules:**
 - Use the "Approved Name" in navigation, headings, CTAs, and forms
