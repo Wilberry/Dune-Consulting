@@ -10,21 +10,20 @@ export function Hero() {
         <div>
           <p className="text-amber mb-5 flex items-center gap-3 text-xs font-extrabold tracking-[.18em] uppercase">
             <span className="bg-amber h-px w-8" />
-            Health, Safety & Environment
+            Health, Safety and Environment Consulting
           </p>
           <h1 className="text-4xl leading-[1.08] font-extrabold text-balance sm:text-6xl xl:text-7xl">
-            Protecting People.
+            Safer Workplaces.
             <br />
-            <span className="text-amber">Protecting Your Business.</span>
+            Safer Events.
+            <br />
+            <span className="text-amber">Stronger HSE Teams.</span>
           </h1>
           <p className="mt-6 max-w-2xl text-base leading-7 text-white/72 sm:text-lg">
-            Dune Consulting delivers practical Health, Safety and Environment
-            solutions for events, workplaces and projects. From planning and
-            training to personnel deployment and emergency coordination, we help
-            organisations operate safely and confidently.
+            Dune Consulting helps organisations protect people, reduce risk and strengthen safety performance through practical HSE training, event safety management and competent outsourced professionals.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <Button href="/contact#consultation">Request a Consultation</Button>
+            <Button href="/contact#consultation">Discuss Your HSE Needs</Button>
             <Button href="/services" variant="light">
               Explore Our Services
             </Button>

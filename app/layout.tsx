@@ -9,11 +9,11 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL(company.websiteUrl),
   title: {
-    default: "Dune Consulting | HSE Training and Event Safety Management",
+    default: "HSE Consulting, Event Safety & Training | Dune Consulting",
     template: `%s | ${company.name}`,
   },
   description:
-    "Dune Consulting provides event safety management, tailored HSE training, safety personnel outsourcing and professional HSE mentorship in Nigeria.",
+    "Dune Consulting provides practical HSE training, event safety management and outsourced HSE personnel for organisations and events.",
   robots: deploymentEnv.isVercelPreview
     ? { index: false, follow: false, nocache: true }
     : { index: true, follow: true },
@@ -23,15 +23,15 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_NG",
     siteName: company.name,
-    title: `${company.name} | HSE Training and Event Safety Management`,
+    title: "HSE Consulting, Event Safety & Training | Dune Consulting",
     description:
-      "Practical HSE solutions for events, workplaces and projects across Nigeria.",
+      "Practical HSE training, event safety management and outsourced HSE personnel for organisations and events.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Dune Consulting | HSE Training and Event Safety Management",
+    title: "HSE Consulting, Event Safety & Training | Dune Consulting",
     description:
-      "Practical HSE solutions for events, workplaces and projects across Nigeria.",
+      "Practical HSE training, event safety management and outsourced HSE personnel for organisations and events.",
   },
 };
 

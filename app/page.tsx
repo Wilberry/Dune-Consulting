@@ -8,14 +8,13 @@ import {
   Mentorship,
   Process,
   ServicesSection,
-  Testimonials,
   WhyChooseUs,
 } from "@/components/sections/home-sections";
 import { company } from "@/data/company";
 
-const pageTitle = "Dune Consulting | HSE Training and Event Safety Management";
+const pageTitle = "HSE Consulting, Event Safety & Training | Dune Consulting";
 const pageDescription =
-  "Dune Consulting provides event safety management, tailored HSE training, safety personnel outsourcing and professional HSE mentorship in Nigeria.";
+  "Dune Consulting provides practical HSE training, event safety management and outsourced HSE personnel for organisations and events.";
 
 export const metadata: Metadata = {
   title: { absolute: pageTitle },
@@ -38,7 +37,7 @@ const organisationSchema = {
   "@type": "Organization",
   name: company.name,
   url: company.websiteUrl,
-  description: "A Lagos-based Health, Safety and Environment consultancy.",
+  description: "Dune Consulting helps organisations manage HSE risk, prepare their people and deliver safer workplaces and events through practical training, specialist consulting and competent HSE personnel.",
   address: {
     "@type": "PostalAddress",
     addressLocality: company.addressLocality,
@@ -67,7 +66,6 @@ export default function Home() {
       <Impact />
       <FeaturedProjects />
       <Mentorship />
-      <Testimonials />
       <CTASection />
     </main>
   );
