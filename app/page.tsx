@@ -4,7 +4,6 @@ import {
   AboutPreview,
   Clients,
   FeaturedProjects,
-  Impact,
   Mentorship,
   Process,
   ServicesSection,
@@ -63,7 +62,6 @@ export default function Home() {
       <AboutPreview />
       <WhyChooseUs />
       <Process />
-      <Impact />
       <FeaturedProjects />
       <Mentorship />
       <CTASection />
