@@ -7,9 +7,9 @@ export type SupportedRoute = {
 export const supportedRoutes = {
   about: {
     path: "/about",
-    title: "About Dune Consulting",
+    title: "About Dune Consulting | HSE Consultancy in Lagos",
     description:
-      "Learn about Dune Consulting and our practical approach to Health, Safety and Environment risk management.",
+      "Learn how Dune Consulting helps organisations protect people, manage HSE risk and build stronger safety cultures through practical professional services.",
   },
   services: {
     path: "/services",
@@ -25,9 +25,9 @@ export const supportedRoutes = {
   },
   "services/hse-training": {
     path: "/services/hse-training",
-    title: "Tailored HSE Training",
+    title: "HSE Training",
     description:
-      "Practical HSE training designed around workforce risks, operations and compliance requirements.",
+      "Build practical competence through customised workplace, fire, first-aid and emergency-response training.",
   },
   "services/personnel-outsourcing": {
     path: "/services/personnel-outsourcing",
