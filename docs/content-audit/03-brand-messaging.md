@@ -690,7 +690,7 @@ clear accountability, responsive support.
 
 | Page | Primary Keyword | Secondary / LSI Keywords | Recommended Meta Title |
 |---|---|---|---|
-| Homepage | HSE consulting Nigeria | Event safety, HSE training, workplace safety | HSE Training & Event Safety Management \| Dune Consulting Lagos |
+| Homepage | HSE consulting Nigeria | Event safety, HSE training, workplace safety | HSE Consulting, Event Safety & Training \| Dune Consulting |
 | About | Dune Consulting HSE | consultancy, Lagos, Nigeria, team | About Dune Consulting \| HSE Consultancy Lagos |
 | Services | HSE services | event safety, training, personnel | HSE Services \| Training, Event Safety, Personnel \| Dune |
 | Event Safety | Event safety management | crowd safety, emergency planning, risk assessment | Event Safety Management \| Planning & Coordination \| Dune |
@@ -712,12 +712,21 @@ clear accountability, responsive support.
 
 ### Structured Data (Schema.org)
 
+**Recommended Implementation (by page type):**
+
 - **Homepage:** Organization schema (name, location, contact, social profiles)
-- **About page:** Organization schema + Person schema (founder bio)
+- **About page:** Organization schema + Person schema (founder bio, if verified)
 - **Service pages:** Service schema (description, area served, price range if known)
-- **Event/Portfolio pages:** Event schema OR Project schema
-- **Mentorship page:** Course schema OR Event schema (if running cohorts)
+- **Portfolio project pages:** Schema type chosen according to actual page content:
+  - Use **Event** schema only if page describes an actual event (date, location, attendees, activities)
+  - Use **Person** schema only for verified founder/team member profiles
+  - Use **Service** schema for project descriptions positioned as consulting work
+  - Use **Organisation** schema for organizational context (e.g., client organization)
+  - Note: Do not prescribe Event schema for all portfolio pages; evaluate actual content
+- **Mentorship page:** Course schema (if programme describes learning outcomes, duration, instructor)
 - **Contact page:** (optional) LocalBusiness schema
+
+**Implementation Rule:** Structured data type must match the actual content and claim on the page. Do not use Event schema for pages that don't describe events.
 
 ---
 
@@ -831,7 +840,7 @@ When updating company phone, email, stats, or service descriptions:
 - [ ] Add project dates or relative timeline
 - [ ] Link projects to relevant service pages (e.g., project → Event Safety Management service)
 - [ ] Add project-specific CTAs ("Plan a Safer Event Like This")
-- [ ] Add Event schema for each project
+- [ ] Add structured data schema for each project (type chosen based on actual content: Event for genuine events, Service for consulting work, or Organisation for client context)
 
 ### Phase 13: SEO & Metadata
 - [ ] Audit all page titles (50–60 chars, include primary keyword, location if relevant)

@@ -17,26 +17,34 @@
 
 ### Public Routes (Marketing & Service Routes)
 
-- `/` – Homepage
+**Collection & Index Routes (4):**
+- `/` – Homepage (handled by `app/page.tsx`)
+- `/services` – Services overview page (SEO metadata in `data/routes.ts`)
+- `/portfolio` – Portfolio / Featured Projects page (SEO metadata in `data/routes.ts`)
+- `/contact` – Contact page with consultation form (handled by `app/contact/page.tsx`)
+
+**Detail Pages & Fully Audited Routes (14):**
 - `/about` – About Dune Consulting
-- `/services` – Services overview page
-- `/services/event-safety-management` – Event safety detail page
-- `/services/hse-training` – HSE training detail page
-- `/services/personnel-outsourcing` – Personnel outsourcing detail page
+- `/insights` – Insights / Articles page
 - `/mentorship` – HSE Mentorship Programme page
-- `/portfolio` – Portfolio / Featured Projects page
-- `/portfolio/[slug]` – Individual project pages:
-  - `/portfolio/jameson-distillery-on-tour`
-  - `/portfolio/moonshot-by-techcabal`
-  - `/portfolio/afc-staff-retreat`
-  - `/portfolio/aproko-nation-fiesta`
-  - `/portfolio/martell-davido-launch`
-  - `/portfolio/zedcrest-launchpad`
-- `/insights` – Insights / Articles page (currently stub)
-- `/contact` – Contact page with consultation form
 - `/privacy` – Privacy policy page
-- `/terms` – Terms page
-- `/[...slug]` – Catch-all for unknown routes (404 handling)
+- `/terms` – Terms of service page
+- `/services/event-safety-management` – Event safety detail page (fully audited)
+- `/services/hse-training` – HSE training detail page (fully audited)
+- `/services/personnel-outsourcing` – Personnel outsourcing detail page (fully audited)
+
+**Portfolio Project Pages (6, inspected for consistency):**
+- `/portfolio/jameson-distillery-on-tour`
+- `/portfolio/moonshot-by-techcabal`
+- `/portfolio/afc-staff-retreat`
+- `/portfolio/aproko-nation-fiesta`
+- `/portfolio/martell-davido-launch`
+- `/portfolio/zedcrest-launchpad`
+
+Note: All 6 projects display "Project details subject to client approval" disclaimer.
+
+**System Routes:**
+- `/[...slug]` – Catch-all for unknown routes (404 handling via `app/[...slug]/page.tsx`)
 
 ### API Routes
 
@@ -150,7 +158,11 @@
 
 **`data/routes.ts`**
 - Full route definitions with metadata
-- 14 supported routes documented
+- 16 supported dynamic routes with SEO metadata
+- Note: This represents 16 defined route paths. The full public site includes 18 routes total:
+  - 4 collection/index routes: `/` (homepage), `/services`, `/portfolio`, `/contact`
+  - 14 detail routes: `/about`, `/insights`, `/mentorship`, `/privacy`, `/terms`, and 3 service detail pages + 6 portfolio project pages
+- All routes verified and currently documented in `data/routes.ts`
 
 **`data/statistics.ts`** ⚠️ **DISCREPANCY ALERT**
 - Current data: "1,000+ Training Hours", "3,500+ Delegates Trained", "100% Event Safety Regulatory Compliance Rate", "10 Active Projects"

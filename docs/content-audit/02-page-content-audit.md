@@ -20,6 +20,79 @@ Each page is rated 1–5 on these dimensions:
 
 ---
 
+## PRIVACY & TERMS PAGES (`/privacy` and `/terms`)
+
+**Implementation File:** `components/pages/legal-page.tsx`
+
+**Routes:** `/privacy` and `/terms` are handled by the catch-all `app/[...slug]/page.tsx` router, rendering via the `LegalPage` component with `type` parameter.
+
+### `/privacy` – Privacy Policy Page
+
+**Current Status:** Placeholder content awaiting client and legal approval.
+
+**Current Visible Content:**
+- Page hero with eyebrow "Website Information"
+- H1: "Privacy Policy"
+- Subtitle copy: "Privacy Policy content is awaiting client and legal approval before publication."
+- Callout box titled "Approved legal copy required"
+- Disclaimer: "This page is intentionally reserved for final legal text. No policy, commitment or legal term has been invented on behalf of Dune Consulting."
+- Two sections: "Content status" and "Last updated"
+
+**Metadata:**
+- Title (from `data/routes.ts`): "Privacy Policy"
+- Description: "Privacy information for the Dune Consulting website."
+- Canonical: `/privacy`
+
+**User-Facing Disclaimers:** Yes – clearly states awaiting approval and that no false claims have been invented.
+
+**Risk Assessment:** No false or misleading company details exposed. Placeholder is transparent.
+
+**Content Required (for replacement):**
+- Data collection practices and lawful basis
+- Data processing activities and retention
+- User rights (access, deletion, portability, etc.)
+- Data subject request procedures
+- Contact information for data protection inquiries
+- Cookie usage (if applicable)
+- Third-party service disclosures
+
+**Scope Note:** Do not invent legal substance. Provide reviewed, approved copy only.
+
+### `/terms` – Terms of Service Page
+
+**Current Status:** Placeholder content awaiting client and legal approval.
+
+**Current Visible Content:**
+- Page hero with eyebrow "Website Information"
+- H1: "Website Terms"
+- Subtitle copy: "Website Terms content is awaiting client and legal approval before publication."
+- Callout box titled "Approved legal copy required"
+- Disclaimer: "This page is intentionally reserved for final legal text. No policy, commitment or legal term has been invented on behalf of Dune Consulting."
+- Two sections: "Content status" and "Last updated"
+
+**Metadata:**
+- Title (from `data/routes.ts`): "Terms"
+- Description: "Terms for using the Dune Consulting website."
+- Canonical: `/terms`
+
+**User-Facing Disclaimers:** Yes – clearly states awaiting approval and that no false claims have been invented.
+
+**Risk Assessment:** No false or misleading company details exposed. Placeholder is transparent.
+
+**Content Required (for replacement):**
+- Website use license and permitted/prohibited uses
+- Intellectual property rights (copyright, trademarks)
+- User-generated content (if applicable)
+- Limitation of liability and disclaimers
+- Indemnification clause
+- Term and termination conditions
+- Dispute resolution and governing law
+- Contact information for legal inquiries
+
+**Scope Note:** Do not invent legal substance. Provide reviewed, approved copy only. Ensure company name, location, and contact details align with `data/company.ts`.
+
+---
+
 ## 1. HOMEPAGE (`/`)
 
 **Route Purpose:** First impression; communicate value proposition, service overview, proof points, and call-to-action.
@@ -106,8 +179,8 @@ Each page is rated 1–5 on these dimensions:
 **Issue 2: Services presented as equal rather than tiered**
 - File: `components/sections/home-sections.tsx` (ServicesSection)
 - Current copy: "Complete HSE Support, From Planning to Execution"
-- Problem: Doesn't distinguish core services (4) from supporting capabilities. Mentorship appears as service #4, but should be distinct (professional development, not commercial).
-- Recommended: Clarify that mentorship is a professional development programme, separate from commercial consulting.
+- Problem: Mentorship is positioned as service #4 alongside commercial offerings, but should be semantically and visually distinct. Dune has **three primary commercial services** (Event Safety Management, HSE Training, HSE Personnel Outsourcing) and **one separate professional-development offering** (HSE Mentorship Programme).
+- Recommended: Clarify in heading, copy, and visual hierarchy that mentorship is a professional-development programme for emerging practitioners, not a commercial consulting service for organizations.
 
 **Issue 3: No business case or outcome-focused messaging**
 - File: `components/sections/home-sections.tsx` (WhyChooseUs)
