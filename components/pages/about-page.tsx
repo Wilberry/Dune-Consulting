@@ -30,11 +30,11 @@ export function AboutPage() {
     <main id="main-content">
       <PageHero
         eyebrow="About Dune Consulting"
-        title="Safety expertise grounded in the realities of your operation."
-        copy="We help organisations protect people, strengthen compliance and move forward confidently through practical HSE support."
+        title="Health, Safety and Environment Consulting for Confident Operations"
+        copy="At Dune Consulting, we believe safety is more than a compliance requirement. It is a business discipline that protects people, strengthens operations and supports sustainable performance."
         breadcrumbs={[{ label: "About" }]}
         image="/images/about/about-hero.jpg"
-        cta={{ label: "Talk to our team", href: "/contact#consultation" }}
+        cta={{ label: "Discuss Your HSE Needs", href: "/contact#consultation" }}
       />
       <Section containerClassName="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
         <div>
@@ -44,23 +44,23 @@ export function AboutPage() {
           />
           <div className="text-muted mt-6 space-y-4 leading-7">
             <p>
-              Dune Consulting is a Lagos-based Health, Safety and Environment
-              consultancy created to close the gap between safety documentation
-              and safe delivery.
+              Dune Consulting is a Health, Safety and Environment consultancy
+              based in Lagos, Nigeria. We support organisations, event producers
+              and project teams with practical risk-management solutions.
             </p>
             <p>
-              We support event producers, organisations and project teams with a
-              combination of early risk planning, practical education, qualified
-              personnel and responsive on-site supervision.
+              We combine early risk planning, practical education, qualified
+              personnel and responsive on-site supervision to help clients
+              protect people, maintain compliance and operate confidently.
             </p>
             <p>
               Our work is guided by a simple belief: safety should enable
-              confident operations, not become disconnected paperwork or an
-              unnecessary obstacle.
+              operations, not become disconnected paperwork or an unnecessary
+              obstacle.
             </p>
           </div>
           <Quote attribution="Dune Consulting positioning">
-            Protecting People. Protecting Your Business.
+            Safer Workplaces. Safer Events. Stronger HSE Teams.
           </Quote>
         </div>
         <div className="aspect-[5/4] overflow-hidden rounded-2xl shadow-xl">
@@ -167,22 +167,22 @@ export function AboutPage() {
           <div>
             <SectionHeading
               eyebrow="Leadership"
-              title="Responsible leadership, demonstrated through delivery"
-              copy="Dune Consulting is led with a commitment to sound judgement, clear communication and dependable client support."
+              title="Responsible guidance from experienced practitioners"
+              copy="Dune Consulting is led by health, safety and environment professionals committed to sound judgement, clear communication and dependable client support."
             />
-            <p className="text-muted mt-5 max-w-2xl leading-7">
-              Approved leadership profiles, portraits and professional
-              biographies will be added after client confirmation. The section
-              is intentionally structured without inventing names, credentials
-              or experience claims.
-            </p>
+            <div className="mt-7 space-y-4 leading-7">
+              <h3 className="text-navy text-lg font-bold">Anthony Igbinosun</h3>
+              <p className="text-sm font-semibold text-amber">Lead Consultant</p>
+              <p className="text-muted text-sm">
+                Anthony is a Health, Safety and Environment professional, corporate trainer, mentor and professional-development advocate. His work focuses on helping organisations improve safety performance through practical HSE training, event safety coordination and professional development.
+              </p>
+            </div>
           </div>
-          <Callout title="Leadership profiles awaiting approval">
+          <Callout title="About leadership">
             <div className="flex items-start gap-3">
               <Award className="text-amber-hover shrink-0" />
-              <p>
-                Supply approved names, roles, biographies and portraits to
-                complete this section.
+              <p className="text-sm">
+                Dune's leadership demonstrates commitment through consistent delivery of practical HSE results, professional development support and dependable client partnerships.
               </p>
             </div>
           </Callout>
