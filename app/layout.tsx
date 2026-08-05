@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { ReviewBanner } from "@/components/layout/review-banner";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { company } from "@/data/company";
 import { deploymentEnv } from "@/lib/env";
 import "./globals.css";
@@ -53,6 +54,7 @@ export default function RootLayout({
         </a>
         <ReviewBanner />
         <Header />
+        <WhatsAppButton />
         {children}
         <Footer />
       </body>

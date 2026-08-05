@@ -27,7 +27,7 @@ export function ImagePlaceholder({
           fill
           sizes="(max-width: 768px) 100vw, 50vw"
           className={cn(
-            fit === "contain" ? "object-contain" : "object-cover",
+            fit === "contain" ? "object-contain" : "object-cover object-center",
             "h-full w-full",
           )}
         />

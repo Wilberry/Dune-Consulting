@@ -93,7 +93,7 @@ export function Header() {
           scrolled && "border-line shadow-sm",
         )}
       >
-        <Container className="flex h-[76px] items-center justify-between">
+        <Container className="flex h-[80px] items-center justify-between sm:h-[76px]">
           <Brand />
           <nav
             className="hidden items-center gap-1 lg:flex"
@@ -145,7 +145,7 @@ export function Header() {
             aria-label="Open navigation menu"
             aria-expanded={open}
           >
-            <Menu />
+            <Menu size={20} />
           </button>
         </Container>
       </header>

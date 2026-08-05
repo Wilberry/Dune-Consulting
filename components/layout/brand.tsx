@@ -11,13 +11,13 @@ export function Brand({ variant = "primary" }: BrandProps) {
   const isFooter = variant === "footer";
   const logoSizeClass = isFooter
     ? "h-16 sm:h-20 md:h-24"
-    : "h-10 sm:h-11 md:h-12 lg:h-14";
+    : "h-8 sm:h-9 md:h-11 lg:h-14";
   const textColor = isFooter ? "text-white" : "text-navy";
 
   return (
     <Link
       href="/"
-      className="flex shrink-0 items-center gap-3"
+      className="flex shrink-0 items-center gap-2.5 sm:gap-3"
       aria-label="Dune Consulting home"
     >
       <div className={`relative ${logoSizeClass} w-auto flex-shrink-0`}>
@@ -30,7 +30,7 @@ export function Brand({ variant = "primary" }: BrandProps) {
           className="h-full w-auto"
         />
       </div>
-      <span className={`${textColor} font-bold leading-tight ${isFooter ? "text-lg sm:text-xl" : "text-base sm:text-lg"}`}>
+      <span className={`${textColor} whitespace-nowrap font-bold leading-tight ${isFooter ? "text-lg sm:text-xl" : "text-sm sm:text-base md:text-lg"}`}>
         Dune Consulting
       </span>
     </Link>

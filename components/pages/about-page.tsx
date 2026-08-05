@@ -1,4 +1,5 @@
 import { Award, CheckCircle2, Eye, Flag } from "lucide-react";
+import Link from "next/link";
 import { CTASection } from "@/components/sections/cta-section";
 import { Button } from "@/components/ui/button";
 import { FeatureGrid } from "@/components/ui/feature-grid";
@@ -46,7 +47,7 @@ export function AboutPage() {
         </div>
         <div className="mt-12 grid items-center gap-12 lg:grid-cols-[.45fr_.55fr] lg:gap-12">
           <div>
-            <div className="text-muted space-y-4 leading-7">
+            <div className="text-muted space-y-4 leading-7 text-center">
               <p>
                 Dune Consulting is a Health, Safety and Environment consultancy
                 based in Lagos, Nigeria. We support organisations, event producers
@@ -64,7 +65,7 @@ export function AboutPage() {
               </p>
             </div>
             <Quote attribution="Dune Consulting positioning">
-              Safer Workplaces. Safer Events. Stronger HSE Teams.
+              WHAT WE STAND FOR
             </Quote>
           </div>
           <div className="aspect-[5/4] overflow-hidden rounded-2xl shadow-xl">
@@ -190,6 +191,16 @@ export function AboutPage() {
             <div className="space-y-4 leading-7">
               <h3 className="text-navy text-lg font-bold">Anthony Igbinosun</h3>
               <p className="text-sm font-semibold text-amber">Lead Consultant</p>
+              <p>
+                <Link
+                  href="https://www.linkedin.com/in/anthonyigbinosun"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-amber-hover text-sm font-semibold hover:text-white transition"
+                >
+                  Connect with Anthony on LinkedIn
+                </Link>
+              </p>
               <p className="text-muted text-sm">
                 Anthony is a Health, Safety and Environment professional, corporate trainer, mentor and professional-development advocate. His work focuses on helping organisations improve safety performance through practical HSE training, event safety coordination and professional development.
               </p>

@@ -1,8 +1,8 @@
 const fallback = {
   siteUrl: "https://www.duneconsulting.example",
-  phone: "+234 (0) 000 000 0000",
+  phone: "+234 906 685 3199",
   email: "hello@duneconsulting.example",
-  linkedinUrl: "https://www.linkedin.com/",
+  linkedinUrl: "https://www.linkedin.com/company/dunesafety-consulting/",
   instagramUrl: "https://www.instagram.com/",
 } as const;
 

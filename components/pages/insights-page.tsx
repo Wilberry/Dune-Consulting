@@ -106,45 +106,6 @@ export function InsightsPage() {
           </button>
         </nav>
       </Section>
-      <section className="bg-navy py-16">
-        <div className="mx-auto grid max-w-[1440px] items-center gap-8 px-5 sm:px-8 lg:grid-cols-[1fr_.8fr] lg:px-10 xl:px-12">
-          <div>
-            <p className="text-amber text-xs font-extrabold tracking-[.18em] uppercase">
-              Newsletter
-            </p>
-            <h2 className="mt-3 text-3xl font-extrabold text-white">
-              Useful HSE insight, when it is ready.
-            </h2>
-            <p className="mt-3 text-white/65">
-              Newsletter signup will be enabled after an approved mailing
-              platform and privacy wording are connected.
-            </p>
-          </div>
-          <div className="rounded-lg border border-white/10 bg-white/5 p-5">
-            <label
-              className="text-sm font-bold text-white"
-              htmlFor="newsletter-email"
-            >
-              Work email
-            </label>
-            <div className="mt-2 flex flex-col gap-2 sm:flex-row">
-              <input
-                id="newsletter-email"
-                disabled
-                type="email"
-                placeholder="Newsletter configuration pending"
-                className="min-h-12 flex-1 rounded-md border border-white/15 bg-white/10 px-4 text-sm text-white placeholder:text-white/45"
-              />
-              <button
-                disabled
-                className="bg-amber text-deep-navy min-h-12 rounded-md px-5 text-sm font-bold opacity-70"
-              >
-                Subscribe soon
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
     </main>
   );
 }
