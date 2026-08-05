@@ -191,7 +191,7 @@ export function AboutPreview() {
                   alt="A facilitator leading a practical Dune Consulting HSE training session"
                 />
             </div>
-            <div className="bg-navy absolute right-4 -bottom-6 max-w-56 rounded-lg p-5 text-white shadow-xl sm:right-[-16px]">
+            <div className="hidden md:block bg-navy absolute right-4 -bottom-6 max-w-56 rounded-lg p-5 text-white shadow-xl sm:right-[-16px]">
               <BadgeCheck className="text-amber mb-3" />
               <p className="font-heading text-lg font-bold">
                 Practical support, designed around your operation.
