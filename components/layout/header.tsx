@@ -175,12 +175,12 @@ export function Header() {
                   />
                 </button>
                 {servicesOpen && (
-                  <div className="mt-2 rounded-lg bg-white/75 backdrop-blur-xl border border-white/20 px-4 py-3 shadow-[0_8px_30px_rgba(15,35,68,0.06)]">
+                  <div className="mt-3 overflow-hidden rounded-xl border border-white/30 bg-white/45 shadow-[0_10px_30px_rgba(15,35,68,0.10)] backdrop-blur-xl supports-[backdrop-filter]:bg-white/35">
                     {serviceNavigation.map((sub) => (
                       <Link
                         key={sub.href}
                         onClick={() => setOpen(false)}
-                        className="text-navy block py-3 text-sm font-semibold"
+                        className="block border-b border-white/30 last:border-b-0 px-5 py-4 text-base font-medium text-[#0F2344] transition-colors hover:bg-white/35 focus:bg-white/35"
                         href={sub.href}
                       >
                         {sub.label}
