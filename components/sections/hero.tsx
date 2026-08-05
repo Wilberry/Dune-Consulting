@@ -43,7 +43,7 @@ export function Hero() {
         </div>
         <div className="relative min-h-[380px] overflow-hidden rounded-xl border border-white/10 shadow-2xl lg:min-h-[540px]">
           <ImagePlaceholder
-            src="/images/hero-event-safety.jpg"
+            src="/images/Hero.png"
             alt="Dune Consulting safety personnel supporting a live event"
             className="absolute inset-0 bg-[#aeb9c3]"
           />

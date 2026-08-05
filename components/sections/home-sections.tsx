@@ -186,10 +186,10 @@ export function AboutPreview() {
         <div className="mt-12 grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
           <div className="relative">
             <div className="aspect-[5/4] overflow-hidden rounded-xl">
-              <ImagePlaceholder
-                src="/images/hse-training-session.jpg"
-                alt="A facilitator leading a practical Dune Consulting HSE training session"
-              />
+                <ImagePlaceholder
+                  src="/images/Practical_Safety.png"
+                  alt="A facilitator leading a practical Dune Consulting HSE training session"
+                />
             </div>
             <div className="bg-navy absolute right-4 -bottom-6 max-w-56 rounded-lg p-5 text-white shadow-xl sm:right-[-16px]">
               <BadgeCheck className="text-amber mb-3" />

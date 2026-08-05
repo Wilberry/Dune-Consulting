@@ -39,6 +39,20 @@ const approvedImage = (
 });
 
 export const siteImages: SiteImage[] = [
+  approvedImage(
+    "/images/Hero.png",
+    "Dune Consulting safety personnel supporting a live event",
+    "Homepage",
+    "1600×900px",
+    "16:9",
+  ),
+  approvedImage(
+    "/images/Practical_Safety.png",
+    "A facilitator leading a practical Dune Consulting HSE training session",
+    "Homepage",
+    "1600×1200px",
+    "4:3",
+  ),
   image(
     "/images/hero-event-safety.jpg",
     "Safety personnel supporting a live event",
