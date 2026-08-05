@@ -54,7 +54,7 @@ export function Hero() {
             <div className="from-deep-navy/55 pointer-events-none absolute inset-0 bg-gradient-to-t via-transparent to-transparent" />
           </div>
 
-          <div className="hidden sm:block rounded-b-2xl border border-amber bg-deep-navy/90 p-4 shadow-2xl backdrop-blur">
+          <div className="w-full rounded-b-2xl border border-amber bg-deep-navy/90 p-4 shadow-2xl backdrop-blur text-center">
             <p className="text-sm font-bold sm:text-base">Practical support, designed around your operation</p>
             <p className="mt-1 text-xs leading-snug text-white/65 sm:text-sm">
               Planning · Personnel · Supervision · Reporting
