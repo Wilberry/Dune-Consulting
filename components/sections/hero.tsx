@@ -6,7 +6,7 @@ export function Hero() {
   return (
     <section className="bg-deep-navy relative overflow-hidden text-white">
       <div className="grid-pattern absolute inset-0" />
-      <Container className="relative grid items-center gap-12 py-16 lg:items-start lg:grid-cols-[1.1fr_.9fr] lg:gap-20 lg:py-28">
+      <Container className="relative grid items-center gap-12 py-20 lg:items-start lg:grid-cols-[1.1fr_.9fr] lg:gap-20 lg:py-28">
         <div className="flex flex-col justify-center items-center lg:items-start">
           <div className="mx-auto max-w-xl text-center lg:mx-0 lg:max-w-none lg:text-left">
             <p className="text-amber mb-5 flex flex-col items-center gap-3 text-xs font-extrabold tracking-[.18em] uppercase sm:flex-row sm:items-center">
