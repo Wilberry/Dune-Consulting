@@ -64,7 +64,7 @@ export function Header() {
         )}
       >
         <Container className="flex h-16 items-center justify-between px-5 sm:h-[4.75rem] sm:px-6">
-          <Brand logoClassName="h-11 w-auto sm:h-12" textClassName="text-xl font-semibold sm:text-2xl" />
+          <Brand logoClassName="h-11 w-auto sm:h-12" textClassName="text-lg font-semibold sm:text-xl" />
           <nav
             className="hidden items-center gap-1 lg:flex"
             aria-label="Main navigation"
