@@ -6,29 +6,29 @@ export function Hero() {
   return (
     <section className="bg-deep-navy relative overflow-hidden text-white">
       <div className="grid-pattern absolute inset-0" />
-      <Container className="relative grid items-center gap-10 py-16 lg:grid-cols-[1.04fr_.96fr] lg:py-20">
-        <div>
+      <Container className="relative grid items-center gap-12 py-16 lg:grid-cols-[1.1fr_.9fr] lg:gap-20 lg:py-28">
+        <div className="text-center lg:text-left flex flex-col justify-center items-center lg:items-start">
           <p className="text-amber mb-5 flex items-center gap-3 text-xs font-extrabold tracking-[.18em] uppercase">
             <span className="bg-amber h-px w-8" />
             Health, Safety and Environment Consulting
           </p>
-          <h1 className="text-4xl leading-[1.08] font-extrabold text-balance sm:text-6xl xl:text-7xl">
+          <h1 className="text-4xl leading-[1.08] font-extrabold text-balance sm:text-6xl xl:text-7xl max-w-3xl mx-auto lg:mx-0">
             Safer Workplaces.
             <br />
             Safer Events.
             <br />
             <span className="text-amber">Stronger HSE Teams.</span>
           </h1>
-          <p className="mt-6 max-w-2xl text-base leading-7 text-white/72 sm:text-lg">
+          <p className="mt-6 max-w-2xl text-base leading-7 text-white/72 sm:text-lg mx-auto lg:mx-0">
             Dune Consulting helps organisations protect people, reduce risk and strengthen safety performance through practical HSE training, event safety management and competent outsourced professionals.
           </p>
-          <div className="mt-8 flex flex-wrap gap-3">
+          <div className="mt-8 flex flex-wrap gap-3 justify-center lg:justify-start">
             <Button href="/contact#consultation">Discuss Your HSE Needs</Button>
             <Button href="/services" variant="light">
               Explore Our Services
             </Button>
           </div>
-          <ul className="mt-9 flex flex-col gap-3 text-sm font-semibold text-white/85 sm:flex-row sm:flex-wrap sm:gap-6">
+          <ul className="mt-9 flex flex-col gap-3 text-sm font-semibold text-white/85 sm:flex-row sm:flex-wrap sm:gap-6 justify-center lg:justify-start">
             {[
               "Practical HSE Expertise",
               "Qualified Safety Personnel",

@@ -9,14 +9,15 @@ export function SectionHeading({
   eyebrow?: string;
   title: string;
   copy?: string;
-  align?: "left" | "center";
+  align?: "left" | "center" | "center-all";
   inverse?: boolean;
 }) {
   return (
     <div
       className={cn(
-        "max-w-3xl",
+        "max-w-3xl lg:max-w-4xl",
         align === "center" && "mx-auto text-center sm:text-left sm:mx-0",
+        align === "center-all" && "mx-auto text-center",
       )}
     >
       {eyebrow && (

@@ -2,11 +2,12 @@ import { CTASection } from "@/components/sections/cta-section";
 import { Hero } from "@/components/sections/hero";
 import {
   AboutPreview,
-  Clients,
   FeaturedProjects,
+  FAQSection,
   Mentorship,
   Process,
   ServicesSection,
+  Testimonials,
   WhyChooseUs,
 } from "@/components/sections/home-sections";
 import { company } from "@/data/company";
@@ -57,13 +58,14 @@ export default function Home() {
         }}
       />
       <Hero />
-      <Clients />
       <ServicesSection />
       <AboutPreview />
       <WhyChooseUs />
       <Process />
       <FeaturedProjects />
       <Mentorship />
+      <Testimonials />
+      <FAQSection />
       <CTASection />
     </main>
   );

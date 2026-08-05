@@ -6,7 +6,7 @@ export default function Loading() {
       aria-busy="true"
       aria-label="Loading page"
     >
-      <div className="mx-auto max-w-7xl animate-pulse px-5 sm:px-8 lg:px-10">
+      <div className="mx-auto max-w-[1440px] animate-pulse px-5 sm:px-8 lg:px-10 xl:px-12">
         <div className="bg-navy/10 h-4 w-36 rounded" />
         <div className="bg-navy/10 mt-6 h-12 max-w-2xl rounded" />
         <div className="bg-navy/10 mt-4 h-5 max-w-xl rounded" />

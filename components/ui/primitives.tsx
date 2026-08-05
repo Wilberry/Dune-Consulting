@@ -94,7 +94,7 @@ export function Quote({
 }
 export function SectionDivider() {
   return (
-    <div className="bg-line mx-auto h-px w-full max-w-7xl" aria-hidden="true" />
+    <div className="bg-line mx-auto h-px w-full max-w-[1440px]" aria-hidden="true" />
   );
 }
 export function EmptyState({ title, copy }: { title: string; copy: string }) {

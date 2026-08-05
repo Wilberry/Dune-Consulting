@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 export function CTASection() {
   return (
-    <section className="bg-navy relative overflow-hidden py-16 sm:py-20">
+    <section className="bg-navy relative overflow-hidden py-20 sm:py-24">
       <div className="bg-amber absolute inset-y-0 left-0 w-2" />
       <Container className="flex flex-col items-start justify-between gap-8 lg:flex-row lg:items-center">
         <div>

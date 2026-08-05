@@ -64,30 +64,6 @@ export default async function ContentPage({ params }: Props) {
     content = <LegalPage type={key} />;
   else notFound();
 
-  const segments = route.path.split("/").filter(Boolean);
-  const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Home",
-        item: company.websiteUrl,
-      },
-      ...segments.map((segment, index) => ({
-        "@type": "ListItem",
-        position: index + 2,
-        name:
-          index === segments.length - 1
-            ? route.title
-            : segment === "services"
-              ? "Services"
-              : "Portfolio",
-        item: `${company.websiteUrl}/${segments.slice(0, index + 1).join("/")}`,
-      })),
-    ],
-  };
   const service = key.startsWith("services/")
     ? serviceDetails[slug[1]]
     : undefined;
@@ -116,7 +92,6 @@ export default async function ContentPage({ params }: Props) {
       : undefined;
   return (
     <>
-      <StructuredData data={breadcrumbSchema} />
       {pageSchema && <StructuredData data={pageSchema} />}
       {content}
     </>

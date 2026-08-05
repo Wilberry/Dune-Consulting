@@ -24,7 +24,6 @@ export function InsightsPage() {
         eyebrow="Insights"
         title="Practical thinking for safer work and events."
         copy="Clear perspectives on risk management, HSE learning, operational safety and professional development."
-        breadcrumbs={[{ label: "Insights" }]}
         image="/images/insights/insights-hero.jpg"
       />
       <Section>
@@ -108,7 +107,7 @@ export function InsightsPage() {
         </nav>
       </Section>
       <section className="bg-navy py-16">
-        <div className="mx-auto grid max-w-7xl items-center gap-8 px-5 sm:px-8 lg:grid-cols-[1fr_.8fr] lg:px-10">
+        <div className="mx-auto grid max-w-[1440px] items-center gap-8 px-5 sm:px-8 lg:grid-cols-[1fr_.8fr] lg:px-10 xl:px-12">
           <div>
             <p className="text-amber text-xs font-extrabold tracking-[.18em] uppercase">
               Newsletter

@@ -7,7 +7,6 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import { CTASection } from "@/components/sections/cta-section";
-import { Accordion } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { FeatureGrid } from "@/components/ui/feature-grid";
 import { PageHero } from "@/components/ui/page-hero";
@@ -26,17 +25,17 @@ export function ServicesOverviewPage() {
         eyebrow="What We Do"
         title="Connected HSE support for safer delivery"
         copy="From planning and education to qualified personnel and live supervision, Dune Consulting helps clients manage risk without losing sight of the operation."
-        breadcrumbs={[{ label: "Services" }]}
         image="/images/services/services-hero.jpg"
         cta={{ label: "Request a consultation", href: "/contact#consultation" }}
       />
       <Section>
         <SectionHeading
+          align="center-all"
           eyebrow="Our Services"
           title="Expert support shaped around your requirements"
           copy="Choose a focused service or combine capabilities into an end-to-end HSE solution."
         />
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-7">
           {services.map((service) => (
             <ServiceCard key={service.href} service={service} />
           ))}
@@ -46,6 +45,7 @@ export function ServicesOverviewPage() {
         <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
           <div>
             <SectionHeading
+              align="center-all"
               eyebrow="Integrated Delivery"
               title="One partner from risk definition to reporting"
             />
@@ -93,35 +93,37 @@ export function ServiceDetailPage({ slug }: { slug: string }) {
         eyebrow={service.eyebrow}
         title={service.title}
         copy={service.summary}
-        breadcrumbs={[
-          { label: "Services", href: "/services" },
-          { label: service.title },
-        ]}
         image={service.image}
         cta={{ label: "Discuss this service", href: "/contact#consultation" }}
       />
-      <Section containerClassName="grid gap-12 lg:grid-cols-[1.15fr_.85fr]">
-        <div>
+      <Section>
+        <div className="mx-auto max-w-4xl text-center">
           <SectionHeading
+            align="center-all"
             eyebrow="Overview"
             title={`Practical ${service.title.toLowerCase()} that supports confident delivery`}
           />
-          <div className="text-muted mt-6 space-y-4 leading-7">
-            {service.overview.map((paragraph) => (
-              <p key={paragraph}>{paragraph}</p>
-            ))}
-          </div>
         </div>
-        <Callout title="Designed around your context">
-          <p>
-            Scope, resourcing and delivery are agreed around the environment,
-            audience, schedule and level of risk—never copied from an unrelated
-            assignment.
-          </p>
-        </Callout>
+        <div className="mt-12 grid gap-12 lg:grid-cols-[1.15fr_.85fr] lg:items-center">
+          <div>
+            <div className="text-muted space-y-4 leading-7">
+              {service.overview.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </div>
+          </div>
+          <Callout title="Designed around your context">
+            <p>
+              Scope, resourcing and delivery are agreed around the environment,
+              audience, schedule and level of risk—never copied from an unrelated
+              assignment.
+            </p>
+          </Callout>
+        </div>
       </Section>
       <Section className="bg-off-white">
         <SectionHeading
+          align="center-all"
           eyebrow="Who It Is For"
           title="Support for teams with real responsibility"
         />
@@ -139,6 +141,7 @@ export function ServiceDetailPage({ slug }: { slug: string }) {
       </Section>
       <Section>
         <SectionHeading
+          align="center-all"
           eyebrow="Benefits"
           title="What this service helps you achieve"
         />
@@ -148,6 +151,7 @@ export function ServiceDetailPage({ slug }: { slug: string }) {
       </Section>
       <Section className="bg-navy">
         <SectionHeading
+          align="center-all"
           eyebrow="Service Features"
           title="Support configured around your priorities"
           inverse
@@ -166,6 +170,7 @@ export function ServiceDetailPage({ slug }: { slug: string }) {
       </Section>
       <Section>
         <SectionHeading
+          align="center-all"
           eyebrow="Our Process"
           title="Structured delivery, clear at every stage"
         />
@@ -173,20 +178,9 @@ export function ServiceDetailPage({ slug }: { slug: string }) {
           <Timeline items={service.process} />
         </div>
       </Section>
-      <Section className="bg-off-white">
-        <div className="grid gap-12 lg:grid-cols-[.7fr_1.3fr]">
-          <div>
-            <SectionHeading eyebrow="FAQs" title="Common questions" />
-            <p className="text-muted mt-5 leading-7">
-              Every engagement begins with a conversation, but these answers
-              provide a useful starting point.
-            </p>
-          </div>
-          <Accordion items={service.faqs} />
-        </div>
-      </Section>
       <Section>
         <SectionHeading
+          align="center-all"
           eyebrow="Related Services"
           title="Build a more complete HSE solution"
         />

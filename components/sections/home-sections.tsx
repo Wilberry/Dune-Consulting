@@ -11,6 +11,7 @@ import {
   Shield,
   UsersRound,
 } from "lucide-react";
+import { Accordion, type AccordionItem } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { FeatureItem } from "@/components/ui/feature-item";
@@ -52,11 +53,64 @@ const process = [
   ["Report", "We document findings, incidents, outcomes and recommendations."],
 ] as const;
 
+const faqItems: AccordionItem[] = [
+  {
+    question: "What does Dune Consulting do?",
+    answer:
+      "Dune Consulting is a Health, Safety, Environment, Quality, and Risk Management consultancy. We help organisations create safer workplaces through professional training, event safety management, HSE personnel outsourcing, compliance support, and strategic safety consulting.",
+  },
+  {
+    question: "Which industries do you serve?",
+    answer:
+      "We work with organisations across multiple sectors, including construction, oil and gas, manufacturing, education, healthcare, hospitality, logistics, government agencies, and event management.",
+  },
+  {
+    question: "What HSE training programmes do you offer?",
+    answer:
+      "We provide industry-relevant HSE training programmes ranging from introductory safety awareness to advanced professional development. Training may be delivered on-site, online, or at a designated training location, depending on the client’s needs.",
+  },
+  {
+    question: "What is the HSE Mentorship Programme?",
+    answer:
+      "The HSE Mentorship Programme supports aspiring and early-career safety professionals through practical guidance, career coaching, industry insights, and real-world knowledge from experienced HSE professionals.",
+  },
+  {
+    question: "Do you provide HSE personnel for companies?",
+    answer:
+      "Yes. We recruit, train, and deploy qualified HSE professionals for short-term, long-term, and project-based assignments, helping organisations access competent safety personnel when needed.",
+  },
+  {
+    question: "What is Event Safety Management?",
+    answer:
+      "Event Safety Management involves planning and coordinating the safety requirements of an event. This includes risk assessment, crowd safety, emergency planning, incident prevention, and compliance with relevant safety standards.",
+  },
+  {
+    question: "Can you customise training for our organisation?",
+    answer:
+      "Yes. We develop customised training programmes based on an organisation’s operations, workforce, industry risks, regulatory requirements, and learning objectives.",
+  },
+  {
+    question: "Do you support regulatory compliance?",
+    answer:
+      "Yes. We help organisations understand applicable HSE requirements, conduct risk assessments, improve workplace safety systems, and implement practical measures that support compliance and operational excellence.",
+  },
+  {
+    question: "How can I register for a training programme?",
+    answer:
+      "You can register through the website contact form, phone, email, or the company’s official social media channels. The Dune Consulting team will guide you through the available programmes and registration process.",
+  },
+  {
+    question: "Why should I choose Dune Consulting?",
+    answer:
+      "Dune Consulting combines technical expertise, practical industry experience, and a strong commitment to safety excellence. Our solutions are designed to reduce risk, strengthen compliance, improve workforce competence, and support sustainable organisational performance.",
+  },
+];
+
 export function Clients() {
   return (
     <section
       aria-labelledby="portfolio-preview-title"
-      className="border-line border-b bg-white py-10"
+      className="border-line border-b bg-white py-16 sm:py-20"
     >
       <Container>
         <div className="max-w-3xl text-center mx-auto">
@@ -75,7 +129,7 @@ export function Clients() {
             practical planning, coordination and on-site safety management.
           </p>
         </div>
-        <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
           {portfolioItems.map((item) => (
             <div
               key={item}
@@ -95,12 +149,13 @@ export function ServicesSection() {
     <section className="bg-off-white py-20 sm:py-24">
       <Container>
         <SectionHeading
+          align="center-all"
           eyebrow="What We Do"
           title="Complete HSE Support, From Planning to Execution"
           copy="We combine risk planning, trained personnel, practical education and on-site supervision to help clients protect people and maintain operational compliance."
         />
         <Reveal>
-          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
             {services.map((service) => (
               <ServiceCard key={service.href} service={service} />
             ))}
@@ -120,53 +175,58 @@ export function AboutPreview() {
   ];
   return (
     <section className="py-20 sm:py-24">
-      <Container className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
-        <div className="relative">
-          <div className="aspect-[5/4] overflow-hidden rounded-xl">
-            <ImagePlaceholder
-              src="/images/hse-training-session.jpg"
-              alt="A facilitator leading a practical Dune Consulting HSE training session"
-            />
-          </div>
-          <div className="bg-navy absolute right-4 -bottom-6 max-w-56 rounded-lg p-5 text-white shadow-xl sm:right-[-16px]">
-            <BadgeCheck className="text-amber mb-3" />
-            <p className="font-heading text-lg font-bold">
-              Practical support, designed around your operation.
-            </p>
-          </div>
-        </div>
-        <div>
+      <Container>
+        <div className="mx-auto max-w-4xl text-center">
           <SectionHeading
+            align="center-all"
             eyebrow="About Dune Consulting"
             title="Practical Safety Systems That Work in the Real World"
           />
-          <div className="text-muted mt-6 space-y-4 leading-7">
-            <p>
-              Dune Consulting is a Lagos-based Health, Safety and Environment
-              consultancy supporting organisations, event producers and project
-              teams with practical risk-management solutions.
-            </p>
-            <p>
-              We believe effective safety should protect people without
-              unnecessarily disrupting operations or the event experience. Our
-              approach combines early planning, clear communication, trained
-              personnel and responsive on-site supervision.
-            </p>
+        </div>
+        <div className="mt-12 grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
+          <div className="relative">
+            <div className="aspect-[5/4] overflow-hidden rounded-xl">
+              <ImagePlaceholder
+                src="/images/hse-training-session.jpg"
+                alt="A facilitator leading a practical Dune Consulting HSE training session"
+              />
+            </div>
+            <div className="bg-navy absolute right-4 -bottom-6 max-w-56 rounded-lg p-5 text-white shadow-xl sm:right-[-16px]">
+              <BadgeCheck className="text-amber mb-3" />
+              <p className="font-heading text-lg font-bold">
+                Practical support, designed around your operation.
+              </p>
+            </div>
           </div>
-          <ul className="mt-7 grid gap-3 sm:grid-cols-2">
-            {points.map((point) => (
-              <li
-                key={point}
-                className="text-ink flex items-start gap-2 text-sm font-semibold"
-              >
-                <Check className="text-success mt-0.5 shrink-0" size={18} />
-                {point}
-              </li>
-            ))}
-          </ul>
-          <Button className="mt-8" href="/about" arrow>
-            Learn About Dune
-          </Button>
+          <div>
+            <div className="text-muted mt-6 space-y-4 leading-7">
+              <p>
+                Dune Consulting is a Lagos-based Health, Safety and Environment
+                consultancy supporting organisations, event producers and project
+                teams with practical risk-management solutions.
+              </p>
+              <p>
+                We believe effective safety should protect people without
+                unnecessarily disrupting operations or the event experience. Our
+                approach combines early planning, clear communication, trained
+                personnel and responsive on-site supervision.
+              </p>
+            </div>
+            <ul className="mt-7 grid gap-3 sm:grid-cols-2">
+              {points.map((point) => (
+                <li
+                  key={point}
+                  className="text-ink flex items-start gap-2 text-sm font-semibold"
+                >
+                  <Check className="text-success mt-0.5 shrink-0" size={18} />
+                  {point}
+                </li>
+              ))}
+            </ul>
+            <Button className="mt-8" href="/about" arrow>
+              Learn About Dune
+            </Button>
+          </div>
         </div>
       </Container>
     </section>
@@ -200,6 +260,7 @@ export function WhyChooseUs() {
     <section className="bg-navy py-20 sm:py-24">
       <Container>
         <SectionHeading
+          align="center-all"
           eyebrow="The Dune Difference"
           title="Why Organisations Choose Dune"
           inverse
@@ -219,6 +280,7 @@ export function Process() {
     <section className="py-20 sm:py-24">
       <Container>
         <SectionHeading
+          align="center-all"
           eyebrow="How We Work"
           title="A Clear Process for Safer Events"
           copy="A structured, accountable approach that keeps safety aligned with the realities of your event."
@@ -240,7 +302,7 @@ export function Process() {
 
 export function Impact() {
   return (
-    <section className="bg-deep-navy py-14">
+    <section className="bg-deep-navy py-16 sm:py-20">
       <Container>
         <p className="text-amber mb-8 text-xs font-extrabold tracking-[.18em] uppercase">
           Our Impact
@@ -272,7 +334,7 @@ export function FeaturedProjects() {
             View all projects <ArrowRight size={17} />
           </Link>
         </div>
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
           {projects.map((project) => (
             <ProjectCard key={project.title} project={project} />
           ))}
@@ -332,6 +394,37 @@ export function Mentorship() {
   );
 }
 
+export function FAQSection() {
+  return (
+    <section className="bg-off-white py-20 sm:py-24">
+      <Container>
+        <div className="mx-auto max-w-4xl text-center">
+          <SectionHeading
+            align="center-all"
+            eyebrow="Frequently Asked Questions"
+            title="Answers to Common Questions"
+            copy="Learn more about our HSE training, consulting services, personnel outsourcing, event safety management, and mentorship programmes."
+          />
+        </div>
+        <div className="mx-auto mt-12 w-full max-w-[1120px] px-0 sm:px-2 lg:px-0">
+          <Accordion items={faqItems} />
+        </div>
+        <div className="mx-auto mt-10 max-w-[920px] rounded-3xl border border-white/10 bg-navy p-8 text-white shadow-xl sm:p-10">
+          <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h3 className="text-2xl font-extrabold">Still have questions?</h3>
+              <p className="mt-3 max-w-2xl text-sm leading-7 text-white/70">
+                Our team is ready to help you choose the right HSE solution, training programme, or professional support service.
+              </p>
+            </div>
+            <Button href="/contact#consultation">Contact Our Team</Button>
+          </div>
+        </div>
+      </Container>
+    </section>
+  );
+}
+
 export function Testimonials() {
   return (
     <section className="border-line bg-off-white border-y py-16">
@@ -339,7 +432,7 @@ export function Testimonials() {
         <SectionHeading
           eyebrow="Client Feedback"
           title="Trusted Partnerships, Measurable Care"
-          align="center"
+          align="center-all"
         />
         {testimonials.length === 0 ? (
           <div className="border-navy/25 mx-auto mt-8 max-w-2xl rounded-xl border border-dashed bg-white p-8 text-center">
@@ -356,3 +449,47 @@ export function Testimonials() {
     </section>
   );
 }
+
+export function NewsletterSection() {
+  return (
+    <section className="bg-navy py-16 sm:py-20 lg:py-24 xl:py-28">
+      <div className="mx-auto grid max-w-[1440px] items-center gap-8 px-5 py-0 text-white sm:px-8 lg:grid-cols-[1fr_.8fr] lg:px-10 xl:px-12">
+        <div>
+          <p className="text-amber text-xs font-extrabold tracking-[.18em] uppercase">
+            Newsletter
+          </p>
+          <h2 className="mt-3 text-3xl font-extrabold text-white sm:text-4xl">
+            Practical HSE insight, delivered when it is ready.
+          </h2>
+          <p className="mt-3 text-white/70">
+            Newsletter signup will be enabled once mailing platform and privacy terms are configured.
+          </p>
+        </div>
+        <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
+          <label
+            className="text-sm font-bold text-white"
+            htmlFor="newsletter-email"
+          >
+            Work email
+          </label>
+          <div className="mt-4 flex flex-col gap-3 sm:flex-row">
+            <input
+              id="newsletter-email"
+              disabled
+              type="email"
+              placeholder="Newsletter configuration pending"
+              className="min-h-12 flex-1 rounded-lg border border-white/15 bg-white/10 px-4 text-sm text-white placeholder:text-white/40"
+            />
+            <button
+              disabled
+              className="bg-amber text-deep-navy min-h-12 rounded-lg px-5 text-sm font-bold opacity-80"
+            >
+              Subscribe soon
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+

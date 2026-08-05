@@ -3,6 +3,7 @@ import { CTASection } from "@/components/sections/cta-section";
 import { Button } from "@/components/ui/button";
 import { FeatureGrid } from "@/components/ui/feature-grid";
 import { ImagePlaceholder } from "@/components/ui/image-placeholder";
+import { LeadConsultantPhoto } from "@/components/ui/lead-consultant-photo";
 import { PageHero } from "@/components/ui/page-hero";
 import { Callout, Quote } from "@/components/ui/primitives";
 import { Section } from "@/components/ui/section";
@@ -32,42 +33,46 @@ export function AboutPage() {
         eyebrow="About Dune Consulting"
         title="Health, Safety and Environment Consulting for Confident Operations"
         copy="At Dune Consulting, we believe safety is more than a compliance requirement. It is a business discipline that protects people, strengthens operations and supports sustainable performance."
-        breadcrumbs={[{ label: "About" }]}
         image="/images/about/about-hero.jpg"
         cta={{ label: "Discuss Your HSE Needs", href: "/contact#consultation" }}
       />
-      <Section containerClassName="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
-        <div>
+      <Section>
+        <div className="mx-auto max-w-4xl text-center">
           <SectionHeading
+            align="center-all"
             eyebrow="Our Story"
             title="Built to make safety useful, visible and workable"
           />
-          <div className="text-muted mt-6 space-y-4 leading-7">
-            <p>
-              Dune Consulting is a Health, Safety and Environment consultancy
-              based in Lagos, Nigeria. We support organisations, event producers
-              and project teams with practical risk-management solutions.
-            </p>
-            <p>
-              We combine early risk planning, practical education, qualified
-              personnel and responsive on-site supervision to help clients
-              protect people, maintain compliance and operate confidently.
-            </p>
-            <p>
-              Our work is guided by a simple belief: safety should enable
-              operations, not become disconnected paperwork or an unnecessary
-              obstacle.
-            </p>
-          </div>
-          <Quote attribution="Dune Consulting positioning">
-            Safer Workplaces. Safer Events. Stronger HSE Teams.
-          </Quote>
         </div>
-        <div className="aspect-[5/4] overflow-hidden rounded-2xl shadow-xl">
-          <ImagePlaceholder
-            src="/images/about/our-story.jpg"
-            alt="Dune Consulting team collaborating on an HSE plan"
-          />
+        <div className="mt-12 grid items-center gap-12 lg:grid-cols-[.45fr_.55fr] lg:gap-12">
+          <div>
+            <div className="text-muted space-y-4 leading-7">
+              <p>
+                Dune Consulting is a Health, Safety and Environment consultancy
+                based in Lagos, Nigeria. We support organisations, event producers
+                and project teams with practical risk-management solutions.
+              </p>
+              <p>
+                We combine early risk planning, practical education, qualified
+                personnel and responsive on-site supervision to help clients
+                protect people, maintain compliance and operate confidently.
+              </p>
+              <p>
+                Our work is guided by a simple belief: safety should enable
+                operations, not become disconnected paperwork or an unnecessary
+                obstacle.
+              </p>
+            </div>
+            <Quote attribution="Dune Consulting positioning">
+              Safer Workplaces. Safer Events. Stronger HSE Teams.
+            </Quote>
+          </div>
+          <div className="aspect-[5/4] overflow-hidden rounded-2xl shadow-xl">
+            <ImagePlaceholder
+              src="/images/about/our-story.jpg"
+              alt="Dune Consulting team collaborating on an HSE plan"
+            />
+          </div>
         </div>
       </Section>
       <Section className="bg-off-white">
@@ -95,6 +100,7 @@ export function AboutPage() {
       </Section>
       <Section>
         <SectionHeading
+          align="center-all"
           eyebrow="What Guides Us"
           title="Values reflected in how we work"
           copy="Our values shape the details—from the questions we ask to the way our personnel show up on site."
@@ -105,6 +111,7 @@ export function AboutPage() {
       </Section>
       <Section className="bg-navy">
         <SectionHeading
+          align="center-all"
           eyebrow="Our Approach"
           title="Clear thinking from first conversation to final report"
           inverse
@@ -155,6 +162,7 @@ export function AboutPage() {
       </Section>
       <Section className="bg-off-white">
         <SectionHeading
+          align="center-all"
           eyebrow="Industries We Serve"
           title="Flexible support across people-led environments"
         />
@@ -163,29 +171,38 @@ export function AboutPage() {
         </div>
       </Section>
       <Section>
-        <div className="grid gap-10 lg:grid-cols-[1fr_.8fr] lg:items-center">
-          <div>
-            <SectionHeading
-              eyebrow="Leadership"
-              title="Responsible guidance from experienced practitioners"
-              copy="Dune Consulting is led by health, safety and environment professionals committed to sound judgement, clear communication and dependable client support."
+        <div className="mx-auto max-w-4xl text-center">
+          <SectionHeading
+            align="center-all"
+            eyebrow="Leadership"
+            title="Responsible guidance from experienced practitioners"
+            copy="Dune Consulting is led by health, safety and environment professionals committed to sound judgement, clear communication and dependable client support."
+          />
+        </div>
+        <div className="mt-12 grid gap-10 lg:grid-cols-[340px_1fr] lg:items-start">
+          <div className="mx-auto h-[260px] w-[260px] overflow-hidden rounded-[18px] border border-white/10 shadow-xl sm:h-[300px] sm:w-[300px] lg:h-[340px] lg:w-[340px]">
+            <LeadConsultantPhoto
+              src="/images/about/lead-consultant.jpg"
+              alt="Anthony Igbinosun, Lead Consultant"
             />
-            <div className="mt-7 space-y-4 leading-7">
+          </div>
+          <div className="space-y-8">
+            <div className="space-y-4 leading-7">
               <h3 className="text-navy text-lg font-bold">Anthony Igbinosun</h3>
               <p className="text-sm font-semibold text-amber">Lead Consultant</p>
               <p className="text-muted text-sm">
                 Anthony is a Health, Safety and Environment professional, corporate trainer, mentor and professional-development advocate. His work focuses on helping organisations improve safety performance through practical HSE training, event safety coordination and professional development.
               </p>
             </div>
+            <Callout title="About leadership">
+              <div className="flex items-start gap-3">
+                <Award className="text-amber-hover shrink-0" />
+                <p className="text-sm">
+                  Dune&apos;s leadership demonstrates commitment through consistent delivery of practical HSE results, professional development support and dependable client partnerships.
+                </p>
+              </div>
+            </Callout>
           </div>
-          <Callout title="About leadership">
-            <div className="flex items-start gap-3">
-              <Award className="text-amber-hover shrink-0" />
-              <p className="text-sm">
-                Dune&apos;s leadership demonstrates commitment through consistent delivery of practical HSE results, professional development support and dependable client partnerships.
-              </p>
-            </div>
-          </Callout>
         </div>
       </Section>
       <CTASection />

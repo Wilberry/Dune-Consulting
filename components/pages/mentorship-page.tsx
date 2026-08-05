@@ -38,18 +38,20 @@ export function MentorshipPage() {
         eyebrow="Dune HSE Mentorship Program"
         title="Build practical judgement for a meaningful career in safety."
         copy="A learning-focused program for emerging HSE professionals who want guidance, industry context and greater confidence applying what they know."
-        breadcrumbs={[{ label: "HSE Mentorship Program" }]}
         image="/images/mentorship/mentorship-hero.jpg"
         cta={{ label: "Express your interest", href: "/contact#consultation" }}
       />
       <Section>
-        <div className="grid gap-12 lg:grid-cols-[1.1fr_.9fr] lg:items-center">
+        <div className="mx-auto max-w-4xl text-center">
+          <SectionHeading
+            align="center-all"
+            eyebrow="Program Overview"
+            title="Move from knowing concepts to thinking like a practitioner"
+          />
+        </div>
+        <div className="mt-12 grid gap-12 lg:grid-cols-[1.1fr_.9fr] lg:items-center">
           <div>
-            <SectionHeading
-              eyebrow="Program Overview"
-              title="Move from knowing concepts to thinking like a practitioner"
-            />
-            <p className="text-muted mt-6 leading-7">
+            <p className="text-muted leading-7">
               The Dune HSE Mentorship Program is designed to help emerging
               professionals connect foundational safety knowledge with the
               judgement, communication and accountability required in real work
@@ -102,6 +104,7 @@ export function MentorshipPage() {
       </Section>
       <Section>
         <SectionHeading
+          align="center-all"
           eyebrow="Program Benefits"
           title="Development that supports the person and the profession"
         />
@@ -191,7 +194,7 @@ export function MentorshipPage() {
         </div>
       </Section>
       <section className="bg-amber py-16">
-        <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-8 px-5 sm:px-8 lg:flex-row lg:items-center lg:px-10">
+        <div className="mx-auto flex max-w-[1440px] flex-col items-start justify-between gap-8 px-5 sm:px-8 lg:flex-row lg:items-center lg:px-10 xl:px-12">
           <div>
             <p className="text-deep-navy text-xs font-extrabold tracking-[.18em] uppercase">
               Applications

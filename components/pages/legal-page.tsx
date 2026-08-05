@@ -11,7 +11,6 @@ export function LegalPage({ type }: { type: "privacy" | "terms" }) {
         eyebrow="Website Information"
         title={title}
         copy={`${title} content is awaiting client and legal approval before publication.`}
-        breadcrumbs={[{ label: title }]}
       />
       <Section>
         <div className="mx-auto max-w-3xl">

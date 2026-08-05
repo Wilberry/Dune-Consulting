@@ -18,7 +18,6 @@ export function PortfolioPage() {
         eyebrow="Our Event Portfolio"
         title="Selected Events and Organisations We Have Supported"
         copy="Our event safety portfolio includes corporate gatherings, conferences, launches, festivals and large-audience experiences supported through practical planning, coordination and on-site safety management."
-        breadcrumbs={[{ label: "Portfolio" }]}
         image={featured.image}
         imageAlt={`${featured.title} event artwork`}
       />
@@ -72,10 +71,6 @@ export function ProjectDetailPage({ slug }: { slug: string }) {
         eyebrow={project.category}
         title={project.title}
         copy={`Dune Consulting provided event safety support for ${project.title}. This portfolio entry uses approved event naming while preserving neutral project detail.`}
-        breadcrumbs={[
-          { label: "Portfolio", href: "/portfolio" },
-          { label: project.title },
-        ]}
         image={project.image}
       />
       <Section>
