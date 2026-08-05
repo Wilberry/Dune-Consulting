@@ -1,11 +1,10 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { ChevronDown, Mail, MapPin, Menu, Phone, X } from "lucide-react";
+import { ChevronDown, Menu, X } from "lucide-react";
 import { Brand } from "./brand";
 import { Container } from "@/components/ui/container";
 import { navigation, serviceNavigation } from "@/data/navigation";
-import { company } from "@/data/company";
 import { cn } from "@/lib/utils";
 
 export function Header() {
@@ -57,44 +56,15 @@ export function Header() {
   }, [open]);
   return (
     <>
-      <div className="bg-deep-navy text-white/75">
-        <Container className="flex h-9 items-center justify-between text-xs">
-          <div className="flex items-center gap-4">
-            <span className="flex items-center gap-1.5">
-              <MapPin size={13} aria-hidden="true" />
-              {company.location}
-            </span>
-            <a
-              className="hidden items-center gap-1.5 hover:text-white sm:flex"
-              href={`tel:${company.telephoneHref}`}
-            >
-              <Phone size={13} aria-hidden="true" />
-              {company.telephone}
-            </a>
-            <a
-              className="hidden items-center gap-1.5 hover:text-white md:flex"
-              href={`mailto:${company.email}`}
-            >
-              <Mail size={13} aria-hidden="true" />
-              {company.email}
-            </a>
-          </div>
-          <Link
-            className="text-amber font-bold hover:text-white"
-            href="/contact#consultation"
-          >
-            Request a Quote
-          </Link>
-        </Container>
-      </div>
+      {/* Top banner removed per design request */}
       <header
         className={cn(
-          "sticky top-0 z-50 border-b border-transparent bg-white transition-shadow",
-          scrolled && "border-line shadow-sm",
+          "sticky top-0 z-50 border-b border-white/20 bg-white/75 backdrop-blur-xl shadow-[0_8px_30px_rgba(15,35,68,0.08)] transition-shadow",
+          scrolled && "border-line shadow-sm"
         )}
       >
-        <Container className="flex h-[80px] items-center justify-between sm:h-[76px]">
-          <Brand />
+        <Container className="flex h-16 items-center justify-between px-5 sm:h-[4.75rem] sm:px-6">
+          <Brand logoClassName="h-11 w-auto sm:h-12" textClassName="text-xl font-semibold sm:text-2xl" />
           <nav
             className="hidden items-center gap-1 lg:flex"
             aria-label="Main navigation"
@@ -140,12 +110,12 @@ export function Header() {
           </Link>
           <button
             ref={menuButtonRef}
-            className="text-navy rounded p-2 lg:hidden"
+            className="text-navy rounded p-2 lg:hidden h-10 w-10 flex items-center justify-center"
             onClick={() => setOpen(true)}
             aria-label="Open navigation menu"
             aria-expanded={open}
           >
-            <Menu size={20} />
+            <Menu size={24} />
           </button>
         </Container>
       </header>
@@ -160,7 +130,7 @@ export function Header() {
       <aside
         ref={mobileDialogRef}
         className={cn(
-          "fixed inset-y-0 right-0 z-[70] w-[min(90vw,390px)] bg-white p-6 shadow-2xl transition-transform lg:hidden",
+          "fixed inset-y-0 right-0 z-[70] w-[min(90vw,390px)] bg-white/75 backdrop-blur-xl border border-white/20 p-6 shadow-[0_8px_30px_rgba(15,35,68,0.08)] transition-transform lg:hidden",
           open ? "translate-x-0" : "translate-x-full",
         )}
         aria-label="Mobile navigation"

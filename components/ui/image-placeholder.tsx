@@ -8,11 +8,13 @@ export function ImagePlaceholder({
   alt,
   className,
   fit = "cover",
+  imgClassName,
 }: {
   src: string;
   alt: string;
   className?: string;
   fit?: "cover" | "contain";
+  imgClassName?: string;
 }) {
   const manifestImage = getSiteImage(src);
   const accessibleAlt = alt || manifestImage?.alt || "Image unavailable";
@@ -28,6 +30,7 @@ export function ImagePlaceholder({
           sizes="(max-width: 768px) 100vw, 50vw"
           className={cn(
             fit === "contain" ? "object-contain" : "object-cover object-center",
+            imgClassName,
             "h-full w-full",
           )}
         />

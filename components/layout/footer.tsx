@@ -12,7 +12,7 @@ export function Footer() {
       <Container className="grid gap-10 py-12 md:grid-cols-2 lg:grid-cols-[1.4fr_0.7fr_1fr_1.2fr] lg:py-14">
         {/* Brand Column */}
         <div>
-          <Brand inverse variant="footer" />
+          <Brand inverse variant="footer" logoClassName="h-16 w-auto sm:h-20" textClassName="text-xl sm:text-2xl" />
           <p className="mt-4 max-w-xs leading-7 text-white/65 text-sm">
             Practical HSE training, consulting and personnel to help organisations manage risk and deliver safer operations.
           </p>
