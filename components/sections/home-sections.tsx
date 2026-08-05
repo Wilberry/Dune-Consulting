@@ -199,7 +199,7 @@ export function AboutPreview() {
             </div>
           </div>
           <div>
-            <div className="text-muted mt-6 space-y-4 leading-7">
+            <div className="text-muted mt-6 space-y-4 leading-7 text-center lg:text-left">
               <p>
                 Dune Consulting is a Lagos-based Health, Safety and Environment
                 consultancy supporting organisations, event producers and project
