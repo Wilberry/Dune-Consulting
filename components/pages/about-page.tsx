@@ -66,7 +66,7 @@ export function AboutPage() {
               </p>
             </div>
             <Quote attribution="Dune Consulting positioning">
-              WHAT WE STAND FOR
+              Safer Workplaces. Safer Events. Stronger HSE Teams.
             </Quote>
           </div>
           <div className="aspect-[5/4] overflow-hidden rounded-2xl shadow-xl">

@@ -17,7 +17,13 @@ export function LeadConsultantPhoto({
         className,
       )}
     >
-      <ImagePlaceholder src={src} alt={alt} className="absolute inset-0" fit="cover" />
+      <ImagePlaceholder
+        src={src}
+        alt={alt}
+        className="absolute inset-0"
+        fit="cover"
+        imgClassName="object-top"
+      />
     </div>
   );
 }
