@@ -40,18 +40,39 @@ const approvedImage = (
 
 export const siteImages: SiteImage[] = [
   approvedImage(
-    "/images/Hero.png",
+    "/images/Hero.webp",
     "Dune Consulting safety personnel supporting a live event",
     "Homepage",
-    "1600×900px",
-    "16:9",
+    "1448×1086px",
+    "4:3",
   ),
   approvedImage(
-    "/images/Practical_Safety.png",
+    "/images/Practical_Safety.webp",
     "A facilitator leading a practical Dune Consulting HSE training session",
     "Homepage",
-    "1600×1200px",
-    "4:3",
+    "1536×1024px",
+    "3:2",
+  ),
+  approvedImage(
+    "/images/mainlogo.svg",
+    "Dune Consulting main logo",
+    "Global",
+    "1000×760px",
+    "25:19",
+  ),
+  approvedImage(
+    "/images/logo2.svg",
+    "Dune Consulting footer logo",
+    "Global",
+    "1000×760px",
+    "25:19",
+  ),
+  approvedImage(
+    "/images/executive_portrait.webp",
+    "Portrait of the Lead Consultant, Anthony Igbinosun",
+    "About",
+    "1130×1392px",
+    "1130:1392",
   ),
   image(
     "/images/hero-event-safety.jpg",
@@ -64,25 +85,33 @@ export const siteImages: SiteImage[] = [
     "Facilitator leading a practical HSE training session",
     "Homepage",
   ),
-  image(
-    "/images/hse-mentorship.jpg",
-    "Emerging safety professionals in a mentorship session",
+  approvedImage(
+    "/images/first_aid_training.webp",
+    "First aid and mentorship training in progress",
     "Homepage",
+    "1536×1024px",
+    "3:2",
   ),
-  image(
-    "/images/about/about-hero.jpg",
+  approvedImage(
+    "/images/dune_team_high_quality.webp",
     "Dune Consulting safety professionals at work",
     "About",
+    "1536×1152px",
+    "4:3",
   ),
-  image(
-    "/images/about/our-story.jpg",
-    "Team collaborating on an HSE plan",
+  approvedImage(
+    "/images/ambulance_paramedic.webp",
+    "Ambulance paramedic and safety team preparing for an emergency response",
     "About",
+    "1448×1086px",
+    "4:3",
   ),
-  image(
-    "/images/about/why-dune.jpg",
-    "Safety professional reviewing site operations",
+  approvedImage(
+    "/images/dune_training_outdoor_high_quality.webp",
+    "Outdoor training session with Dune Consulting safety personnel",
     "About",
+    "1535×1025px",
+    "3:2",
   ),
   image(
     "/images/services/services-hero.jpg",
@@ -94,15 +123,19 @@ export const siteImages: SiteImage[] = [
     "Event safety personnel coordinating on site",
     "Event Safety Management",
   ),
-  image(
-    "/images/services/hse-training.jpg",
+  approvedImage(
+    "/images/dune_training_outdoor_high_quality.webp",
     "Workforce participating in practical HSE training",
     "HSE Training",
+    "1535×1025px",
+    "3:2",
   ),
-  image(
-    "/images/services/personnel-outsourcing.jpg",
-    "Deployed HSE professional supporting operations",
+  approvedImage(
+    "/images/container_crane.webp",
+    "Container crane and HSE personnel on site",
     "Personnel Outsourcing",
+    "1448×1086px",
+    "4:3",
   ),
   image(
     "/images/mentorship/mentorship-hero.jpg",
@@ -161,6 +194,13 @@ export const siteImages: SiteImage[] = [
     "1080×1350px",
     "4:5",
   ),
+  approvedImage(
+    "/images/training_room.webp",
+    "Training room set up for practical HSE instruction and exercises",
+    "Assets",
+    "1752×898px",
+    "~1.95:1",
+  ),
   image(
     "/images/insights/insights-hero.jpg",
     "HSE professional reviewing safety information",
@@ -188,7 +228,7 @@ export const siteImages: SiteImage[] = [
     Array.from({ length: 3 }, (_, index) =>
       image(
         `/images/projects/${slug}-${index + 1}.jpg` as SiteImage["pathname"],
-        `Authorised gallery photograph ${index + 1} for ${slug.replaceAll("-", " ")}`,
+        `Project gallery image ${index + 1} showing ${slug.replaceAll("-", " ")}. Useful for project overview and event context.`,
         "Project detail",
       ),
     ),

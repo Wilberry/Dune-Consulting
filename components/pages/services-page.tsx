@@ -26,6 +26,7 @@ export function ServicesOverviewPage() {
         title="Connected HSE support for safer delivery"
         copy="From planning and education to qualified personnel and live supervision, Dune Consulting helps clients manage risk without losing sight of the operation."
         image="/images/services/services-hero.jpg"
+        imageAlt="Dune Consulting personnel delivering HSE support on site"
         cta={{ label: "Request a consultation", href: "/contact#consultation" }}
       />
       <Section>
@@ -94,6 +95,7 @@ export function ServiceDetailPage({ slug }: { slug: string }) {
         title={service.title}
         copy={service.summary}
         image={service.image}
+        imageAlt={`${service.title} hero image showing practical HSE operations`}
         cta={{ label: "Discuss this service", href: "/contact#consultation" }}
       />
       <Section>

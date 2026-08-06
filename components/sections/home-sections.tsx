@@ -187,7 +187,7 @@ export function AboutPreview() {
           <div className="relative">
             <div className="aspect-[5/4] overflow-hidden rounded-xl">
                 <ImagePlaceholder
-                  src="/images/Practical_Safety.png"
+                  src="/images/Practical_Safety.webp"
                   alt="A facilitator leading a practical Dune Consulting HSE training session"
                 />
             </div>
@@ -356,8 +356,8 @@ export function Mentorship() {
         <div className="bg-navy overflow-hidden rounded-2xl text-white lg:grid lg:grid-cols-2">
           <div className="relative min-h-80">
             <ImagePlaceholder
-              src="/images/hse-mentorship.jpg"
-              alt="Emerging safety professionals participating in the Dune HSE Mentorship Program"
+              src="/images/first_aid_training.webp"
+              alt="First aid and HSE mentorship training in progress"
               className="absolute inset-0"
             />
           </div>

@@ -46,7 +46,7 @@ export function Hero() {
         <div className="flex flex-col gap-0">
           <div className="relative h-[400px] overflow-hidden rounded-t-2xl border border-white/10 shadow-2xl">
             <ImagePlaceholder
-              src="/images/Hero.png"
+              src="/images/Hero.webp"
               alt="Dune Consulting safety personnel supporting a live event"
               className="absolute inset-0 bg-[#aeb9c3]"
               imgClassName="object-top"

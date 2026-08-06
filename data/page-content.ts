@@ -141,7 +141,7 @@ export const serviceDetails: Record<string, ServiceDetail> = {
     slug: "hse-training",
     title: "HSE Training",
     eyebrow: "Learning designed for real work",
-    image: "/images/services/hse-training.jpg",
+    image: "/images/dune_training_outdoor_high_quality.webp",
     summary:
       "Practical and customised workplace safety training designed to strengthen competence, emergency preparedness and confident response.",
     overview: [
@@ -208,7 +208,7 @@ export const serviceDetails: Record<string, ServiceDetail> = {
     slug: "personnel-outsourcing",
     title: "HSE Personnel Outsourcing",
     eyebrow: "The right expertise, where you need it",
-    image: "/images/services/personnel-outsourcing.jpg",
+    image: "/images/container_crane.webp",
     summary:
       "Competent HSE professionals deployed to support projects, facilities, workplaces and events.",
     overview: [

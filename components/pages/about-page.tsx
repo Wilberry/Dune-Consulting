@@ -34,7 +34,8 @@ export function AboutPage() {
         eyebrow="About Dune Consulting"
         title="Health, Safety and Environment Consulting for Confident Operations"
         copy="At Dune Consulting, we believe safety is more than a compliance requirement. It is a business discipline that protects people, strengthens operations and supports sustainable performance."
-        image="/images/about/about-hero.jpg"
+        image="/images/dune_team_high_quality.webp"
+        imageAlt="Dune Consulting team collaborating on HSE strategy for safe operations"
         cta={{ label: "Discuss Your HSE Needs", href: "/contact#consultation" }}
       />
       <Section>
@@ -70,8 +71,8 @@ export function AboutPage() {
           </div>
           <div className="aspect-[5/4] overflow-hidden rounded-2xl shadow-xl">
             <ImagePlaceholder
-              src="/images/about/our-story.jpg"
-              alt="Dune Consulting team collaborating on an HSE plan"
+              src="/images/ambulance_paramedic.webp"
+              alt="Ambulance paramedic and safety team preparing for an emergency response"
             />
           </div>
         </div>
@@ -129,8 +130,8 @@ export function AboutPage() {
         <div className="grid gap-12 lg:grid-cols-[.9fr_1.1fr] lg:items-center">
           <div className="aspect-square overflow-hidden rounded-2xl">
             <ImagePlaceholder
-              src="/images/about/why-dune.jpg"
-              alt="Dune Consulting safety professional reviewing operations on site"
+              src="/images/dune_training_outdoor_high_quality.webp"
+              alt="Outdoor Dune Consulting training session with safety team"
             />
           </div>
           <div>
@@ -183,7 +184,7 @@ export function AboutPage() {
         <div className="mt-12 grid gap-10 lg:grid-cols-[340px_1fr] lg:items-start">
           <div className="mx-auto h-[260px] w-[260px] overflow-hidden rounded-[18px] border border-white/10 shadow-xl sm:h-[300px] sm:w-[300px] lg:h-[340px] lg:w-[340px]">
             <LeadConsultantPhoto
-              src="/images/about/lead-consultant.jpg"
+              src="/images/executive_portrait.webp"
               alt="Anthony Igbinosun, Lead Consultant"
             />
           </div>

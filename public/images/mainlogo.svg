@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 760" role="img" aria-labelledby="title desc">
+  <title id="title">Dune Consulting safety logo</title>
+  <desc id="desc">A navy hard hat above orange safety goggles.</desc>
+
+  <!-- Hard hat -->
+  <path
+    d="M205 430
+       H155
+       V360
+       H202
+       C220 230 315 145 420 122
+       V72
+       Q420 52 440 52
+       H480
+       V20
+       H520
+       V52
+       H560
+       Q580 52 580 72
+       V122
+       C685 145 780 230 798 360
+       H845
+       V430
+       H205 Z"
+    fill="none"
+    stroke="#0F2A44"
+    stroke-width="28"
+    stroke-linejoin="round"
+    stroke-linecap="round"/>
+
+  <!-- Helmet crown detail -->
+  <path
+    d="M440 175 V62 H560 V175
+       M500 62 V145"
+    fill="none"
+    stroke="#0F2A44"
+    stroke-width="28"
+    stroke-linejoin="round"
+    stroke-linecap="square"/>
+
+  <!-- Goggles -->
+  <path
+    d="M205 505
+       H265
+       V475
+       H735
+       V505
+       H795
+       V575
+       H735
+       V595
+       L680 665
+       H570
+       L530 615
+       Q500 575 470 615
+       L430 665
+       H320
+       L265 595
+       V575
+       H205 Z"
+    fill="none"
+    stroke="#FF7A00"
+    stroke-width="28"
+    stroke-linejoin="round"
+    stroke-linecap="round"/>
+</svg>
