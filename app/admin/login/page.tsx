@@ -1,7 +1,13 @@
+import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { Brand } from "@/components/layout/brand";
 import { getStaffUser } from "@/lib/admin-auth";
 import { LoginForm } from "./login-form";
+
+export const metadata: Metadata = {
+  title: "Admin Login",
+  robots: { index: false, follow: false, nocache: true },
+};
 
 export default async function AdminLoginPage() {
   const staff = await getStaffUser();
