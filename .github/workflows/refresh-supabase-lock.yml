@@ -1,19 +1,19 @@
 name: Refresh Supabase lockfile
 
 on:
-  push:
+  pull_request:
     branches:
-      - agent/supabase-foundation
+      - main
 
 permissions:
   contents: write
 
 jobs:
   refresh-lock:
-    if: github.actor != 'github-actions[bot]'
+    if: github.head_ref == 'agent/supabase-foundation' && github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout branch
+      - name: Checkout implementation branch
         uses: actions/checkout@v4
         with:
           ref: agent/supabase-foundation
@@ -21,7 +21,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 20
           cache: npm
 
       - name: Refresh package lock
