@@ -314,7 +314,13 @@ create policy "Published articles are publicly readable"
 on public.articles
 for select
 to anon, authenticated
-using (status = 'published' or public.can_manage_articles());
+using (status = 'published');
+
+create policy "Authorized staff can read all articles"
+on public.articles
+for select
+to authenticated
+using (public.can_manage_articles());
 
 create policy "Authorized staff can create articles"
 on public.articles
