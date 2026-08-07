@@ -2,18 +2,17 @@ import "server-only";
 
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-
-export type StaffRole = "admin" | "editor";
-
-export type StaffUser = {
-  id: string;
-  email: string;
-  fullName: string | null;
-  role: StaffRole;
-};
+import type { StaffUser } from "@/lib/admin/types";
 
 export async function getStaffUser(): Promise<StaffUser | null> {
-  const supabase = await createClient();
+  let supabase: Awaited<ReturnType<typeof createClient>>;
+
+  try {
+    supabase = await createClient();
+  } catch {
+    return null;
+  }
+
   const {
     data: { user },
     error: authError,
