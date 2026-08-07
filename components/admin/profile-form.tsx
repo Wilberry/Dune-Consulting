@@ -5,7 +5,7 @@ import {
   updateProfileName,
   type ProfileActionState,
 } from "@/app/admin/(dashboard)/settings/actions";
-import type { StaffUser } from "@/lib/admin/auth";
+import type { StaffUser } from "@/lib/admin/types";
 
 const initialState: ProfileActionState = { status: "idle" };
 
