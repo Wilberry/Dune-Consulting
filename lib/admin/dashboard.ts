@@ -1,7 +1,7 @@
 import "server-only";
 
 import { createClient } from "@/lib/supabase/server";
-import type { StaffUser } from "@/lib/admin/auth";
+import type { StaffUser } from "@/lib/admin/types";
 
 export type DashboardStat = {
   label: string;
@@ -80,8 +80,16 @@ export async function getDashboardData(user: StaffUser) {
   }
 
   const stats: DashboardStat[] = [
-    { label: "Published Insights", value: publishedInsights, href: "/admin/insights" },
-    { label: "Draft Insights", value: draftInsights, href: "/admin/insights" },
+    {
+      label: "Published Insights",
+      value: publishedInsights,
+      href: "/admin/insights",
+    },
+    {
+      label: "Draft Insights",
+      value: draftInsights,
+      href: "/admin/insights",
+    },
     {
       label: "New Contact Enquiries",
       value: newEnquiries,
@@ -150,7 +158,8 @@ export async function getDashboardData(user: StaffUser) {
 
     if (enquiriesResult.error) throw new Error(enquiriesResult.error.message);
     if (quotesResult.error) throw new Error(quotesResult.error.message);
-    if (mentorshipResult.error) throw new Error(mentorshipResult.error.message);
+    if (mentorshipResult.error)
+      throw new Error(mentorshipResult.error.message);
 
     for (const enquiry of enquiriesResult.data ?? []) {
       activities.push({
@@ -187,7 +196,8 @@ export async function getDashboardData(user: StaffUser) {
   }
 
   activities.sort(
-    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+    (a, b) =>
+      new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
   );
 
   return { stats, activities: activities.slice(0, 8) };
@@ -202,5 +212,7 @@ export async function getSectionCount(
     | "newsletter_subscribers",
 ) {
   const supabase = await createClient();
-  return checkedCount(supabase.from(table).select("id", { count: "exact", head: true }));
+  return checkedCount(
+    supabase.from(table).select("id", { count: "exact", head: true }),
+  );
 }
