@@ -4,12 +4,16 @@ on:
   push:
     branches:
       - agent/supabase-foundation
+  pull_request:
+    branches:
+      - main
 
 permissions:
   contents: write
 
 jobs:
   lockfile:
+    if: github.ref_name == 'agent/supabase-foundation' || github.head_ref == 'agent/supabase-foundation'
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -38,4 +42,4 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add package-lock.json
           git commit -m "Sync Supabase package lock"
-          git push
+          git push origin HEAD:agent/supabase-foundation
