@@ -168,6 +168,7 @@ declare
   updated_profile public.profiles;
 begin
   if auth.uid() is null then raise exception 'Not authenticated'; end if;
+  if public.current_staff_role() not in ('admin', 'editor') then raise exception 'Not authorised'; end if;
   if length(trim(p_full_name)) < 2 or length(trim(p_full_name)) > 120 then
     raise exception 'Invalid profile name';
   end if;
@@ -205,10 +206,10 @@ create policy "admins manage mentorship" on public.mentorship_applications for a
 create policy "admins manage newsletter" on public.newsletter_subscribers for all to authenticated using (public.current_staff_role() = 'admin') with check (public.current_staff_role() = 'admin');
 
 insert into storage.buckets (id, name, public)
-values ('insights', 'insights', true)
+values ('insights', 'insights', false)
 on conflict (id) do update set public = excluded.public;
 
-create policy "public reads insight media" on storage.objects for select to anon, authenticated using (bucket_id = 'insights');
+create policy "staff reads insight media" on storage.objects for select to authenticated using (bucket_id = 'insights' and public.current_staff_role() in ('admin', 'editor'));
 create policy "staff uploads insight media" on storage.objects for insert to authenticated with check (bucket_id = 'insights' and public.current_staff_role() in ('admin', 'editor'));
 create policy "staff updates insight media" on storage.objects for update to authenticated using (bucket_id = 'insights' and public.current_staff_role() in ('admin', 'editor')) with check (bucket_id = 'insights' and public.current_staff_role() in ('admin', 'editor'));
 create policy "staff deletes insight media" on storage.objects for delete to authenticated using (bucket_id = 'insights' and public.current_staff_role() in ('admin', 'editor'));
