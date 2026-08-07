@@ -207,7 +207,7 @@ export function AboutPage() {
               </p>
             </div>
             <Callout title="About leadership">
-              <div className="flex flex-col items-center gap-3 text-center lg:flex-row lg:items-start lg:text-left">
+              <div className="flex flex-col items-center gap-3 text-left sm:text-center lg:flex-row lg:items-start lg:text-left">
                 <Award className="text-amber-hover shrink-0" />
                 <p className="text-sm">
                   Dune&apos;s leadership demonstrates commitment through consistent delivery of practical HSE results, professional development support and dependable client partnerships.

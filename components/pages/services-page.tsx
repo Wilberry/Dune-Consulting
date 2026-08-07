@@ -109,7 +109,7 @@ export function ServiceDetailPage({ slug }: { slug: string }) {
         </div>
         <div className="mt-12 grid gap-12 lg:grid-cols-[1.15fr_.85fr] lg:items-center">
           <div>
-            <div className="text-muted space-y-4 leading-7">
+            <div className="text-center lg:text-left text-muted space-y-4 leading-7">
               {service.overview.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}

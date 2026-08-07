@@ -32,7 +32,7 @@ export function PortfolioPage() {
           </div>
           <div className="flex flex-col justify-center p-8 sm:p-10">
             <Tag>{featured.category}</Tag>
-            <p className="text-muted mt-5 flex items-center gap-2 text-sm">
+            <p className="text-muted mt-5 flex items-center justify-center gap-2 text-sm sm:justify-start">
               <MapPin size={16} />
               {featured.location}
             </p>
@@ -98,7 +98,7 @@ export function ProjectDetailPage({ slug }: { slug: string }) {
                 </dt>
                 <dd className="text-navy mt-1 font-bold">{project.category}</dd>
               </div>
-              <div>
+              <div className="text-center sm:text-left">
                 <dt className="text-muted text-xs font-bold tracking-wider uppercase">
                   Location
                 </dt>

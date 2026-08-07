@@ -20,7 +20,7 @@ export function ProjectCard({ project }: { project: Project }) {
         <h3 className="text-navy mt-2 text-xl font-extrabold">
           {project.title}
         </h3>
-        <p className="text-muted mt-3 flex items-center gap-2 text-sm">
+        <p className="text-muted mt-3 flex items-center justify-center gap-2 text-sm sm:justify-start">
           <MapPin size={15} aria-hidden="true" />
           {project.location}
         </p>

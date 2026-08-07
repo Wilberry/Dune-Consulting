@@ -225,7 +225,7 @@ export function AboutPreview() {
                 </li>
               ))}
             </ul>
-            <Button className="mt-8" href="/about" arrow>
+            <Button className="mt-8 mx-auto lg:mx-0" href="/about" arrow>
               Learn About Dune
             </Button>
           </div>
@@ -323,18 +323,20 @@ export function FeaturedProjects() {
   return (
     <section className="bg-off-white py-20 sm:py-24">
       <Container>
-        <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
+        <div className="flex flex-col gap-5 sm:flex-row sm:items-end lg:grid lg:grid-cols-[1.35fr_.65fr] lg:items-end">
           <SectionHeading
             eyebrow="Our Work"
             title="Selected Events and Projects"
             copy="A selection of events and organisations supported by Dune Consulting."
           />
-          <Link
-            href="/portfolio"
-            className="text-navy inline-flex shrink-0 items-center gap-2 font-bold"
-          >
-            View all projects <ArrowRight size={17} />
-          </Link>
+          <div className="w-full flex justify-center lg:justify-end">
+            <Link
+              href="/portfolio"
+              className="text-navy inline-flex shrink-0 items-center gap-2 font-bold"
+            >
+              View all projects <ArrowRight size={17} />
+            </Link>
+          </div>
         </div>
         <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
           {projects.map((project) => (
