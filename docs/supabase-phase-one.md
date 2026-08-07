@@ -45,7 +45,7 @@ The migration creates:
 - `quote_requests`
 - `mentorship_applications`
 - `newsletter_subscribers`
-- the `insights` storage bucket
+- the private `insights` storage bucket
 - updated-at triggers
 - automatic Auth profile creation
 - role helper functions
@@ -91,7 +91,9 @@ Only use `editor` for staff who should manage Insights without access to private
 
 ## 6. Storage
 
-The migration creates an `insights` bucket. Only `admin` and `editor` roles can insert/update/delete files through Storage policies. Public read access is enabled for Insight media so published assets can be served directly later. Do not store private customer documents in this bucket.
+The migration creates a private `insights` bucket. Only `admin` and `editor` roles can read, insert, update or delete files through Storage policies during Phase One. This prevents unpublished media from becoming public simply because its URL is known.
+
+When the public Insights publishing workflow is implemented, Phase Two can deliberately expose approved published media through a public delivery strategy or signed URLs. Do not store private customer documents in this bucket.
 
 ## 7. Generate database TypeScript types
 
