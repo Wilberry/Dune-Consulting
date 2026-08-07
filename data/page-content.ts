@@ -31,6 +31,7 @@ export type ServiceDetail = {
   slug: string;
   title: string;
   eyebrow: string;
+  eyebrowMobile?: string;
   summary: string;
   image: string;
   overview: string[];
@@ -74,7 +75,7 @@ export const serviceDetails: Record<string, ServiceDetail> = {
     slug: "event-safety-management",
     title: "Event Safety Management",
     eyebrow: "Safe events, confidently delivered",
-    image: "/images/services/event-safety-management.jpg",
+    image: "/images/conference_event.webp",
     summary:
       "End-to-end safety planning and live operational support for events of every format and scale.",
     overview: [
@@ -208,6 +209,7 @@ export const serviceDetails: Record<string, ServiceDetail> = {
     slug: "personnel-outsourcing",
     title: "HSE Personnel Outsourcing",
     eyebrow: "The right expertise, where you need it",
+    eyebrowMobile: "Expertise where needed",
     image: "/images/container_crane.webp",
     summary:
       "Competent HSE professionals deployed to support projects, facilities, workplaces and events.",

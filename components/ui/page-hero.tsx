@@ -1,9 +1,11 @@
+import { cn } from "@/lib/utils";
 import { Button } from "./button";
 import { Container } from "./container";
 import { ImagePlaceholder } from "./image-placeholder";
 
 export function PageHero({
   eyebrow,
+  eyebrowMobile,
   title,
   copy,
   image,
@@ -11,6 +13,7 @@ export function PageHero({
   cta,
 }: {
   eyebrow: string;
+  eyebrowMobile?: string;
   title: string;
   copy: string;
   image?: string;
@@ -25,7 +28,14 @@ export function PageHero({
       >
         <div className="text-center lg:text-left flex flex-col justify-center items-center lg:items-start">
           <p className="text-amber text-xs font-extrabold tracking-[.18em] uppercase">
-            {eyebrow}
+            {eyebrowMobile ? (
+              <>
+                <span className="inline lg:hidden">{eyebrowMobile}</span>
+                <span className="hidden lg:inline">{eyebrow}</span>
+              </>
+            ) : (
+              eyebrow
+            )}
           </p>
           <h1 className="mt-4 max-w-3xl text-4xl leading-[1.08] font-extrabold text-balance sm:text-5xl lg:text-6xl mx-auto lg:mx-0">
             {title}
@@ -41,7 +51,11 @@ export function PageHero({
         </div>
         {image && (
           <div className="aspect-[4/3] overflow-hidden rounded-xl border border-white/10 shadow-2xl">
-            <ImagePlaceholder src={image} alt={altText} />
+            <ImagePlaceholder
+              src={image}
+              alt={altText}
+              imgClassName="object-top sm:object-center"
+            />
           </div>
         )}
       </Container>

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { company } from "@/data/company";
 
 type BrandProps = {
   inverse?: boolean;
@@ -19,8 +20,8 @@ export function Brand({
   const src = variant === "footer" ? "/images/logo2.svg" : "/images/mainlogo.svg";
   const isFooter = variant === "footer";
   const defaultLogoSizeClass = isFooter
-    ? "h-16 sm:h-20 md:h-24"
-    : "h-8 sm:h-9 md:h-11 lg:h-14";
+    ? "h-12 sm:h-14 md:h-16"
+    : "h-7 sm:h-8 md:h-9 lg:h-10";
   const logoSize = logoClassName ?? defaultLogoSizeClass;
   const textColor = isFooter ? "text-white" : "text-navy";
 
@@ -28,20 +29,20 @@ export function Brand({
     <Link
       href="/"
       className={cn("flex shrink-0 items-center gap-2.5 sm:gap-3", className)}
-      aria-label="Dune Consulting home"
+      aria-label={`${company.name} home`}
     >
       <div className={`relative ${logoSize} w-auto flex-shrink-0`}>
         <Image
           src={src}
-          alt="Dune Consulting"
+          alt={company.name}
           width={160}
           height={160}
           priority
           className="h-full w-auto object-contain"
         />
       </div>
-      <span className={`${textColor} whitespace-nowrap font-bold leading-tight ${textClassName ?? (isFooter ? "text-lg sm:text-xl" : "text-sm sm:text-base md:text-lg")}`}>
-        Dune Consulting
+      <span className={`${textColor} whitespace-nowrap font-heading font-semibold leading-tight ${textClassName ?? (isFooter ? "text-lg sm:text-xl" : "text-sm sm:text-base md:text-lg")}`}>
+        {company.name}
       </span>
     </Link>
   );

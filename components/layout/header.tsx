@@ -64,7 +64,7 @@ export function Header() {
         )}
       >
         <Container className="flex h-16 items-center justify-between px-5 sm:h-[4.75rem] sm:px-6">
-          <Brand logoClassName="h-11 w-auto sm:h-12" textClassName="text-lg font-semibold sm:text-xl" />
+          <Brand logoClassName="h-10 w-auto sm:h-11" textClassName="text-sm font-semibold sm:text-base md:text-lg" />
           <nav
             className="hidden items-center gap-1 lg:flex"
             aria-label="Main navigation"
@@ -140,7 +140,7 @@ export function Header() {
         inert={!open}
       >
         <div className="flex items-center justify-between">
-          <Brand />
+          <Brand logoClassName="h-10 w-auto" textClassName="text-sm font-semibold" />
           <button
             ref={closeButtonRef}
             className="text-navy rounded p-2"

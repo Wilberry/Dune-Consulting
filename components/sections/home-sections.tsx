@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -9,6 +10,7 @@ import {
   Lightbulb,
   Route,
   Shield,
+  Star,
   UsersRound,
 } from "lucide-react";
 import { Accordion, type AccordionItem } from "@/components/ui/accordion";
@@ -434,17 +436,51 @@ export function Testimonials() {
           title="Trusted Partnerships, Measurable Care"
           align="center-all"
         />
-        {testimonials.length === 0 ? (
-          <div className="border-navy/25 mx-auto mt-8 max-w-2xl rounded-xl border border-dashed bg-white p-8 text-center">
-            <p className="font-heading text-navy text-lg font-bold">
-              Client testimonials will be added after approval.
-            </p>
-            <p className="text-muted mt-2 text-sm">
-              This space is ready for verified feedback from clients and project
-              partners.
-            </p>
-          </div>
-        ) : null}
+        <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          {testimonials.map((testimonial) => (
+            <article
+              key={testimonial.name}
+              className="rounded-[2rem] border border-white/10 bg-white p-8 shadow-sm"
+            >
+              <div className="flex items-center gap-4">
+                <div className="relative h-14 w-14 overflow-hidden rounded-full bg-slate-100">
+                  {testimonial.image ? (
+                    <Image
+                      src={testimonial.image}
+                      alt={testimonial.name}
+                      fill
+                      sizes="56px"
+                      className="object-cover"
+                    />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center bg-amber text-deep-navy font-semibold">
+                      {testimonial.name
+                        .split(" ")
+                        .map((part) => part[0])
+                        .join("")}
+                    </div>
+                  )}
+                </div>
+                <div>
+                  <p className="text-navy font-semibold">{testimonial.name}</p>
+                  <p className="text-muted text-sm">{testimonial.role}</p>
+                </div>
+              </div>
+              <div className="mt-5 flex items-center gap-1">
+                {Array.from({ length: 5 }, (_, index) => (
+                  <Star
+                    key={index}
+                    size={16}
+                    className={index < testimonial.rating ? "text-amber" : "text-slate-300"}
+                  />
+                ))}
+              </div>
+              <p className="mt-6 text-sm leading-7 text-ink">
+                “{testimonial.quote}”
+              </p>
+            </article>
+          ))}
+        </div>
       </Container>
     </section>
   );

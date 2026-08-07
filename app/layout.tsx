@@ -20,9 +20,9 @@ export const metadata: Metadata = {
     : { index: true, follow: true },
   manifest: "/manifest.webmanifest",
   icons: {
-    icon: "/images/mainlogo.svg",
-    shortcut: "/images/mainlogo.svg",
-    apple: "/images/mainlogo.svg",
+    icon: "/favicon.png",
+    shortcut: "/favicon.png",
+    apple: "/favicon.png",
   },
   openGraph: {
     type: "website",

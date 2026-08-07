@@ -188,7 +188,7 @@ export function AboutPage() {
               alt="Anthony Igbinosun, Lead Consultant"
             />
           </div>
-          <div className="space-y-8">
+          <div className="space-y-8 text-center lg:text-left">
             <div className="space-y-4 leading-7">
               <h3 className="text-navy text-lg font-bold">Anthony Igbinosun</h3>
               <p className="text-sm font-semibold text-amber">Lead Consultant</p>
@@ -207,7 +207,7 @@ export function AboutPage() {
               </p>
             </div>
             <Callout title="About leadership">
-              <div className="flex items-start gap-3">
+              <div className="flex flex-col items-center gap-3 text-center lg:flex-row lg:items-start lg:text-left">
                 <Award className="text-amber-hover shrink-0" />
                 <p className="text-sm">
                   Dune&apos;s leadership demonstrates commitment through consistent delivery of practical HSE results, professional development support and dependable client partnerships.

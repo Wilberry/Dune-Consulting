@@ -92,6 +92,7 @@ export function ServiceDetailPage({ slug }: { slug: string }) {
     <main id="main-content">
       <PageHero
         eyebrow={service.eyebrow}
+        eyebrowMobile={service.eyebrowMobile}
         title={service.title}
         copy={service.summary}
         image={service.image}

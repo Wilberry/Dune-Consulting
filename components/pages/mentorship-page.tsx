@@ -38,7 +38,7 @@ export function MentorshipPage() {
         eyebrow="Dune HSE Mentorship Program"
         title="Build practical judgement for a meaningful career in safety."
         copy="A learning-focused program for emerging HSE professionals who want guidance, industry context and greater confidence applying what they know."
-        image="/images/mentorship/mentorship-hero.jpg"
+        image="/images/site_safety_briefing.webp"
         cta={{ label: "Express your interest", href: "/contact#consultation" }}
       />
       <Section>
@@ -74,8 +74,9 @@ export function MentorshipPage() {
         <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
           <div className="aspect-[5/4] overflow-hidden rounded-2xl shadow-lg">
             <ImagePlaceholder
-              src="/images/mentorship/who-should-apply.jpg"
-              alt="Emerging HSE professionals learning together"
+              src="/images/training_room.webp"
+              alt="Training room set up for practical HSE instruction"
+              imgStyle={{ objectPosition: "10% center" }}
             />
           </div>
           <div>

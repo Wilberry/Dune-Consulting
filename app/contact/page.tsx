@@ -28,7 +28,7 @@ export default function ContactPage() {
         eyebrow="Contact Dune"
         title="Let's plan the right safety support for your organisation."
         copy="Share your event, training or personnel requirements and our team will help define the next step."
-        image="/images/contact/contact-hero.jpg"
+        image="/images/contact_office.webp"
       />
       <section className="py-16 sm:py-20 lg:py-24">
         <Container className="grid gap-12 lg:grid-cols-[1fr_1.2fr]">

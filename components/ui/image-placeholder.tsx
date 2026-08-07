@@ -1,5 +1,6 @@
 import { ImageIcon } from "lucide-react";
 import Image from "next/image";
+import type { CSSProperties } from "react";
 import { cn } from "@/lib/utils";
 import { getSiteImage } from "@/data/images";
 
@@ -9,12 +10,14 @@ export function ImagePlaceholder({
   className,
   fit = "cover",
   imgClassName,
+  imgStyle,
 }: {
   src: string;
   alt: string;
   className?: string;
   fit?: "cover" | "contain";
   imgClassName?: string;
+  imgStyle?: CSSProperties;
 }) {
   const manifestImage = getSiteImage(src);
   const accessibleAlt = alt || manifestImage?.alt || "Image unavailable";
@@ -33,6 +36,7 @@ export function ImagePlaceholder({
             imgClassName,
             "h-full w-full",
           )}
+          style={imgStyle}
         />
       </div>
     );
