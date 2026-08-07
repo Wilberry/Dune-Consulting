@@ -34,5 +34,10 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(loginUrl);
   }
 
+  if (isAdminRoute) {
+    response.headers.set("Cache-Control", "private, no-store, max-age=0");
+    response.headers.set("Pragma", "no-cache");
+  }
+
   return response;
 }
