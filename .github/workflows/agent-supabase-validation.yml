@@ -1,0 +1,57 @@
+name: Supabase foundation validation
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    if: github.head_ref == 'agent/supabase-admin-foundation'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Run diagnostics
+        shell: bash
+        run: |
+          set +e
+          : > validation.log
+
+          echo '=== npm install / lockfile sync ===' | tee -a validation.log
+          npm install --ignore-scripts 2>&1 | tee -a validation.log
+          echo "install_status=${PIPESTATUS[0]}" | tee -a validation.log
+
+          echo '=== lint ===' | tee -a validation.log
+          npm run lint 2>&1 | tee -a validation.log
+          echo "lint_status=${PIPESTATUS[0]}" | tee -a validation.log
+
+          echo '=== typecheck ===' | tee -a validation.log
+          npm run typecheck 2>&1 | tee -a validation.log
+          echo "typecheck_status=${PIPESTATUS[0]}" | tee -a validation.log
+
+          echo '=== tests ===' | tee -a validation.log
+          npm run test 2>&1 | tee -a validation.log
+          echo "test_status=${PIPESTATUS[0]}" | tee -a validation.log
+
+          echo '=== build ===' | tee -a validation.log
+          npm run build 2>&1 | tee -a validation.log
+          echo "build_status=${PIPESTATUS[0]}" | tee -a validation.log
+
+      - name: Upload diagnostic output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: supabase-foundation-validation
+          path: |
+            validation.log
+            package-lock.json
+          if-no-files-found: warn

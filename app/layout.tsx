@@ -1,8 +1,5 @@
 import type { Metadata } from "next";
-import { Footer } from "@/components/layout/footer";
-import { Header } from "@/components/layout/header";
-import { ReviewBanner } from "@/components/layout/review-banner";
-import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { SiteShell } from "@/components/layout/site-shell";
 import { company } from "@/data/company";
 import { deploymentEnv } from "@/lib/env";
 import "./globals.css";
@@ -46,17 +43,7 @@ export default function RootLayout({
   return (
     <html lang="en" data-scroll-behavior="smooth">
       <body>
-        <a
-          href="#main-content"
-          className="bg-amber text-deep-navy fixed top-3 left-3 z-[100] -translate-y-24 rounded px-4 py-2 font-bold focus:translate-y-0"
-        >
-          Skip to content
-        </a>
-        <ReviewBanner />
-        <Header />
-        <WhatsAppButton />
-        {children}
-        <Footer />
+        <SiteShell>{children}</SiteShell>
       </body>
     </html>
   );
