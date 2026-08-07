@@ -1,7 +1,15 @@
+import type { Metadata } from "next";
 import { Brand } from "@/components/layout/brand";
 import { AdminMobileNav, AdminSidebar } from "@/components/admin/admin-nav";
 import { requireStaffUser } from "@/lib/admin-auth";
 import { logoutAction } from "../actions";
+
+export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "Admin",
+  robots: { index: false, follow: false, nocache: true },
+};
 
 export default async function ProtectedAdminLayout({
   children,
