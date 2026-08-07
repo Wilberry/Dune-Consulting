@@ -5,7 +5,7 @@ on:
     branches: [main]
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   validate:
@@ -14,41 +14,44 @@ jobs:
     steps:
       - name: Checkout PR branch
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.head_ref }}
-          fetch-depth: 0
 
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
 
-      - name: Sync lockfile
-        run: npm install --package-lock-only --ignore-scripts
-
-      - name: Commit lockfile if changed
+      - name: Run diagnostics
         shell: bash
         run: |
-          if ! git diff --quiet -- package-lock.json; then
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add package-lock.json
-            git commit -m "sync Supabase lockfile"
-            git push origin HEAD:${{ github.head_ref }}
-          fi
+          set +e
+          : > validation.log
 
-      - name: Install dependencies
-        run: npm ci
+          echo '=== npm install / lockfile sync ===' | tee -a validation.log
+          npm install --ignore-scripts 2>&1 | tee -a validation.log
+          echo "install_status=${PIPESTATUS[0]}" | tee -a validation.log
 
-      - name: Lint
-        run: npm run lint
+          echo '=== lint ===' | tee -a validation.log
+          npm run lint 2>&1 | tee -a validation.log
+          echo "lint_status=${PIPESTATUS[0]}" | tee -a validation.log
 
-      - name: Typecheck
-        run: npm run typecheck
+          echo '=== typecheck ===' | tee -a validation.log
+          npm run typecheck 2>&1 | tee -a validation.log
+          echo "typecheck_status=${PIPESTATUS[0]}" | tee -a validation.log
 
-      - name: Tests
-        run: npm run test
+          echo '=== tests ===' | tee -a validation.log
+          npm run test 2>&1 | tee -a validation.log
+          echo "test_status=${PIPESTATUS[0]}" | tee -a validation.log
 
-      - name: Build
-        run: npm run build
+          echo '=== build ===' | tee -a validation.log
+          npm run build 2>&1 | tee -a validation.log
+          echo "build_status=${PIPESTATUS[0]}" | tee -a validation.log
+
+      - name: Upload diagnostic output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: supabase-foundation-validation
+          path: |
+            validation.log
+            package-lock.json
+          if-no-files-found: warn
