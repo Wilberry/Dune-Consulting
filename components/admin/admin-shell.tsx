@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 import { Brand } from "@/components/layout/brand";
 import { createClient } from "@/lib/supabase/client";
-import type { StaffUser } from "@/lib/admin/auth";
+import type { StaffUser } from "@/lib/admin/types";
 
 const navigation = [
   { label: "Dashboard", href: "/admin", icon: LayoutDashboard, adminOnly: false },
@@ -138,8 +138,8 @@ export function AdminShell({
         className={`bg-deep-navy/50 fixed inset-0 z-50 transition-opacity lg:hidden ${
           open ? "visible opacity-100" : "invisible opacity-0"
         }`}
-        aria-hidden="true"
         onClick={() => setOpen(false)}
+        aria-hidden="true"
       />
       <aside
         className={`bg-deep-navy fixed inset-y-0 left-0 z-[60] w-[min(88vw,320px)] p-6 shadow-2xl transition-transform lg:hidden ${
