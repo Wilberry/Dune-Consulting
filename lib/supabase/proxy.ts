@@ -26,8 +26,10 @@ export async function updateSession(request: NextRequest) {
     },
   });
 
-  // getUser validates the auth token and refreshes the session cookie when needed.
-  await supabase.auth.getUser();
+  // Supabase recommends getClaims() in Next.js Proxy so the access token is
+  // cryptographically validated while expired sessions are refreshed into the
+  // request/response cookies used by Server Components.
+  await supabase.auth.getClaims();
 
   return response;
 }
