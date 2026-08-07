@@ -12,11 +12,11 @@ export default async function ProtectedAdminLayout({
 
   return (
     <div className="bg-off-white min-h-screen lg:flex">
-      <AdminSidebar />
+      <AdminSidebar role={staff.role} />
       <div className="min-w-0 flex-1">
         <header className="border-line sticky top-0 z-30 flex min-h-16 items-center justify-between border-b bg-white/95 px-4 backdrop-blur sm:px-6">
           <div className="flex items-center gap-3">
-            <AdminMobileNav />
+            <AdminMobileNav role={staff.role} />
             <Brand
               logoClassName="h-8"
               textClassName="hidden text-sm sm:block"
