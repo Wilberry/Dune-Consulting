@@ -20,7 +20,10 @@ export type AdminActivity = {
 };
 
 async function checkedCount(
-  query: PromiseLike<{ count: number | null; error: { message: string } | null }>,
+  query: PromiseLike<{
+    count: number | null;
+    error: { message: string } | null;
+  }>,
 ) {
   const { count, error } = await query;
   if (error) throw new Error(error.message);
@@ -138,28 +141,29 @@ export async function getDashboardData(user: StaffUser) {
   }
 
   if (user.role === "admin") {
-    const [enquiriesResult, quotesResult, mentorshipResult] = await Promise.all([
-      supabase
-        .from("contact_enquiries")
-        .select("id,name,service,status,created_at")
-        .order("created_at", { ascending: false })
-        .limit(3),
-      supabase
-        .from("quote_requests")
-        .select("id,reference_number,name,status,created_at")
-        .order("created_at", { ascending: false })
-        .limit(3),
-      supabase
-        .from("mentorship_applications")
-        .select("id,name,status,created_at")
-        .order("created_at", { ascending: false })
-        .limit(3),
-    ]);
+    const [enquiriesResult, quotesResult, mentorshipResult] = await Promise.all(
+      [
+        supabase
+          .from("contact_enquiries")
+          .select("id,name,service,status,created_at")
+          .order("created_at", { ascending: false })
+          .limit(3),
+        supabase
+          .from("quote_requests")
+          .select("id,reference_number,name,status,created_at")
+          .order("created_at", { ascending: false })
+          .limit(3),
+        supabase
+          .from("mentorship_applications")
+          .select("id,name,status,created_at")
+          .order("created_at", { ascending: false })
+          .limit(3),
+      ],
+    );
 
     if (enquiriesResult.error) throw new Error(enquiriesResult.error.message);
     if (quotesResult.error) throw new Error(quotesResult.error.message);
-    if (mentorshipResult.error)
-      throw new Error(mentorshipResult.error.message);
+    if (mentorshipResult.error) throw new Error(mentorshipResult.error.message);
 
     for (const enquiry of enquiriesResult.data ?? []) {
       activities.push({
@@ -196,8 +200,7 @@ export async function getDashboardData(user: StaffUser) {
   }
 
   activities.sort(
-    (a, b) =>
-      new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
   );
 
   return { stats, activities: activities.slice(0, 8) };

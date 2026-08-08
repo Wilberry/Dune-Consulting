@@ -10,10 +10,16 @@ import type { StaffUser } from "@/lib/admin/types";
 const initialState: ProfileActionState = { status: "idle" };
 
 export function ProfileForm({ user }: { user: StaffUser }) {
-  const [state, formAction, pending] = useActionState(updateProfileName, initialState);
+  const [state, formAction, pending] = useActionState(
+    updateProfileName,
+    initialState,
+  );
 
   return (
-    <form action={formAction} className="border-line mt-8 max-w-2xl rounded-xl border bg-white p-6 sm:p-7">
+    <form
+      action={formAction}
+      className="border-line mt-8 max-w-2xl rounded-xl border bg-white p-6 sm:p-7"
+    >
       <div className="grid gap-5">
         <div>
           <label htmlFor="fullName" className="text-navy text-sm font-bold">
@@ -50,7 +56,10 @@ export function ProfileForm({ user }: { user: StaffUser }) {
             readOnly
             className="border-line bg-off-white text-muted mt-2 w-full rounded-lg border px-4 py-3 capitalize"
           />
-          <p className="text-muted mt-2 text-xs">Roles can only be changed through an authorized administrative process.</p>
+          <p className="text-muted mt-2 text-xs">
+            Roles can only be changed through an authorized administrative
+            process.
+          </p>
         </div>
       </div>
 

@@ -27,7 +27,9 @@ export function AdminLoginForm() {
     });
 
     if (!parsed.success) {
-      setError(parsed.error.issues[0]?.message ?? "Review your sign-in details.");
+      setError(
+        parsed.error.issues[0]?.message ?? "Review your sign-in details.",
+      );
       return;
     }
 
@@ -35,10 +37,13 @@ export function AdminLoginForm() {
 
     try {
       const supabase = createClient();
-      const { data, error: signInError } = await supabase.auth.signInWithPassword(parsed.data);
+      const { data, error: signInError } =
+        await supabase.auth.signInWithPassword(parsed.data);
 
       if (signInError || !data.user) {
-        setError("The email or password is incorrect, or this account is unavailable.");
+        setError(
+          "The email or password is incorrect, or this account is unavailable.",
+        );
         return;
       }
 
@@ -54,7 +59,9 @@ export function AdminLoginForm() {
         (profile.role !== "admin" && profile.role !== "editor")
       ) {
         await supabase.auth.signOut();
-        setError("This account is not authorized to access Dune administration.");
+        setError(
+          "This account is not authorized to access Dune administration.",
+        );
         return;
       }
 
@@ -77,7 +84,9 @@ export function AdminLoginForm() {
           <p className="text-amber-text text-xs font-extrabold tracking-[0.16em] uppercase">
             Staff Access
           </p>
-          <h1 className="text-navy mt-3 text-3xl font-extrabold">Admin sign in</h1>
+          <h1 className="text-navy mt-3 text-3xl font-extrabold">
+            Admin sign in
+          </h1>
           <p className="text-muted mt-3 text-sm leading-6">
             Sign in with an approved Dune Consulting staff account.
           </p>
@@ -112,7 +121,10 @@ export function AdminLoginForm() {
 
             <div className="min-h-12" aria-live="polite">
               {error && (
-                <p className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800" role="alert">
+                <p
+                  className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800"
+                  role="alert"
+                >
                   {error}
                 </p>
               )}

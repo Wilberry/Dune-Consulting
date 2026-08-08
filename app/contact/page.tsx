@@ -37,25 +37,34 @@ export default function ContactPage() {
             <h2 className="text-navy text-2xl font-bold">Get in touch</h2>
             <ul className="mt-8 space-y-5">
               <li className="flex items-start gap-3">
-                <MapPin className="text-amber-hover shrink-0 mt-0.5" size={20} />
-                <span className="text-sm text-navy">{company.location}</span>
+                <MapPin
+                  className="text-amber-hover mt-0.5 shrink-0"
+                  size={20}
+                />
+                <span className="text-navy text-sm">{company.location}</span>
               </li>
               <li>
                 <a
-                  className="flex items-start gap-3 hover:text-amber transition"
+                  className="hover:text-amber flex items-start gap-3 transition"
                   href={`tel:${company.telephoneHref}`}
                 >
-                  <Phone className="text-amber-hover shrink-0 mt-0.5" size={20} />
-                  <span className="text-sm text-navy">{company.telephone}</span>
+                  <Phone
+                    className="text-amber-hover mt-0.5 shrink-0"
+                    size={20}
+                  />
+                  <span className="text-navy text-sm">{company.telephone}</span>
                 </a>
               </li>
               <li>
                 <a
-                  className="flex items-start gap-3 hover:text-amber transition"
+                  className="hover:text-amber flex items-start gap-3 transition"
                   href={`mailto:${company.email}`}
                 >
-                  <Mail className="text-amber-hover shrink-0 mt-0.5" size={20} />
-                  <span className="text-sm text-navy">{company.email}</span>
+                  <Mail
+                    className="text-amber-hover mt-0.5 shrink-0"
+                    size={20}
+                  />
+                  <span className="text-navy text-sm">{company.email}</span>
                 </a>
               </li>
             </ul>

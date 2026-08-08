@@ -8,5 +8,8 @@ test("internal metadata uses a page-specific canonical and social URL", async ()
   });
   assert.equal(metadata.alternates?.canonical, "/about");
   assert.equal(metadata.openGraph?.url, "/about");
-  assert.equal(metadata.title, "About Dune Consulting | HSE Consultancy in Lagos");
+  assert.equal(
+    metadata.title,
+    "About Dune Consulting | HSE Consultancy in Lagos",
+  );
 });

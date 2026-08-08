@@ -17,7 +17,8 @@ export function Brand({
   logoClassName,
   textClassName,
 }: BrandProps) {
-  const src = variant === "footer" ? "/images/logo2.svg" : "/images/mainlogo.svg";
+  const src =
+    variant === "footer" ? "/images/logo2.svg" : "/images/mainlogo.svg";
   const isFooter = variant === "footer";
   const defaultLogoSizeClass = isFooter
     ? "h-12 sm:h-14 md:h-16"
@@ -41,7 +42,9 @@ export function Brand({
           className="h-full w-auto object-contain"
         />
       </div>
-      <span className={`${textColor} whitespace-nowrap font-heading font-semibold leading-tight ${textClassName ?? (isFooter ? "text-lg sm:text-xl" : "text-sm sm:text-base md:text-lg")}`}>
+      <span
+        className={`${textColor} font-heading leading-tight font-semibold whitespace-nowrap ${textClassName ?? (isFooter ? "text-lg sm:text-xl" : "text-sm sm:text-base md:text-lg")}`}
+      >
         {company.name}
       </span>
     </Link>

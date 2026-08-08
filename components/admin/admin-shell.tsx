@@ -19,13 +19,48 @@ import { createClient } from "@/lib/supabase/client";
 import type { StaffUser } from "@/lib/admin/types";
 
 const navigation = [
-  { label: "Dashboard", href: "/admin", icon: LayoutDashboard, adminOnly: false },
-  { label: "Insights", href: "/admin/insights", icon: BookOpen, adminOnly: false },
-  { label: "Contact Enquiries", href: "/admin/enquiries", icon: Mail, adminOnly: true },
-  { label: "Quote Requests", href: "/admin/quotes", icon: FileText, adminOnly: true },
-  { label: "Mentorship Applications", href: "/admin/mentorship", icon: Users, adminOnly: true },
-  { label: "Newsletter", href: "/admin/newsletter", icon: Mail, adminOnly: true },
-  { label: "Settings", href: "/admin/settings", icon: Settings, adminOnly: false },
+  {
+    label: "Dashboard",
+    href: "/admin",
+    icon: LayoutDashboard,
+    adminOnly: false,
+  },
+  {
+    label: "Insights",
+    href: "/admin/insights",
+    icon: BookOpen,
+    adminOnly: false,
+  },
+  {
+    label: "Contact Enquiries",
+    href: "/admin/enquiries",
+    icon: Mail,
+    adminOnly: true,
+  },
+  {
+    label: "Quote Requests",
+    href: "/admin/quotes",
+    icon: FileText,
+    adminOnly: true,
+  },
+  {
+    label: "Mentorship Applications",
+    href: "/admin/mentorship",
+    icon: Users,
+    adminOnly: true,
+  },
+  {
+    label: "Newsletter",
+    href: "/admin/newsletter",
+    icon: Mail,
+    adminOnly: true,
+  },
+  {
+    label: "Settings",
+    href: "/admin/settings",
+    icon: Settings,
+    adminOnly: false,
+  },
 ];
 
 function isActivePath(pathname: string, href: string) {
@@ -124,7 +159,9 @@ export function AdminShell({
             <Menu size={24} />
           </button>
           <div className="ml-auto text-right">
-            <p className="text-navy text-sm font-bold">{user.fullName || "Dune Staff"}</p>
+            <p className="text-navy text-sm font-bold">
+              {user.fullName || "Dune Staff"}
+            </p>
             <p className="text-muted text-xs">{user.email}</p>
           </div>
         </header>

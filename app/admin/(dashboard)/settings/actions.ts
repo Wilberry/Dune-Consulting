@@ -6,7 +6,11 @@ import { requireStaffUser } from "@/lib/admin/auth";
 import { createClient } from "@/lib/supabase/server";
 
 const profileSchema = z.object({
-  fullName: z.string().trim().min(2, "Enter at least 2 characters.").max(120, "Keep the name under 120 characters."),
+  fullName: z
+    .string()
+    .trim()
+    .min(2, "Enter at least 2 characters.")
+    .max(120, "Keep the name under 120 characters."),
 });
 
 export type ProfileActionState = {
@@ -20,7 +24,9 @@ export async function updateProfileName(
 ): Promise<ProfileActionState> {
   await requireStaffUser();
 
-  const parsed = profileSchema.safeParse({ fullName: formData.get("fullName") });
+  const parsed = profileSchema.safeParse({
+    fullName: formData.get("fullName"),
+  });
   if (!parsed.success) {
     return {
       status: "error",

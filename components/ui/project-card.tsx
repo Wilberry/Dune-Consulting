@@ -4,16 +4,16 @@ import type { Project } from "@/data/portfolio";
 import { ImagePlaceholder } from "./image-placeholder";
 export function ProjectCard({ project }: { project: Project }) {
   return (
-    <article className="group border-line overflow-hidden rounded-xl border bg-white text-center transition hover:-translate-y-1 hover:shadow-xl sm:text-left h-full flex flex-col">
-      <div className="overflow-hidden bg-off-white h-[220px] sm:h-[240px] lg:h-[280px] w-full">
+    <article className="group border-line flex h-full flex-col overflow-hidden rounded-xl border bg-white text-center transition hover:-translate-y-1 hover:shadow-xl sm:text-left">
+      <div className="bg-off-white h-[220px] w-full overflow-hidden sm:h-[240px] lg:h-[280px]">
         <ImagePlaceholder
           src={project.image}
           alt={`${project.title} event artwork`}
-          className="min-h-0 transition duration-300 group-hover:scale-105 h-full"
+          className="h-full min-h-0 transition duration-300 group-hover:scale-105"
           fit="cover"
         />
       </div>
-      <div className="p-6 flex flex-col flex-1">
+      <div className="flex flex-1 flex-col p-6">
         <p className="text-amber-text text-xs font-bold tracking-wider uppercase">
           {project.category}
         </p>

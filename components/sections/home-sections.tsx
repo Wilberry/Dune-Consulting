@@ -115,7 +115,7 @@ export function Clients() {
       className="border-line border-b bg-white py-16 sm:py-20"
     >
       <Container>
-        <div className="max-w-3xl text-center mx-auto">
+        <div className="mx-auto max-w-3xl text-center">
           <p className="text-amber mb-3 text-xs font-extrabold tracking-[.18em] uppercase">
             Our Event Portfolio
           </p>
@@ -126,9 +126,10 @@ export function Clients() {
             Selected Events and Organisations We Have Supported
           </h2>
           <p className="text-muted mt-4 text-sm leading-7">
-            Our event safety portfolio includes corporate gatherings, conferences,
-            launches, festivals and large audience experiences supported through
-            practical planning, coordination and on-site safety management.
+            Our event safety portfolio includes corporate gatherings,
+            conferences, launches, festivals and large audience experiences
+            supported through practical planning, coordination and on-site
+            safety management.
           </p>
         </div>
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
@@ -188,12 +189,12 @@ export function AboutPreview() {
         <div className="mt-12 grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
           <div className="relative">
             <div className="aspect-[5/4] overflow-hidden rounded-xl">
-                <ImagePlaceholder
-                  src="/images/Practical_Safety.webp"
-                  alt="A facilitator leading a practical Dune Consulting HSE training session"
-                />
+              <ImagePlaceholder
+                src="/images/Practical_Safety.webp"
+                alt="A facilitator leading a practical Dune Consulting HSE training session"
+              />
             </div>
-            <div className="hidden md:block bg-navy absolute right-4 -bottom-6 max-w-56 rounded-lg p-5 text-white shadow-xl sm:right-[-16px]">
+            <div className="bg-navy absolute right-4 -bottom-6 hidden max-w-56 rounded-lg p-5 text-white shadow-xl sm:right-[-16px] md:block">
               <BadgeCheck className="text-amber mb-3" />
               <p className="font-heading text-lg font-bold">
                 Practical support, designed around your operation.
@@ -201,11 +202,11 @@ export function AboutPreview() {
             </div>
           </div>
           <div>
-            <div className="text-muted mt-6 space-y-4 leading-7 text-center lg:text-left">
+            <div className="text-muted mt-6 space-y-4 text-center leading-7 lg:text-left">
               <p>
                 Dune Consulting is a Lagos-based Health, Safety and Environment
-                consultancy supporting organisations, event producers and project
-                teams with practical risk-management solutions.
+                consultancy supporting organisations, event producers and
+                project teams with practical risk-management solutions.
               </p>
               <p>
                 We believe effective safety should protect people without
@@ -225,7 +226,7 @@ export function AboutPreview() {
                 </li>
               ))}
             </ul>
-            <Button className="mt-8 mx-auto lg:mx-0" href="/about" arrow>
+            <Button className="mx-auto mt-8 lg:mx-0" href="/about" arrow>
               Learn About Dune
             </Button>
           </div>
@@ -329,7 +330,7 @@ export function FeaturedProjects() {
             title="Selected Events and Projects"
             copy="A selection of events and organisations supported by Dune Consulting."
           />
-          <div className="w-full flex justify-center lg:justify-end">
+          <div className="flex w-full justify-center lg:justify-end">
             <Link
               href="/portfolio"
               className="text-navy inline-flex shrink-0 items-center gap-2 font-bold"
@@ -413,12 +414,13 @@ export function FAQSection() {
         <div className="mx-auto mt-12 w-full max-w-[1120px] px-0 sm:px-2 lg:px-0">
           <Accordion items={faqItems} />
         </div>
-        <div className="mx-auto mt-10 max-w-[920px] rounded-3xl border border-white/10 bg-navy p-8 text-white shadow-xl sm:p-10">
+        <div className="bg-navy mx-auto mt-10 max-w-[920px] rounded-3xl border border-white/10 p-8 text-white shadow-xl sm:p-10">
           <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <h3 className="text-2xl font-extrabold">Still have questions?</h3>
               <p className="mt-3 max-w-2xl text-sm leading-7 text-white/70">
-                Our team is ready to help you choose the right HSE solution, training programme, or professional support service.
+                Our team is ready to help you choose the right HSE solution,
+                training programme, or professional support service.
               </p>
             </div>
             <Button href="/contact#consultation">Contact Our Team</Button>
@@ -455,7 +457,7 @@ export function Testimonials() {
                       className="object-cover"
                     />
                   ) : (
-                    <div className="flex h-full w-full items-center justify-center bg-amber text-deep-navy font-semibold">
+                    <div className="bg-amber text-deep-navy flex h-full w-full items-center justify-center font-semibold">
                       {testimonial.name
                         .split(" ")
                         .map((part) => part[0])
@@ -473,11 +475,15 @@ export function Testimonials() {
                   <Star
                     key={index}
                     size={16}
-                    className={index < testimonial.rating ? "text-amber" : "text-slate-300"}
+                    className={
+                      index < testimonial.rating
+                        ? "text-amber"
+                        : "text-slate-300"
+                    }
                   />
                 ))}
               </div>
-              <p className="mt-6 text-sm leading-7 text-ink">
+              <p className="text-ink mt-6 text-sm leading-7">
                 “{testimonial.quote}”
               </p>
             </article>
@@ -500,7 +506,8 @@ export function NewsletterSection() {
             Practical HSE insight, delivered when it is ready.
           </h2>
           <p className="mt-3 text-white/70">
-            Newsletter signup will be enabled once mailing platform and privacy terms are configured.
+            Newsletter signup will be enabled once mailing platform and privacy
+            terms are configured.
           </p>
         </div>
         <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
@@ -530,4 +537,3 @@ export function NewsletterSection() {
     </section>
   );
 }
-
