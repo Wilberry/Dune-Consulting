@@ -28,13 +28,15 @@ Copy `.env.example` to `.env.local` and set:
 
 ```env
 NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_ANON_KEY=
-SUPABASE_SERVICE_ROLE_KEY=
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=
+SUPABASE_SECRET_KEY=
 ```
 
-Use the project URL and anon/publishable key for the public variables.
+Use the project URL and current publishable key for browser/server-session clients.
 
-The service-role key is server-only. Never add `NEXT_PUBLIC_` to it and never expose it in browser code.
+The secret key is server-only. Never add `NEXT_PUBLIC_` to it and never expose it in browser code. It has elevated privileges and bypasses Row Level Security through the service role, so treat it like a production secret.
+
+The code temporarily accepts the legacy `NEXT_PUBLIC_SUPABASE_ANON_KEY` and `SUPABASE_SERVICE_ROLE_KEY` variable names as fallbacks for older projects, but new Dune environments should use the publishable/secret keys. Supabase has announced that the legacy `anon` and `service_role` API keys are being deprecated by the end of 2026.
 
 Existing Resend/contact variables should remain unchanged.
 
@@ -215,9 +217,10 @@ npm run lint
 npm run typecheck
 npm run test
 npm run build
+npm run e2e
 ```
 
-The repository also contains broader E2E/accessibility/content checks where appropriate.
+The repository also contains broader accessibility/content/asset checks where appropriate.
 
 ## 14. Phase Two
 
