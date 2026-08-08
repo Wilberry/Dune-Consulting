@@ -1,4 +1,3 @@
-import { cn } from "@/lib/utils";
 import { Button } from "./button";
 import { Container } from "./container";
 import { ImagePlaceholder } from "./image-placeholder";
@@ -24,9 +23,9 @@ export function PageHero({
   return (
     <section className="grid-pattern bg-deep-navy overflow-hidden text-white">
       <Container
-        className={`grid items-center gap-10 lg:gap-14 py-14 sm:py-18 ${image ? "lg:grid-cols-[1.12fr_.88fr]" : ""}`}
+        className={`grid items-center gap-10 py-14 sm:py-18 lg:gap-14 ${image ? "lg:grid-cols-[1.12fr_.88fr]" : ""}`}
       >
-        <div className="text-center lg:text-left flex flex-col justify-center items-center lg:items-start">
+        <div className="flex flex-col items-center justify-center text-center lg:items-start lg:text-left">
           <p className="text-amber text-xs font-extrabold tracking-[.18em] uppercase">
             {eyebrowMobile ? (
               <>
@@ -37,14 +36,14 @@ export function PageHero({
               eyebrow
             )}
           </p>
-          <h1 className="mt-4 max-w-3xl text-4xl leading-[1.08] font-extrabold text-balance sm:text-5xl lg:text-6xl mx-auto lg:mx-0">
+          <h1 className="mx-auto mt-4 max-w-3xl text-4xl leading-[1.08] font-extrabold text-balance sm:text-5xl lg:mx-0 lg:text-6xl">
             {title}
           </h1>
-          <p className="mt-5 max-w-2xl text-base leading-7 text-white/70 sm:text-lg mx-auto lg:mx-0">
+          <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-white/70 sm:text-lg lg:mx-0">
             {copy}
           </p>
           {cta && (
-            <div className="mt-7 flex gap-3 justify-center lg:justify-start w-full">
+            <div className="mt-7 flex w-full justify-center gap-3 lg:justify-start">
               <Button href={cta.href}>{cta.label}</Button>
             </div>
           )}

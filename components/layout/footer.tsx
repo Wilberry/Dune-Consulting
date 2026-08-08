@@ -12,9 +12,15 @@ export function Footer() {
       <Container className="grid gap-10 py-12 md:grid-cols-2 lg:grid-cols-[1.4fr_0.7fr_1fr_1.2fr] lg:py-14">
         {/* Brand Column */}
         <div>
-          <Brand inverse variant="footer" logoClassName="h-12 w-auto sm:h-14" textClassName="text-base sm:text-lg" />
-          <p className="mt-4 max-w-xs leading-7 text-white/65 text-sm">
-            Practical HSE training, consulting and personnel to help organisations manage risk and deliver safer operations.
+          <Brand
+            inverse
+            variant="footer"
+            logoClassName="h-12 w-auto sm:h-14"
+            textClassName="text-base sm:text-lg"
+          />
+          <p className="mt-4 max-w-xs text-sm leading-7 text-white/65">
+            Practical HSE training, consulting and personnel to help
+            organisations manage risk and deliver safer operations.
           </p>
           <div className="mt-6 flex gap-3">
             <a
@@ -47,7 +53,7 @@ export function Footer() {
               ["Contact", "/contact"],
             ].map(([label, href]) => (
               <li key={href}>
-                <Link className="hover:text-white transition" href={href}>
+                <Link className="transition hover:text-white" href={href}>
                   {label}
                 </Link>
               </li>
@@ -63,13 +69,13 @@ export function Footer() {
           <ul className="mt-4 space-y-3 text-sm text-white/70">
             {serviceNavigation.map((item) => (
               <li key={item.href}>
-                <Link className="hover:text-white transition" href={item.href}>
+                <Link className="transition hover:text-white" href={item.href}>
                   {item.label}
                 </Link>
               </li>
             ))}
             <li>
-              <Link href="/mentorship" className="hover:text-white transition">
+              <Link href="/mentorship" className="transition hover:text-white">
                 HSE Mentorship
               </Link>
             </li>
@@ -85,24 +91,24 @@ export function Footer() {
             </h3>
             <ul className="mt-4 space-y-3 text-sm text-white/70">
               <li className="flex items-start gap-3">
-                <MapPin className="text-amber shrink-0 mt-0.5" size={16} />
+                <MapPin className="text-amber mt-0.5 shrink-0" size={16} />
                 <span>{company.location}</span>
               </li>
               <li>
                 <a
-                  className="flex items-start gap-3 hover:text-white transition"
+                  className="flex items-start gap-3 transition hover:text-white"
                   href={`tel:${company.telephoneHref}`}
                 >
-                  <Phone className="text-amber shrink-0 mt-0.5" size={16} />
+                  <Phone className="text-amber mt-0.5 shrink-0" size={16} />
                   <span>{company.telephone}</span>
                 </a>
               </li>
               <li>
                 <a
-                  className="flex items-start gap-3 hover:text-white transition"
+                  className="flex items-start gap-3 transition hover:text-white"
                   href={`mailto:${company.email}`}
                 >
-                  <Mail className="text-amber shrink-0 mt-0.5" size={16} />
+                  <Mail className="text-amber mt-0.5 shrink-0" size={16} />
                   <span>{company.email}</span>
                 </a>
               </li>
@@ -122,7 +128,7 @@ export function Footer() {
                 disabled
                 type="email"
                 placeholder="Work email"
-                className="min-h-10 rounded-md border border-white/15 bg-white/5 px-3 text-xs text-white placeholder:text-white/40 transition"
+                className="min-h-10 rounded-md border border-white/15 bg-white/5 px-3 text-xs text-white transition placeholder:text-white/40"
               />
               <button
                 disabled
@@ -131,9 +137,7 @@ export function Footer() {
                 Subscribe
               </button>
             </div>
-            <p className="mt-2 text-xs text-white/50">
-              Coming soon
-            </p>
+            <p className="mt-2 text-xs text-white/50">Coming soon</p>
           </div>
         </div>
       </Container>
@@ -145,10 +149,10 @@ export function Footer() {
             © {year} {company.name}. All rights reserved.
           </p>
           <div className="flex gap-5">
-            <Link href="/privacy" className="hover:text-white/70 transition">
+            <Link href="/privacy" className="transition hover:text-white/70">
               Privacy Policy
             </Link>
-            <Link href="/terms" className="hover:text-white/70 transition">
+            <Link href="/terms" className="transition hover:text-white/70">
               Terms
             </Link>
           </div>

@@ -4,7 +4,7 @@ import type { Service } from "@/data/services";
 export function ServiceCard({ service }: { service: Service }) {
   const Icon = service.icon;
   return (
-    <article className="group border-line hover:border-amber hover:shadow-navy/8 flex min-h-72 flex-col items-center text-center rounded-xl border bg-white p-7 transition hover:-translate-y-1 hover:shadow-xl sm:items-start sm:text-left">
+    <article className="group border-line hover:border-amber hover:shadow-navy/8 flex min-h-72 flex-col items-center rounded-xl border bg-white p-7 text-center transition hover:-translate-y-1 hover:shadow-xl sm:items-start sm:text-left">
       <div className="bg-navy text-amber mb-6 flex size-12 items-center justify-center rounded-lg">
         <Icon aria-hidden="true" />
       </div>

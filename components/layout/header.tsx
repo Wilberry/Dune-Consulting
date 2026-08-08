@@ -59,12 +59,15 @@ export function Header() {
       {/* Top banner removed per design request */}
       <header
         className={cn(
-          "sticky top-0 z-50 border-b border-white/20 bg-white/75 backdrop-blur-xl shadow-[0_8px_30px_rgba(15,35,68,0.08)] transition-shadow",
-          scrolled && "border-line shadow-sm"
+          "sticky top-0 z-50 border-b border-white/20 bg-white/75 shadow-[0_8px_30px_rgba(15,35,68,0.08)] backdrop-blur-xl transition-shadow",
+          scrolled && "border-line shadow-sm",
         )}
       >
         <Container className="flex h-16 items-center justify-between px-5 sm:h-[4.75rem] sm:px-6">
-          <Brand logoClassName="h-10 w-auto sm:h-11" textClassName="text-sm font-semibold sm:text-base md:text-lg" />
+          <Brand
+            logoClassName="h-10 w-auto sm:h-11"
+            textClassName="text-sm font-semibold sm:text-base md:text-lg"
+          />
           <nav
             className="hidden items-center gap-1 lg:flex"
             aria-label="Main navigation"
@@ -110,7 +113,7 @@ export function Header() {
           </Link>
           <button
             ref={menuButtonRef}
-            className="text-navy rounded p-2 lg:hidden h-10 w-10 flex items-center justify-center"
+            className="text-navy flex h-10 w-10 items-center justify-center rounded p-2 lg:hidden"
             onClick={() => setOpen(true)}
             aria-label="Open navigation menu"
             aria-expanded={open}
@@ -130,7 +133,7 @@ export function Header() {
       <aside
         ref={mobileDialogRef}
         className={cn(
-          "fixed inset-y-0 right-0 z-[70] w-[min(90vw,390px)] bg-white/75 backdrop-blur-xl border border-white/20 p-6 shadow-[0_8px_30px_rgba(15,35,68,0.08)] transition-transform lg:hidden",
+          "fixed inset-y-0 right-0 z-[70] w-[min(90vw,390px)] border border-white/20 bg-white/75 p-6 shadow-[0_8px_30px_rgba(15,35,68,0.08)] backdrop-blur-xl transition-transform lg:hidden",
           open ? "translate-x-0" : "translate-x-full",
         )}
         aria-label="Mobile navigation"
@@ -140,7 +143,10 @@ export function Header() {
         inert={!open}
       >
         <div className="flex items-center justify-between">
-          <Brand logoClassName="h-10 w-auto" textClassName="text-sm font-semibold" />
+          <Brand
+            logoClassName="h-10 w-auto"
+            textClassName="text-sm font-semibold"
+          />
           <button
             ref={closeButtonRef}
             className="text-navy rounded p-2"
@@ -180,7 +186,7 @@ export function Header() {
                       <Link
                         key={sub.href}
                         onClick={() => setOpen(false)}
-                        className="block border-b border-white/30 last:border-b-0 px-5 py-4 text-base font-medium text-[#0F2344] transition-colors hover:bg-white/35 focus:bg-white/35"
+                        className="block border-b border-white/30 px-5 py-4 text-base font-medium text-[#0F2344] transition-colors last:border-b-0 hover:bg-white/35 focus:bg-white/35"
                         href={sub.href}
                       >
                         {sub.label}

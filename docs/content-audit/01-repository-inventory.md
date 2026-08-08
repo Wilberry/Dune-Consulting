@@ -18,12 +18,14 @@
 ### Public Routes (Marketing & Service Routes)
 
 **Collection & Index Routes (4):**
+
 - `/` – Homepage (handled by `app/page.tsx`)
 - `/services` – Services overview page (SEO metadata in `data/routes.ts`)
 - `/portfolio` – Portfolio / Featured Projects page (SEO metadata in `data/routes.ts`)
 - `/contact` – Contact page with consultation form (handled by `app/contact/page.tsx`)
 
 **Detail Pages & Fully Audited Routes (14):**
+
 - `/about` – About Dune Consulting
 - `/insights` – Insights / Articles page
 - `/mentorship` – HSE Mentorship Programme page
@@ -34,6 +36,7 @@
 - `/services/personnel-outsourcing` – Personnel outsourcing detail page (fully audited)
 
 **Portfolio Project Pages (6, inspected for consistency):**
+
 - `/portfolio/jameson-distillery-on-tour`
 - `/portfolio/moonshot-by-techcabal`
 - `/portfolio/afc-staff-retreat`
@@ -44,6 +47,7 @@
 Note: All 6 projects display "Project details subject to client approval" disclaimer.
 
 **System Routes:**
+
 - `/[...slug]` – Catch-all for unknown routes (404 handling via `app/[...slug]/page.tsx`)
 
 ### API Routes
@@ -64,36 +68,39 @@ Note: All 6 projects display "Project details subject to client approval" discla
 
 ## 3. Page-to-File Map
 
-| Route | Component File | Data File(s) | Purpose |
-|-------|---|---|---|
-| `/` | `app/page.tsx` | `data/page-content.ts`, `data/services.ts`, `data/statistics.ts`, `data/portfolio.ts`, `data/testimonials.ts` | Homepage with hero, services overview, impact, mentorship spotlight, testimonials |
-| `/about` | `components/pages/about-page.tsx` | `data/page-content.ts` | Company story, mission, vision, values, approach, industries, leadership |
-| `/services` | `components/pages/services-page.tsx` | `data/services.ts`, `data/page-content.ts` | Services overview and navigation |
-| `/services/event-safety-management` | `components/pages/services-page.tsx` (dynamic) | `data/page-content.ts` | Detailed event safety service page |
-| `/services/hse-training` | `components/pages/services-page.tsx` (dynamic) | `data/page-content.ts` | Detailed HSE training service page |
-| `/services/personnel-outsourcing` | `components/pages/services-page.tsx` (dynamic) | `data/page-content.ts` | Detailed HSE outsourcing service page |
-| `/mentorship` | `components/pages/mentorship-page.tsx` | `data/page-content.ts` | HSE Mentorship Programme overview, benefits, curriculum |
-| `/portfolio` | `components/pages/portfolio-page.tsx` | `data/portfolio.ts` | Portfolio / Featured projects overview |
-| `/portfolio/[slug]` | `components/pages/portfolio-page.tsx` (dynamic) | `data/portfolio.ts` | Individual project detail page |
-| `/insights` | `components/pages/insights-page.tsx` | `data/page-content.ts` | Articles and insights stub |
-| `/contact` | `app/contact/page.tsx` | `data/company.ts`, `lib/validations.ts` | Contact form and enquiry page |
-| `/privacy` | `components/pages/legal-page.tsx` | – | Privacy policy |
-| `/terms` | `components/pages/legal-page.tsx` | – | Terms of service |
+| Route                               | Component File                                  | Data File(s)                                                                                                  | Purpose                                                                           |
+| ----------------------------------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| `/`                                 | `app/page.tsx`                                  | `data/page-content.ts`, `data/services.ts`, `data/statistics.ts`, `data/portfolio.ts`, `data/testimonials.ts` | Homepage with hero, services overview, impact, mentorship spotlight, testimonials |
+| `/about`                            | `components/pages/about-page.tsx`               | `data/page-content.ts`                                                                                        | Company story, mission, vision, values, approach, industries, leadership          |
+| `/services`                         | `components/pages/services-page.tsx`            | `data/services.ts`, `data/page-content.ts`                                                                    | Services overview and navigation                                                  |
+| `/services/event-safety-management` | `components/pages/services-page.tsx` (dynamic)  | `data/page-content.ts`                                                                                        | Detailed event safety service page                                                |
+| `/services/hse-training`            | `components/pages/services-page.tsx` (dynamic)  | `data/page-content.ts`                                                                                        | Detailed HSE training service page                                                |
+| `/services/personnel-outsourcing`   | `components/pages/services-page.tsx` (dynamic)  | `data/page-content.ts`                                                                                        | Detailed HSE outsourcing service page                                             |
+| `/mentorship`                       | `components/pages/mentorship-page.tsx`          | `data/page-content.ts`                                                                                        | HSE Mentorship Programme overview, benefits, curriculum                           |
+| `/portfolio`                        | `components/pages/portfolio-page.tsx`           | `data/portfolio.ts`                                                                                           | Portfolio / Featured projects overview                                            |
+| `/portfolio/[slug]`                 | `components/pages/portfolio-page.tsx` (dynamic) | `data/portfolio.ts`                                                                                           | Individual project detail page                                                    |
+| `/insights`                         | `components/pages/insights-page.tsx`            | `data/page-content.ts`                                                                                        | Articles and insights stub                                                        |
+| `/contact`                          | `app/contact/page.tsx`                          | `data/company.ts`, `lib/validations.ts`                                                                       | Contact form and enquiry page                                                     |
+| `/privacy`                          | `components/pages/legal-page.tsx`               | –                                                                                                             | Privacy policy                                                                    |
+| `/terms`                            | `components/pages/legal-page.tsx`               | –                                                                                                             | Terms of service                                                                  |
 
 ## 4. Shared Content Components
 
 ### Layout Components
+
 - `components/layout/header.tsx` – Navigation, logo, CTA buttons
 - `components/layout/footer.tsx` – Footer navigation, contact, social links
 - `components/layout/brand.tsx` – Logo and brand assets
 - `components/layout/review-banner.tsx` – Preview mode banner
 
 ### Page Shells
+
 - `components/ui/page-hero.tsx` – Reusable page hero section
 - `components/ui/section.tsx` – Reusable section wrapper
 - `components/ui/container.tsx` – Max-width container
 
 ### Feature & Content Blocks
+
 - `components/ui/section-heading.tsx` – Eyebrow + title + copy pattern
 - `components/ui/feature-grid.tsx` – Grid of feature cards
 - `components/ui/feature-item.tsx` – Single feature card
@@ -105,17 +112,20 @@ Note: All 6 projects display "Project details subject to client approval" discla
 - `components/ui/article-card.tsx` – Article/insight card
 
 ### Forms & Controls
+
 - `components/forms/consultation-form.tsx` – Main contact/enquiry form
 - `components/ui/button.tsx` – CTA button (primary/secondary variants)
 - `components/ui/primitives.tsx` – `<Callout>`, `<Quote>`, `<Badge>` components
 
 ### Other
+
 - `components/ui/reveal.tsx` – Scroll-triggered reveal animation
 - `components/ui/image-placeholder.tsx` – Responsive image container
 - `components/ui/breadcrumb.tsx` – Breadcrumb navigation
 - `components/ui/accordion.tsx` – Accordion component
 
 ### Sections (Homepage-Specific)
+
 - `components/sections/hero.tsx` – Homepage hero
 - `components/sections/cta-section.tsx` – Global CTA section
 - `components/sections/home-sections.tsx` – All homepage sections:
@@ -134,6 +144,7 @@ Note: All 6 projects display "Project details subject to client approval" discla
 ### Core Data Files
 
 **`data/company.ts`**
+
 - Company name: "Dune Consulting"
 - Location: "Lagos, Nigeria"
 - Contact phone: `publicEnv.companyPhone`
@@ -142,6 +153,7 @@ Note: All 6 projects display "Project details subject to client approval" discla
 - LinkedIn & Instagram URLs
 
 **`data/page-content.ts`** (Primary content source)
+
 - `serviceDetails` – Full service descriptions for:
   - Event Safety Management
   - Tailored HSE Training
@@ -154,9 +166,11 @@ Note: All 6 projects display "Project details subject to client approval" discla
 - `aboutApproach` – 3 approach points
 
 **`data/services.ts`**
+
 - `services[]` – 4 core services with descriptions and route links
 
 **`data/routes.ts`**
+
 - Full route definitions with metadata
 - 16 supported dynamic routes with SEO metadata
 - Note: This represents 16 defined route paths. The full public site includes 18 routes total:
@@ -165,22 +179,27 @@ Note: All 6 projects display "Project details subject to client approval" discla
 - All routes verified and currently documented in `data/routes.ts`
 
 **`data/statistics.ts`** ⚠️ **DISCREPANCY ALERT**
+
 - Current data: "1,000+ Training Hours", "3,500+ Delegates Trained", "100% Event Safety Regulatory Compliance Rate", "10 Active Projects"
 - **Conflicts with brief claims**: 700+ professionals trained, 30+ corporate training sessions, 320+ mentorship registrations
 - **Action required**: Verify which figures are correct
 
 **`data/testimonials.ts`**
+
 - Currently empty array
 - Note in app: "Client testimonials will be added after approval"
 
 **`data/portfolio.ts`**
+
 - 6 featured event projects with images and descriptions
 
 **`data/navigation.ts`**
+
 - Main navigation: Home, About, Services, Portfolio, HSE Mentorship, Insights, Contact
 - Service sub-navigation: Event Safety Management, Tailored HSE Training, HSE Personnel Outsourcing
 
 **`data/images.ts`**
+
 - Image metadata and URLs (not inspected in detail)
 
 ## 6. Forms and Conversion Points
@@ -188,10 +207,12 @@ Note: All 6 projects display "Project details subject to client approval" discla
 ### Consultation Form (`components/forms/consultation-form.tsx`)
 
 **Primary form locations:**
+
 - `/contact` page (full form)
 - Linked from CTAs throughout site via `#consultation` anchor
 
 **Current fields:**
+
 - `name` (required) – min 2, max 100 chars
 - `email` (required) – valid email format
 - `phone` (required) – 7–30 chars, alphanumeric + formatting
@@ -206,6 +227,7 @@ Note: All 6 projects display "Project details subject to client approval" discla
 - `originPage` – page URL where form was submitted
 
 **Submission:**
+
 - POST to `/api/contact`
 - Validated by Zod schema (`lib/validations.ts`)
 - Rate limited: 6 requests per IP per hour
@@ -214,23 +236,25 @@ Note: All 6 projects display "Project details subject to client approval" discla
 - Form reset on successful submission
 
 **Issues identified:**
+
 - Field labels need review (form text reading "Tell us what support you need. All fields marked * are required.")
 - `service` dropdown options unclear (not visible in form component)
 - No clear CTA text variation ("Request a consultation" vs other CTAs)
 
 ### Button/CTA Locations
 
-| Location | Text | Link | Context |
-|---|---|---|---|
-| Homepage Hero | "Request a Consultation" | `/contact#consultation` | Primary CTA |
-| Homepage Hero | "Explore Our Services" | `/services` | Secondary CTA |
-| Homepage Mentorship | "Explore the Mentorship Programme" | `/mentorship` | Service CTA |
-| About Hero | "Talk to our team" | `/contact#consultation` | Page CTA |
-| About Services | "Explore our services" | `/services` | Link CTA |
-| Mentorship Hero | "Express your interest" | `/contact#consultation` | Conversion CTA |
-| Throughout | Various "Learn More", "Explore" links | Various | Secondary navigation |
+| Location            | Text                                  | Link                    | Context              |
+| ------------------- | ------------------------------------- | ----------------------- | -------------------- |
+| Homepage Hero       | "Request a Consultation"              | `/contact#consultation` | Primary CTA          |
+| Homepage Hero       | "Explore Our Services"                | `/services`             | Secondary CTA        |
+| Homepage Mentorship | "Explore the Mentorship Programme"    | `/mentorship`           | Service CTA          |
+| About Hero          | "Talk to our team"                    | `/contact#consultation` | Page CTA             |
+| About Services      | "Explore our services"                | `/services`             | Link CTA             |
+| Mentorship Hero     | "Express your interest"               | `/contact#consultation` | Conversion CTA       |
+| Throughout          | Various "Learn More", "Explore" links | Various                 | Secondary navigation |
 
 **Observations:**
+
 - CTAs are inconsistent: "Request a Consultation", "Talk to our team", "Express your interest"
 - Some buttons use service-specific language, others generic
 - No "Request HSE Personnel", "Request Training Proposal", "Plan a Safer Event" variations
@@ -240,16 +264,19 @@ Note: All 6 projects display "Project details subject to client approval" discla
 ### Root Metadata (`app/layout.tsx`)
 
 **Default title template:**
+
 ```
 Dune Consulting | HSE Training and Event Safety Management
 ```
 
 **Default description:**
+
 ```
 Dune Consulting provides event safety management, tailored HSE training, safety personnel outsourcing and professional HSE mentorship in Nigeria.
 ```
 
 **Meta configuration:**
+
 - Base URL from `company.websiteUrl`
 - Title template: `%s | ${company.name}`
 - Robots: Indexed for production, blocked for Vercel previews
@@ -260,6 +287,7 @@ Dune Consulting provides event safety management, tailored HSE training, safety 
 ### Page-Specific Metadata
 
 **Homepage** (`app/page.tsx`)
+
 - Custom title: "Dune Consulting | HSE Training and Event Safety Management"
 - Custom description
 - Canonical: `/`
@@ -269,6 +297,7 @@ Dune Consulting provides event safety management, tailored HSE training, safety 
 Each route has `title` and `description`, but need to verify if they're being used in page metadata.
 
 **Issues identified:**
+
 - Page titles are descriptive but not optimized for search intent (no LSI keywords)
 - Meta descriptions repeat "Dune Consulting" at start
 - No structured data observed on service pages, portfolio pages
@@ -340,6 +369,7 @@ Each route has `title` and `description`, but need to verify if they're being us
 ## 10. Recommended Implementation Sequence
 
 ### Phase 1 (Reconnaissance) ✓
+
 - [x] Explore repository structure
 - [x] Map all routes and pages
 - [x] Identify content sources
@@ -347,6 +377,7 @@ Each route has `title` and `description`, but need to verify if they're being us
 - [x] Document technical risks
 
 ### Phase 2 (Page-by-Page Audit)
+
 - [ ] Audit homepage copy and structure
 - [ ] Audit About page positioning
 - [ ] Audit Services overview page
@@ -360,6 +391,7 @@ Each route has `title` and `description`, but need to verify if they're being us
 - [ ] Check all CTAs and link targets
 
 ### Phase 3 (Brand Messaging)
+
 - [ ] Define core brand position
 - [ ] Establish messaging pillars
 - [ ] Standardize service naming
@@ -370,6 +402,7 @@ Each route has `title` and `description`, but need to verify if they're being us
 - [ ] Define event safety positioning
 
 ### Phase 4–14 (Implementation)
+
 - [ ] Update homepage
 - [ ] Update About page
 - [ ] Restructure Services pages
@@ -390,6 +423,7 @@ Each route has `title` and `description`, but need to verify if they're being us
 The Dune Consulting website uses a modern, maintainable Next.js architecture with clear separation of content (data files), components, and pages. Content is centralized in `data/page-content.ts`, making bulk updates feasible. However, several placeholders and gaps are intentional (awaiting client approval) and require verification before publication.
 
 **Key findings for Phase 2:**
+
 1. Statistics discrepancy must be resolved before claiming metrics
 2. Mentorship and leadership content requires client confirmation before positioning
 3. CTA language and form fields need standardization

@@ -37,7 +37,8 @@ const organisationSchema = {
   "@type": "Organization",
   name: company.name,
   url: company.websiteUrl,
-  description: "Dune Consulting helps organisations manage HSE risk, prepare their people and deliver safer workplaces and events through practical training, specialist consulting and competent HSE personnel.",
+  description:
+    "Dune Consulting helps organisations manage HSE risk, prepare their people and deliver safer workplaces and events through practical training, specialist consulting and competent HSE personnel.",
   address: {
     "@type": "PostalAddress",
     addressLocality: company.addressLocality,
