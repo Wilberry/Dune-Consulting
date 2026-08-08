@@ -9,13 +9,13 @@ test("homepage and primary navigation load without console errors", async ({
   });
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toContainText(
-    "Protecting People",
+    "Safer Workplaces.",
   );
   if ((page.viewportSize()?.width ?? 0) >= 1024) {
     for (const [label, path] of [
       ["About", "/about"],
       ["Portfolio", "/portfolio"],
-      ["HSE Mentorship", "/mentorship"],
+      ["Mentorship", "/mentorship"],
       ["Insights", "/insights"],
       ["Contact", "/contact"],
     ] as const) {
