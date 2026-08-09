@@ -10,7 +10,7 @@ import {
 } from "@/lib/validations";
 
 type SubmissionState = {
-  kind: "idle" | "success" | "error" | "unconfigured";
+  kind: "idle" | "success" | "error";
   message?: string;
 };
 const control =
@@ -233,10 +233,8 @@ export function ConsultationForm() {
           >
             <strong className="block">
               {submission.kind === "success"
-                ? "Enquiry sent"
-                : submission.kind === "unconfigured"
-                  ? "Delivery not configured"
-                  : "Enquiry not sent"}
+                ? "Enquiry received"
+                : "Enquiry not received"}
             </strong>
             <span className="text-muted mt-1 block">{submission.message}</span>
           </div>
