@@ -192,15 +192,13 @@ export function AboutPage() {
           <div className="space-y-8 text-center lg:text-left">
             <div className="space-y-4 leading-7">
               <h3 className="text-navy text-lg font-bold">Anthony Igbinosun</h3>
-              <p className="text-amber text-sm font-semibold">
-                Lead Consultant
-              </p>
+              <p className="text-navy text-sm font-semibold">Lead Consultant</p>
               <p>
                 <Link
                   href="https://www.linkedin.com/in/anthonyigbinosun"
                   target="_blank"
                   rel="noreferrer"
-                  className="text-amber-hover text-sm font-semibold transition hover:text-white"
+                  className="text-navy hover:text-deep-navy text-sm font-semibold underline decoration-amber decoration-2 underline-offset-4 transition"
                 >
                   Connect with Anthony on LinkedIn
                 </Link>
