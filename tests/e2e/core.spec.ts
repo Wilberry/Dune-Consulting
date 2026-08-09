@@ -75,9 +75,7 @@ test("mobile navigation manages focus, Escape, and scrolling", async ({
   await expect(trigger).toBeFocused();
 });
 
-test("contact validation and unavailable delivery are honest", async ({
-  page,
-}) => {
+test("contact validation and stored delivery are honest", async ({ page }) => {
   await page.goto("/contact");
   await page.getByRole("button", { name: "Send enquiry" }).click();
   await expect(page.locator("[aria-invalid=true]")).toHaveCount(6);
@@ -101,10 +99,13 @@ test("contact validation and unavailable delivery are honest", async ({
   await page.getByRole("checkbox").check();
   await page.waitForTimeout(3000);
   await page.getByRole("button", { name: "Send enquiry" }).click();
+  await expect(page.getByRole("status")).toContainText("Enquiry received");
   await expect(page.getByRole("status")).toContainText(
+    "Your enquiry has been received. Our team will respond using the details provided.",
+  );
+  await expect(page.getByRole("status")).not.toContainText(
     "Delivery not configured",
   );
-  await expect(page.getByRole("status")).not.toContainText("Enquiry sent");
 });
 
 test("pending contact submission cannot be duplicated", async ({ page }) => {
