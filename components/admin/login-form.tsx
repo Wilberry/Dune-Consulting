@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { z } from "zod";
 import { Brand } from "@/components/layout/brand";
@@ -15,6 +16,7 @@ export function AdminLoginForm() {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -41,6 +43,7 @@ export function AdminLoginForm() {
         await supabase.auth.signInWithPassword(parsed.data);
 
       if (signInError || !data.user) {
+        console.error("Sign-in error:", signInError ?? "no user returned", data);
         setError(
           "The email or password is incorrect, or this account is unavailable.",
         );
@@ -109,14 +112,42 @@ export function AdminLoginForm() {
               <label htmlFor="password" className="text-navy text-sm font-bold">
                 Password
               </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="current-password"
-                required
-                className="border-line text-ink mt-2 w-full rounded-lg border bg-white px-4 py-3"
-              />
+              <div className="relative mt-2">
+                <input
+                  id="password"
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  autoComplete="current-password"
+                  required
+                  className="border-line text-ink w-full rounded-lg border bg-white px-4 py-3 pr-10"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((s) => !s)}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 inline-flex items-center justify-center rounded p-1 text-sm text-muted hover:bg-slate-50"
+                >
+                  {showPassword ? (
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="h-5 w-5">
+                      <path strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" d="M3 3l18 18M10.58 10.58A3 3 0 0113.42 13.42M9.88 5.12A12.06 12.06 0 0121 12c-2.14 3.49-5.74 6-9 6a8.29 8.29 0 01-3.67-.78" />
+                    </svg>
+                  ) : (
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="h-5 w-5">
+                      <path strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" d="M12 5c4 0 7.4 2.5 9 6-1.6 3.5-5 6-9 6s-7.4-2.5-9-6c1.6-3.5 5-6 9-6z" />
+                      <circle cx="12" cy="12" r="3" strokeWidth="1.5" />
+                    </svg>
+                  )}
+                </button>
+              </div>
+            </div>
+
+            <div className="flex justify-end">
+              <Link
+                href="/admin/forgot-password"
+                className="text-sm font-medium text-amber hover:underline"
+              >
+                Forgot password?
+              </Link>
             </div>
 
             <div className="min-h-12" aria-live="polite">
