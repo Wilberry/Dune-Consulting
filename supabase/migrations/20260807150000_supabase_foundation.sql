@@ -116,7 +116,7 @@ create table public.mentorship_applications (
   name text not null,
   email text not null,
   phone text not null,
-  current_role text,
+  professional_role text,
   experience_level text,
   education text,
   reason_for_applying text,
