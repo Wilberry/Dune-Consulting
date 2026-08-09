@@ -7,6 +7,7 @@ test("sitemap contains public routes and excludes internal endpoints", () => {
   const entries = sitemap();
   const urls = entries.map((entry) => entry.url);
   assert.ok(urls.some((url) => url.endsWith("/about")));
+  assert.ok(urls.some((url) => url.endsWith("/request-quote")));
   assert.ok(
     urls.some((url) => url.endsWith("/services/event-safety-management")),
   );
