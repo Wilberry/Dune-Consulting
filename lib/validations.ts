@@ -86,7 +86,8 @@ export const mentorshipApplicationSchema = z.object({
     .max(4000),
   additionalInformation: z.string().trim().max(3000).optional(),
   consent: z.boolean().refine((value) => value, {
-    message: "Please confirm that we may review your application and contact you.",
+    message:
+      "Please confirm that we may review your application and contact you.",
   }),
   website: z.string().max(0, "Submission rejected."),
   formStartedAt: z.number().int().positive(),

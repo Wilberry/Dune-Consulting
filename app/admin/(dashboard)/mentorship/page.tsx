@@ -42,8 +42,8 @@ export default async function AdminMentorshipPage() {
             Mentorship Applications
           </h1>
           <p className="text-muted mt-3 max-w-3xl leading-7">
-            Review HSE Mentorship Program applications and keep each candidate&apos;s
-            progress status current.
+            Review HSE Mentorship Program applications and keep each
+            candidate&apos;s progress status current.
           </p>
         </div>
         <div className="border-line rounded-lg border bg-white px-4 py-3 text-sm">
@@ -147,7 +147,9 @@ export default async function AdminMentorshipPage() {
                   </div>
 
                   <div className="border-line mt-4 rounded-lg border p-4">
-                    <h3 className="text-navy text-sm font-bold">Career goals</h3>
+                    <h3 className="text-navy text-sm font-bold">
+                      Career goals
+                    </h3>
                     <p className="text-ink mt-2 text-sm leading-6 whitespace-pre-wrap">
                       {application.careerGoals || "Not provided"}
                     </p>

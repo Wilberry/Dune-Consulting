@@ -3,10 +3,7 @@ import "server-only";
 import { createClient } from "@/lib/supabase/server";
 
 export type MentorshipApplicationStatus =
-  | "new"
-  | "reviewing"
-  | "accepted"
-  | "declined";
+  "new" | "reviewing" | "accepted" | "declined";
 
 export type MentorshipApplication = {
   id: string;
@@ -36,21 +33,19 @@ export async function getMentorshipApplications() {
 
   if (error) throw new Error(error.message);
 
-  return (data ?? []).map(
-    (application): MentorshipApplication => ({
-      id: application.id,
-      name: application.name,
-      email: application.email,
-      phone: application.phone,
-      professionalRole: application.professional_role,
-      experienceLevel: application.experience_level,
-      education: application.education,
-      reasonForApplying: application.reason_for_applying,
-      careerGoals: application.career_goals,
-      additionalInformation: application.additional_information,
-      status: application.status as MentorshipApplicationStatus,
-      createdAt: application.created_at,
-      updatedAt: application.updated_at,
-    }),
-  );
+  return (data ?? []).map((application): MentorshipApplication => ({
+    id: application.id,
+    name: application.name,
+    email: application.email,
+    phone: application.phone,
+    professionalRole: application.professional_role,
+    experienceLevel: application.experience_level,
+    education: application.education,
+    reasonForApplying: application.reason_for_applying,
+    careerGoals: application.career_goals,
+    additionalInformation: application.additional_information,
+    status: application.status as MentorshipApplicationStatus,
+    createdAt: application.created_at,
+    updatedAt: application.updated_at,
+  }));
 }

@@ -189,9 +189,7 @@ export function MentorshipApplicationForm() {
             defaultValue=""
             aria-invalid={!!errors.experienceLevel}
             aria-describedby={
-              errors.experienceLevel
-                ? "mentorship-experience-error"
-                : undefined
+              errors.experienceLevel ? "mentorship-experience-error" : undefined
             }
             {...register("experienceLevel")}
           >
@@ -202,7 +200,9 @@ export function MentorshipApplicationForm() {
             <option>Recent graduate</option>
             <option>Early-career HSE professional</option>
             <option>Transitioning into HSE</option>
-            <option>Experienced professional seeking broader HSE context</option>
+            <option>
+              Experienced professional seeking broader HSE context
+            </option>
           </select>
         </Field>
 

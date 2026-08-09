@@ -56,9 +56,12 @@ test("mentorship endpoint persistence and notification behavior", async (context
           },
           fetchImpl: async (_input, init) => {
             providerBody = String(init?.body);
-            return new Response(JSON.stringify({ id: "email_mentorship_123" }), {
-              status: 200,
-            });
+            return new Response(
+              JSON.stringify({ id: "email_mentorship_123" }),
+              {
+                status: 200,
+              },
+            );
           },
         },
       );
@@ -167,9 +170,12 @@ test("mentorship endpoint persistence and notification behavior", async (context
           "203.0.113.78",
         ],
       ] as const) {
-        const response = await handleMentorshipApplication(request(payload, ip), {
-          persist: async () => undefined,
-        });
+        const response = await handleMentorshipApplication(
+          request(payload, ip),
+          {
+            persist: async () => undefined,
+          },
+        );
         assert.equal(response.status, 400);
       }
     },
