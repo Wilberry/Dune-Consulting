@@ -41,6 +41,25 @@ export function ForgotPasswordForm() {
       );
 
       if (resetError) {
+        if (process.env.NODE_ENV !== "production") {
+          console.error("Admin recovery email error:", {
+            code: resetError.code,
+            status: resetError.status,
+            message: resetError.message,
+          });
+        }
+
+        if (
+          resetError.status === 429 ||
+          resetError.code === "over_email_send_rate_limit" ||
+          resetError.code === "over_request_rate_limit"
+        ) {
+          setError(
+            "Too many recovery emails have been requested. Wait a while, then try again.",
+          );
+          return;
+        }
+
         setError("Could not send the recovery email. Try again later.");
         return;
       }
