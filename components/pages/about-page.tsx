@@ -198,7 +198,7 @@ export function AboutPage() {
                   href="https://www.linkedin.com/in/anthonyigbinosun"
                   target="_blank"
                   rel="noreferrer"
-                  className="text-navy hover:text-deep-navy text-sm font-semibold underline decoration-amber decoration-2 underline-offset-4 transition"
+                  className="text-navy hover:text-deep-navy decoration-amber text-sm font-semibold underline decoration-2 underline-offset-4 transition"
                 >
                   Connect with Anthony on LinkedIn
                 </Link>
