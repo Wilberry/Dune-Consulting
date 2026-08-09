@@ -142,13 +142,13 @@ export default async function AdminEnquiriesPage() {
 
                   <div className="bg-off-white mt-5 rounded-lg p-4">
                     <h3 className="text-navy text-sm font-bold">Enquiry</h3>
-                    <p className="text-ink mt-2 whitespace-pre-wrap text-sm leading-6">
+                    <p className="text-ink mt-2 text-sm leading-6 whitespace-pre-wrap">
                       {enquiry.message}
                     </p>
                   </div>
 
                   {enquiry.originPage && (
-                    <p className="text-muted mt-4 break-all text-xs">
+                    <p className="text-muted mt-4 text-xs break-all">
                       Origin: {enquiry.originPage}
                     </p>
                   )}
@@ -156,7 +156,7 @@ export default async function AdminEnquiriesPage() {
 
                 <form
                   action={updateEnquiryStatus}
-                  className="border-line w-full rounded-lg border bg-off-white p-4 xl:w-60"
+                  className="border-line bg-off-white w-full rounded-lg border p-4 xl:w-60"
                 >
                   <input type="hidden" name="id" value={enquiry.id} />
                   <label
@@ -179,7 +179,7 @@ export default async function AdminEnquiriesPage() {
                   </select>
                   <button
                     type="submit"
-                    className="bg-navy mt-3 w-full rounded-md px-4 py-2.5 text-sm font-bold text-white hover:bg-deep-navy"
+                    className="bg-navy hover:bg-deep-navy mt-3 w-full rounded-md px-4 py-2.5 text-sm font-bold text-white"
                   >
                     Save status
                   </button>

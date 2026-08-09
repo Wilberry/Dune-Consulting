@@ -1,10 +1,7 @@
 import { NextResponse } from "next/server";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { getEmailEnvironment } from "@/lib/server-env";
-import {
-  consultationSchema,
-  type ConsultationInput,
-} from "@/lib/validations";
+import { consultationSchema, type ConsultationInput } from "@/lib/validations";
 
 const MIN_COMPLETION_MS = 3000;
 

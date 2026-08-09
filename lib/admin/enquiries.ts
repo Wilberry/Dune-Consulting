@@ -32,21 +32,19 @@ export async function getContactEnquiries() {
 
   if (error) throw new Error(error.message);
 
-  return (data ?? []).map(
-    (enquiry): ContactEnquiry => ({
-      id: enquiry.id,
-      name: enquiry.name,
-      email: enquiry.email,
-      phone: enquiry.phone,
-      organisation: enquiry.organisation,
-      service: enquiry.service,
-      projectDate: enquiry.project_date,
-      location: enquiry.location,
-      message: enquiry.message,
-      status: enquiry.status as ContactEnquiryStatus,
-      originPage: enquiry.origin_page,
-      createdAt: enquiry.created_at,
-      updatedAt: enquiry.updated_at,
-    }),
-  );
+  return (data ?? []).map((enquiry): ContactEnquiry => ({
+    id: enquiry.id,
+    name: enquiry.name,
+    email: enquiry.email,
+    phone: enquiry.phone,
+    organisation: enquiry.organisation,
+    service: enquiry.service,
+    projectDate: enquiry.project_date,
+    location: enquiry.location,
+    message: enquiry.message,
+    status: enquiry.status as ContactEnquiryStatus,
+    originPage: enquiry.origin_page,
+    createdAt: enquiry.created_at,
+    updatedAt: enquiry.updated_at,
+  }));
 }
