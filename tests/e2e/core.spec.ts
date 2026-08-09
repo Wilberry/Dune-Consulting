@@ -192,6 +192,47 @@ test("quote request returns a Dune reference without depending on live services"
   await expect(page.getByRole("status")).toContainText("DUNE-Q-000123");
 });
 
+test("mentorship application can be submitted without depending on live services", async ({
+  page,
+}) => {
+  await page.route("**/api/mentorship", async (route) => {
+    await route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify({
+        status: "success",
+        message:
+          "Your mentorship application has been received. Our team will review it and contact you using the details provided.",
+      }),
+    });
+  });
+
+  await page.goto("/mentorship");
+  await page.getByLabel("Full name *").fill("Ada Example");
+  await page.getByLabel("Email address *").fill("ada@example.org");
+  await page.getByLabel("Phone number *").fill("+234 801 234 5678");
+  await page
+    .getByLabel("Experience level *")
+    .selectOption("Recent graduate");
+  await page
+    .getByLabel("Why do you want to join? *")
+    .fill(
+      "I want practical HSE guidance that connects classroom knowledge to real professional responsibilities.",
+    );
+  await page
+    .getByLabel("What are your HSE career goals? *")
+    .fill(
+      "I want to become a confident safety professional with strong risk assessment and communication skills.",
+    );
+  await page.getByRole("checkbox").check();
+  await page.getByRole("button", { name: "Submit application" }).click();
+
+  await expect(page.getByRole("status")).toContainText("Application received");
+  await expect(page.getByRole("status")).toContainText(
+    "Your mentorship application has been received.",
+  );
+});
+
 test("content routes have one H1 and expected status", async ({
   page,
   request,
