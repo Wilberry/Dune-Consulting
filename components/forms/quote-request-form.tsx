@@ -185,7 +185,9 @@ export function QuoteRequestForm() {
             className={control}
             defaultValue=""
             aria-invalid={!!errors.service}
-            aria-describedby={errors.service ? "quote-service-error" : undefined}
+            aria-describedby={
+              errors.service ? "quote-service-error" : undefined
+            }
             {...register("service")}
           >
             <option value="" disabled>
@@ -282,8 +284,8 @@ export function QuoteRequestForm() {
         />
         <span>
           By submitting this form, you agree that Dune Consulting may use the
-          information provided to prepare and respond to your quote request. Read
-          our{" "}
+          information provided to prepare and respond to your quote request.
+          Read our{" "}
           <Link
             href="/privacy"
             className="text-navy decoration-amber font-bold underline decoration-2 underline-offset-2"

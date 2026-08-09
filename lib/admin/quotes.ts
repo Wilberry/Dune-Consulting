@@ -3,11 +3,7 @@ import "server-only";
 import { createClient } from "@/lib/supabase/server";
 
 export type QuoteRequestStatus =
-  | "new"
-  | "reviewing"
-  | "contacted"
-  | "converted"
-  | "closed";
+  "new" | "reviewing" | "contacted" | "converted" | "closed";
 
 export type QuoteRequest = {
   id: string;

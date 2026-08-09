@@ -13,7 +13,8 @@ const basePayload = {
   participantCount: 250,
   projectDescription:
     "Please provide event safety planning and on-site coordination for our conference.",
-  additionalRequirements: "Include <script>alert(1)</script> emergency support.",
+  additionalRequirements:
+    "Include <script>alert(1)</script> emergency support.",
   consent: true,
   website: "",
   formStartedAt: Date.now() - 5000,
@@ -110,7 +111,8 @@ test("quote endpoint persistence and notification behavior", async (context) => 
           request(basePayload, "203.0.113.63"),
           {
             persist: async () => "DUNE-Q-000125",
-            fetchImpl: async () => new Response("provider detail", { status: 500 }),
+            fetchImpl: async () =>
+              new Response("provider detail", { status: 500 }),
           },
         );
         const result = await response.json();

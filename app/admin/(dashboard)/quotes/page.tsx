@@ -1,9 +1,6 @@
 import { updateQuoteStatus } from "@/app/admin/(dashboard)/quotes/actions";
 import { requireAdminUser } from "@/lib/admin/auth";
-import {
-  getQuoteRequests,
-  type QuoteRequestStatus,
-} from "@/lib/admin/quotes";
+import { getQuoteRequests, type QuoteRequestStatus } from "@/lib/admin/quotes";
 
 const statuses: { value: QuoteRequestStatus; label: string }[] = [
   { value: "new", label: "New" },

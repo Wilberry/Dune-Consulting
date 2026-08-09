@@ -56,7 +56,9 @@ function toInsert(quote: QuoteRequestInput): QuoteRequestInsert {
     location: nullable(quote.location),
     expected_start_date: nullable(quote.expectedStartDate),
     participant_count:
-      typeof quote.participantCount === "number" ? quote.participantCount : null,
+      typeof quote.participantCount === "number"
+        ? quote.participantCount
+        : null,
     project_description: quote.projectDescription,
     additional_requirements: nullable(quote.additionalRequirements),
   };
