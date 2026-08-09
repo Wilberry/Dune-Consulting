@@ -157,11 +157,47 @@ test("pending contact submission cannot be duplicated", async ({ page }) => {
   expect(requests).toBe(1);
 });
 
+test("quote request returns a Dune reference without depending on live services", async ({
+  page,
+}) => {
+  await page.route("**/api/quote", async (route) => {
+    await route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify({
+        status: "success",
+        referenceNumber: "DUNE-Q-000123",
+        message:
+          "Your quote request has been received. Reference: DUNE-Q-000123. Our team will review the details and contact you using the information provided.",
+      }),
+    });
+  });
+
+  await page.goto("/request-quote");
+  await page.getByLabel("Full name *").fill("Ada Example");
+  await page.getByLabel("Email address *").fill("ada@example.org");
+  await page.getByLabel("Phone number *").fill("+234 801 234 5678");
+  await page
+    .getByLabel("Service required *")
+    .selectOption("Event Safety Management");
+  await page
+    .getByLabel("Project or event description *")
+    .fill("Please provide event safety planning for our annual conference.");
+  await page.getByRole("checkbox").check();
+  await page.getByRole("button", { name: "Request a quote" }).click();
+
+  await expect(page.getByRole("status")).toContainText(
+    "Quote request received",
+  );
+  await expect(page.getByRole("status")).toContainText("DUNE-Q-000123");
+});
+
 test("content routes have one H1 and expected status", async ({
   page,
   request,
 }) => {
   for (const path of [
+    "/request-quote",
     "/services/event-safety-management",
     "/services/hse-training",
     "/services/personnel-outsourcing",
