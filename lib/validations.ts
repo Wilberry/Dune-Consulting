@@ -93,6 +93,36 @@ export const mentorshipApplicationSchema = z.object({
   formStartedAt: z.number().int().positive(),
 });
 
+export const articleEditorSchema = z.object({
+  title: z.string().trim().min(5, "Please enter a clear article title.").max(160),
+  slug: z
+    .string()
+    .trim()
+    .toLowerCase()
+    .min(3, "Please enter a slug.")
+    .max(160)
+    .regex(
+      /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
+      "Use lowercase letters, numbers and single hyphens only.",
+    ),
+  excerpt: z
+    .string()
+    .trim()
+    .min(20, "Please provide a short article summary.")
+    .max(320),
+  content: z
+    .string()
+    .trim()
+    .min(80, "Please provide a more complete article body.")
+    .max(50000),
+  category: z.string().trim().min(2, "Please enter a category.").max(100),
+  authorName: z.string().trim().min(2, "Please enter the author name.").max(120),
+  status: z.enum(["draft", "published"]),
+  featured: z.boolean(),
+  seoTitle: z.string().trim().max(70).optional(),
+  seoDescription: z.string().trim().max(160).optional(),
+});
+
 export type ConsultationInput = z.infer<typeof consultationSchema>;
 export type ConsultationFormInput = z.input<typeof consultationSchema>;
 export type QuoteRequestInput = z.infer<typeof quoteRequestSchema>;
@@ -103,3 +133,4 @@ export type MentorshipApplicationInput = z.infer<
 export type MentorshipApplicationFormInput = z.input<
   typeof mentorshipApplicationSchema
 >;
+export type ArticleEditorInput = z.infer<typeof articleEditorSchema>;
