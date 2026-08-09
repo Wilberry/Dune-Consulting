@@ -8,9 +8,7 @@ import { createClient } from "@/lib/supabase/client";
 
 const passwordSchema = z
   .object({
-    password: z
-      .string()
-      .min(8, "Enter a password with at least 8 characters."),
+    password: z.string().min(8, "Enter a password with at least 8 characters."),
     confirmPassword: z.string(),
   })
   .superRefine(({ password, confirmPassword }, ctx) => {
@@ -77,7 +75,9 @@ export function UpdatePasswordForm() {
     });
 
     if (!parsed.success) {
-      setError(parsed.error.issues[0]?.message ?? "Review the password fields.");
+      setError(
+        parsed.error.issues[0]?.message ?? "Review the password fields.",
+      );
       return;
     }
 
@@ -195,7 +195,9 @@ export function UpdatePasswordForm() {
 
                 <div className="min-h-12" aria-live="polite">
                   {ready === null && (
-                    <p className="text-muted text-sm">Checking recovery link…</p>
+                    <p className="text-muted text-sm">
+                      Checking recovery link…
+                    </p>
                   )}
                   {error && (
                     <p
