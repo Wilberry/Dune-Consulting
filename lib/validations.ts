@@ -63,7 +63,42 @@ export const quoteRequestSchema = z.object({
   originPage: z.string().trim().max(500),
 });
 
+export const mentorshipApplicationSchema = z.object({
+  name: z.string().trim().min(2, "Please enter your name.").max(100),
+  email: emailSchema,
+  phone: phoneSchema,
+  professionalRole: z.string().trim().max(150).optional(),
+  experienceLevel: z
+    .string()
+    .trim()
+    .min(1, "Please select your current experience level.")
+    .max(100),
+  education: z.string().trim().max(300).optional(),
+  reasonForApplying: z
+    .string()
+    .trim()
+    .min(20, "Please tell us a little more about why you want to join.")
+    .max(4000),
+  careerGoals: z
+    .string()
+    .trim()
+    .min(20, "Please tell us a little more about your career goals.")
+    .max(4000),
+  additionalInformation: z.string().trim().max(3000).optional(),
+  consent: z.boolean().refine((value) => value, {
+    message: "Please confirm that we may review your application and contact you.",
+  }),
+  website: z.string().max(0, "Submission rejected."),
+  formStartedAt: z.number().int().positive(),
+});
+
 export type ConsultationInput = z.infer<typeof consultationSchema>;
 export type ConsultationFormInput = z.input<typeof consultationSchema>;
 export type QuoteRequestInput = z.infer<typeof quoteRequestSchema>;
 export type QuoteRequestFormInput = z.input<typeof quoteRequestSchema>;
+export type MentorshipApplicationInput = z.infer<
+  typeof mentorshipApplicationSchema
+>;
+export type MentorshipApplicationFormInput = z.input<
+  typeof mentorshipApplicationSchema
+>;
