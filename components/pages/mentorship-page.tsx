@@ -7,6 +7,7 @@ import {
   Route,
   Target,
 } from "lucide-react";
+import { MentorshipApplicationForm } from "@/components/forms/mentorship-application-form";
 import { Button } from "@/components/ui/button";
 import { FeatureGrid } from "@/components/ui/feature-grid";
 import { ImagePlaceholder } from "@/components/ui/image-placeholder";
@@ -39,7 +40,7 @@ export function MentorshipPage() {
         title="Build practical judgement for a meaningful career in safety."
         copy="A learning-focused program for emerging HSE professionals who want guidance, industry context and greater confidence applying what they know."
         image="/images/site_safety_briefing.webp"
-        cta={{ label: "Express your interest", href: "/contact#consultation" }}
+        cta={{ label: "Apply for mentorship", href: "#apply" }}
       />
       <Section>
         <div className="mx-auto max-w-4xl text-center">
@@ -194,6 +195,27 @@ export function MentorshipPage() {
           </div>
         </div>
       </Section>
+      <Section className="bg-off-white">
+        <div className="grid gap-10 lg:grid-cols-[.8fr_1.2fr] lg:items-start">
+          <div className="lg:sticky lg:top-28">
+            <SectionHeading
+              eyebrow="Applications"
+              title="Tell us where you are and where you want to go"
+            />
+            <p className="text-muted mt-5 leading-7">
+              Applications help the Dune team understand your current stage,
+              motivation and development goals before the next mentorship intake
+              is confirmed.
+            </p>
+            <p className="text-muted mt-4 leading-7">
+              Submitting an application does not guarantee a place in a cohort.
+              Approved programme details, eligibility and next steps will be
+              communicated directly when available.
+            </p>
+          </div>
+          <MentorshipApplicationForm />
+        </div>
+      </Section>
       <section className="bg-amber py-16">
         <div className="mx-auto flex max-w-[1440px] flex-col items-start justify-between gap-8 px-5 sm:px-8 lg:flex-row lg:items-center lg:px-10 xl:px-12">
           <div>
@@ -204,12 +226,12 @@ export function MentorshipPage() {
               Ready to take your next professional step?
             </h2>
             <p className="text-deep-navy/70 mt-3">
-              Register your interest and receive approved programme details when
-              the next cohort is confirmed.
+              Submit your application and we will contact you with approved
+              programme details when the next cohort is confirmed.
             </p>
           </div>
-          <Button href="/contact#consultation" variant="secondary">
-            Express your interest <ArrowRight size={17} />
+          <Button href="#apply" variant="secondary">
+            Apply for mentorship <ArrowRight size={17} />
           </Button>
         </div>
       </section>
