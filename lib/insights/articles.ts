@@ -1,6 +1,6 @@
 import "server-only";
 
-import { createClient } from "@/lib/supabase/server";
+import { createPublicClient } from "@/lib/supabase/public";
 
 export type PublishedArticle = {
   id: string;
@@ -42,7 +42,7 @@ function mapArticle(article: Record<string, unknown>): PublishedArticle {
 }
 
 export async function getPublishedArticles(limit = 50) {
-  const supabase = await createClient();
+  const supabase = createPublicClient();
   const { data, error } = await supabase
     .from("articles")
     .select(articleSelect)
@@ -57,7 +57,7 @@ export async function getPublishedArticles(limit = 50) {
 }
 
 export async function getPublishedArticleBySlug(slug: string) {
-  const supabase = await createClient();
+  const supabase = createPublicClient();
   const { data, error } = await supabase
     .from("articles")
     .select(articleSelect)
@@ -70,7 +70,9 @@ export async function getPublishedArticleBySlug(slug: string) {
   return data ? mapArticle(data) : null;
 }
 
-export function getArticleCoverUrl(article: Pick<PublishedArticle, "slug" | "coverImagePath">) {
+export function getArticleCoverUrl(
+  article: Pick<PublishedArticle, "slug" | "coverImagePath">,
+) {
   return article.coverImagePath
     ? `/api/insights/${encodeURIComponent(article.slug)}/cover`
     : "/images/insights/insights-hero.jpg";
