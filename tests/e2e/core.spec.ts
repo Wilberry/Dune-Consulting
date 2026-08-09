@@ -76,6 +76,18 @@ test("mobile navigation manages focus, Escape, and scrolling", async ({
 });
 
 test("contact validation and stored delivery are honest", async ({ page }) => {
+  await page.route("**/api/contact", async (route) => {
+    await route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify({
+        status: "success",
+        message:
+          "Your enquiry has been received. Our team will respond using the details provided.",
+      }),
+    });
+  });
+
   await page.goto("/contact");
   await page.getByRole("button", { name: "Send enquiry" }).click();
   await expect(page.locator("[aria-invalid=true]")).toHaveCount(6);
