@@ -1,9 +1,9 @@
 import { getNewsletterProviderEnvironment } from "@/lib/server-env";
 
 const RESEND_API_BASE = "https://api.resend.com";
+const RATE_LIMIT_RETRY_MS = 650;
 
 type FetchLike = typeof fetch;
-
 type ResendObject = Record<string, unknown>;
 
 export class NewsletterProviderError extends Error {
@@ -14,6 +14,10 @@ export class NewsletterProviderError extends Error {
     super(message);
     this.name = "NewsletterProviderError";
   }
+}
+
+function delay(milliseconds: number) {
+  return new Promise((resolve) => setTimeout(resolve, milliseconds));
 }
 
 async function readJson(response: Response): Promise<ResendObject> {
@@ -31,14 +35,19 @@ async function providerRequest(
   apiKey: string,
   fetchImpl: FetchLike,
 ) {
-  const response = await fetchImpl(`${RESEND_API_BASE}${path}`, {
-    ...init,
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
-      ...init.headers,
-    },
-  });
+  const execute = async () => {
+    const headers = new Headers(init.headers);
+    headers.set("Authorization", `Bearer ${apiKey}`);
+    headers.set("Content-Type", "application/json");
+    return fetchImpl(`${RESEND_API_BASE}${path}`, { ...init, headers });
+  };
+
+  let response = await execute();
+  if (response.status === 429) {
+    await delay(RATE_LIMIT_RETRY_MS);
+    response = await execute();
+  }
+
   const data = await readJson(response);
   return { response, data };
 }
