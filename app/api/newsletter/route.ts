@@ -97,8 +97,6 @@ async function persistSubscription(email: string) {
           status: "subscribed",
           subscribed_at: new Date().toISOString(),
           unsubscribed_at: null,
-          deliverability_status: "ok",
-          deliverability_updated_at: null,
         })
         .eq("id", existing.id);
 
@@ -142,8 +140,6 @@ async function persistSubscription(email: string) {
           status: "subscribed",
           subscribed_at: new Date().toISOString(),
           unsubscribed_at: null,
-          deliverability_status: "ok",
-          deliverability_updated_at: null,
         })
         .eq("id", raced.id);
 
