@@ -1,5 +1,79 @@
 import { handleNewsletterSignup } from "@/lib/newsletter/handler";
+import { syncNewsletterSubscriber } from "@/lib/newsletter/provider";
 import { createAdminClient } from "@/lib/supabase/admin";
+
+type SubscriberRecord = {
+  id: string;
+  email: string;
+  first_name: string | null;
+  status: "subscribed" | "unsubscribed";
+  external_contact_id: string | null;
+};
+
+async function loadSubscriber(email: string) {
+  const supabase = createAdminClient();
+  const { data, error } = await supabase
+    .from("newsletter_subscribers")
+    .select("id,email,first_name,status,external_contact_id")
+    .eq("email", email)
+    .single();
+
+  if (error || !data) {
+    const loadError = new Error("Newsletter subscriber reload failed");
+    loadError.name = error?.code || "SupabaseError";
+    throw loadError;
+  }
+  return data as SubscriberRecord;
+}
+
+async function syncPersistedSubscriber(subscriber: SubscriberRecord) {
+  const supabase = createAdminClient();
+
+  try {
+    const result = await syncNewsletterSubscriber({
+      email: subscriber.email,
+      firstName: subscriber.first_name,
+      status: subscriber.status,
+      externalContactId: subscriber.external_contact_id,
+    });
+
+    if (result.status === "unconfigured") {
+      return;
+    }
+
+    const { error } = await supabase
+      .from("newsletter_subscribers")
+      .update({
+        external_contact_id: result.externalContactId,
+        provider_synced_at: new Date().toISOString(),
+        provider_sync_error: null,
+      })
+      .eq("id", subscriber.id);
+
+    if (error) {
+      console.error(
+        "Newsletter provider sync state could not be recorded",
+        error.code || "SupabaseError",
+      );
+    }
+  } catch (error) {
+    const providerError =
+      error instanceof Error ? error.name : "NewsletterProviderError";
+    console.error("Newsletter provider sync failed", providerError);
+
+    const { error: stateError } = await supabase
+      .from("newsletter_subscribers")
+      .update({ provider_sync_error: providerError })
+      .eq("id", subscriber.id);
+
+    if (stateError) {
+      console.error(
+        "Newsletter provider sync failure could not be recorded",
+        stateError.code || "SupabaseError",
+      );
+    }
+  }
+}
 
 async function persistSubscription(email: string) {
   const supabase = createAdminClient();
@@ -23,6 +97,8 @@ async function persistSubscription(email: string) {
           status: "subscribed",
           subscribed_at: new Date().toISOString(),
           unsubscribed_at: null,
+          deliverability_status: "ok",
+          deliverability_updated_at: null,
         })
         .eq("id", existing.id);
 
@@ -32,6 +108,8 @@ async function persistSubscription(email: string) {
         throw error;
       }
     }
+
+    await syncPersistedSubscriber(await loadSubscriber(email));
     return;
   }
 
@@ -39,7 +117,10 @@ async function persistSubscription(email: string) {
     .from("newsletter_subscribers")
     .insert({ email, status: "subscribed" });
 
-  if (!insertError) return;
+  if (!insertError) {
+    await syncPersistedSubscriber(await loadSubscriber(email));
+    return;
+  }
 
   if (insertError.code === "23505") {
     const { data: raced, error: raceLookupError } = await supabase
@@ -61,6 +142,8 @@ async function persistSubscription(email: string) {
           status: "subscribed",
           subscribed_at: new Date().toISOString(),
           unsubscribed_at: null,
+          deliverability_status: "ok",
+          deliverability_updated_at: null,
         })
         .eq("id", raced.id);
 
@@ -70,6 +153,8 @@ async function persistSubscription(email: string) {
         throw error;
       }
     }
+
+    await syncPersistedSubscriber(await loadSubscriber(email));
     return;
   }
 
