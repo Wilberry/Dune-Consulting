@@ -264,6 +264,7 @@ test("content routes have one H1 and expected status", async ({
 test("internal links resolve and external targets are safe", async ({
   page,
   request,
+  isMobile,
 }) => {
   await page.goto("/");
   const links = await page.locator("a[href]").evaluateAll((nodes) =>
@@ -283,6 +284,11 @@ test("internal links resolve and external targets are safe", async ({
     }
     if (link.target === "_blank") expect(link.rel).toMatch(/noopener/);
   }
+
+  // HTTP route resolution is viewport-independent and is covered by the
+  // desktop project. Avoid crawling every route a second time under mobile,
+  // while retaining the mobile page's external-link safety assertions above.
+  if (isMobile) return;
 
   const paths = [...internalPaths];
   const batchSize = 4;
