@@ -11,6 +11,13 @@ const statusSchema = z.object({
   status: z.enum(["subscribed", "unsubscribed"]),
 });
 
+type DeliverabilityStatus =
+  | "ok"
+  | "bounced"
+  | "complained"
+  | "suppressed"
+  | "failed";
+
 function delay(milliseconds: number) {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
 }
@@ -20,6 +27,7 @@ async function syncSubscriberRecord(subscriber: {
   email: string;
   first_name: string | null;
   status: "subscribed" | "unsubscribed";
+  deliverability_status: DeliverabilityStatus;
   external_contact_id: string | null;
 }) {
   const supabase = await createClient();
@@ -29,6 +37,7 @@ async function syncSubscriberRecord(subscriber: {
       email: subscriber.email,
       firstName: subscriber.first_name,
       status: subscriber.status,
+      deliverabilityStatus: subscriber.deliverability_status,
       externalContactId: subscriber.external_contact_id,
     });
 
@@ -68,7 +77,9 @@ export async function updateNewsletterStatus(formData: FormData) {
   const supabase = await createClient();
   const { data: subscriber, error: loadError } = await supabase
     .from("newsletter_subscribers")
-    .select("id,email,first_name,status,external_contact_id")
+    .select(
+      "id,email,first_name,status,deliverability_status,external_contact_id",
+    )
     .eq("id", parsed.data.id)
     .maybeSingle();
 
@@ -99,6 +110,8 @@ export async function updateNewsletterStatus(formData: FormData) {
   await syncSubscriberRecord({
     ...subscriber,
     status: parsed.data.status,
+    deliverability_status:
+      subscriber.deliverability_status as DeliverabilityStatus,
   });
 
   revalidatePath("/admin");
@@ -110,7 +123,9 @@ export async function syncNewsletterSubscribers() {
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("newsletter_subscribers")
-    .select("id,email,first_name,status,external_contact_id,provider_sync_error")
+    .select(
+      "id,email,first_name,status,deliverability_status,external_contact_id,provider_sync_error",
+    )
     .order("updated_at", { ascending: true })
     .limit(100);
 
@@ -129,6 +144,8 @@ export async function syncNewsletterSubscribers() {
       email: subscriber.email,
       first_name: subscriber.first_name,
       status: subscriber.status as "subscribed" | "unsubscribed",
+      deliverability_status:
+        subscriber.deliverability_status as DeliverabilityStatus,
       external_contact_id: subscriber.external_contact_id,
     });
     await delay(600);
