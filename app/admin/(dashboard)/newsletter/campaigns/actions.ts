@@ -160,17 +160,22 @@ export async function sendNewsletterCampaign(formData: FormData) {
 
   const { data: audience, error: audienceError } = await supabase
     .from("newsletter_subscribers")
-    .select("id,external_contact_id,provider_sync_error,deliverability_status")
-    .eq("status", "subscribed");
+    .select("status,external_contact_id,provider_sync_error,deliverability_status");
 
   if (audienceError) throw new Error("Newsletter audience could not be loaded.");
-  const eligible = (audience ?? []).filter(
+  const all = audience ?? [];
+  const active = all.filter((subscriber) => subscriber.status === "subscribed");
+  const eligible = active.filter(
     (subscriber) => subscriber.deliverability_status === "ok",
   );
-  const unsynced = eligible.filter(
-    (subscriber) =>
-      !subscriber.external_contact_id || Boolean(subscriber.provider_sync_error),
-  );
+  const providerPending = all.filter((subscriber) => {
+    if (subscriber.provider_sync_error) return true;
+    return (
+      subscriber.status === "subscribed" &&
+      subscriber.deliverability_status === "ok" &&
+      !subscriber.external_contact_id
+    );
+  });
 
   if (eligible.length === 0) {
     await supabase
@@ -181,11 +186,11 @@ export async function sendNewsletterCampaign(formData: FormData) {
     return;
   }
 
-  if (unsynced.length > 0) {
+  if (providerPending.length > 0) {
     await supabase
       .from("newsletter_campaigns")
       .update({
-        last_error: `${unsynced.length} eligible subscriber(s) must be synchronized with the email provider before sending.`,
+        last_error: `${providerPending.length} subscriber record(s) must finish provider synchronization before sending.`,
       })
       .eq("id", campaign.id);
     revalidatePath(`/admin/newsletter/campaigns/${campaign.id}`);
