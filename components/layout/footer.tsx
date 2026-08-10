@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { Instagram, Linkedin, Mail, MapPin, Phone } from "lucide-react";
-import { Brand } from "./brand";
+import { NewsletterSignupForm } from "@/components/forms/newsletter-signup-form";
 import { Container } from "@/components/ui/container";
 import { serviceNavigation } from "@/data/navigation";
 import { company } from "@/data/company";
+import { Brand } from "./brand";
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -123,21 +124,7 @@ export function Footer() {
             <p className="mt-2 text-xs text-white/60">
               Practical HSE insights delivered.
             </p>
-            <div className="mt-3 flex flex-col gap-2">
-              <input
-                disabled
-                type="email"
-                placeholder="Work email"
-                className="min-h-10 rounded-md border border-white/15 bg-white/5 px-3 text-xs text-white transition placeholder:text-white/40"
-              />
-              <button
-                disabled
-                className="bg-amber text-deep-navy min-h-10 rounded-md text-xs font-bold opacity-70 transition"
-              >
-                Subscribe
-              </button>
-            </div>
-            <p className="mt-2 text-xs text-white/50">Coming soon</p>
+            <NewsletterSignupForm />
           </div>
         </div>
       </Container>
