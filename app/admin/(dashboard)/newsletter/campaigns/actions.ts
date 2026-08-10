@@ -141,6 +141,10 @@ export async function deleteNewsletterCampaign(formData: FormData) {
 
 export async function sendNewsletterCampaign(formData: FormData) {
   await requireAdminUser();
+  if (formData.get("confirm") !== "yes") {
+    throw new Error("Campaign send confirmation is required.");
+  }
+
   const parsedId = campaignIdSchema.safeParse(formData.get("id"));
   if (!parsedId.success) throw new Error("Invalid campaign identifier.");
 
