@@ -62,11 +62,7 @@ function validateCover(file: FormDataEntryValue | null) {
   return null;
 }
 
-async function uploadCover(
-  articleId: string,
-  file: File,
-  previousPath: string | null,
-) {
+async function uploadCover(articleId: string, file: File) {
   const supabase = await createClient();
   const path = `${articleId}/${Date.now()}-${safeFileName(file.name)}`;
   const bytes = new Uint8Array(await file.arrayBuffer());
@@ -75,10 +71,6 @@ async function uploadCover(
     upsert: false,
   });
   if (error) throw new Error(error.message);
-
-  if (previousPath) {
-    await supabase.storage.from("insights").remove([previousPath]);
-  }
   return path;
 }
 
@@ -143,9 +135,12 @@ export async function saveArticle(
     published_at: publishedAt,
   };
 
-  let id = existingId;
-  if (id) {
-    const { error } = await supabase.from("articles").update(payload).eq("id", id);
+  let savedId: string;
+  if (existingId) {
+    const { error } = await supabase
+      .from("articles")
+      .update(payload)
+      .eq("id", existingId);
     if (error) {
       return {
         status: "error",
@@ -155,6 +150,7 @@ export async function saveArticle(
             : "The article could not be saved.",
       };
     }
+    savedId = existingId;
   } else {
     const { data, error } = await supabase
       .from("articles")
@@ -170,20 +166,30 @@ export async function saveArticle(
             : "The article could not be created.",
       };
     }
-    id = data.id;
+    savedId = data.id;
   }
 
   const cover = formData.get("cover");
   if (cover instanceof File && cover.size > 0) {
+    let newCoverPath: string | null = null;
     try {
-      const coverPath = await uploadCover(id, cover, existingCover);
+      newCoverPath = await uploadCover(savedId, cover);
       const { error } = await supabase
         .from("articles")
-        .update({ cover_image_url: coverPath })
-        .eq("id", id);
+        .update({ cover_image_url: newCoverPath })
+        .eq("id", savedId);
       if (error) throw new Error(error.message);
+
+      if (existingCover) {
+        await supabase.storage.from("insights").remove([existingCover]);
+      }
     } catch {
-      if (!existingId) await supabase.from("articles").delete().eq("id", id);
+      if (newCoverPath) {
+        await supabase.storage.from("insights").remove([newCoverPath]);
+      }
+      if (!existingId) {
+        await supabase.from("articles").delete().eq("id", savedId);
+      }
       return {
         status: "error",
         message: "The cover image could not be stored. Please try again.",
@@ -195,7 +201,7 @@ export async function saveArticle(
     await supabase
       .from("articles")
       .update({ featured: false })
-      .neq("id", id)
+      .neq("id", savedId)
       .eq("featured", true);
   }
 
@@ -203,7 +209,7 @@ export async function saveArticle(
   revalidatePath("/admin/insights");
   revalidatePath("/insights");
   revalidatePath(`/insights/${values.slug}`);
-  redirect(`/admin/insights/${id}?saved=1`);
+  redirect(`/admin/insights/${savedId}?saved=1`);
 }
 
 export async function deleteArticle(formData: FormData) {
