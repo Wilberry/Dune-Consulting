@@ -1,6 +1,12 @@
 alter table public.newsletter_subscribers
 add column if not exists provider_synced_at timestamptz,
-add column if not exists provider_sync_error text;
+add column if not exists provider_sync_error text,
+add column if not exists deliverability_status text not null default 'ok',
+add column if not exists deliverability_updated_at timestamptz;
+
+alter table public.newsletter_subscribers
+add constraint newsletter_subscribers_deliverability_status_check
+check (deliverability_status in ('ok', 'bounced', 'complained', 'suppressed', 'failed'));
 
 create table public.newsletter_campaigns (
   id uuid primary key default gen_random_uuid(),
