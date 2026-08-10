@@ -19,7 +19,10 @@ function recipientEmail(data: Record<string, unknown>) {
   const direct = asString(data.email);
   if (direct) return direct;
   const recipients = Array.isArray(data.to) ? data.to : [];
-  return recipients.find((value): value is string => typeof value === "string") ?? null;
+  return (
+    recipients.find((value): value is string => typeof value === "string") ??
+    null
+  );
 }
 
 async function campaignIdForBroadcast(
@@ -124,6 +127,7 @@ async function applyDeliverabilityEvent(
     .update({
       deliverability_status: deliverability,
       deliverability_updated_at: event.created_at,
+      provider_sync_error: "Deliverability segment cleanup pending",
     })
     .eq("id", subscriberId);
   if (error) throw new Error(error.message);
@@ -149,10 +153,7 @@ function eventMetadata(event: WebhookEvent) {
 export async function POST(request: Request) {
   const secret = getResendWebhookSecret();
   if (!secret) {
-    return NextResponse.json(
-      { status: "unconfigured" },
-      { status: 503 },
-    );
+    return NextResponse.json({ status: "unconfigured" }, { status: 503 });
   }
 
   const id = request.headers.get("svix-id");
@@ -163,9 +164,7 @@ export async function POST(request: Request) {
   }
 
   const payload = await request.text();
-  if (
-    !verifySvixWebhook(payload, { id, timestamp, signature }, secret)
-  ) {
+  if (!verifySvixWebhook(payload, { id, timestamp, signature }, secret)) {
     return NextResponse.json({ status: "invalid" }, { status: 400 });
   }
 
