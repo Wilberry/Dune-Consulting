@@ -12,11 +12,7 @@ const statusSchema = z.object({
 });
 
 type DeliverabilityStatus =
-  | "ok"
-  | "bounced"
-  | "complained"
-  | "suppressed"
-  | "failed";
+  "ok" | "bounced" | "complained" | "suppressed" | "failed";
 
 function delay(milliseconds: number) {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
@@ -58,7 +54,8 @@ async function syncSubscriberRecord(subscriber: {
       .from("newsletter_subscribers")
       .update({ provider_sync_error: errorName })
       .eq("id", subscriber.id);
-    if (stateError) console.error("Newsletter sync state update failed", stateError.code);
+    if (stateError)
+      console.error("Newsletter sync state update failed", stateError.code);
   }
 }
 
@@ -134,7 +131,8 @@ export async function syncNewsletterSubscribers() {
   const pending = (data ?? [])
     .filter(
       (subscriber) =>
-        !subscriber.external_contact_id || Boolean(subscriber.provider_sync_error),
+        !subscriber.external_contact_id ||
+        Boolean(subscriber.provider_sync_error),
     )
     .slice(0, 10);
 

@@ -3,11 +3,7 @@ import { syncNewsletterSubscriber } from "@/lib/newsletter/provider";
 import { createAdminClient } from "@/lib/supabase/admin";
 
 type DeliverabilityStatus =
-  | "ok"
-  | "bounced"
-  | "complained"
-  | "suppressed"
-  | "failed";
+  "ok" | "bounced" | "complained" | "suppressed" | "failed";
 
 type SubscriberRecord = {
   id: string;

@@ -162,9 +162,7 @@ async function applyDeliverabilityEvent(
   subscriber: SubscriberEventTarget | null,
 ) {
   if (!subscriber) return;
-  if (
-    !isNewerEvent(event.created_at, subscriber.deliverability_updated_at)
-  ) {
+  if (!isNewerEvent(event.created_at, subscriber.deliverability_updated_at)) {
     return;
   }
 
@@ -226,7 +224,8 @@ export async function POST(request: Request) {
   let event: WebhookEvent;
   try {
     const parsed = JSON.parse(payload) as unknown;
-    if (!parsed || typeof parsed !== "object") throw new Error("Invalid payload");
+    if (!parsed || typeof parsed !== "object")
+      throw new Error("Invalid payload");
     const candidate = parsed as Partial<WebhookEvent>;
     if (
       typeof candidate.type !== "string" ||

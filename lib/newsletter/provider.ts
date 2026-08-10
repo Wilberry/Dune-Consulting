@@ -61,11 +61,7 @@ export type NewsletterSubscriberSyncInput = {
   firstName?: string | null;
   status: "subscribed" | "unsubscribed";
   deliverabilityStatus?:
-    | "ok"
-    | "bounced"
-    | "complained"
-    | "suppressed"
-    | "failed";
+    "ok" | "bounced" | "complained" | "suppressed" | "failed";
   externalContactId?: string | null;
 };
 

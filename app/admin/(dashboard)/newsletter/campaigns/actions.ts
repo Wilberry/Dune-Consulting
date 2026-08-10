@@ -179,14 +179,18 @@ export async function sendNewsletterCampaign(formData: FormData) {
     .eq("id", parsedId.data)
     .maybeSingle();
 
-  if (campaignError || !campaign) throw new Error("Campaign could not be loaded.");
+  if (campaignError || !campaign)
+    throw new Error("Campaign could not be loaded.");
   if (campaign.status !== "draft" && campaign.status !== "failed") return;
 
   const { data: audience, error: audienceError } = await supabase
     .from("newsletter_subscribers")
-    .select("status,external_contact_id,provider_sync_error,deliverability_status");
+    .select(
+      "status,external_contact_id,provider_sync_error,deliverability_status",
+    );
 
-  if (audienceError) throw new Error("Newsletter audience could not be loaded.");
+  if (audienceError)
+    throw new Error("Newsletter audience could not be loaded.");
   const all = audience ?? [];
   const active = all.filter((subscriber) => subscriber.status === "subscribed");
   const eligible = active.filter(
@@ -204,7 +208,9 @@ export async function sendNewsletterCampaign(formData: FormData) {
   if (eligible.length === 0) {
     await supabase
       .from("newsletter_campaigns")
-      .update({ last_error: "No eligible subscribed recipients are available." })
+      .update({
+        last_error: "No eligible subscribed recipients are available.",
+      })
       .eq("id", campaign.id);
     revalidatePath(`/admin/newsletter/campaigns/${campaign.id}`);
     return;
@@ -283,7 +289,9 @@ export async function sendNewsletterCampaign(formData: FormData) {
         .eq("id", campaign.id);
 
       if (persistProviderIdError) {
-        await deleteNewsletterBroadcastDraft(broadcastId).catch(() => undefined);
+        await deleteNewsletterBroadcastDraft(broadcastId).catch(
+          () => undefined,
+        );
         broadcastId = null;
         throw new Error("Provider Broadcast identifier could not be stored.");
       }

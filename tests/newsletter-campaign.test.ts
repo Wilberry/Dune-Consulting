@@ -30,7 +30,8 @@ function withProviderEnvironment<T>(run: () => Promise<T>) {
     VERCEL_ENV: process.env.VERCEL_ENV,
   };
   process.env.RESEND_API_KEY = "re_test_newsletter_key";
-  process.env.NEWSLETTER_FROM_EMAIL = "Dune Consulting <insights@duneconsult.ng>";
+  process.env.NEWSLETTER_FROM_EMAIL =
+    "Dune Consulting <insights@duneconsult.ng>";
   process.env.NEWSLETTER_SEGMENT_ID = segmentId;
   delete process.env.VERCEL_ENV;
 
@@ -109,10 +110,13 @@ test("a suppressed subscriber is removed from the newsletter Segment without cha
       requests.push({ url, method });
 
       if (method === "PATCH") {
-        return new Response(JSON.stringify({ object: "contact", id: contactId }), {
-          status: 200,
-          headers: { "content-type": "application/json" },
-        });
+        return new Response(
+          JSON.stringify({ object: "contact", id: contactId }),
+          {
+            status: 200,
+            headers: { "content-type": "application/json" },
+          },
+        );
       }
       if (method === "GET") {
         return new Response(
@@ -170,7 +174,10 @@ test("newsletter Broadcast is created as a draft before a separate send request"
 
     const sent = await sendNewsletterBroadcast(broadcastId, fakeFetch);
     assert.deepEqual(sent, { status: "sent", broadcastId });
-    assert.match(requests[1].url, new RegExp(`/broadcasts/${broadcastId}/send$`));
+    assert.match(
+      requests[1].url,
+      new RegExp(`/broadcasts/${broadcastId}/send$`),
+    );
     assert.equal(requests[1].method, "POST");
   });
 });

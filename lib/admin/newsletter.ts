@@ -4,11 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 
 export type NewsletterSubscriberStatus = "subscribed" | "unsubscribed";
 export type NewsletterDeliverabilityStatus =
-  | "ok"
-  | "bounced"
-  | "complained"
-  | "suppressed"
-  | "failed";
+  "ok" | "bounced" | "complained" | "suppressed" | "failed";
 
 export type NewsletterSubscriber = {
   id: string;
@@ -26,11 +22,7 @@ export type NewsletterSubscriber = {
   updatedAt: string;
 };
 
-export type NewsletterCampaignStatus =
-  | "draft"
-  | "sending"
-  | "sent"
-  | "failed";
+export type NewsletterCampaignStatus = "draft" | "sending" | "sent" | "failed";
 
 export type NewsletterCampaign = {
   id: string;
@@ -136,7 +128,9 @@ export async function getNewsletterAudienceReadiness() {
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("newsletter_subscribers")
-    .select("status,external_contact_id,provider_sync_error,deliverability_status");
+    .select(
+      "status,external_contact_id,provider_sync_error,deliverability_status",
+    );
 
   if (error) throw new Error(error.message);
   const all = data ?? [];
@@ -170,8 +164,11 @@ export async function getNewsletterCampaignEventSummary(campaignId: string) {
     .limit(5000);
 
   if (error) throw new Error(error.message);
-  return (data ?? []).reduce<NewsletterCampaignEventSummary>((summary, event) => {
-    summary[event.event_type] = (summary[event.event_type] ?? 0) + 1;
-    return summary;
-  }, {});
+  return (data ?? []).reduce<NewsletterCampaignEventSummary>(
+    (summary, event) => {
+      summary[event.event_type] = (summary[event.event_type] ?? 0) + 1;
+      return summary;
+    },
+    {},
+  );
 }

@@ -142,11 +142,7 @@ export const newsletterCampaignSchema = z.object({
     .trim()
     .min(3, "Please enter an internal campaign name.")
     .max(120),
-  subject: z
-    .string()
-    .trim()
-    .min(3, "Please enter an email subject.")
-    .max(160),
+  subject: z.string().trim().min(3, "Please enter an email subject.").max(160),
   previewText: z.string().trim().max(160).optional(),
   contentHtml: z
     .string()

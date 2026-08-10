@@ -106,8 +106,8 @@ export function NewsletterCampaignForm({
               disabled={locked}
             />
             <p className="text-muted mt-2 text-xs leading-5">
-              Write the email body as trusted HTML. Dune&apos;s unsubscribe footer
-              is appended automatically when the campaign is sent.
+              Write the email body as trusted HTML. Dune&apos;s unsubscribe
+              footer is appended automatically when the campaign is sent.
             </p>
           </Field>
 
@@ -125,7 +125,8 @@ export function NewsletterCampaignForm({
               disabled={locked}
             />
             <p className="text-muted mt-2 text-xs leading-5">
-              Optional. Resend can derive text from HTML when this is left empty.
+              Optional. Resend can derive text from HTML when this is left
+              empty.
             </p>
           </Field>
         </div>
@@ -149,10 +150,10 @@ export function NewsletterCampaignForm({
           </div>
 
           {campaign?.providerBroadcastId && (
-            <div className="border-line rounded-xl border bg-off-white p-5 text-sm leading-6 text-muted">
-              Content is locked because a provider Broadcast draft already exists.
-              Retry the same campaign, or delete it and create a new draft if the
-              content must change.
+            <div className="border-line bg-off-white text-muted rounded-xl border p-5 text-sm leading-6">
+              Content is locked because a provider Broadcast draft already
+              exists. Retry the same campaign, or delete it and create a new
+              draft if the content must change.
             </div>
           )}
 

@@ -31,7 +31,8 @@ export default async function NewsletterCampaignPage({ params }: Props) {
     getNewsletterCampaignEventSummary(campaign.id),
   ]);
   const provider = getNewsletterProviderEnvironment();
-  const sendableStatus = campaign.status === "draft" || campaign.status === "failed";
+  const sendableStatus =
+    campaign.status === "draft" || campaign.status === "failed";
   const canSend =
     sendableStatus &&
     provider.configured &&
@@ -61,7 +62,7 @@ export default async function NewsletterCampaignPage({ params }: Props) {
           </p>
         </div>
         {campaign.providerBroadcastId && (
-          <span className="border-line rounded-lg border bg-white px-4 py-3 text-xs text-muted">
+          <span className="border-line text-muted rounded-lg border bg-white px-4 py-3 text-xs">
             Provider broadcast {campaign.providerBroadcastId}
           </span>
         )}
@@ -88,7 +89,8 @@ export default async function NewsletterCampaignPage({ params }: Props) {
           <h2 className="text-navy text-xl font-extrabold">Delivery events</h2>
           <p className="text-muted mt-2 text-sm leading-6">
             Counts below are based on verified Resend webhook events stored in
-            Supabase. They remain zero until the production webhook is connected.
+            Supabase. They remain zero until the production webhook is
+            connected.
           </p>
           <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
             <Stat label="Delivered" value={events["email.delivered"] ?? 0} />
@@ -104,7 +106,9 @@ export default async function NewsletterCampaignPage({ params }: Props) {
         <section className="border-line mt-8 rounded-xl border bg-white p-5 shadow-sm sm:p-6">
           <div className="grid gap-6 lg:grid-cols-[1fr_320px] lg:items-start">
             <div>
-              <h2 className="text-navy text-xl font-extrabold">Send campaign</h2>
+              <h2 className="text-navy text-xl font-extrabold">
+                Send campaign
+              </h2>
               <p className="text-muted mt-2 text-sm leading-6">
                 Sending targets all eligible newsletter subscribers in the
                 configured provider segment. This action cannot be undone after
@@ -128,7 +132,10 @@ export default async function NewsletterCampaignPage({ params }: Props) {
               )}
             </div>
 
-            <form action={sendNewsletterCampaign} className="bg-off-white border-line rounded-lg border p-4">
+            <form
+              action={sendNewsletterCampaign}
+              className="bg-off-white border-line rounded-lg border p-4"
+            >
               <input type="hidden" name="id" value={campaign.id} />
               <label className="flex items-start gap-3 text-sm leading-6">
                 <input
@@ -141,7 +148,8 @@ export default async function NewsletterCampaignPage({ params }: Props) {
                 />
                 <span>
                   I confirm this campaign is approved to send to{" "}
-                  <strong>{readiness.eligibleCount}</strong> eligible recipient(s).
+                  <strong>{readiness.eligibleCount}</strong> eligible
+                  recipient(s).
                 </span>
               </label>
               <button

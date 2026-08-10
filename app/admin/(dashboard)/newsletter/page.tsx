@@ -87,7 +87,9 @@ export default async function AdminNewsletterPage() {
         <Stat label="Need provider sync" value={syncPendingCount} />
         <div className="border-line rounded-lg border bg-white px-4 py-3 text-sm">
           <span className="text-muted">Provider</span>{" "}
-          <strong className={provider.configured ? "text-green-800" : "text-red-700"}>
+          <strong
+            className={provider.configured ? "text-green-800" : "text-red-700"}
+          >
             {provider.configured ? "Configured" : "Not configured"}
           </strong>
         </div>
@@ -138,7 +140,9 @@ export default async function AdminNewsletterPage() {
                         ? "Subscribed"
                         : "Unsubscribed"}
                     </span>
-                    <DeliverabilityBadge status={subscriber.deliverabilityStatus} />
+                    <DeliverabilityBadge
+                      status={subscriber.deliverabilityStatus}
+                    />
                     <span className="text-muted text-xs">
                       {subscriber.providerSyncError
                         ? "Provider sync failed"
@@ -162,14 +166,26 @@ export default async function AdminNewsletterPage() {
                     </p>
                   )}
                   <dl className="text-muted mt-4 grid gap-x-6 gap-y-2 text-xs sm:grid-cols-2 xl:grid-cols-5">
-                    <DateItem label="Subscribed" value={subscriber.subscribedAt} />
-                    <DateItem label="Unsubscribed" value={subscriber.unsubscribedAt} />
-                    <DateItem label="Provider synced" value={subscriber.providerSyncedAt} />
+                    <DateItem
+                      label="Subscribed"
+                      value={subscriber.subscribedAt}
+                    />
+                    <DateItem
+                      label="Unsubscribed"
+                      value={subscriber.unsubscribedAt}
+                    />
+                    <DateItem
+                      label="Provider synced"
+                      value={subscriber.providerSyncedAt}
+                    />
                     <DateItem
                       label="Deliverability updated"
                       value={subscriber.deliverabilityUpdatedAt}
                     />
-                    <DateItem label="Last updated" value={subscriber.updatedAt} />
+                    <DateItem
+                      label="Last updated"
+                      value={subscriber.updatedAt}
+                    />
                   </dl>
                 </div>
 

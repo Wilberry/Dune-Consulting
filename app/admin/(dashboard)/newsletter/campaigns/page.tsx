@@ -169,7 +169,9 @@ function StatusBadge({ status }: { status: string }) {
           ? "bg-amber/20 text-deep-navy"
           : "bg-off-white text-navy";
   return (
-    <span className={`rounded-full px-3 py-1 text-xs font-bold capitalize ${className}`}>
+    <span
+      className={`rounded-full px-3 py-1 text-xs font-bold capitalize ${className}`}
+    >
       {status}
     </span>
   );
