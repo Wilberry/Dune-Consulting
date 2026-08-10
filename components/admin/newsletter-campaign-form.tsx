@@ -20,7 +20,10 @@ export function NewsletterCampaignForm({
     saveNewsletterCampaign,
     initialState,
   );
-  const locked = campaign?.status === "sending" || campaign?.status === "sent";
+  const locked =
+    campaign?.status === "sending" ||
+    campaign?.status === "sent" ||
+    Boolean(campaign?.providerBroadcastId);
 
   function errorFor(field: string) {
     return state.fieldErrors?.[field]?.[0];
@@ -144,6 +147,14 @@ export function NewsletterCampaignForm({
               events are synchronized back into the Supabase subscriber record.
             </p>
           </div>
+
+          {campaign?.providerBroadcastId && (
+            <div className="border-line rounded-xl border bg-off-white p-5 text-sm leading-6 text-muted">
+              Content is locked because a provider Broadcast draft already exists.
+              Retry the same campaign, or delete it and create a new draft if the
+              content must change.
+            </div>
+          )}
 
           {!locked && (
             <button
