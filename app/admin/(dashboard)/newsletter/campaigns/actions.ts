@@ -61,17 +61,22 @@ export async function saveNewsletterCampaign(
   if (existingId) {
     const { data: existing, error: loadError } = await supabase
       .from("newsletter_campaigns")
-      .select("status")
+      .select("status,provider_broadcast_id")
       .eq("id", existingId)
       .maybeSingle();
 
     if (loadError || !existing) {
       return { status: "error", message: "The campaign could not be loaded." };
     }
-    if (existing.status === "sending" || existing.status === "sent") {
+    if (
+      existing.status === "sending" ||
+      existing.status === "sent" ||
+      existing.provider_broadcast_id
+    ) {
       return {
         status: "error",
-        message: "A sending or sent campaign is locked from editing.",
+        message:
+          "Campaign content is locked after a provider Broadcast draft exists.",
       };
     }
   }
@@ -135,9 +140,15 @@ export async function deleteNewsletterCampaign(formData: FormData) {
   }
 
   if (campaign.provider_broadcast_id) {
-    await deleteNewsletterBroadcastDraft(campaign.provider_broadcast_id).catch(
-      () => undefined,
+    const providerState = await getNewsletterBroadcastStatus(
+      campaign.provider_broadcast_id,
     );
+    if (providerState.status === "unconfigured") {
+      throw new Error(
+        "Newsletter provider configuration is required to clean up this campaign.",
+      );
+    }
+    await deleteNewsletterBroadcastDraft(campaign.provider_broadcast_id);
   }
 
   const { error } = await supabase
