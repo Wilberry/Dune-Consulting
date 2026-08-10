@@ -30,7 +30,7 @@ export function ArticleEditorForm({ article }: { article?: AdminArticle }) {
   }
 
   return (
-    <form action={action} encType="multipart/form-data" className="space-y-7">
+    <form action={action} className="space-y-7">
       {article && <input type="hidden" name="id" value={article.id} />}
 
       {state.status === "error" && state.message && (
