@@ -136,24 +136,28 @@ export async function getNewsletterAudienceReadiness() {
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("newsletter_subscribers")
-    .select("status,external_contact_id,provider_sync_error,deliverability_status")
-    .eq("status", "subscribed");
+    .select("status,external_contact_id,provider_sync_error,deliverability_status");
 
   if (error) throw new Error(error.message);
-  const active = data ?? [];
+  const all = data ?? [];
+  const active = all.filter((subscriber) => subscriber.status === "subscribed");
   const eligible = active.filter(
     (subscriber) => subscriber.deliverability_status === "ok",
   );
-  const unsynced = eligible.filter(
-    (subscriber) =>
-      !subscriber.external_contact_id || Boolean(subscriber.provider_sync_error),
-  );
+  const providerPending = all.filter((subscriber) => {
+    if (subscriber.provider_sync_error) return true;
+    return (
+      subscriber.status === "subscribed" &&
+      subscriber.deliverability_status === "ok" &&
+      !subscriber.external_contact_id
+    );
+  });
 
   return {
     activeCount: active.length,
     eligibleCount: eligible.length,
     suppressedCount: active.length - eligible.length,
-    unsyncedCount: unsynced.length,
+    unsyncedCount: providerPending.length,
   };
 }
 
