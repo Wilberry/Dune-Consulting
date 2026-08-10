@@ -11,6 +11,14 @@ type WebhookEvent = {
 
 type AdminClient = ReturnType<typeof createAdminClient>;
 
+type SubscriberEventTarget = {
+  id: string;
+  email: string;
+  status: string;
+  provider_synced_at: string | null;
+  deliverability_updated_at: string | null;
+};
+
 function asString(value: unknown) {
   return typeof value === "string" && value ? value : null;
 }
@@ -23,6 +31,11 @@ function recipientEmail(data: Record<string, unknown>) {
     recipients.find((value): value is string => typeof value === "string") ??
     null
   );
+}
+
+function isNewerEvent(eventTime: string, previousTime: string | null) {
+  if (!previousTime) return true;
+  return Date.parse(eventTime) > Date.parse(previousTime);
 }
 
 async function campaignIdForBroadcast(
@@ -43,34 +56,38 @@ async function subscriberForEvent(
   supabase: AdminClient,
   data: Record<string, unknown>,
   email: string | null,
-) {
+): Promise<SubscriberEventTarget | null> {
+  const select =
+    "id,email,status,provider_synced_at,deliverability_updated_at";
   const providerContactId = asString(data.id);
   if (providerContactId) {
     const { data: byProvider, error } = await supabase
       .from("newsletter_subscribers")
-      .select("id,email,status")
+      .select(select)
       .eq("external_contact_id", providerContactId)
       .maybeSingle();
     if (error) throw new Error(error.message);
-    if (byProvider) return byProvider;
+    if (byProvider) return byProvider as SubscriberEventTarget;
   }
 
   if (!email) return null;
   const { data: byEmail, error } = await supabase
     .from("newsletter_subscribers")
-    .select("id,email,status")
+    .select(select)
     .eq("email", email.toLowerCase())
     .maybeSingle();
   if (error) throw new Error(error.message);
-  return byEmail ?? null;
+  return byEmail ? (byEmail as SubscriberEventTarget) : null;
 }
 
 async function applyContactEvent(
   supabase: AdminClient,
   event: WebhookEvent,
-  subscriberId: string | null,
+  subscriber: SubscriberEventTarget | null,
 ) {
-  if (!subscriberId) return;
+  if (!subscriber) return;
+  if (!isNewerEvent(event.created_at, subscriber.provider_synced_at)) return;
+
   const providerContactId = asString(event.data.id);
 
   if (event.type === "contact.deleted") {
@@ -78,10 +95,10 @@ async function applyContactEvent(
       .from("newsletter_subscribers")
       .update({
         external_contact_id: null,
-        provider_synced_at: null,
+        provider_synced_at: event.created_at,
         provider_sync_error: "Provider contact deleted",
       })
-      .eq("id", subscriberId);
+      .eq("id", subscriber.id);
     if (error) throw new Error(error.message);
     return;
   }
@@ -94,7 +111,6 @@ async function applyContactEvent(
   const update: Record<string, unknown> = {
     external_contact_id: providerContactId,
     provider_synced_at: event.created_at,
-    provider_sync_error: null,
     status: unsubscribed ? "unsubscribed" : "subscribed",
   };
   if (unsubscribed) update.unsubscribed_at = event.created_at;
@@ -103,16 +119,22 @@ async function applyContactEvent(
   const { error } = await supabase
     .from("newsletter_subscribers")
     .update(update)
-    .eq("id", subscriberId);
+    .eq("id", subscriber.id);
   if (error) throw new Error(error.message);
 }
 
 async function applyDeliverabilityEvent(
   supabase: AdminClient,
   event: WebhookEvent,
-  subscriberId: string | null,
+  subscriber: SubscriberEventTarget | null,
 ) {
-  if (!subscriberId) return;
+  if (!subscriber) return;
+  if (
+    !isNewerEvent(event.created_at, subscriber.deliverability_updated_at)
+  ) {
+    return;
+  }
+
   const statusByEvent: Record<string, string> = {
     "email.bounced": "bounced",
     "email.complained": "complained",
@@ -129,7 +151,7 @@ async function applyDeliverabilityEvent(
       deliverability_updated_at: event.created_at,
       provider_sync_error: "Deliverability segment cleanup pending",
     })
-    .eq("id", subscriberId);
+    .eq("id", subscriber.id);
   if (error) throw new Error(error.message);
 }
 
@@ -176,6 +198,7 @@ export async function POST(request: Request) {
     if (
       typeof candidate.type !== "string" ||
       typeof candidate.created_at !== "string" ||
+      !Number.isFinite(Date.parse(candidate.created_at)) ||
       !candidate.data ||
       typeof candidate.data !== "object"
     ) {
@@ -202,8 +225,8 @@ export async function POST(request: Request) {
     const broadcastId = asString(event.data.broadcast_id);
     const campaignId = await campaignIdForBroadcast(supabase, broadcastId);
 
-    await applyContactEvent(supabase, event, subscriber?.id ?? null);
-    await applyDeliverabilityEvent(supabase, event, subscriber?.id ?? null);
+    await applyContactEvent(supabase, event, subscriber);
+    await applyDeliverabilityEvent(supabase, event, subscriber);
 
     const { error: insertError } = await supabase
       .from("newsletter_provider_events")
