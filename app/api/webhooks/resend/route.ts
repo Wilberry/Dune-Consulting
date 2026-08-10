@@ -15,6 +15,7 @@ type SubscriberEventTarget = {
   id: string;
   email: string;
   status: string;
+  deliverability_status: string;
   provider_synced_at: string | null;
   deliverability_updated_at: string | null;
 };
@@ -31,6 +32,30 @@ function recipientEmail(data: Record<string, unknown>) {
     recipients.find((value): value is string => typeof value === "string") ??
     null
   );
+}
+
+function contactSegmentIds(data: Record<string, unknown>) {
+  if (!Array.isArray(data.segment_ids)) return null;
+  return data.segment_ids.filter(
+    (value): value is string => typeof value === "string" && value.length > 0,
+  );
+}
+
+function providerSegmentSyncError(
+  event: WebhookEvent,
+  subscriber: SubscriberEventTarget,
+  unsubscribed: boolean,
+) {
+  const segmentId = process.env.NEWSLETTER_SEGMENT_ID?.trim();
+  const segmentIds = contactSegmentIds(event.data);
+  if (!segmentId || !segmentIds) return undefined;
+
+  const shouldBelong =
+    !unsubscribed && subscriber.deliverability_status === "ok";
+  const belongs = segmentIds.includes(segmentId);
+  return belongs === shouldBelong
+    ? null
+    : "Provider segment reconciliation pending";
 }
 
 function isNewerEvent(eventTime: string, previousTime: string | null) {
@@ -58,7 +83,7 @@ async function subscriberForEvent(
   email: string | null,
 ): Promise<SubscriberEventTarget | null> {
   const select =
-    "id,email,status,provider_synced_at,deliverability_updated_at";
+    "id,email,status,deliverability_status,provider_synced_at,deliverability_updated_at";
   const providerContactId = asString(data.id);
   if (providerContactId) {
     const { data: byProvider, error } = await supabase
@@ -108,11 +133,19 @@ async function applyContactEvent(
   }
 
   const unsubscribed = event.data.unsubscribed === true;
+  const segmentSyncError = providerSegmentSyncError(
+    event,
+    subscriber,
+    unsubscribed,
+  );
   const update: Record<string, unknown> = {
     external_contact_id: providerContactId,
     provider_synced_at: event.created_at,
     status: unsubscribed ? "unsubscribed" : "subscribed",
   };
+  if (segmentSyncError !== undefined) {
+    update.provider_sync_error = segmentSyncError;
+  }
   if (unsubscribed) update.unsubscribed_at = event.created_at;
   else update.unsubscribed_at = null;
 
