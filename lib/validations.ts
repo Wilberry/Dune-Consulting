@@ -102,7 +102,6 @@ export const articleEditorSchema = z.object({
   slug: z
     .string()
     .trim()
-    .toLowerCase()
     .min(3, "Please enter a slug.")
     .max(160)
     .regex(
