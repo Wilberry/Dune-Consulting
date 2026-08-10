@@ -62,13 +62,23 @@ function validateCover(file: FormDataEntryValue | null) {
   return null;
 }
 
+function safePersistenceErrorCode(error: unknown) {
+  if (error && typeof error === "object" && "code" in error) {
+    const code = (error as { code?: unknown }).code;
+    if (typeof code === "string" && code) return code;
+  }
+
+  if (error instanceof Error && error.name) return error.name;
+  return "UnknownPersistenceError";
+}
+
 function logPersistenceError(
   operation: "create" | "update" | "cover",
-  error: { code?: string | null } | null | undefined,
+  error: unknown,
 ) {
   console.error(
     `Insights ${operation} failed`,
-    error?.code || "UnknownPersistenceError",
+    safePersistenceErrorCode(error),
   );
 }
 
