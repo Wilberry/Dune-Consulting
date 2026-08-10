@@ -136,6 +136,26 @@ export const newsletterSignupSchema = z.object({
   formStartedAt: z.number().int().positive(),
 });
 
+export const newsletterCampaignSchema = z.object({
+  name: z
+    .string()
+    .trim()
+    .min(3, "Please enter an internal campaign name.")
+    .max(120),
+  subject: z
+    .string()
+    .trim()
+    .min(3, "Please enter an email subject.")
+    .max(160),
+  previewText: z.string().trim().max(160).optional(),
+  contentHtml: z
+    .string()
+    .trim()
+    .min(40, "Please provide the campaign HTML content.")
+    .max(100000),
+  contentText: z.string().trim().max(50000).optional(),
+});
+
 export type ConsultationInput = z.infer<typeof consultationSchema>;
 export type ConsultationFormInput = z.input<typeof consultationSchema>;
 export type QuoteRequestInput = z.infer<typeof quoteRequestSchema>;
@@ -148,3 +168,4 @@ export type MentorshipApplicationFormInput = z.input<
 >;
 export type ArticleEditorInput = z.infer<typeof articleEditorSchema>;
 export type NewsletterSignupInput = z.infer<typeof newsletterSignupSchema>;
+export type NewsletterCampaignInput = z.infer<typeof newsletterCampaignSchema>;
