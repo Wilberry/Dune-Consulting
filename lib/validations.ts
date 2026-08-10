@@ -130,6 +130,12 @@ export const articleEditorSchema = z.object({
   seoDescription: z.string().trim().max(160).optional(),
 });
 
+export const newsletterSignupSchema = z.object({
+  email: emailSchema,
+  website: z.string().max(0, "Submission rejected."),
+  formStartedAt: z.number().int().positive(),
+});
+
 export type ConsultationInput = z.infer<typeof consultationSchema>;
 export type ConsultationFormInput = z.input<typeof consultationSchema>;
 export type QuoteRequestInput = z.infer<typeof quoteRequestSchema>;
@@ -141,3 +147,4 @@ export type MentorshipApplicationFormInput = z.input<
   typeof mentorshipApplicationSchema
 >;
 export type ArticleEditorInput = z.infer<typeof articleEditorSchema>;
+export type NewsletterSignupInput = z.infer<typeof newsletterSignupSchema>;
