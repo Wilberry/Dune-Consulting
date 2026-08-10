@@ -66,10 +66,12 @@ async function uploadCover(articleId: string, file: File) {
   const supabase = await createClient();
   const path = `${articleId}/${Date.now()}-${safeFileName(file.name)}`;
   const bytes = new Uint8Array(await file.arrayBuffer());
-  const { error } = await supabase.storage.from("insights").upload(path, bytes, {
-    contentType: file.type,
-    upsert: false,
-  });
+  const { error } = await supabase.storage
+    .from("insights")
+    .upload(path, bytes, {
+      contentType: file.type,
+      upsert: false,
+    });
   if (error) throw new Error(error.message);
   return path;
 }

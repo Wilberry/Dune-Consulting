@@ -29,7 +29,8 @@ export async function GET(_request: Request, { params }: Props) {
     status: 200,
     headers: {
       "Content-Type": file.type || "application/octet-stream",
-      "Cache-Control": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800",
+      "Cache-Control":
+        "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800",
       "X-Content-Type-Options": "nosniff",
     },
   });

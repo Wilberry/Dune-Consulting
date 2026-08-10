@@ -16,7 +16,7 @@ export default async function EditInsightArticlePage({ params }: Props) {
     <div className="mx-auto max-w-7xl">
       <Link
         href="/admin/insights"
-        className="text-navy text-sm font-bold underline decoration-amber decoration-2 underline-offset-4"
+        className="text-navy decoration-amber text-sm font-bold underline decoration-2 underline-offset-4"
       >
         Back to Insights
       </Link>

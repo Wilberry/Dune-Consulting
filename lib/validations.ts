@@ -94,7 +94,11 @@ export const mentorshipApplicationSchema = z.object({
 });
 
 export const articleEditorSchema = z.object({
-  title: z.string().trim().min(5, "Please enter a clear article title.").max(160),
+  title: z
+    .string()
+    .trim()
+    .min(5, "Please enter a clear article title.")
+    .max(160),
   slug: z
     .string()
     .trim()
@@ -116,7 +120,11 @@ export const articleEditorSchema = z.object({
     .min(80, "Please provide a more complete article body.")
     .max(50000),
   category: z.string().trim().min(2, "Please enter a category.").max(100),
-  authorName: z.string().trim().min(2, "Please enter the author name.").max(120),
+  authorName: z
+    .string()
+    .trim()
+    .min(2, "Please enter the author name.")
+    .max(120),
   status: z.enum(["draft", "published"]),
   featured: z.boolean(),
   seoTitle: z.string().trim().max(70).optional(),

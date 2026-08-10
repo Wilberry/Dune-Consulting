@@ -44,7 +44,11 @@ export function ArticleEditorForm({ article }: { article?: AdminArticle }) {
 
       <div className="grid gap-6 lg:grid-cols-[1fr_280px]">
         <div className="space-y-6">
-          <Field label="Article title" htmlFor="article-title" error={errorFor("title")}>
+          <Field
+            label="Article title"
+            htmlFor="article-title"
+            error={errorFor("title")}
+          >
             <input
               id="article-title"
               name="title"
@@ -76,7 +80,11 @@ export function ArticleEditorForm({ article }: { article?: AdminArticle }) {
             </p>
           </Field>
 
-          <Field label="Excerpt" htmlFor="article-excerpt" error={errorFor("excerpt")}>
+          <Field
+            label="Excerpt"
+            htmlFor="article-excerpt"
+            error={errorFor("excerpt")}
+          >
             <textarea
               id="article-excerpt"
               name="excerpt"
@@ -88,7 +96,11 @@ export function ArticleEditorForm({ article }: { article?: AdminArticle }) {
             />
           </Field>
 
-          <Field label="Article body" htmlFor="article-content" error={errorFor("content")}>
+          <Field
+            label="Article body"
+            htmlFor="article-content"
+            error={errorFor("content")}
+          >
             <textarea
               id="article-content"
               name="content"
@@ -98,13 +110,17 @@ export function ArticleEditorForm({ article }: { article?: AdminArticle }) {
               maxLength={50000}
             />
             <p className="text-muted mt-2 text-xs">
-              Separate paragraphs with a blank line. The public article preserves
-              paragraph breaks and line spacing.
+              Separate paragraphs with a blank line. The public article
+              preserves paragraph breaks and line spacing.
             </p>
           </Field>
 
           <div className="grid gap-5 sm:grid-cols-2">
-            <Field label="SEO title" htmlFor="article-seo-title" error={errorFor("seoTitle")}>
+            <Field
+              label="SEO title"
+              htmlFor="article-seo-title"
+              error={errorFor("seoTitle")}
+            >
               <input
                 id="article-seo-title"
                 name="seoTitle"
@@ -133,7 +149,11 @@ export function ArticleEditorForm({ article }: { article?: AdminArticle }) {
         <aside className="space-y-5 lg:sticky lg:top-24 lg:self-start">
           <div className="border-line rounded-xl border bg-white p-5 shadow-sm">
             <h2 className="text-navy font-extrabold">Publishing</h2>
-            <Field label="Status" htmlFor="article-status" error={errorFor("status")}>
+            <Field
+              label="Status"
+              htmlFor="article-status"
+              error={errorFor("status")}
+            >
               <select
                 id="article-status"
                 name="status"
@@ -163,7 +183,11 @@ export function ArticleEditorForm({ article }: { article?: AdminArticle }) {
 
           <div className="border-line rounded-xl border bg-white p-5 shadow-sm">
             <h2 className="text-navy font-extrabold">Article details</h2>
-            <Field label="Category" htmlFor="article-category" error={errorFor("category")}>
+            <Field
+              label="Category"
+              htmlFor="article-category"
+              error={errorFor("category")}
+            >
               <input
                 id="article-category"
                 name="category"
@@ -173,7 +197,11 @@ export function ArticleEditorForm({ article }: { article?: AdminArticle }) {
                 maxLength={100}
               />
             </Field>
-            <Field label="Author" htmlFor="article-author" error={errorFor("authorName")}>
+            <Field
+              label="Author"
+              htmlFor="article-author"
+              error={errorFor("authorName")}
+            >
               <input
                 id="article-author"
                 name="authorName"
@@ -191,7 +219,7 @@ export function ArticleEditorForm({ article }: { article?: AdminArticle }) {
               type="file"
               name="cover"
               accept="image/jpeg,image/png,image/webp,image/avif"
-              className="text-ink mt-4 block w-full text-sm file:mr-3 file:rounded-md file:border-0 file:bg-off-white file:px-3 file:py-2 file:font-semibold"
+              className="text-ink file:bg-off-white mt-4 block w-full text-sm file:mr-3 file:rounded-md file:border-0 file:px-3 file:py-2 file:font-semibold"
             />
             <p className="text-muted mt-2 text-xs leading-5">
               JPEG, PNG, WebP or AVIF. Maximum 5 MB.
@@ -206,7 +234,11 @@ export function ArticleEditorForm({ article }: { article?: AdminArticle }) {
             disabled={pending}
             className="bg-amber text-deep-navy hover:bg-amber-hover min-h-12 w-full rounded-md px-5 py-3 font-extrabold disabled:cursor-wait disabled:opacity-60"
           >
-            {pending ? "Saving article…" : article ? "Save article" : "Create article"}
+            {pending
+              ? "Saving article…"
+              : article
+                ? "Save article"
+                : "Create article"}
           </button>
 
           {article?.status === "published" && (

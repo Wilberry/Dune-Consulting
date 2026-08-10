@@ -66,8 +66,8 @@ export default async function AdminInsightsPage() {
           </p>
         </div>
       ) : (
-        <div className="mt-8 overflow-hidden rounded-xl border border-line bg-white shadow-sm">
-          <div className="divide-y divide-line">
+        <div className="border-line mt-8 overflow-hidden rounded-xl border bg-white shadow-sm">
+          <div className="divide-line divide-y">
             {articles.map((article) => (
               <article
                 key={article.id}
@@ -85,11 +85,13 @@ export default async function AdminInsightsPage() {
                       {article.status}
                     </span>
                     {article.featured && (
-                      <span className="rounded-full bg-amber/20 px-3 py-1 text-xs font-bold text-deep-navy">
+                      <span className="bg-amber/20 text-deep-navy rounded-full px-3 py-1 text-xs font-bold">
                         Featured
                       </span>
                     )}
-                    <span className="text-muted text-xs">{article.category}</span>
+                    <span className="text-muted text-xs">
+                      {article.category}
+                    </span>
                   </div>
                   <h2 className="text-navy mt-3 text-xl font-extrabold">
                     {article.title}

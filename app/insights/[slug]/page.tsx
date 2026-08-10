@@ -79,7 +79,7 @@ export default async function InsightArticlePage({ params }: Props) {
           <div className="mx-auto max-w-4xl text-center">
             <Link
               href="/insights"
-              className="text-navy text-sm font-bold underline decoration-amber decoration-2 underline-offset-4"
+              className="text-navy decoration-amber text-sm font-bold underline decoration-2 underline-offset-4"
             >
               Back to Insights
             </Link>
@@ -112,9 +112,12 @@ export default async function InsightArticlePage({ params }: Props) {
           </div>
 
           <article className="mx-auto max-w-3xl py-12 sm:py-16">
-            <div className="space-y-6 text-[1.05rem] leading-8 text-ink">
+            <div className="text-ink space-y-6 text-[1.05rem] leading-8">
               {paragraphs.map((paragraph, index) => (
-                <p key={`${article.id}-${index}`} className="whitespace-pre-line">
+                <p
+                  key={`${article.id}-${index}`}
+                  className="whitespace-pre-line"
+                >
                   {paragraph}
                 </p>
               ))}
