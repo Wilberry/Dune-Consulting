@@ -246,7 +246,11 @@ export type NewsletterBroadcastInput = {
   contentText?: string | null;
 };
 
-export type NewsletterBroadcastResult =
+export type NewsletterBroadcastDraftResult =
+  | { status: "unconfigured"; missing: string[] }
+  | { status: "created"; broadcastId: string };
+
+export type NewsletterBroadcastSendResult =
   | { status: "unconfigured"; missing: string[] }
   | { status: "sent"; broadcastId: string };
 
@@ -255,10 +259,10 @@ function withUnsubscribeFooter(html: string) {
   return `${html}\n<hr><p style="font-size:12px;color:#667085">You are receiving this email because you subscribed to Dune Consulting HSE insights. <a href="{{{RESEND_UNSUBSCRIBE_URL}}}">Unsubscribe</a>.</p>`;
 }
 
-export async function createAndSendNewsletterBroadcast(
+export async function createNewsletterBroadcastDraft(
   campaign: NewsletterBroadcastInput,
   fetchImpl: FetchLike = fetch,
-): Promise<NewsletterBroadcastResult> {
+): Promise<NewsletterBroadcastDraftResult> {
   const environment = getNewsletterProviderEnvironment();
   if (!environment.configured) {
     return { status: "unconfigured", missing: environment.missing };
@@ -278,7 +282,6 @@ export async function createAndSendNewsletterBroadcast(
         preview_text: campaign.previewText || undefined,
         html: withUnsubscribeFooter(campaign.contentHtml),
         text: campaign.contentText || undefined,
-        send: true,
       }),
     },
     RESEND_API_KEY,
@@ -287,7 +290,7 @@ export async function createAndSendNewsletterBroadcast(
 
   if (!response.ok) {
     throw new NewsletterProviderError(
-      "Newsletter provider could not create or send the broadcast.",
+      "Newsletter provider could not create the Broadcast draft.",
       response.status,
     );
   }
@@ -295,9 +298,58 @@ export async function createAndSendNewsletterBroadcast(
   const broadcastId = providerId(data);
   if (!broadcastId) {
     throw new NewsletterProviderError(
-      "Newsletter provider returned an invalid broadcast response.",
+      "Newsletter provider returned an invalid Broadcast response.",
+    );
+  }
+  return { status: "created", broadcastId };
+}
+
+export async function sendNewsletterBroadcast(
+  broadcastId: string,
+  fetchImpl: FetchLike = fetch,
+): Promise<NewsletterBroadcastSendResult> {
+  const environment = getNewsletterProviderEnvironment();
+  if (!environment.configured) {
+    return { status: "unconfigured", missing: environment.missing };
+  }
+
+  const { RESEND_API_KEY } = environment.values;
+  const { response, data } = await providerRequest(
+    `/broadcasts/${encodeURIComponent(broadcastId)}/send`,
+    { method: "POST", body: JSON.stringify({}) },
+    RESEND_API_KEY,
+    fetchImpl,
+  );
+
+  if (!response.ok) {
+    throw new NewsletterProviderError(
+      "Newsletter provider could not send the Broadcast.",
+      response.status,
     );
   }
 
-  return { status: "sent", broadcastId };
+  return {
+    status: "sent",
+    broadcastId: providerId(data) || broadcastId,
+  };
+}
+
+export async function deleteNewsletterBroadcastDraft(
+  broadcastId: string,
+  fetchImpl: FetchLike = fetch,
+) {
+  const environment = getNewsletterProviderEnvironment();
+  if (!environment.configured) return;
+  const { response } = await providerRequest(
+    `/broadcasts/${encodeURIComponent(broadcastId)}`,
+    { method: "DELETE" },
+    environment.values.RESEND_API_KEY,
+    fetchImpl,
+  );
+  if (!response.ok && response.status !== 404) {
+    throw new NewsletterProviderError(
+      "Newsletter provider could not clean up the Broadcast draft.",
+      response.status,
+    );
+  }
 }
