@@ -62,6 +62,16 @@ function validateCover(file: FormDataEntryValue | null) {
   return null;
 }
 
+function logPersistenceError(
+  operation: "create" | "update" | "cover",
+  error: { code?: string | null } | null | undefined,
+) {
+  console.error(
+    `Insights ${operation} failed`,
+    error?.code || "UnknownPersistenceError",
+  );
+}
+
 async function uploadCover(articleId: string, file: File) {
   const supabase = await createClient();
   const path = `${articleId}/${Date.now()}-${safeFileName(file.name)}`;
@@ -72,7 +82,10 @@ async function uploadCover(articleId: string, file: File) {
       contentType: file.type,
       upsert: false,
     });
-  if (error) throw new Error(error.message);
+  if (error) {
+    logPersistenceError("cover", error);
+    throw new Error("Cover upload failed");
+  }
   return path;
 }
 
@@ -112,6 +125,7 @@ export async function saveArticle(
       .eq("id", existingId)
       .maybeSingle();
     if (error || !data) {
+      logPersistenceError("update", error);
       return { status: "error", message: "The article could not be loaded." };
     }
     existingCover = data.cover_image_url;
@@ -144,6 +158,7 @@ export async function saveArticle(
       .update(payload)
       .eq("id", existingId);
     if (error) {
+      logPersistenceError("update", error);
       return {
         status: "error",
         message:
@@ -160,6 +175,7 @@ export async function saveArticle(
       .select("id")
       .single();
     if (error || !data) {
+      logPersistenceError("create", error);
       return {
         status: "error",
         message:
@@ -180,7 +196,10 @@ export async function saveArticle(
         .from("articles")
         .update({ cover_image_url: newCoverPath })
         .eq("id", savedId);
-      if (error) throw new Error(error.message);
+      if (error) {
+        logPersistenceError("cover", error);
+        throw new Error("Cover path update failed");
+      }
 
       if (existingCover) {
         await supabase.storage.from("insights").remove([existingCover]);
