@@ -254,6 +254,10 @@ export type NewsletterBroadcastSendResult =
   | { status: "unconfigured"; missing: string[] }
   | { status: "sent"; broadcastId: string };
 
+export type NewsletterBroadcastStatusResult =
+  | { status: "unconfigured"; missing: string[] }
+  | { status: "found"; broadcastStatus: string };
+
 function withUnsubscribeFooter(html: string) {
   if (html.includes("RESEND_UNSUBSCRIBE_URL")) return html;
   return `${html}\n<hr><p style="font-size:12px;color:#667085">You are receiving this email because you subscribed to Dune Consulting HSE insights. <a href="{{{RESEND_UNSUBSCRIBE_URL}}}">Unsubscribe</a>.</p>`;
@@ -302,6 +306,32 @@ export async function createNewsletterBroadcastDraft(
     );
   }
   return { status: "created", broadcastId };
+}
+
+export async function getNewsletterBroadcastStatus(
+  broadcastId: string,
+  fetchImpl: FetchLike = fetch,
+): Promise<NewsletterBroadcastStatusResult> {
+  const environment = getNewsletterProviderEnvironment();
+  if (!environment.configured) {
+    return { status: "unconfigured", missing: environment.missing };
+  }
+
+  const { response, data } = await providerRequest(
+    `/broadcasts/${encodeURIComponent(broadcastId)}`,
+    { method: "GET" },
+    environment.values.RESEND_API_KEY,
+    fetchImpl,
+  );
+  if (!response.ok) {
+    throw new NewsletterProviderError(
+      "Newsletter provider could not retrieve the Broadcast.",
+      response.status,
+    );
+  }
+  const broadcastStatus =
+    typeof data.status === "string" ? data.status : "unknown";
+  return { status: "found", broadcastStatus };
 }
 
 export async function sendNewsletterBroadcast(
