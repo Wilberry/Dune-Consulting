@@ -4,7 +4,12 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { requireAdminUser } from "@/lib/admin/auth";
-import { createAndSendNewsletterBroadcast } from "@/lib/newsletter/provider";
+import {
+  createNewsletterBroadcastDraft,
+  deleteNewsletterBroadcastDraft,
+  getNewsletterBroadcastStatus,
+  sendNewsletterBroadcast,
+} from "@/lib/newsletter/provider";
 import { createClient } from "@/lib/supabase/server";
 import { newsletterCampaignSchema } from "@/lib/validations";
 
@@ -120,13 +125,19 @@ export async function deleteNewsletterCampaign(formData: FormData) {
   const supabase = await createClient();
   const { data: campaign, error: loadError } = await supabase
     .from("newsletter_campaigns")
-    .select("status")
+    .select("status,provider_broadcast_id")
     .eq("id", parsedId.data)
     .maybeSingle();
 
   if (loadError || !campaign) throw new Error("Campaign could not be loaded.");
   if (campaign.status === "sending" || campaign.status === "sent") {
     throw new Error("Sending or sent campaigns cannot be deleted.");
+  }
+
+  if (campaign.provider_broadcast_id) {
+    await deleteNewsletterBroadcastDraft(campaign.provider_broadcast_id).catch(
+      () => undefined,
+    );
   }
 
   const { error } = await supabase
@@ -151,7 +162,9 @@ export async function sendNewsletterCampaign(formData: FormData) {
   const supabase = await createClient();
   const { data: campaign, error: campaignError } = await supabase
     .from("newsletter_campaigns")
-    .select("id,name,subject,preview_text,content_html,content_text,status")
+    .select(
+      "id,name,subject,preview_text,content_html,content_text,status,provider_broadcast_id",
+    )
     .eq("id", parsedId.data)
     .maybeSingle();
 
@@ -212,36 +225,75 @@ export async function sendNewsletterCampaign(formData: FormData) {
   if (lockError) throw new Error("Campaign send lock could not be acquired.");
   if (!locked) return;
 
-  try {
-    const result = await createAndSendNewsletterBroadcast({
-      name: campaign.name,
-      subject: campaign.subject,
-      previewText: campaign.preview_text,
-      contentHtml: campaign.content_html,
-      contentText: campaign.content_text,
-    });
+  let broadcastId: string | null = campaign.provider_broadcast_id;
 
-    if (result.status === "unconfigured") {
-      await supabase
-        .from("newsletter_campaigns")
-        .update({
-          status: "failed",
-          provider_status: "unconfigured",
-          last_error: "Newsletter provider configuration is incomplete.",
-        })
-        .eq("id", campaign.id);
+  try {
+    if (broadcastId) {
+      const existing = await getNewsletterBroadcastStatus(broadcastId);
+      if (existing.status === "unconfigured") {
+        throw new Error("Newsletter provider configuration is incomplete.");
+      }
+      if (["queued", "sent", "scheduled"].includes(existing.broadcastStatus)) {
+        const { error: reconcileError } = await supabase
+          .from("newsletter_campaigns")
+          .update({
+            status: "sent",
+            provider_status: existing.broadcastStatus,
+            sent_at: new Date().toISOString(),
+            last_error: null,
+          })
+          .eq("id", campaign.id);
+        if (reconcileError) throw new Error(reconcileError.message);
+        revalidateNewsletterCampaign(campaign.id);
+        return;
+      }
+      if (existing.broadcastStatus !== "draft") {
+        throw new Error("Provider Broadcast is not in a sendable state.");
+      }
     } else {
-      await supabase
+      const draft = await createNewsletterBroadcastDraft({
+        name: campaign.name,
+        subject: campaign.subject,
+        previewText: campaign.preview_text,
+        contentHtml: campaign.content_html,
+        contentText: campaign.content_text,
+      });
+      if (draft.status === "unconfigured") {
+        throw new Error("Newsletter provider configuration is incomplete.");
+      }
+
+      broadcastId = draft.broadcastId;
+      const { error: persistProviderIdError } = await supabase
         .from("newsletter_campaigns")
         .update({
-          status: "sent",
-          provider_broadcast_id: result.broadcastId,
-          provider_status: "accepted",
-          sent_at: new Date().toISOString(),
-          last_error: null,
+          provider_broadcast_id: broadcastId,
+          provider_status: "draft",
         })
         .eq("id", campaign.id);
+
+      if (persistProviderIdError) {
+        await deleteNewsletterBroadcastDraft(broadcastId).catch(() => undefined);
+        broadcastId = null;
+        throw new Error("Provider Broadcast identifier could not be stored.");
+      }
     }
+
+    const result = await sendNewsletterBroadcast(broadcastId);
+    if (result.status === "unconfigured") {
+      throw new Error("Newsletter provider configuration is incomplete.");
+    }
+
+    const { error: sentStateError } = await supabase
+      .from("newsletter_campaigns")
+      .update({
+        status: "sent",
+        provider_broadcast_id: result.broadcastId,
+        provider_status: "accepted",
+        sent_at: new Date().toISOString(),
+        last_error: null,
+      })
+      .eq("id", campaign.id);
+    if (sentStateError) throw new Error(sentStateError.message);
   } catch (error) {
     const providerStatus =
       error && typeof error === "object" && "status" in error
@@ -252,13 +304,18 @@ export async function sendNewsletterCampaign(formData: FormData) {
       .update({
         status: "failed",
         provider_status: providerStatus,
+        ...(broadcastId ? { provider_broadcast_id: broadcastId } : {}),
         last_error:
-          "The email provider did not accept the campaign. Review provider configuration and try again.",
+          "The email provider did not complete the campaign send. Review provider configuration and retry safely.",
       })
       .eq("id", campaign.id);
   }
 
+  revalidateNewsletterCampaign(campaign.id);
+}
+
+function revalidateNewsletterCampaign(campaignId: string) {
   revalidatePath("/admin/newsletter");
   revalidatePath("/admin/newsletter/campaigns");
-  revalidatePath(`/admin/newsletter/campaigns/${campaign.id}`);
+  revalidatePath(`/admin/newsletter/campaigns/${campaignId}`);
 }
