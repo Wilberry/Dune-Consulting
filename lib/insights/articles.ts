@@ -1,5 +1,3 @@
-import "server-only";
-
 import { createPublicClient } from "@/lib/supabase/public";
 
 export type PublishedArticle = {
