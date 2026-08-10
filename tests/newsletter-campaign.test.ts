@@ -8,6 +8,7 @@ import {
 import { verifySvixWebhook } from "../lib/newsletter/webhook";
 import { newsletterCampaignSchema } from "../lib/validations";
 
+const segmentId = "78261eea-8f8b-4381-83c6-79fa7120f1cf";
 const campaign = {
   name: "August HSE Update",
   subject: "Three practical HSE lessons for your team",
@@ -27,7 +28,7 @@ function withProviderEnvironment<T>(run: () => Promise<T>) {
   };
   process.env.RESEND_API_KEY = "re_test_newsletter_key";
   process.env.NEWSLETTER_FROM_EMAIL = "Dune Consulting <insights@duneconsult.ng>";
-  process.env.NEWSLETTER_SEGMENT_ID = "78261eea-8f8b-4381-83c6-79fa7120f1cf";
+  process.env.NEWSLETTER_SEGMENT_ID = segmentId;
   delete process.env.VERCEL_ENV;
 
   return run().finally(() => {
@@ -91,9 +92,53 @@ test("newsletter subscriber provider sync creates a missing Resend contact in th
     const body = JSON.parse(String(requests[1].init?.body));
     assert.equal(body.email, "subscriber@example.org");
     assert.equal(body.unsubscribed, false);
-    assert.deepEqual(body.segments, [
-      { id: "78261eea-8f8b-4381-83c6-79fa7120f1cf" },
-    ]);
+    assert.deepEqual(body.segments, [{ id: segmentId }]);
+  });
+});
+
+test("a suppressed subscriber is removed from the newsletter Segment without changing consent", async () => {
+  await withProviderEnvironment(async () => {
+    const requests: { url: string; method: string }[] = [];
+    const contactId = "479e3145-dd38-476b-932c-529ceb705947";
+    const fakeFetch = (async (input: RequestInfo | URL, init?: RequestInit) => {
+      const url = String(input);
+      const method = init?.method ?? "GET";
+      requests.push({ url, method });
+
+      if (method === "PATCH") {
+        return new Response(JSON.stringify({ object: "contact", id: contactId }), {
+          status: 200,
+          headers: { "content-type": "application/json" },
+        });
+      }
+      if (method === "GET") {
+        return new Response(
+          JSON.stringify({ object: "list", data: [{ id: segmentId }] }),
+          { status: 200, headers: { "content-type": "application/json" } },
+        );
+      }
+      return new Response(JSON.stringify({ id: segmentId, deleted: true }), {
+        status: 200,
+        headers: { "content-type": "application/json" },
+      });
+    }) as typeof fetch;
+
+    const result = await syncNewsletterSubscriber(
+      {
+        email: "subscriber@example.org",
+        status: "subscribed",
+        deliverabilityStatus: "bounced",
+        externalContactId: contactId,
+      },
+      fakeFetch,
+    );
+
+    assert.equal(result.status, "synced");
+    assert.deepEqual(
+      requests.map((request) => request.method),
+      ["PATCH", "GET", "DELETE"],
+    );
+    assert.match(requests[2].url, new RegExp(`/segments/${segmentId}$`));
   });
 });
 
@@ -114,7 +159,7 @@ test("newsletter Broadcast uses the configured segment, immediate send and unsub
       status: "sent",
       broadcastId: "49a3999c-0ce1-4ea6-ab68-afcd6dc2e794",
     });
-    assert.equal(body?.segment_id, "78261eea-8f8b-4381-83c6-79fa7120f1cf");
+    assert.equal(body?.segment_id, segmentId);
     assert.equal(body?.send, true);
     assert.match(String(body?.html), /RESEND_UNSUBSCRIBE_URL/);
   });
