@@ -2,11 +2,19 @@ import { handleNewsletterSignup } from "@/lib/newsletter/handler";
 import { syncNewsletterSubscriber } from "@/lib/newsletter/provider";
 import { createAdminClient } from "@/lib/supabase/admin";
 
+type DeliverabilityStatus =
+  | "ok"
+  | "bounced"
+  | "complained"
+  | "suppressed"
+  | "failed";
+
 type SubscriberRecord = {
   id: string;
   email: string;
   first_name: string | null;
   status: "subscribed" | "unsubscribed";
+  deliverability_status: DeliverabilityStatus;
   external_contact_id: string | null;
 };
 
@@ -14,7 +22,9 @@ async function loadSubscriber(email: string) {
   const supabase = createAdminClient();
   const { data, error } = await supabase
     .from("newsletter_subscribers")
-    .select("id,email,first_name,status,external_contact_id")
+    .select(
+      "id,email,first_name,status,deliverability_status,external_contact_id",
+    )
     .eq("email", email)
     .single();
 
@@ -34,6 +44,7 @@ async function syncPersistedSubscriber(subscriber: SubscriberRecord) {
       email: subscriber.email,
       firstName: subscriber.first_name,
       status: subscriber.status,
+      deliverabilityStatus: subscriber.deliverability_status,
       externalContactId: subscriber.external_contact_id,
     });
 
