@@ -60,6 +60,12 @@ export type NewsletterSubscriberSyncInput = {
   email: string;
   firstName?: string | null;
   status: "subscribed" | "unsubscribed";
+  deliverabilityStatus?:
+    | "ok"
+    | "bounced"
+    | "complained"
+    | "suppressed"
+    | "failed";
   externalContactId?: string | null;
 };
 
@@ -84,21 +90,59 @@ async function patchContact(
   );
 }
 
-async function addContactToSegment(
-  contactId: string,
-  segmentId: string,
+async function listContactSegments(
+  identifier: string,
   apiKey: string,
   fetchImpl: FetchLike,
 ) {
-  const { response } = await providerRequest(
-    `/contacts/${encodeURIComponent(contactId)}/segments/${encodeURIComponent(segmentId)}`,
-    { method: "POST" },
+  const { response, data } = await providerRequest(
+    `/contacts/${encodeURIComponent(identifier)}/segments`,
+    { method: "GET" },
     apiKey,
     fetchImpl,
   );
   if (!response.ok) {
     throw new NewsletterProviderError(
-      "Newsletter provider could not add the contact to the configured segment.",
+      "Newsletter provider could not inspect contact segments.",
+      response.status,
+    );
+  }
+  const segments = Array.isArray(data.data) ? data.data : [];
+  return segments
+    .map((segment) =>
+      segment && typeof segment === "object"
+        ? providerId(segment as ResendObject)
+        : null,
+    )
+    .filter((id): id is string => Boolean(id));
+}
+
+async function setSegmentMembership(
+  contactId: string,
+  segmentId: string,
+  shouldBelong: boolean,
+  apiKey: string,
+  fetchImpl: FetchLike,
+) {
+  const currentSegments = await listContactSegments(
+    contactId,
+    apiKey,
+    fetchImpl,
+  );
+  const belongs = currentSegments.includes(segmentId);
+  if (belongs === shouldBelong) return;
+
+  const { response } = await providerRequest(
+    `/contacts/${encodeURIComponent(contactId)}/segments/${encodeURIComponent(segmentId)}`,
+    { method: shouldBelong ? "POST" : "DELETE" },
+    apiKey,
+    fetchImpl,
+  );
+  if (!response.ok) {
+    throw new NewsletterProviderError(
+      shouldBelong
+        ? "Newsletter provider could not add the contact to the configured segment."
+        : "Newsletter provider could not remove the contact from the configured segment.",
       response.status,
     );
   }
@@ -114,12 +158,14 @@ export async function syncNewsletterSubscriber(
   }
 
   const { RESEND_API_KEY, NEWSLETTER_SEGMENT_ID } = environment.values;
-  const unsubscribed = subscriber.status === "unsubscribed";
-  let recoveredExistingContact = false;
+  const deliverable = (subscriber.deliverabilityStatus ?? "ok") === "ok";
+  const active = subscriber.status === "subscribed";
+  const shouldBelongToSegment = active && deliverable;
+  const globalUnsubscribed = subscriber.status === "unsubscribed";
 
   let result = await patchContact(
     subscriber.externalContactId || subscriber.email,
-    unsubscribed,
+    globalUnsubscribed,
     RESEND_API_KEY,
     fetchImpl,
   );
@@ -127,13 +173,10 @@ export async function syncNewsletterSubscriber(
   if (result.response.status === 404 && subscriber.externalContactId) {
     result = await patchContact(
       subscriber.email,
-      unsubscribed,
+      globalUnsubscribed,
       RESEND_API_KEY,
       fetchImpl,
     );
-    recoveredExistingContact = result.response.ok;
-  } else if (!subscriber.externalContactId && result.response.ok) {
-    recoveredExistingContact = true;
   }
 
   if (result.response.status === 404) {
@@ -143,9 +186,11 @@ export async function syncNewsletterSubscriber(
         method: "POST",
         body: JSON.stringify({
           email: subscriber.email,
-          unsubscribed,
+          unsubscribed: globalUnsubscribed,
           ...(subscriber.firstName ? { first_name: subscriber.firstName } : {}),
-          segments: [{ id: NEWSLETTER_SEGMENT_ID }],
+          ...(shouldBelongToSegment
+            ? { segments: [{ id: NEWSLETTER_SEGMENT_ID }] }
+            : {}),
         }),
       },
       RESEND_API_KEY,
@@ -182,14 +227,13 @@ export async function syncNewsletterSubscriber(
     );
   }
 
-  if (subscriber.status === "subscribed" && recoveredExistingContact) {
-    await addContactToSegment(
-      contactId,
-      NEWSLETTER_SEGMENT_ID,
-      RESEND_API_KEY,
-      fetchImpl,
-    );
-  }
+  await setSegmentMembership(
+    contactId,
+    NEWSLETTER_SEGMENT_ID,
+    shouldBelongToSegment,
+    RESEND_API_KEY,
+    fetchImpl,
+  );
 
   return { status: "synced", externalContactId: contactId };
 }
