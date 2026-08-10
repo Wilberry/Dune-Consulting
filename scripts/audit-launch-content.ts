@@ -4,7 +4,11 @@ import { siteImages } from "../data/images";
 import { projects } from "../data/portfolio";
 import { testimonials } from "../data/testimonials";
 import { publicEnv, publicEnvFallbacks } from "../lib/env";
-import { getEmailEnvironment } from "../lib/server-env";
+import {
+  getEmailEnvironment,
+  getNewsletterProviderEnvironment,
+  getResendWebhookSecret,
+} from "../lib/server-env";
 
 type Finding = {
   group: string;
@@ -50,6 +54,18 @@ if (!getEmailEnvironment().configured)
     "Enquiry delivery",
     "BLOCKER",
     "Resend sender, recipient, or API configuration is incomplete.",
+  );
+if (!getNewsletterProviderEnvironment().configured)
+  add(
+    "Newsletter delivery",
+    "BLOCKER",
+    "Resend newsletter sender, Segment, or API configuration is incomplete.",
+  );
+if (!getResendWebhookSecret())
+  add(
+    "Newsletter delivery",
+    "BLOCKER",
+    "Resend webhook signing secret is not configured.",
   );
 
 const pendingImages = siteImages.filter(
