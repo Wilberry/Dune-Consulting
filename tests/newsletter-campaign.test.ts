@@ -2,13 +2,16 @@ import assert from "node:assert/strict";
 import { createHmac } from "node:crypto";
 import test from "node:test";
 import {
-  createAndSendNewsletterBroadcast,
+  createNewsletterBroadcastDraft,
+  getNewsletterBroadcastStatus,
+  sendNewsletterBroadcast,
   syncNewsletterSubscriber,
 } from "../lib/newsletter/provider";
 import { verifySvixWebhook } from "../lib/newsletter/webhook";
 import { newsletterCampaignSchema } from "../lib/validations";
 
 const segmentId = "78261eea-8f8b-4381-83c6-79fa7120f1cf";
+const broadcastId = "49a3999c-0ce1-4ea6-ab68-afcd6dc2e794";
 const campaign = {
   name: "August HSE Update",
   subject: "Three practical HSE lessons for your team",
@@ -142,26 +145,46 @@ test("a suppressed subscriber is removed from the newsletter Segment without cha
   });
 });
 
-test("newsletter Broadcast uses the configured segment, immediate send and unsubscribe footer", async () => {
+test("newsletter Broadcast is created as a draft before a separate send request", async () => {
   await withProviderEnvironment(async () => {
-    let body: Record<string, unknown> | null = null;
-    const fakeFetch = (async (_input: RequestInfo | URL, init?: RequestInit) => {
-      body = JSON.parse(String(init?.body)) as Record<string, unknown>;
-      return new Response(
-        JSON.stringify({ id: "49a3999c-0ce1-4ea6-ab68-afcd6dc2e794" }),
-        { status: 200, headers: { "content-type": "application/json" } },
-      );
+    const requests: { url: string; method: string; body: unknown }[] = [];
+    const fakeFetch = (async (input: RequestInfo | URL, init?: RequestInit) => {
+      const url = String(input);
+      const method = init?.method ?? "GET";
+      const body = init?.body ? JSON.parse(String(init.body)) : null;
+      requests.push({ url, method, body });
+      return new Response(JSON.stringify({ id: broadcastId }), {
+        status: 200,
+        headers: { "content-type": "application/json" },
+      });
     }) as typeof fetch;
 
-    const result = await createAndSendNewsletterBroadcast(campaign, fakeFetch);
+    const draft = await createNewsletterBroadcastDraft(campaign, fakeFetch);
+    assert.deepEqual(draft, { status: "created", broadcastId });
+    const draftBody = requests[0].body as Record<string, unknown>;
+    assert.equal(requests[0].url.endsWith("/broadcasts"), true);
+    assert.equal(requests[0].method, "POST");
+    assert.equal(draftBody.segment_id, segmentId);
+    assert.equal("send" in draftBody, false);
+    assert.match(String(draftBody.html), /RESEND_UNSUBSCRIBE_URL/);
 
-    assert.deepEqual(result, {
-      status: "sent",
-      broadcastId: "49a3999c-0ce1-4ea6-ab68-afcd6dc2e794",
-    });
-    assert.equal(body?.segment_id, segmentId);
-    assert.equal(body?.send, true);
-    assert.match(String(body?.html), /RESEND_UNSUBSCRIBE_URL/);
+    const sent = await sendNewsletterBroadcast(broadcastId, fakeFetch);
+    assert.deepEqual(sent, { status: "sent", broadcastId });
+    assert.match(requests[1].url, new RegExp(`/broadcasts/${broadcastId}/send$`));
+    assert.equal(requests[1].method, "POST");
+  });
+});
+
+test("newsletter Broadcast status can be reconciled before a safe retry", async () => {
+  await withProviderEnvironment(async () => {
+    const fakeFetch = (async () =>
+      new Response(JSON.stringify({ id: broadcastId, status: "queued" }), {
+        status: 200,
+        headers: { "content-type": "application/json" },
+      })) as typeof fetch;
+
+    const result = await getNewsletterBroadcastStatus(broadcastId, fakeFetch);
+    assert.deepEqual(result, { status: "found", broadcastStatus: "queued" });
   });
 });
 
