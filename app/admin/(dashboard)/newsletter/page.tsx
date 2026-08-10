@@ -44,8 +44,8 @@ export default async function AdminNewsletterPage() {
           <h1 className="text-navy mt-2 text-3xl font-extrabold">Newsletter</h1>
           <p className="text-muted mt-3 max-w-3xl leading-7">
             Review newsletter signups stored in Supabase and manage each
-            subscriber&apos;s active status. External campaign delivery remains a
-            separate integration step.
+            subscriber&apos;s active status. External campaign delivery remains
+            a separate integration step.
           </p>
         </div>
         <div className="flex flex-wrap gap-3">
@@ -104,7 +104,7 @@ export default async function AdminNewsletterPage() {
                     </span>
                   </div>
 
-                  <h2 className="text-navy mt-3 break-all text-lg font-extrabold">
+                  <h2 className="text-navy mt-3 text-lg font-extrabold break-all">
                     {subscriber.email}
                   </h2>
                   {subscriber.firstName && (
@@ -115,19 +115,27 @@ export default async function AdminNewsletterPage() {
                   <dl className="text-muted mt-4 grid gap-x-6 gap-y-2 text-xs sm:grid-cols-2 xl:grid-cols-4">
                     <div>
                       <dt className="font-semibold">Subscribed</dt>
-                      <dd className="mt-1">{formatDate(subscriber.subscribedAt)}</dd>
+                      <dd className="mt-1">
+                        {formatDate(subscriber.subscribedAt)}
+                      </dd>
                     </div>
                     <div>
                       <dt className="font-semibold">Unsubscribed</dt>
-                      <dd className="mt-1">{formatDate(subscriber.unsubscribedAt)}</dd>
+                      <dd className="mt-1">
+                        {formatDate(subscriber.unsubscribedAt)}
+                      </dd>
                     </div>
                     <div>
                       <dt className="font-semibold">Created</dt>
-                      <dd className="mt-1">{formatDate(subscriber.createdAt)}</dd>
+                      <dd className="mt-1">
+                        {formatDate(subscriber.createdAt)}
+                      </dd>
                     </div>
                     <div>
                       <dt className="font-semibold">Last updated</dt>
-                      <dd className="mt-1">{formatDate(subscriber.updatedAt)}</dd>
+                      <dd className="mt-1">
+                        {formatDate(subscriber.updatedAt)}
+                      </dd>
                     </div>
                   </dl>
                 </div>

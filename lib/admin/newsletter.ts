@@ -28,17 +28,15 @@ export async function getNewsletterSubscribers() {
 
   if (error) throw new Error(error.message);
 
-  return (data ?? []).map(
-    (subscriber): NewsletterSubscriber => ({
-      id: subscriber.id,
-      email: subscriber.email,
-      firstName: subscriber.first_name,
-      status: subscriber.status as NewsletterSubscriberStatus,
-      externalContactId: subscriber.external_contact_id,
-      subscribedAt: subscriber.subscribed_at,
-      unsubscribedAt: subscriber.unsubscribed_at,
-      createdAt: subscriber.created_at,
-      updatedAt: subscriber.updated_at,
-    }),
-  );
+  return (data ?? []).map((subscriber): NewsletterSubscriber => ({
+    id: subscriber.id,
+    email: subscriber.email,
+    firstName: subscriber.first_name,
+    status: subscriber.status as NewsletterSubscriberStatus,
+    externalContactId: subscriber.external_contact_id,
+    subscribedAt: subscriber.subscribed_at,
+    unsubscribedAt: subscriber.unsubscribed_at,
+    createdAt: subscriber.created_at,
+    updatedAt: subscriber.updated_at,
+  }));
 }

@@ -13,7 +13,9 @@ export function NewsletterSignupForm() {
   const [website, setWebsite] = useState("");
   const [startedAt, setStartedAt] = useState(() => Date.now());
   const [submitting, setSubmitting] = useState(false);
-  const [submission, setSubmission] = useState<SubmissionState>({ kind: "idle" });
+  const [submission, setSubmission] = useState<SubmissionState>({
+    kind: "idle",
+  });
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -76,7 +78,7 @@ export function NewsletterSignupForm() {
           value={email}
           onChange={(event) => setEmail(event.currentTarget.value)}
           disabled={submitting}
-          className="min-h-10 rounded-md border border-white/15 bg-white/5 px-3 text-xs text-white transition placeholder:text-white/40 focus:border-amber focus:outline-none disabled:opacity-60"
+          className="focus:border-amber min-h-10 rounded-md border border-white/15 bg-white/5 px-3 text-xs text-white transition placeholder:text-white/40 focus:outline-none disabled:opacity-60"
         />
         <button
           type="submit"
@@ -101,7 +103,10 @@ export function NewsletterSignupForm() {
       <p className="mt-1 text-[11px] leading-5 text-white/45">
         By subscribing, you agree that Dune Consulting may send HSE insights to
         this address. See our{" "}
-        <Link href="/privacy" className="underline underline-offset-2 hover:text-white/70">
+        <Link
+          href="/privacy"
+          className="underline underline-offset-2 hover:text-white/70"
+        >
           privacy policy
         </Link>
         .

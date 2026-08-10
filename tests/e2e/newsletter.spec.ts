@@ -18,13 +18,17 @@ test("footer newsletter signup succeeds without depending on live services", asy
   });
 
   await page.goto("/");
-  await page.getByLabel("Email address", { exact: true }).fill("reader@example.org");
+  await page
+    .getByLabel("Email address", { exact: true })
+    .fill("reader@example.org");
   await page.getByRole("button", { name: "Subscribe", exact: true }).click();
 
   await expect(page.getByRole("status")).toContainText(
     "You are subscribed to Dune Consulting insights.",
   );
-  await expect(page.getByLabel("Email address", { exact: true })).toHaveValue("");
+  await expect(page.getByLabel("Email address", { exact: true })).toHaveValue(
+    "",
+  );
   expect(requests).toBe(1);
 });
 
@@ -45,7 +49,9 @@ test("pending newsletter signup cannot be duplicated", async ({ page }) => {
   });
 
   await page.goto("/");
-  await page.getByLabel("Email address", { exact: true }).fill("reader@example.org");
+  await page
+    .getByLabel("Email address", { exact: true })
+    .fill("reader@example.org");
   const submit = page.getByRole("button", { name: "Subscribe", exact: true });
   await submit.click();
   await expect(
