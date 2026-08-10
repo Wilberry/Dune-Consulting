@@ -274,12 +274,26 @@ test("internal links resolve and external targets are safe", async ({
     })),
   );
   const origin = new URL(page.url()).origin;
+  const internalPaths = new Set<string>();
+
   for (const link of links) {
     const url = new URL(link.href);
-    if (url.origin === origin)
-      expect(
-        (await request.get(`${url.pathname}${url.search}`)).status(),
-      ).toBeLessThan(400);
+    if (url.origin === origin) {
+      internalPaths.add(`${url.pathname}${url.search}`);
+    }
     if (link.target === "_blank") expect(link.rel).toMatch(/noopener/);
+  }
+
+  const paths = [...internalPaths];
+  const batchSize = 4;
+  for (let index = 0; index < paths.length; index += batchSize) {
+    const batch = paths.slice(index, index + batchSize);
+    const responses = await Promise.all(batch.map((path) => request.get(path)));
+    for (let offset = 0; offset < responses.length; offset += 1) {
+      expect(
+        responses[offset].status(),
+        `${batch[offset]} should resolve below HTTP 400`,
+      ).toBeLessThan(400);
+    }
   }
 });
