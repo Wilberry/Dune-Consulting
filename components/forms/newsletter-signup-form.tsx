@@ -100,7 +100,7 @@ export function NewsletterSignupForm() {
         )}
       </div>
 
-      <p className="mt-1 text-[11px] leading-5 text-white/45">
+      <p className="mt-1 text-[11px] leading-5 text-white/50">
         By subscribing, you agree that Dune Consulting may send HSE insights to
         this address. See our{" "}
         <Link
