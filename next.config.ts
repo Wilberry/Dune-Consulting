@@ -1,5 +1,7 @@
 import type { NextConfig } from "next";
 
+const TURNSTILE_ORIGIN = "https://challenges.cloudflare.com";
+
 function getSupabaseConnectSources() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 
@@ -26,15 +28,17 @@ const nextConfig: NextConfig = {
     const connectSources = [
       "'self'",
       "https://api.resend.com",
+      TURNSTILE_ORIGIN,
       ...supabaseConnectSources,
     ].join(" ");
     const contentSecurityPolicy = [
       "default-src 'self'",
-      `script-src 'self' 'unsafe-inline'${isProduction ? "" : " 'unsafe-eval'"}`,
+      `script-src 'self' 'unsafe-inline' ${TURNSTILE_ORIGIN}${isProduction ? "" : " 'unsafe-eval'"}`,
       "style-src 'self' 'unsafe-inline'",
       "img-src 'self' data: blob:",
       "font-src 'self' data:",
       `connect-src ${connectSources}`,
+      `frame-src ${TURNSTILE_ORIGIN}`,
       "form-action 'self'",
       "frame-ancestors 'none'",
       "base-uri 'self'",
