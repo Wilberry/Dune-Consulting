@@ -1,9 +1,14 @@
 import { handleNewsletterSignup } from "@/lib/newsletter/handler";
 import { syncNewsletterSubscriber } from "@/lib/newsletter/provider";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { verifyTurnstileRequest } from "@/lib/turnstile/server";
 
 type DeliverabilityStatus =
-  "ok" | "bounced" | "complained" | "suppressed" | "failed";
+  | "ok"
+  | "bounced"
+  | "complained"
+  | "suppressed"
+  | "failed";
 
 type SubscriberRecord = {
   id: string;
@@ -167,5 +172,8 @@ async function persistSubscription(email: string) {
 }
 
 export async function POST(request: Request) {
+  const turnstile = await verifyTurnstileRequest(request, "newsletter");
+  if (!turnstile.ok) return turnstile.response;
+
   return handleNewsletterSignup(request, { persist: persistSubscription });
 }
