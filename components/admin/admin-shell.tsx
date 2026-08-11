@@ -123,7 +123,7 @@ export function AdminShell({
     <div className="bg-off-white min-h-screen lg:grid lg:grid-cols-[280px_1fr]">
       <aside className="bg-deep-navy sticky top-0 hidden h-screen flex-col p-6 lg:flex">
         <Brand
-          className="[&_span]:text-white"
+          variant="footer"
           logoClassName="h-10 w-auto"
           textClassName="text-base"
         />
@@ -187,7 +187,7 @@ export function AdminShell({
       >
         <div className="flex items-center justify-between">
           <Brand
-            className="[&_span]:text-white"
+            variant="footer"
             logoClassName="h-9 w-auto"
             textClassName="text-sm"
           />
