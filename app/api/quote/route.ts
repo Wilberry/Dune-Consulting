@@ -1,7 +1,11 @@
 import { handleQuoteRequest } from "@/lib/quote/handler";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { verifyTurnstileRequest } from "@/lib/turnstile/server";
 
 export async function POST(request: Request) {
+  const turnstile = await verifyTurnstileRequest(request, "quote");
+  if (!turnstile.ok) return turnstile.response;
+
   return handleQuoteRequest(request, {
     persist: async (quote) => {
       const supabase = createAdminClient();
