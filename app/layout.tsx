@@ -17,9 +17,9 @@ export const metadata: Metadata = {
     : { index: true, follow: true },
   manifest: "/manifest.webmanifest",
   icons: {
-    icon: "/favicon.png",
-    shortcut: "/favicon.png",
-    apple: "/favicon.png",
+    icon: "/images/favicon.png",
+    shortcut: "/images/favicon.png",
+    apple: "/images/favicon.png",
   },
   openGraph: {
     type: "website",
