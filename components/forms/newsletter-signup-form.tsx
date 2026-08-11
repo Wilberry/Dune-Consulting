@@ -105,9 +105,7 @@ export function NewsletterSignupForm() {
 
         <button
           type="submit"
-          disabled={
-            submitting || (turnstileClientEnabled && !turnstileToken)
-          }
+          disabled={submitting || (turnstileClientEnabled && !turnstileToken)}
           className="bg-amber text-deep-navy hover:bg-amber-hover min-h-10 rounded-md px-3 text-xs font-bold transition disabled:cursor-wait disabled:opacity-60"
         >
           {submitting ? "Subscribing…" : "Subscribe"}

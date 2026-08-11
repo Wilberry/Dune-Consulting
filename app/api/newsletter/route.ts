@@ -4,11 +4,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { verifyTurnstileRequest } from "@/lib/turnstile/server";
 
 type DeliverabilityStatus =
-  | "ok"
-  | "bounced"
-  | "complained"
-  | "suppressed"
-  | "failed";
+  "ok" | "bounced" | "complained" | "suppressed" | "failed";
 
 type SubscriberRecord = {
   id: string;

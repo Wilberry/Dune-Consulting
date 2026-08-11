@@ -260,9 +260,7 @@ export function ConsultationForm() {
         )}
       </div>
       <button
-        disabled={
-          isSubmitting || (turnstileClientEnabled && !turnstileToken)
-        }
+        disabled={isSubmitting || (turnstileClientEnabled && !turnstileToken)}
         className="bg-amber text-deep-navy hover:bg-amber-hover mt-2 min-h-12 rounded-md px-6 py-3 font-bold disabled:cursor-wait disabled:opacity-60"
         type="submit"
       >

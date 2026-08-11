@@ -14,7 +14,10 @@ test("Turnstile Siteverify responses require success, matching action and produc
     isTurnstileResponseValid(valid, "contact", "duneconsult.ng"),
     true,
   );
-  assert.equal(isTurnstileResponseValid(valid, "quote", "duneconsult.ng"), false);
+  assert.equal(
+    isTurnstileResponseValid(valid, "quote", "duneconsult.ng"),
+    false,
+  );
   assert.equal(
     isTurnstileResponseValid(valid, "contact", "example.org"),
     false,
@@ -45,8 +48,7 @@ test("Turnstile environment distinguishes disabled, partial and complete configu
     process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY = "1x00000000000000000000AA";
     assert.equal(getTurnstileEnvironment().status, "misconfigured");
 
-    process.env.TURNSTILE_SECRET_KEY =
-      "1x0000000000000000000000000000000AA";
+    process.env.TURNSTILE_SECRET_KEY = "1x0000000000000000000000000000000AA";
     assert.equal(getTurnstileEnvironment().status, "configured");
   } finally {
     if (originalSiteKey === undefined)
