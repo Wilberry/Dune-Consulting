@@ -1,7 +1,11 @@
 import { handleContactRequest } from "@/lib/contact/handler";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { verifyTurnstileRequest } from "@/lib/turnstile/server";
 
 export async function POST(request: Request) {
+  const turnstile = await verifyTurnstileRequest(request, "contact");
+  if (!turnstile.ok) return turnstile.response;
+
   return handleContactRequest(request, {
     persist: async (enquiry) => {
       const supabase = createAdminClient();
