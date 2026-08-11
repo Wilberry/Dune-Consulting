@@ -23,6 +23,8 @@ function requestIp(request: Request) {
 }
 
 function expectedHostname() {
+  if (process.env.NODE_ENV !== "production") return null;
+
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
   if (!siteUrl) return null;
 
@@ -79,7 +81,8 @@ export async function verifyTurnstileRequest(
       token = typeof candidate === "string" ? candidate.trim() : null;
     }
   } catch {
-    return { ok: true, status: "verified" };
+    // The existing endpoint parser will return its normal malformed-body error.
+    return { ok: true, status: "disabled" };
   }
 
   if (!token || token.length > MAX_TOKEN_LENGTH) {
@@ -130,7 +133,7 @@ export async function verifyTurnstileRequest(
   }
 
   const hostname = expectedHostname();
-  const actionMatches = !result.action || result.action === action;
+  const actionMatches = result.action === action;
   const hostnameMatches = !hostname || result.hostname === hostname;
 
   if (!result.success || !actionMatches || !hostnameMatches) {
