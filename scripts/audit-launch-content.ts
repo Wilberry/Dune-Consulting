@@ -8,6 +8,7 @@ import {
   getEmailEnvironment,
   getNewsletterProviderEnvironment,
   getResendWebhookSecret,
+  getTurnstileEnvironment,
 } from "../lib/server-env";
 
 type Finding = {
@@ -66,6 +67,12 @@ if (!getResendWebhookSecret())
     "Newsletter delivery",
     "BLOCKER",
     "Resend webhook signing secret is not configured.",
+  );
+if (getTurnstileEnvironment().status !== "configured")
+  add(
+    "Form protection",
+    "BLOCKER",
+    "Cloudflare Turnstile site and secret keys are not fully configured for public forms.",
   );
 
 const pendingImages = siteImages.filter(
