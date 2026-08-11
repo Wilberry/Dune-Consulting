@@ -2,17 +2,14 @@ import "server-only";
 
 import { NextResponse } from "next/server";
 import { getTurnstileEnvironment } from "@/lib/server-env";
+import {
+  isTurnstileResponseValid,
+  type TurnstileSiteverifyResponse,
+} from "@/lib/turnstile/verification";
 
 const SITEVERIFY_URL =
   "https://challenges.cloudflare.com/turnstile/v0/siteverify";
 const MAX_TOKEN_LENGTH = 2048;
-
-type TurnstileResponse = {
-  success?: boolean;
-  hostname?: string;
-  action?: string;
-  "error-codes"?: string[];
-};
 
 function requestIp(request: Request) {
   return (
@@ -99,7 +96,7 @@ export async function verifyTurnstileRequest(
     };
   }
 
-  let result: TurnstileResponse;
+  let result: TurnstileSiteverifyResponse;
   try {
     const response = await fetchImpl(SITEVERIFY_URL, {
       method: "POST",
@@ -113,7 +110,7 @@ export async function verifyTurnstileRequest(
     });
 
     if (!response.ok) throw new Error("Siteverify request failed");
-    result = (await response.json()) as TurnstileResponse;
+    result = (await response.json()) as TurnstileSiteverifyResponse;
   } catch (error) {
     console.error(
       "Turnstile verification service failed",
@@ -132,11 +129,7 @@ export async function verifyTurnstileRequest(
     };
   }
 
-  const hostname = expectedHostname();
-  const actionMatches = result.action === action;
-  const hostnameMatches = !hostname || result.hostname === hostname;
-
-  if (!result.success || !actionMatches || !hostnameMatches) {
+  if (!isTurnstileResponseValid(result, action, expectedHostname())) {
     return {
       ok: false,
       response: NextResponse.json(
