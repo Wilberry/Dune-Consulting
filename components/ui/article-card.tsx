@@ -2,16 +2,23 @@ import Link from "next/link";
 import { ArrowUpRight, CalendarDays } from "lucide-react";
 import { ImagePlaceholder } from "./image-placeholder";
 import { Tag } from "./primitives";
-import type { articles } from "@/data/page-content";
 
-type Article = (typeof articles)[number];
-export function ArticleCard({ article }: { article: Article }) {
+export type ArticleCardData = {
+  slug: string;
+  title: string;
+  excerpt: string;
+  category: string;
+  date: string;
+  image: string;
+};
+
+export function ArticleCard({ article }: { article: ArticleCardData }) {
   return (
     <article className="group border-line hover:border-amber overflow-hidden rounded-xl border bg-white transition-all duration-200 hover:-translate-y-1 hover:shadow-xl">
       <div className="aspect-[16/10] overflow-hidden">
         <ImagePlaceholder
           src={article.image}
-          alt={`Editorial image placeholder for ${article.title}`}
+          alt={`Cover image for ${article.title}`}
           className="min-h-0 transition-transform duration-300 group-hover:scale-[1.03]"
         />
       </div>
@@ -27,7 +34,7 @@ export function ArticleCard({ article }: { article: Article }) {
             {article.date}
           </span>
           <Link
-            href={`/insights#${article.slug}`}
+            href={`/insights/${article.slug}`}
             className="text-navy inline-flex items-center gap-1 text-sm font-bold"
             aria-label={`Read ${article.title}`}
           >
