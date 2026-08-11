@@ -1,6 +1,7 @@
 import "server-only";
 
 import { NextResponse } from "next/server";
+import { checkRateLimit } from "@/lib/rate-limit";
 import { getTurnstileEnvironment } from "@/lib/server-env";
 import {
   isTurnstileResponseValid,
@@ -70,6 +71,21 @@ export async function verifyTurnstileRequest(
     };
   }
 
+  const ip = requestIp(request) || "unknown";
+  if (!checkRateLimit(`turnstile:${action}:${ip}`).allowed) {
+    return {
+      ok: false,
+      response: NextResponse.json(
+        {
+          status: "error",
+          message:
+            "Too many verification attempts were submitted. Please wait before trying again.",
+        },
+        { status: 429 },
+      ),
+    };
+  }
+
   let token: string | null = null;
   try {
     const body = (await request.clone().json()) as unknown;
@@ -104,7 +120,7 @@ export async function verifyTurnstileRequest(
       body: JSON.stringify({
         secret: environment.values.TURNSTILE_SECRET_KEY,
         response: token,
-        remoteip: requestIp(request),
+        remoteip: ip === "unknown" ? undefined : ip,
       }),
       signal: AbortSignal.timeout(8000),
     });
