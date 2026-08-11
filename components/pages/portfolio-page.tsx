@@ -37,7 +37,8 @@ export function PortfolioPage() {
               {featured.location}
             </p>
             <p className="text-muted mt-5 leading-7">
-              This featured portfolio entry uses an approved event name and neutral project context while avoiding unverified delivery claims.
+              This featured portfolio entry uses an approved event name and
+              neutral project context while avoiding unverified delivery claims.
             </p>
             <Button href={featured.href} className="mt-7 self-start" arrow>
               View project
@@ -81,7 +82,9 @@ export function ProjectDetailPage({ slug }: { slug: string }) {
               title="Approved portfolio project structure"
             />
             <p className="text-muted mt-6 leading-7">
-              Dune Consulting provided event safety support for {project.title}. The entry is part of our approved event safety portfolio and focuses on factual, neutral project context.
+              Dune Consulting provided event safety support for {project.title}.
+              The entry is part of our approved event safety portfolio and
+              focuses on factual, neutral project context.
             </p>
           </div>
           <div className="border-line bg-off-white rounded-xl border p-6">
@@ -126,8 +129,10 @@ export function ProjectDetailPage({ slug }: { slug: string }) {
           eyebrow="Project Summary"
           title="Neutral portfolio context"
         />
-        <p className="mt-6 text-muted leading-7">
-          Dune Consulting provided event safety support for {project.title}. This portfolio entry focuses on verified naming, imagery and category without adding unapproved delivery details.
+        <p className="text-muted mt-6 leading-7">
+          Dune Consulting provided event safety support for {project.title}.
+          This portfolio entry focuses on verified naming, imagery and category
+          without adding unapproved delivery details.
         </p>
       </Section>
       <Section className="bg-off-white">

@@ -19,14 +19,16 @@ export function Accordion({ items }: { items: AccordionItem[] }) {
                 aria-controls={contentId}
                 className={cn(
                   "text-navy font-heading flex w-full items-center justify-between gap-5 rounded-t-3xl bg-white px-5 py-5 text-left font-bold transition-colors duration-200 sm:px-6 sm:py-6",
-                  active ? "bg-white shadow-[0_10px_30px_-15px_rgba(15,23,42,0.18)]" : "hover:bg-off-white",
+                  active
+                    ? "bg-white shadow-[0_10px_30px_-15px_rgba(15,23,42,0.18)]"
+                    : "hover:bg-off-white",
                 )}
               >
                 <span className="flex-1 text-left">{item.question}</span>
                 {active ? (
-                  <Minus className="shrink-0 text-amber" size={20} />
+                  <Minus className="text-amber shrink-0" size={20} />
                 ) : (
-                  <Plus className="shrink-0 text-navy" size={20} />
+                  <Plus className="text-navy shrink-0" size={20} />
                 )}
               </button>
             </h3>

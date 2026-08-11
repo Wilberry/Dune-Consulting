@@ -10,7 +10,7 @@ export function FeatureItem({
 }) {
   return (
     <article className="text-center sm:text-left">
-      <div className="text-amber mb-5 flex size-11 items-center justify-center rounded-full border border-white/20 mx-auto">
+      <div className="text-amber mx-auto mb-5 flex size-11 items-center justify-center rounded-full border border-white/20">
         <Icon size={21} aria-hidden="true" />
       </div>
       <h3 className="text-xl font-bold text-white">{title}</h3>

@@ -85,13 +85,15 @@ export const siteImages: SiteImage[] = [
     "Facilitator leading a practical HSE training session",
     "Homepage",
   ),
-  approvedImage(    "/images/first_aid_training.webp",
+  approvedImage(
+    "/images/first_aid_training.webp",
     "First aid and mentorship training in progress",
     "Homepage",
     "1536×1024px",
     "3:2",
   ),
-  approvedImage(    "/images/site_safety_briefing.webp",
+  approvedImage(
+    "/images/site_safety_briefing.webp",
     "First aid and mentorship training in progress",
     "Homepage",
     "1536×1024px",

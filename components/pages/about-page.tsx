@@ -48,11 +48,12 @@ export function AboutPage() {
         </div>
         <div className="mt-12 grid items-center gap-12 lg:grid-cols-[.45fr_.55fr] lg:gap-12">
           <div>
-            <div className="text-muted space-y-4 leading-7 text-center">
+            <div className="text-muted space-y-4 text-center leading-7">
               <p>
                 Dune Consulting is a Health, Safety and Environment consultancy
-                based in Lagos, Nigeria. We support organisations, event producers
-                and project teams with practical risk-management solutions.
+                based in Lagos, Nigeria. We support organisations, event
+                producers and project teams with practical risk-management
+                solutions.
               </p>
               <p>
                 We combine early risk planning, practical education, qualified
@@ -191,26 +192,32 @@ export function AboutPage() {
           <div className="space-y-8 text-center lg:text-left">
             <div className="space-y-4 leading-7">
               <h3 className="text-navy text-lg font-bold">Anthony Igbinosun</h3>
-              <p className="text-sm font-semibold text-amber">Lead Consultant</p>
+              <p className="text-navy text-sm font-semibold">Lead Consultant</p>
               <p>
                 <Link
                   href="https://www.linkedin.com/in/anthonyigbinosun"
                   target="_blank"
                   rel="noreferrer"
-                  className="text-amber-hover text-sm font-semibold hover:text-white transition"
+                  className="text-navy hover:text-deep-navy decoration-amber text-sm font-semibold underline decoration-2 underline-offset-4 transition"
                 >
                   Connect with Anthony on LinkedIn
                 </Link>
               </p>
               <p className="text-muted text-sm">
-                Anthony is a Health, Safety and Environment professional, corporate trainer, mentor and professional-development advocate. His work focuses on helping organisations improve safety performance through practical HSE training, event safety coordination and professional development.
+                Anthony is a Health, Safety and Environment professional,
+                corporate trainer, mentor and professional-development advocate.
+                His work focuses on helping organisations improve safety
+                performance through practical HSE training, event safety
+                coordination and professional development.
               </p>
             </div>
             <Callout title="About leadership">
               <div className="flex flex-col items-center gap-3 text-left sm:text-center lg:flex-row lg:items-start lg:text-left">
                 <Award className="text-amber-hover shrink-0" />
                 <p className="text-sm">
-                  Dune&apos;s leadership demonstrates commitment through consistent delivery of practical HSE results, professional development support and dependable client partnerships.
+                  Dune&apos;s leadership demonstrates commitment through
+                  consistent delivery of practical HSE results, professional
+                  development support and dependable client partnerships.
                 </p>
               </div>
             </Callout>
