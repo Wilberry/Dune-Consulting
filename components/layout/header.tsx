@@ -56,7 +56,6 @@ export function Header() {
   }, [open]);
   return (
     <>
-      {/* Top banner removed per design request */}
       <header
         className={cn(
           "sticky top-0 z-50 border-b border-white/20 bg-white/75 shadow-[0_8px_30px_rgba(15,35,68,0.08)] backdrop-blur-xl transition-shadow",
@@ -182,6 +181,13 @@ export function Header() {
                 </button>
                 {servicesOpen && (
                   <div className="mt-3 overflow-hidden rounded-xl border border-white/30 bg-white/45 shadow-[0_10px_30px_rgba(15,35,68,0.10)] backdrop-blur-xl supports-[backdrop-filter]:bg-white/35">
+                    <Link
+                      href="/services"
+                      onClick={() => setOpen(false)}
+                      className="bg-navy/5 text-navy hover:bg-navy/10 focus:bg-navy/10 block border-b border-white/30 px-5 py-4 text-base font-extrabold transition-colors"
+                    >
+                      View All Services
+                    </Link>
                     {serviceNavigation.map((sub) => (
                       <Link
                         key={sub.href}

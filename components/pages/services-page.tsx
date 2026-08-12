@@ -25,8 +25,8 @@ export function ServicesOverviewPage() {
         eyebrow="What We Do"
         title="Connected HSE support for safer delivery"
         copy="From planning and education to qualified personnel and live supervision, Dune Consulting helps clients manage risk without losing sight of the operation."
-        image="/images/services/services-hero.jpg"
-        imageAlt="Dune Consulting personnel delivering HSE support on site"
+        image="/images/dune_insights_hero.webp"
+        imageAlt="Dune Consulting professionals delivering practical HSE support"
         cta={{ label: "Request a consultation", href: "/contact#consultation" }}
       />
       <Section>
