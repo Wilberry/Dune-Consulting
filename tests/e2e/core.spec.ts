@@ -12,6 +12,7 @@ test("homepage and primary navigation load without console errors", async ({
     "Safer Workplaces.",
   );
   if ((page.viewportSize()?.width ?? 0) >= 1024) {
+    const nav = page.getByRole("navigation", { name: "Main navigation" });
     for (const [label, path] of [
       ["About", "/about"],
       ["Portfolio", "/portfolio"],
@@ -19,12 +20,14 @@ test("homepage and primary navigation load without console errors", async ({
       ["Insights", "/insights"],
       ["Contact", "/contact"],
     ] as const) {
-      await page
-        .getByRole("navigation", { name: "Main navigation" })
-        .getByRole("link", { name: label, exact: true })
-        .click();
-      await expect(page).toHaveURL(new RegExp(`${path}$`));
+      const link = nav.getByRole("link", { name: label, exact: true });
+      await expect(link).toHaveAttribute("href", path);
+      await Promise.all([
+        page.waitForURL(new RegExp(`${path}$`)),
+        link.click(),
+      ]);
       await page.goto("/");
+      await expect(nav).toBeVisible();
     }
   }
   expect(errors).toEqual([]);
