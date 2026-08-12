@@ -195,12 +195,12 @@ export default async function AdminDashboardPage({
                     className={`border-line group relative overflow-hidden rounded-2xl border bg-white p-5 shadow-sm transition duration-200 ${
                       stat.restricted
                         ? "cursor-default opacity-70"
-                        : "hover:-translate-y-0.5 hover:border-amber/60 hover:shadow-lg"
+                        : "hover:border-amber/60 hover:-translate-y-0.5 hover:shadow-lg"
                     }`}
                     aria-disabled={stat.restricted}
                   >
                     <div className="flex items-start justify-between gap-5">
-                      <div className="bg-off-white text-navy flex size-11 items-center justify-center rounded-xl border border-line">
+                      <div className="bg-off-white text-navy border-line flex size-11 items-center justify-center rounded-xl border">
                         {stat.restricted ? (
                           <LockKeyhole size={19} aria-hidden="true" />
                         ) : (
@@ -209,7 +209,7 @@ export default async function AdminDashboardPage({
                       </div>
                       {!stat.restricted && (
                         <ArrowRight
-                          className="text-muted transition group-hover:translate-x-1 group-hover:text-amber-hover"
+                          className="text-muted group-hover:text-amber-hover transition group-hover:translate-x-1"
                           size={18}
                           aria-hidden="true"
                         />
@@ -254,7 +254,7 @@ export default async function AdminDashboardPage({
                         key={activity.id}
                         className="group hover:bg-off-white/70 flex items-center gap-4 px-5 py-4 transition sm:px-6"
                       >
-                        <div className="bg-off-white text-navy flex size-10 shrink-0 items-center justify-center rounded-xl border border-line transition group-hover:bg-white">
+                        <div className="bg-off-white text-navy border-line flex size-10 shrink-0 items-center justify-center rounded-xl border transition group-hover:bg-white">
                           <Icon size={17} aria-hidden="true" />
                         </div>
                         <div className="min-w-0 flex-1">
@@ -271,7 +271,7 @@ export default async function AdminDashboardPage({
                           {activity.status}
                         </span>
                         <ArrowRight
-                          className="text-muted shrink-0 transition group-hover:translate-x-1 group-hover:text-navy"
+                          className="text-muted group-hover:text-navy shrink-0 transition group-hover:translate-x-1"
                           size={17}
                           aria-hidden="true"
                         />
@@ -281,7 +281,7 @@ export default async function AdminDashboardPage({
                 </div>
               ) : (
                 <div className="px-5 py-12 text-center sm:px-6">
-                  <div className="bg-off-white text-navy mx-auto flex size-12 items-center justify-center rounded-xl border border-line">
+                  <div className="bg-off-white text-navy border-line mx-auto flex size-12 items-center justify-center rounded-xl border">
                     <Inbox size={20} aria-hidden="true" />
                   </div>
                   <p className="text-navy mt-4 font-bold">No activity yet</p>
@@ -312,14 +312,14 @@ export default async function AdminDashboardPage({
                       href={action.href}
                       className="border-line hover:border-amber/60 hover:bg-off-white group flex items-center gap-3 rounded-xl border px-4 py-3 transition"
                     >
-                      <div className="bg-off-white text-navy group-hover:bg-white flex size-9 items-center justify-center rounded-lg">
+                      <div className="bg-off-white text-navy flex size-9 items-center justify-center rounded-lg group-hover:bg-white">
                         <Icon size={16} aria-hidden="true" />
                       </div>
                       <span className="text-navy flex-1 text-sm font-bold">
                         {action.label}
                       </span>
                       <ArrowRight
-                        className="text-muted transition group-hover:translate-x-1 group-hover:text-navy"
+                        className="text-muted group-hover:text-navy transition group-hover:translate-x-1"
                         size={16}
                         aria-hidden="true"
                       />

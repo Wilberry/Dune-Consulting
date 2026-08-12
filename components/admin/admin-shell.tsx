@@ -83,7 +83,9 @@ export function AdminShell({
     (item) => !item.adminOnly || user.role === "admin",
   );
   const displayName = user.fullName || "Dune Staff";
-  const userInitial = (user.fullName || user.email || "D").charAt(0).toUpperCase();
+  const userInitial = (user.fullName || user.email || "D")
+    .charAt(0)
+    .toUpperCase();
 
   async function logout() {
     setLoggingOut(true);
@@ -154,7 +156,9 @@ export function AdminShell({
               <p className="truncate text-sm font-bold text-white">
                 {displayName}
               </p>
-              <p className="mt-0.5 truncate text-xs text-white/45">{user.email}</p>
+              <p className="mt-0.5 truncate text-xs text-white/45">
+                {user.email}
+              </p>
             </div>
           </div>
           <div className="mt-4 flex items-center justify-between gap-3 border-t border-white/10 pt-4">
@@ -187,7 +191,9 @@ export function AdminShell({
               <Menu size={22} />
             </button>
             <div className="hidden sm:block">
-              <p className="text-navy text-sm font-extrabold">Admin Workspace</p>
+              <p className="text-navy text-sm font-extrabold">
+                Admin Workspace
+              </p>
               <p className="text-muted text-xs">Dune Consulting operations</p>
             </div>
           </div>
@@ -197,7 +203,9 @@ export function AdminShell({
               <p className="text-navy max-w-48 truncate text-sm font-bold">
                 {displayName}
               </p>
-              <p className="text-muted max-w-48 truncate text-xs">{user.email}</p>
+              <p className="text-muted max-w-48 truncate text-xs">
+                {user.email}
+              </p>
             </div>
             <div className="bg-navy text-amber flex size-9 items-center justify-center rounded-xl text-xs font-extrabold shadow-sm">
               {userInitial}
