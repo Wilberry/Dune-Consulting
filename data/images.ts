@@ -134,10 +134,12 @@ export const siteImages: SiteImage[] = [
     "1535×1025px",
     "3:2",
   ),
-  image(
-    "/images/services/services-hero.jpg",
-    "HSE planning and operational support",
-    "Services",
+  approvedImage(
+    "/images/dune_insights_hero.webp",
+    "Dune Consulting HSE professionals supporting practical safety work",
+    "Insights / Services",
+    "1536×1024px",
+    "3:2",
   ),
   image(
     "/images/services/event-safety-management.jpg",
@@ -221,13 +223,6 @@ export const siteImages: SiteImage[] = [
     "Assets",
     "1752×898px",
     "~1.95:1",
-  ),
-  image(
-    "/images/insights/insights-hero.jpg",
-    "HSE professional reviewing safety information",
-    "Insights",
-    "1600×900px",
-    "16:9",
   ),
   ...Array.from({ length: 5 }, (_, index) =>
     image(
