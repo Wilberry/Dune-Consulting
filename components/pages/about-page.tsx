@@ -66,9 +66,7 @@ export function AboutPage() {
                 obstacle.
               </p>
             </div>
-            <Quote attribution="Dune Consulting positioning">
-              Safer Workplaces. Safer Events. Stronger HSE Teams.
-            </Quote>
+            <Quote>Safer Workplaces. Safer Events. Stronger HSE Teams.</Quote>
           </div>
           <div className="aspect-[5/4] overflow-hidden rounded-2xl shadow-xl">
             <ImagePlaceholder

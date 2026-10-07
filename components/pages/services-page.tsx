@@ -14,7 +14,6 @@ import { Badge, Callout, IconBox } from "@/components/ui/primitives";
 import { Section } from "@/components/ui/section";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { ServiceCard } from "@/components/ui/service-card";
-import { Timeline } from "@/components/ui/timeline";
 import { serviceDetails } from "@/data/page-content";
 import { services } from "@/data/services";
 
@@ -169,16 +168,6 @@ export function ServiceDetailPage({ slug }: { slug: string }) {
               {feature}
             </div>
           ))}
-        </div>
-      </Section>
-      <Section>
-        <SectionHeading
-          align="center-all"
-          eyebrow="Our Process"
-          title="Structured delivery, clear at every stage"
-        />
-        <div className="mt-12">
-          <Timeline items={service.process} />
         </div>
       </Section>
       <Section>

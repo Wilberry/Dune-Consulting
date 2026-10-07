@@ -10,7 +10,9 @@ import {
   LogOut,
   Mail,
   Menu,
+  MessageSquareText,
   Settings,
+  Star,
   Users,
   X,
 } from "lucide-react";
@@ -54,6 +56,18 @@ const navigation = [
     href: "/admin/newsletter",
     icon: Mail,
     adminOnly: true,
+  },
+  {
+    label: "Client Feedback",
+    href: "/admin/testimonials",
+    icon: Star,
+    adminOnly: false,
+  },
+  {
+    label: "FAQ",
+    href: "/admin/faq",
+    icon: MessageSquareText,
+    adminOnly: false,
   },
   {
     label: "Settings",

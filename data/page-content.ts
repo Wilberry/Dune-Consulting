@@ -386,25 +386,4 @@ export const articles = [
   },
 ];
 
-export const aboutApproach: ContentFeature[] = [
-  {
-    title: "Listen carefully",
-    copy: "We begin with your environment, people, constraints and definition of success.",
-    icon: MessageSquareText,
-  },
-  {
-    title: "Prioritise clearly",
-    copy: "We focus attention on meaningful risks and workable controls.",
-    icon: Scale,
-  },
-  {
-    title: "Deliver visibly",
-    copy: "Plans translate into people, actions, supervision and records.",
-    icon: CheckCircle2,
-  },
-  {
-    title: "Improve continuously",
-    copy: "Reporting creates a useful foundation for stronger future delivery.",
-    icon: FileCheck2,
-  },
-];
+export const aboutApproach: ContentFeature[] = [];

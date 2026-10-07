@@ -74,13 +74,14 @@ export function Header() {
             {navigation.map((item) =>
               item.label === "Services" ? (
                 <div key={item.href} className="group relative">
-                  <Link
+                  <button
+                    type="button"
                     className="text-ink hover:text-navy flex items-center gap-1 rounded px-3 py-3 text-sm font-semibold"
-                    href={item.href}
+                    aria-label="Services menu"
                   >
                     Services
                     <ChevronDown size={14} aria-hidden="true" />
-                  </Link>
+                  </button>
                   <div className="border-line invisible absolute top-full left-0 w-72 translate-y-2 rounded-lg border bg-white p-2 opacity-0 shadow-xl transition-all group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
                     {serviceNavigation.map((sub) => (
                       <Link
@@ -181,13 +182,6 @@ export function Header() {
                 </button>
                 {servicesOpen && (
                   <div className="mt-3 overflow-hidden rounded-xl border border-white/30 bg-white/45 shadow-[0_10px_30px_rgba(15,35,68,0.10)] backdrop-blur-xl supports-[backdrop-filter]:bg-white/35">
-                    <Link
-                      href="/services"
-                      onClick={() => setOpen(false)}
-                      className="bg-navy/5 text-navy hover:bg-navy/10 focus:bg-navy/10 block border-b border-white/30 px-5 py-4 text-base font-extrabold transition-colors"
-                    >
-                      View All Services
-                    </Link>
                     {serviceNavigation.map((sub) => (
                       <Link
                         key={sub.href}

@@ -3,7 +3,7 @@ export type NavigationItem = { label: string; href: string };
 export const navigation: NavigationItem[] = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
-  { label: "Services", href: "/services" },
+  { label: "Services", href: "#" },
   { label: "Mentorship", href: "/mentorship" },
   { label: "Portfolio", href: "/portfolio" },
   { label: "Insights", href: "/insights" },

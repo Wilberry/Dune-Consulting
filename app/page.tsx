@@ -5,7 +5,6 @@ import {
   FeaturedProjects,
   FAQSection,
   Mentorship,
-  Process,
   ServicesSection,
   Testimonials,
   WhyChooseUs,
@@ -62,7 +61,6 @@ export default function Home() {
       <ServicesSection />
       <AboutPreview />
       <WhyChooseUs />
-      <Process />
       <FeaturedProjects />
       <Mentorship />
       <Testimonials />

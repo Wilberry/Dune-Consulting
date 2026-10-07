@@ -24,10 +24,14 @@ import { Reveal } from "@/components/ui/reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { ServiceCard } from "@/components/ui/service-card";
 import { StatCard } from "@/components/ui/stat-card";
+import { faqDefaultItems, getFaqItems } from "@/lib/faq";
+import {
+  testimonialDefaultItems,
+  getTestimonialItems,
+} from "@/lib/testimonials";
 import { projects } from "@/data/portfolio";
 import { services } from "@/data/services";
 import { statistics } from "@/data/statistics";
-import { testimonials } from "@/data/testimonials";
 
 const portfolioItems = [
   "Jameson Distillery on Tour Lagos",
@@ -54,59 +58,6 @@ const process = [
   ["Monitor", "We conduct active supervision and dynamic risk assessments."],
   ["Report", "We document findings, incidents, outcomes and recommendations."],
 ] as const;
-
-const faqItems: AccordionItem[] = [
-  {
-    question: "What does Dune Consulting do?",
-    answer:
-      "Dune Consulting is a Health, Safety, Environment, Quality, and Risk Management consultancy. We help organisations create safer workplaces through professional training, event safety management, HSE personnel outsourcing, compliance support, and strategic safety consulting.",
-  },
-  {
-    question: "Which industries do you serve?",
-    answer:
-      "We work with organisations across multiple sectors, including construction, oil and gas, manufacturing, education, healthcare, hospitality, logistics, government agencies, and event management.",
-  },
-  {
-    question: "What HSE training programmes do you offer?",
-    answer:
-      "We provide industry-relevant HSE training programmes ranging from introductory safety awareness to advanced professional development. Training may be delivered on-site, online, or at a designated training location, depending on the client’s needs.",
-  },
-  {
-    question: "What is the HSE Mentorship Programme?",
-    answer:
-      "The HSE Mentorship Programme supports aspiring and early-career safety professionals through practical guidance, career coaching, industry insights, and real-world knowledge from experienced HSE professionals.",
-  },
-  {
-    question: "Do you provide HSE personnel for companies?",
-    answer:
-      "Yes. We recruit, train, and deploy qualified HSE professionals for short-term, long-term, and project-based assignments, helping organisations access competent safety personnel when needed.",
-  },
-  {
-    question: "What is Event Safety Management?",
-    answer:
-      "Event Safety Management involves planning and coordinating the safety requirements of an event. This includes risk assessment, crowd safety, emergency planning, incident prevention, and compliance with relevant safety standards.",
-  },
-  {
-    question: "Can you customise training for our organisation?",
-    answer:
-      "Yes. We develop customised training programmes based on an organisation’s operations, workforce, industry risks, regulatory requirements, and learning objectives.",
-  },
-  {
-    question: "Do you support regulatory compliance?",
-    answer:
-      "Yes. We help organisations understand applicable HSE requirements, conduct risk assessments, improve workplace safety systems, and implement practical measures that support compliance and operational excellence.",
-  },
-  {
-    question: "How can I register for a training programme?",
-    answer:
-      "You can register through the website contact form, phone, email, or the company’s official social media channels. The Dune Consulting team will guide you through the available programmes and registration process.",
-  },
-  {
-    question: "Why should I choose Dune Consulting?",
-    answer:
-      "Dune Consulting combines technical expertise, practical industry experience, and a strong commitment to safety excellence. Our solutions are designed to reduce risk, strengthen compliance, improve workforce competence, and support sustainable organisational performance.",
-  },
-];
 
 export function Clients() {
   return (
@@ -324,20 +275,12 @@ export function FeaturedProjects() {
   return (
     <section className="bg-off-white py-20 sm:py-24">
       <Container>
-        <div className="flex flex-col gap-5 sm:flex-row sm:items-end lg:grid lg:grid-cols-[1.35fr_.65fr] lg:items-end">
+        <div className="flex flex-col gap-5 sm:flex-row sm:items-end">
           <SectionHeading
             eyebrow="Our Work"
             title="Selected Events and Projects"
             copy="A selection of events and organisations supported by Dune Consulting."
           />
-          <div className="flex w-full justify-center lg:justify-end">
-            <Link
-              href="/portfolio"
-              className="text-navy inline-flex shrink-0 items-center gap-2 font-bold"
-            >
-              View all projects <ArrowRight size={17} />
-            </Link>
-          </div>
         </div>
         <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
           {projects.map((project) => (
@@ -399,7 +342,18 @@ export function Mentorship() {
   );
 }
 
-export function FAQSection() {
+export async function FAQSection() {
+  const loadedItems = await getFaqItems();
+  const faqItems: AccordionItem[] = loadedItems.length
+    ? loadedItems.map((item) => ({
+        question: item.question,
+        answer: item.answer,
+      }))
+    : faqDefaultItems.map((item) => ({
+        question: item.question,
+        answer: item.answer,
+      }));
+
   return (
     <section className="bg-off-white py-20 sm:py-24">
       <Container>
@@ -431,7 +385,12 @@ export function FAQSection() {
   );
 }
 
-export function Testimonials() {
+export async function Testimonials() {
+  const loadedItems = await getTestimonialItems();
+  const testimonials = loadedItems.length
+    ? loadedItems
+    : testimonialDefaultItems;
+
   return (
     <section className="border-line bg-off-white border-y py-16">
       <Container>
@@ -443,7 +402,7 @@ export function Testimonials() {
         <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {testimonials.map((testimonial) => (
             <article
-              key={testimonial.name}
+              key={`${testimonial.name}-${testimonial.role}`}
               className="rounded-[2rem] border border-white/10 bg-white p-8 shadow-sm"
             >
               <div className="flex items-center gap-4">
