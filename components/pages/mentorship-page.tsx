@@ -75,8 +75,8 @@ export function MentorshipPage() {
         <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
           <div className="aspect-[5/4] overflow-hidden rounded-2xl shadow-lg">
             <ImagePlaceholder
-              src="/images/training_room.webp"
-              alt="Training room set up for practical HSE instruction"
+              src="/images/first_aid_training.webp"
+              alt="First aid and HSE mentorship training in progress"
               imgStyle={{ objectPosition: "10% center" }}
             />
           </div>

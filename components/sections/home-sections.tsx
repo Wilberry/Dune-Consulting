@@ -304,9 +304,10 @@ export function Mentorship() {
         <div className="bg-navy overflow-hidden rounded-2xl text-white lg:grid lg:grid-cols-2">
           <div className="relative min-h-80">
             <ImagePlaceholder
-              src="/images/first_aid_training.webp"
-              alt="First aid and HSE mentorship training in progress"
+              src="/images/training_room.webp"
+              alt="Training room set up for practical HSE instruction"
               className="absolute inset-0"
+              imgStyle={{ objectPosition: "20% center" }}
             />
           </div>
           <div className="p-8 sm:p-12 lg:p-14">
