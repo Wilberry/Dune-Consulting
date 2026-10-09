@@ -322,19 +322,29 @@ export const industries: ContentFeature[] = [
 
 export const mentorshipBenefits: ContentFeature[] = [
   {
-    title: "Professional guidance",
-    copy: "Learn how experienced practitioners approach decisions, communication and responsibility.",
+    title: "Five-week programme",
+    copy: "A structured learning journey designed to deepen practical HSE understanding over time.",
     icon: Compass,
   },
   {
-    title: "Practical perspective",
-    copy: "Connect safety principles to events, workplaces and changing operational conditions.",
+    title: "Live Saturday sessions",
+    copy: "Join mentor-led discussions every Saturday via Microsoft Teams and ask questions in real time.",
     icon: Eye,
   },
   {
-    title: "Career direction",
-    copy: "Build clarity around strengths, development priorities and professional next steps.",
+    title: "Weekly assignments",
+    copy: "Apply key concepts through guided tasks that help you connect learning with professional practice.",
     icon: TrendingUp,
+  },
+  {
+    title: "Scholarship eligibility",
+    copy: "Selected participants may be considered for HSE training scholarship opportunities.",
+    icon: GraduationCap,
+  },
+  {
+    title: "Participation certificate",
+    copy: "Receive a certificate of participation recognising your engagement and completion of the programme.",
+    icon: BookOpenCheck,
   },
 ];
 

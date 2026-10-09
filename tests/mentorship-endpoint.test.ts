@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { extractYouTubeVideoId } from "../lib/mentorship/youtube";
 import { handleMentorshipApplication } from "../lib/mentorship/handler";
 
 const basePayload = {
@@ -40,6 +41,19 @@ function unconfigure() {
   delete process.env.CONTACT_FROM_EMAIL;
 }
 
+test("YouTube links are parsed reliably for mentorship video testimonials", () => {
+  assert.equal(
+    extractYouTubeVideoId("https://www.youtube.com/watch?v=dQw4w9WgXcQ"),
+    "dQw4w9WgXcQ",
+  );
+  assert.equal(
+    extractYouTubeVideoId("https://youtu.be/dQw4w9WgXcQ?t=12"),
+    "dQw4w9WgXcQ",
+  );
+  assert.equal(extractYouTubeVideoId("https://example.com/video"), null);
+  assert.equal(extractYouTubeVideoId("not a url"), null);
+});
+
 test("mentorship endpoint persistence and notification behavior", async (context) => {
   await context.test(
     "valid application is persisted before a secondary notification",
@@ -49,7 +63,10 @@ test("mentorship endpoint persistence and notification behavior", async (context
       let providerBody = "";
 
       const response = await handleMentorshipApplication(
-        request(basePayload, "203.0.113.71"),
+        request(
+          { ...basePayload, selectedPackage: "Momentum" },
+          "203.0.113.71",
+        ),
         {
           persist: async (application) => {
             persisted = application;
@@ -72,6 +89,7 @@ test("mentorship endpoint persistence and notification behavior", async (context
       assert.equal(persisted?.professional_role, "Graduate trainee");
       assert.equal(persisted?.experience_level, "Recent graduate");
       assert.match(providerBody, /Ada &lt;Example&gt;/);
+      assert.match(providerBody, /Momentum/);
       assert.match(providerBody, /&lt;script&gt;/);
       assert.doesNotMatch(providerBody, /<script>/);
       assert.doesNotMatch(providerBody, /re_test_key/);

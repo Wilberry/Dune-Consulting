@@ -43,9 +43,9 @@ export const supportedRoutes = {
   },
   mentorship: {
     path: "/mentorship",
-    title: "HSE Mentorship Program",
+    title: "HSE Mentorship Program | Dune Consulting",
     description:
-      "Build practical safety skills through structured guidance, industry insight and career development support.",
+      "Join Dune Consulting's five-week HSE mentorship programme for practical safety learning, live Saturday sessions, assignments and mentor-led development support.",
   },
   insights: {
     path: "/insights",

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -19,8 +19,27 @@ type SubmissionState = {
   message?: string;
 };
 
+const mentorshipPackages = ["Foundation", "Momentum", "Elevation"] as const;
+
 const control =
   "mt-2 w-full rounded-md border border-line bg-white px-4 py-3 text-ink placeholder:text-muted/70 focus:border-navy disabled:opacity-60";
+
+function getInitialPackage() {
+  if (typeof window === "undefined") {
+    return "";
+  }
+
+  const value = new URLSearchParams(window.location.search).get("package");
+  if (!value) {
+    return "";
+  }
+
+  return mentorshipPackages.includes(
+    value as (typeof mentorshipPackages)[number],
+  )
+    ? value
+    : "";
+}
 
 export function MentorshipApplicationForm() {
   const [startedAt] = useState(() => Date.now());
@@ -34,6 +53,7 @@ export function MentorshipApplicationForm() {
     handleSubmit,
     reset,
     setError,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<
     MentorshipApplicationFormInput,
@@ -44,9 +64,17 @@ export function MentorshipApplicationForm() {
     defaultValues: {
       consent: false,
       website: "",
+      selectedPackage: getInitialPackage(),
       formStartedAt: startedAt,
     },
   });
+
+  useEffect(() => {
+    const nextPackage = getInitialPackage();
+    if (nextPackage) {
+      setValue("selectedPackage", nextPackage);
+    }
+  }, [setValue]);
 
   async function onSubmit(values: MentorshipApplicationInput) {
     setSubmission({ kind: "idle" });
@@ -83,6 +111,7 @@ export function MentorshipApplicationForm() {
         reset({
           consent: false,
           website: "",
+          selectedPackage: getInitialPackage(),
           formStartedAt: startedAt,
         });
       }
@@ -130,6 +159,25 @@ export function MentorshipApplicationForm() {
       />
 
       <div className="mt-7 grid gap-5 sm:grid-cols-2">
+        <Field id="mentorship-package" label="Preferred package">
+          <select
+            id="mentorship-package"
+            className={control}
+            defaultValue={getInitialPackage()}
+            aria-invalid={!!errors.selectedPackage}
+            aria-describedby={
+              errors.selectedPackage ? "mentorship-package-error" : undefined
+            }
+            {...register("selectedPackage")}
+          >
+            <option value="">No package selected</option>
+            {mentorshipPackages.map((packageName) => (
+              <option key={packageName} value={packageName}>
+                {packageName}
+              </option>
+            ))}
+          </select>
+        </Field>
         <Field
           id="mentorship-name"
           label="Full name *"
@@ -275,6 +323,12 @@ export function MentorshipApplicationForm() {
           />
         </Field>
       </div>
+
+      {errors.selectedPackage && (
+        <p id="mentorship-package-error" className="mt-1 text-sm text-red-700">
+          {errors.selectedPackage.message}
+        </p>
+      )}
 
       <label className="mt-5 flex items-start gap-3 text-sm leading-6">
         <input

@@ -68,6 +68,17 @@ export const mentorshipApplicationSchema = z.object({
   email: emailSchema,
   phone: phoneSchema,
   professionalRole: z.string().trim().max(150).optional(),
+  selectedPackage: z
+    .string()
+    .trim()
+    .refine(
+      (value) =>
+        value === "" || ["Foundation", "Momentum", "Elevation"].includes(value),
+      {
+        message: "Please choose a mentorship package.",
+      },
+    )
+    .optional(),
   experienceLevel: z
     .string()
     .trim()

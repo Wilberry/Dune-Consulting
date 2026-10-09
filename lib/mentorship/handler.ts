@@ -115,6 +115,10 @@ export async function handleMentorshipApplication(
   }
 
   const application = parsed.data;
+  const selectedPackageSummary =
+    application.selectedPackage && application.selectedPackage.trim()
+      ? application.selectedPackage.trim()
+      : "Not provided";
   if (Date.now() - application.formStartedAt < MIN_COMPLETION_MS) {
     return NextResponse.json(
       {
@@ -152,7 +156,7 @@ export async function handleMentorshipApplication(
   }
 
   const submittedAt = new Date().toISOString();
-  const html = `<h1>New Dune Consulting mentorship application</h1><dl><dt>Name</dt><dd>${text(application.name)}</dd><dt>Email</dt><dd>${text(application.email)}</dd><dt>Phone</dt><dd>${text(application.phone)}</dd><dt>Professional role</dt><dd>${text(application.professionalRole)}</dd><dt>Experience level</dt><dd>${text(application.experienceLevel)}</dd><dt>Education</dt><dd>${text(application.education)}</dd><dt>Reason for applying</dt><dd>${text(application.reasonForApplying).replace(/\n/g, "<br>")}</dd><dt>Career goals</dt><dd>${text(application.careerGoals).replace(/\n/g, "<br>")}</dd><dt>Additional information</dt><dd>${text(application.additionalInformation).replace(/\n/g, "<br>")}</dd><dt>Submitted</dt><dd>${submittedAt}</dd></dl>`;
+  const html = `<h1>New Dune Consulting mentorship application</h1><dl><dt>Name</dt><dd>${text(application.name)}</dd><dt>Email</dt><dd>${text(application.email)}</dd><dt>Phone</dt><dd>${text(application.phone)}</dd><dt>Preferred package</dt><dd>${text(selectedPackageSummary)}</dd><dt>Professional role</dt><dd>${text(application.professionalRole)}</dd><dt>Experience level</dt><dd>${text(application.experienceLevel)}</dd><dt>Education</dt><dd>${text(application.education)}</dd><dt>Reason for applying</dt><dd>${text(application.reasonForApplying).replace(/\n/g, "<br>")}</dd><dt>Career goals</dt><dd>${text(application.careerGoals).replace(/\n/g, "<br>")}</dd><dt>Additional information</dt><dd>${text(application.additionalInformation).replace(/\n/g, "<br>")}</dd><dt>Submitted</dt><dd>${submittedAt}</dd></dl>`;
 
   try {
     const fetchImpl = dependencies.fetchImpl ?? fetch;
