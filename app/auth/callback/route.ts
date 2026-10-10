@@ -24,7 +24,9 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  return NextResponse.redirect(
-    new URL("/admin/forgot-password?recovery=invalid", requestUrl.origin),
-  );
+  const failedPath =
+    next === "/dashboard"
+      ? "/mentee/login?verification=invalid"
+      : "/admin/forgot-password?recovery=invalid";
+  return NextResponse.redirect(new URL(failedPath, requestUrl.origin));
 }
