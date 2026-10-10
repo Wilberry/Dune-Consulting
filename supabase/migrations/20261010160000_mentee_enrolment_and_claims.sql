@@ -27,7 +27,7 @@ create table public.mentorship_claims (
   token_hash text not null unique,
   expires_at timestamptz not null,
   claimed_at timestamptz,
-  claimed_by uuid references auth.users(id) on delete set null,
+  claimed_by uuid references auth.users(id) on delete cascade,
   created_by uuid not null references auth.users(id),
   created_at timestamptz not null default now(),
   constraint mentorship_claims_token_hash_check check (token_hash ~ '^[a-f0-9]{64}$'),
@@ -70,8 +70,9 @@ using (
 -- Claims have NO browser-readable policies. Only the server-side service role
 -- can issue/revoke them, while the SECURITY DEFINER function can redeem them.
 revoke all on public.mentorship_claims from anon, authenticated;
-revoke insert, update, delete on public.mentorship_enrolments from anon, authenticated;
-grant select on public.mentorship_enrolments to authenticated;
+revoke all on public.mentorship_enrolments from anon;
+grant select, insert, update, delete on public.mentorship_enrolments to authenticated;
+-- Mentee writes are still denied by RLS; only admin policies permit them.
 
 create or replace function public.claim_mentorship_enrolment(p_token_hash text)
 returns uuid
