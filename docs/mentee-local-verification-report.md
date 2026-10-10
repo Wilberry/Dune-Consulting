@@ -6,15 +6,15 @@ Verification date: 2026-10-10
 
 - Repository: `https://github.com/Wilberry/Dune-Consulting`
 - Starting checkout: `main` at `74c7e20cb847c72f52421aa6fde21934eeee765a`.
-- PR branch: `feat/mentee-enrolment-foundation`, starting head `a0b04cdac1bfe22d1c133f8c8256d701d5876fb4`; main remained `74c7e20cb847c72f52421aa6fde21934eeee765a` when rechecked.
-- The remote feature ref was 14 commits ahead with no divergence. No local feature branch existed.
+- PR branch: `feat/mentee-enrolment-foundation`, starting head `a0b04cdac1bfe22d1c133f8c8256d701d5876fb4`; final pushed head `ce4c1b3c3ef4bc3280f6bd8cbb341021d4b9843d`. Main remained `74c7e20cb847c72f52421aa6fde21934eeee765a`.
+- The remote feature ref was 14 commits ahead at the start and 15 commits ahead after verification, with no divergence. The detached worktree now tracks the pushed commit.
 - Original `main` checkout contained five modified and twelve untracked files at start. It was not switched, and those edits were preserved.
-- Checks ran in detached worktree `/tmp/dune-pr6-verify-a0b04cd`. This report and scoped fixes are being added to the PR branch; no production change was made.
+- Checks ran in detached worktree `/tmp/dune-pr6-verify-a0b04cd`. The report and scoped fixes were committed and pushed as `ce4c1b3`; no production change was made.
 - Original PR diff: 22 files, 1,146 insertions, 28 deletions; `git diff --check` passed.
 
 ## 2. Environment
 
-- Node.js `v22.23.2`; npm `10.9.2`.
+- Node.js `v22.23.2`; npm `10.9.8`.
 - `npm ci` passed; lockfile unchanged. Transitive dependency deprecation warnings were emitted.
 - Next.js `16.2.12`, React `19.2.8`, TypeScript `5.9.3`.
 - No local Supabase URL/publishable key or server secret, Turnstile keys, or email-provider settings were present. Values were not printed or copied.
