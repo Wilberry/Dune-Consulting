@@ -1,8 +1,8 @@
 "use server";
 
-import { createHash } from "node:crypto";
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
+import { hashInvitationCode } from "@/lib/mentorship/invitation-token";
 
 export type MenteeActionState = {
   status: "idle" | "error" | "success";
@@ -13,11 +13,8 @@ export async function claimMentorship(
   _previous: MenteeActionState,
   formData: FormData,
 ): Promise<MenteeActionState> {
-  const code = formData.get("code");
-  if (
-    typeof code !== "string" ||
-    !/^[A-Za-z0-9_-]{43}$/.test(code.trim())
-  ) {
+  const tokenHash = hashInvitationCode(formData.get("code"));
+  if (!tokenHash) {
     return { status: "error", message: "Invalid or expired invitation code." };
   }
 
@@ -28,7 +25,6 @@ export async function claimMentorship(
       return { status: "error", message: "Sign in before claiming an invitation." };
     }
 
-    const tokenHash = createHash("sha256").update(code.trim()).digest("hex");
     const { error } = await supabase.rpc("claim_mentorship_enrolment", {
       p_token_hash: tokenHash,
     });
