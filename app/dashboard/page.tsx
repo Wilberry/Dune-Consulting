@@ -35,7 +35,9 @@ const benefits = {
 type Package = keyof typeof benefits;
 
 function isPackage(value: string | null): value is Package {
-  return value === "Foundation" || value === "Momentum" || value === "Elevation";
+  return (
+    value === "Foundation" || value === "Momentum" || value === "Elevation"
+  );
 }
 
 export default async function MenteeDashboardPage() {
@@ -51,7 +53,11 @@ export default async function MenteeDashboardPage() {
 
   const user = auth.user;
   const [profileResult, enrolmentResult] = await Promise.all([
-    supabase.from("profiles").select("full_name,email").eq("id", user.id).maybeSingle(),
+    supabase
+      .from("profiles")
+      .select("full_name,email")
+      .eq("id", user.id)
+      .maybeSingle(),
     supabase
       .from("mentorship_enrolments")
       .select("id,application_id,cohort_name,created_at")
@@ -65,8 +71,10 @@ export default async function MenteeDashboardPage() {
 
   const profile = profileResult.data;
   const enrolment = enrolmentResult.data;
-  const fullName = profile?.full_name || user.user_metadata?.full_name || "Mentee";
-  let application: { status: string; selected_package: string | null } | null = null;
+  const fullName =
+    profile?.full_name || user.user_metadata?.full_name || "Mentee";
+  let application: { status: string; selected_package: string | null } | null =
+    null;
 
   if (enrolment) {
     const result = await supabase
@@ -85,7 +93,9 @@ export default async function MenteeDashboardPage() {
     <main id="main-content" className="bg-off-white min-h-screen pb-14">
       <header className="bg-navy text-white">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-5">
-          <Link href="/" className="text-lg font-extrabold">Dune Consulting</Link>
+          <Link href="/" className="text-lg font-extrabold">
+            Dune Consulting
+          </Link>
           <MenteeSignOutButton />
         </div>
       </header>
@@ -97,20 +107,26 @@ export default async function MenteeDashboardPage() {
           Welcome, {fullName}
         </h1>
         <p className="text-muted mt-3 text-sm">
-          Signed in as {user.email}. Enrolment information is private to your account.
+          Signed in as {user.email}. Enrolment information is private to your
+          account.
         </p>
 
         {!enrolment ? (
           <>
             <div className="border-line mt-8 rounded-xl border bg-white p-6">
-              <h2 className="text-navy text-xl font-bold">No linked enrolment yet</h2>
+              <h2 className="text-navy text-xl font-bold">
+                No linked enrolment yet
+              </h2>
               <p className="text-muted mt-2 leading-7">
-                Submitting an application is separate from enrolment. If you have
-                applied, staff will review it and contact you. An approved
+                Submitting an application is separate from enrolment. If you
+                have applied, staff will review it and contact you. An approved
                 application requires a private invitation code to link it here.
                 Application details are not exposed through email lookups.
               </p>
-              <Link href="/mentorship#apply" className="text-navy mt-4 inline-block font-semibold underline">
+              <Link
+                href="/mentorship#apply"
+                className="text-navy mt-4 inline-block font-semibold underline"
+              >
                 View mentorship application
               </Link>
             </div>
@@ -118,10 +134,22 @@ export default async function MenteeDashboardPage() {
           </>
         ) : (
           <>
-            <section aria-label="Enrolment summary" className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              <Summary title="Application status" value={application?.status ?? "Unavailable"} />
-              <Summary title="Selected package" value={packageName ?? "Not recorded"} />
-              <Summary title="Assigned cohort" value={enrolment.cohort_name ?? "Not yet assigned"} />
+            <section
+              aria-label="Enrolment summary"
+              className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
+            >
+              <Summary
+                title="Application status"
+                value={application?.status ?? "Unavailable"}
+              />
+              <Summary
+                title="Selected package"
+                value={packageName ?? "Not recorded"}
+              />
+              <Summary
+                title="Assigned cohort"
+                value={enrolment.cohort_name ?? "Not yet assigned"}
+              />
             </section>
             {!accepted && (
               <div className="mt-6 rounded-xl border border-amber-300 bg-white p-5 text-sm">
@@ -132,22 +160,28 @@ export default async function MenteeDashboardPage() {
             {accepted && (
               <section className="mt-7 grid gap-6 lg:grid-cols-2">
                 <div className="border-line rounded-xl border bg-white p-6">
-                  <h2 className="text-navy text-xl font-bold">Your programme</h2>
+                  <h2 className="text-navy text-xl font-bold">
+                    Your programme
+                  </h2>
                   <p className="text-muted mt-3 leading-7">
                     The mentorship programme is structured over five weeks.
                     Dates, session joining details, resources, and assignments
                     will appear when officially published.
                   </p>
                   <p className="text-muted mt-4 text-sm">
-                    No upcoming sessions or resource links have been published in this dashboard.
+                    No upcoming sessions or resource links have been published
+                    in this dashboard.
                   </p>
                 </div>
                 <div className="border-line rounded-xl border bg-white p-6">
-                  <h2 className="text-navy text-xl font-bold">Package benefits</h2>
+                  <h2 className="text-navy text-xl font-bold">
+                    Package benefits
+                  </h2>
                   {isPackage(packageName) ? (
                     <>
                       <p className="text-muted mt-2 text-sm">
-                        Included in {packageName}; availability depends on official scheduling and publication.
+                        Included in {packageName}; availability depends on
+                        official scheduling and publication.
                       </p>
                       <ul className="text-ink mt-4 list-inside list-disc space-y-3 text-sm leading-6">
                         {benefits[packageName].map((benefit) => (
@@ -177,7 +211,8 @@ export default async function MenteeDashboardPage() {
             <MenteeProfileForm fullName={profile?.full_name ?? null} />
           ) : (
             <p className="text-muted mt-4 text-sm">
-              Profile editing becomes available after you securely link your enrolment.
+              Profile editing becomes available after you securely link your
+              enrolment.
             </p>
           )}
         </section>
@@ -190,21 +225,32 @@ function Summary({ title, value }: { title: string; value: string }) {
   return (
     <div className="border-line rounded-xl border bg-white p-5 shadow-sm">
       <p className="text-muted text-xs font-bold uppercase">{title}</p>
-      <p className="text-navy mt-2 text-lg font-extrabold capitalize">{value}</p>
+      <p className="text-navy mt-2 text-lg font-extrabold capitalize">
+        {value}
+      </p>
     </div>
   );
 }
 
 function DashboardError() {
   return (
-    <main id="main-content" className="bg-off-white flex min-h-screen items-center justify-center p-6">
-      <div role="alert" className="border-line max-w-lg rounded-xl border bg-white p-8">
+    <main
+      id="main-content"
+      className="bg-off-white flex min-h-screen items-center justify-center p-6"
+    >
+      <div
+        role="alert"
+        className="border-line max-w-lg rounded-xl border bg-white p-8"
+      >
         <h1 className="text-navy text-2xl font-bold">Dashboard unavailable</h1>
         <p className="text-muted mt-3">
           Your account information could not be loaded. Please try again or
           contact Dune Consulting if the issue continues.
         </p>
-        <Link href="/mentee/login" className="text-navy mt-5 inline-block font-bold underline">
+        <Link
+          href="/mentee/login"
+          className="text-navy mt-5 inline-block font-bold underline"
+        >
           Return to sign in
         </Link>
       </div>

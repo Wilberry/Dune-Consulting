@@ -22,7 +22,10 @@ export async function claimMentorship(
     const supabase = await createClient();
     const { data: auth, error: authError } = await supabase.auth.getUser();
     if (authError || !auth.user) {
-      return { status: "error", message: "Sign in before claiming an invitation." };
+      return {
+        status: "error",
+        message: "Sign in before claiming an invitation.",
+      };
     }
 
     const { error } = await supabase.rpc("claim_mentorship_enrolment", {
@@ -38,9 +41,16 @@ export async function claimMentorship(
     }
 
     revalidatePath("/dashboard");
-    return { status: "success", message: "Your enrolment is now linked. Refresh the dashboard to view it." };
+    return {
+      status: "success",
+      message:
+        "Your enrolment is now linked. Refresh the dashboard to view it.",
+    };
   } catch {
-    return { status: "error", message: "The invitation service is temporarily unavailable." };
+    return {
+      status: "error",
+      message: "The invitation service is temporarily unavailable.",
+    };
   }
 }
 
@@ -49,8 +59,15 @@ export async function updateMenteeProfile(
   formData: FormData,
 ): Promise<MenteeActionState> {
   const name = formData.get("fullName");
-  if (typeof name !== "string" || name.trim().length < 2 || name.trim().length > 120) {
-    return { status: "error", message: "Enter a name between 2 and 120 characters." };
+  if (
+    typeof name !== "string" ||
+    name.trim().length < 2 ||
+    name.trim().length > 120
+  ) {
+    return {
+      status: "error",
+      message: "Enter a name between 2 and 120 characters.",
+    };
   }
 
   try {
@@ -70,6 +87,9 @@ export async function updateMenteeProfile(
     revalidatePath("/dashboard");
     return { status: "success", message: "Your name has been updated." };
   } catch {
-    return { status: "error", message: "Profile updates are temporarily unavailable." };
+    return {
+      status: "error",
+      message: "Profile updates are temporarily unavailable.",
+    };
   }
 }

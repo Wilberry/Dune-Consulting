@@ -15,9 +15,15 @@ export function MenteeProfileForm({ fullName }: { fullName: string | null }) {
   );
 
   return (
-    <form action={formAction} className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-end">
+    <form
+      action={formAction}
+      className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-end"
+    >
       <div className="flex-1">
-        <label htmlFor="mentee-full-name" className="text-navy text-sm font-semibold">
+        <label
+          htmlFor="mentee-full-name"
+          className="text-navy text-sm font-semibold"
+        >
           Display name
         </label>
         <input
@@ -38,7 +44,11 @@ export function MenteeProfileForm({ fullName }: { fullName: string | null }) {
       >
         {pending ? "Saving…" : "Update name"}
       </button>
-      {state.message && <p role="status" className="text-muted text-xs">{state.message}</p>}
+      {state.message && (
+        <p role="status" className="text-muted text-xs">
+          {state.message}
+        </p>
+      )}
     </form>
   );
 }

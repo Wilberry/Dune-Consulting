@@ -15,11 +15,15 @@ export function MenteeAuthForm() {
     event.preventDefault();
     setMessage("");
     const form = new FormData(event.currentTarget);
-    const email = String(form.get("email") ?? "").trim().toLowerCase();
+    const email = String(form.get("email") ?? "")
+      .trim()
+      .toLowerCase();
     const password = String(form.get("password") ?? "");
 
     if (!email.includes("@") || password.length < 8) {
-      setMessage("Enter a valid email and a password of at least eight characters.");
+      setMessage(
+        "Enter a valid email and a password of at least eight characters.",
+      );
       return;
     }
 
@@ -31,22 +35,30 @@ export function MenteeAuthForm() {
           email,
           password,
           options: {
-            emailRedirectTo: window.location.origin + "/auth/callback?next=/dashboard",
+            emailRedirectTo:
+              window.location.origin + "/auth/callback?next=/dashboard",
           },
         });
 
         if (error) {
           setMessage("Your account could not be created. Please try again.");
         } else if (!data.session) {
-          setMessage("Check your inbox and verify your email address before signing in.");
+          setMessage(
+            "Check your inbox and verify your email address before signing in.",
+          );
         } else {
           router.replace("/dashboard");
           router.refresh();
         }
       } else {
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        const { error } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
         if (error) {
-          setMessage("Sign-in failed. Check your credentials or verify your email address.");
+          setMessage(
+            "Sign-in failed. Check your credentials or verify your email address.",
+          );
         } else {
           router.replace("/dashboard");
           router.refresh();
@@ -60,7 +72,10 @@ export function MenteeAuthForm() {
   }
 
   return (
-    <main id="main-content" className="bg-off-white flex min-h-screen items-center justify-center px-5 py-12">
+    <main
+      id="main-content"
+      className="bg-off-white flex min-h-screen items-center justify-center px-5 py-12"
+    >
       <div className="w-full max-w-md">
         <Link href="/" className="text-navy text-sm font-semibold underline">
           ← Dune Consulting
@@ -78,7 +93,10 @@ export function MenteeAuthForm() {
           </p>
           <form onSubmit={handleSubmit} className="mt-6 space-y-5">
             <div>
-              <label htmlFor="mentee-email" className="text-navy text-sm font-bold">
+              <label
+                htmlFor="mentee-email"
+                className="text-navy text-sm font-bold"
+              >
                 Email address
               </label>
               <input
@@ -91,7 +109,10 @@ export function MenteeAuthForm() {
               />
             </div>
             <div>
-              <label htmlFor="mentee-password" className="text-navy text-sm font-bold">
+              <label
+                htmlFor="mentee-password"
+                className="text-navy text-sm font-bold"
+              >
                 Password
               </label>
               <input
@@ -99,26 +120,41 @@ export function MenteeAuthForm() {
                 name="password"
                 type="password"
                 minLength={8}
-                autoComplete={mode === "signin" ? "current-password" : "new-password"}
+                autoComplete={
+                  mode === "signin" ? "current-password" : "new-password"
+                }
                 required
                 className="border-line mt-2 w-full rounded-lg border px-4 py-3"
               />
             </div>
-            {message && <p role="status" className="text-muted text-sm">{message}</p>}
+            {message && (
+              <p role="status" className="text-muted text-sm">
+                {message}
+              </p>
+            )}
             <button
               disabled={busy}
               type="submit"
               className="bg-amber text-deep-navy hover:bg-amber-hover w-full rounded-lg px-5 py-3 font-bold disabled:opacity-60"
             >
-              {busy ? "Processing…" : mode === "signin" ? "Sign in" : "Create account"}
+              {busy
+                ? "Processing…"
+                : mode === "signin"
+                  ? "Sign in"
+                  : "Create account"}
             </button>
           </form>
           <button
             type="button"
-            onClick={() => { setMode(mode === "signin" ? "signup" : "signin"); setMessage(""); }}
+            onClick={() => {
+              setMode(mode === "signin" ? "signup" : "signin");
+              setMessage("");
+            }}
             className="text-navy mt-5 text-sm font-semibold underline"
           >
-            {mode === "signin" ? "Create an account instead" : "Already registered? Sign in"}
+            {mode === "signin"
+              ? "Create an account instead"
+              : "Already registered? Sign in"}
           </button>
         </div>
       </div>

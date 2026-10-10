@@ -147,7 +147,7 @@ exception
 end;
 $$;
 
-revoke all on function public.claim_mentorship_enrolment(text) from public;
+revoke all on function public.claim_mentorship_enrolment(text) from public, anon;
 grant execute on function public.claim_mentorship_enrolment(text) to authenticated;
 
 -- Profile updates for mentees cannot change email, package, role, or ownership.
@@ -174,5 +174,5 @@ begin
 end;
 $$;
 
-revoke all on function public.update_my_mentee_name(text) from public;
+revoke all on function public.update_my_mentee_name(text) from public, anon;
 grant execute on function public.update_my_mentee_name(text) to authenticated;

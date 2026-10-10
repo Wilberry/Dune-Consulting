@@ -39,7 +39,8 @@ export async function getMentorshipApplications() {
     name: application.name,
     email: application.email,
     phone: application.phone,
-    selectedPackage: application.selected_package as MentorshipApplication["selectedPackage"],
+    selectedPackage:
+      application.selected_package as MentorshipApplication["selectedPackage"],
     professionalRole: application.professional_role,
     experienceLevel: application.experience_level,
     education: application.education,

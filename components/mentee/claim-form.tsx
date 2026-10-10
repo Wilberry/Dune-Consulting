@@ -2,13 +2,19 @@
 
 import { useActionState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { claimMentorship, type MenteeActionState } from "@/app/dashboard/actions";
+import {
+  claimMentorship,
+  type MenteeActionState,
+} from "@/app/dashboard/actions";
 
 const initialState: MenteeActionState = { status: "idle" };
 
 export function ClaimForm() {
   const router = useRouter();
-  const [state, formAction, pending] = useActionState(claimMentorship, initialState);
+  const [state, formAction, pending] = useActionState(
+    claimMentorship,
+    initialState,
+  );
 
   useEffect(() => {
     if (state.status === "success") router.refresh();
@@ -16,7 +22,9 @@ export function ClaimForm() {
 
   return (
     <div className="border-line mt-6 rounded-xl border bg-white p-6 shadow-sm">
-      <h2 className="text-navy text-xl font-bold">Link your approved application</h2>
+      <h2 className="text-navy text-xl font-bold">
+        Link your approved application
+      </h2>
       <p className="text-muted mt-2 text-sm leading-6">
         After staff approve your application, they will provide a private
         invitation code. Sign in using the verified email address on your
@@ -24,7 +32,10 @@ export function ClaimForm() {
         grant enrolment.
       </p>
       <form action={formAction} className="mt-5 space-y-3">
-        <label htmlFor="mentee-claim-code" className="text-navy block text-sm font-bold">
+        <label
+          htmlFor="mentee-claim-code"
+          className="text-navy block text-sm font-bold"
+        >
           Invitation code
         </label>
         <input

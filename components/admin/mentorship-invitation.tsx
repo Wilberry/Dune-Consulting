@@ -8,7 +8,11 @@ import {
 
 const initialState: MentorshipInvitationState = { status: "idle" };
 
-export function MentorshipInvitation({ applicationId }: { applicationId: string }) {
+export function MentorshipInvitation({
+  applicationId,
+}: {
+  applicationId: string;
+}) {
   const [state, formAction, pending] = useActionState(
     createMentorshipInvitation,
     initialState,
@@ -41,11 +45,12 @@ export function MentorshipInvitation({ applicationId }: { applicationId: string 
           <p className="text-navy text-xs font-bold">
             Copy now. This code will not be shown again.
           </p>
-          <code className="mt-2 block break-all select-all text-xs">
+          <code className="mt-2 block text-xs break-all select-all">
             {state.code}
           </code>
           <p className="text-muted mt-2 text-xs">
-            Send only through a private, verified channel. Never put it in a URL.
+            Send only through a private, verified channel. Never put it in a
+            URL.
           </p>
         </div>
       )}

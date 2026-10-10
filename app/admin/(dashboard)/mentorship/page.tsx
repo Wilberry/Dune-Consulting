@@ -109,7 +109,9 @@ export default async function AdminMentorshipPage() {
                       </dd>
                     </div>
                     <div>
-                      <dt className="text-muted font-semibold">Preferred package</dt>
+                      <dt className="text-muted font-semibold">
+                        Preferred package
+                      </dt>
                       <dd className="text-navy mt-1 font-semibold">
                         {application.selectedPackage || "Not recorded"}
                       </dd>

@@ -68,7 +68,8 @@ export async function createMentorshipInvitation(
     ) {
       return {
         status: "error",
-        message: "Only approved applications with a recorded package can be invited.",
+        message:
+          "Only approved applications with a recorded package can be invited.",
       };
     }
 
@@ -81,7 +82,8 @@ export async function createMentorshipInvitation(
     if (enrolmentError || enrolment) {
       return {
         status: "error",
-        message: "Invitation unavailable. The application may already be linked.",
+        message:
+          "Invitation unavailable. The application may already be linked.",
       };
     }
 
@@ -104,7 +106,8 @@ export async function createMentorshipInvitation(
   } catch {
     return {
       status: "error",
-      message: "Invitation could not be created. Verify the database migration.",
+      message:
+        "Invitation could not be created. Verify the database migration.",
     };
   }
 }

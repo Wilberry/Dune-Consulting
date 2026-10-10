@@ -18,7 +18,7 @@ Audit date: 2026-10-10. Source: `Wilberry/Dune-Consulting`, GitHub `main` at
   original table omitted any package column. Admin mentorship did not display it.
 - No authenticated mentee route, enrolment table, or secure claim flow existed
   in `main`.
-- The GitHub connection cannot report a developer's *local* staged, untracked
+- The GitHub connection cannot report a developer's _local_ staged, untracked
   or ignored files. Check local `git status --short --branch` before
   integrating. This audit did not alter any local working tree or stash.
 - GitHub Quality workflow runs available at audit time report failure, without
@@ -30,16 +30,16 @@ Audit date: 2026-10-10. Source: `Wilberry/Dune-Consulting`, GitHub `main` at
 
 ## Workflow status matrix
 
-| Workflow | Repository evidence | Remaining verification |
-| --- | --- | --- |
-| Contact | API, validated handler, persistence-before-notification, admin enquiry routes | Live DB, recipient delivery, failure/retry states, admin review |
-| Quotes | API, validated handler, reference generator, admin quote routes | DB reference concurrency, delivery, admin state changes |
-| Mentorship | Public form/API, review UI; package persistence fixed in this branch | Staging migration, complete application-to-dashboard acceptance test |
-| Insights | Staff editor, public published-only reads, private cover proxy | Slugs, sanitization, storage RLS, image download, SEO |
-| Newsletter | Signup, admin campaigns, Resend provider/webhook, unsubscribe model | DNS/provider verification, segment sync, suppression, webhook; **no bulk live send** |
-| Turnstile | Server-side Siteverify and missing-key/error handling | Production key configuration, fail-closed behavior and test key in staging |
-| FAQ/testimonials | October 7 migration files and admin management | Confirm remote migrations and review production editorial content |
-| Website | Next.js 16, responsive pages, tests and audit scripts | Actual production smoke, accessibility, asset and content approval |
+| Workflow         | Repository evidence                                                           | Remaining verification                                                               |
+| ---------------- | ----------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| Contact          | API, validated handler, persistence-before-notification, admin enquiry routes | Live DB, recipient delivery, failure/retry states, admin review                      |
+| Quotes           | API, validated handler, reference generator, admin quote routes               | DB reference concurrency, delivery, admin state changes                              |
+| Mentorship       | Public form/API, review UI; package persistence fixed in this branch          | Staging migration, complete application-to-dashboard acceptance test                 |
+| Insights         | Staff editor, public published-only reads, private cover proxy                | Slugs, sanitization, storage RLS, image download, SEO                                |
+| Newsletter       | Signup, admin campaigns, Resend provider/webhook, unsubscribe model           | DNS/provider verification, segment sync, suppression, webhook; **no bulk live send** |
+| Turnstile        | Server-side Siteverify and missing-key/error handling                         | Production key configuration, fail-closed behavior and test key in staging           |
+| FAQ/testimonials | October 7 migration files and admin management                                | Confirm remote migrations and review production editorial content                    |
+| Website          | Next.js 16, responsive pages, tests and audit scripts                         | Actual production smoke, accessibility, asset and content approval                   |
 
 Code presence alone is not proof that an external integration or remote schema works.
 
@@ -66,7 +66,7 @@ below first.
   the earlier one. No bulk email or automated invitation send is introduced.
 - Staff must verify the recipient and transmit the code through a private
   channel; no token may be entered in a URL, log, or analytics field.
-- A signed-in claimant must have a *confirmed Supabase Auth email* equal to the
+- A signed-in claimant must have a _confirmed Supabase Auth email_ equal to the
   application's email; the database checks approval and uniqueness while
   locking the claim row. Matching email alone never authorizes a claim.
 - A consumed code is idempotent only for the same Auth UUID. Foreign claims,
