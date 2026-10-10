@@ -12,6 +12,7 @@ export type MentorshipApplicationInsert = {
   name: string;
   email: string;
   phone: string;
+  selected_package: MentorshipApplicationInput["selectedPackage"];
   professional_role: string | null;
   experience_level: string | null;
   education: string | null;
@@ -55,6 +56,7 @@ function toInsert(
     name: application.name,
     email: application.email,
     phone: application.phone,
+    selected_package: application.selectedPackage,
     professional_role: nullable(application.professionalRole),
     experience_level: nullable(application.experienceLevel),
     education: nullable(application.education),
@@ -115,10 +117,7 @@ export async function handleMentorshipApplication(
   }
 
   const application = parsed.data;
-  const selectedPackageSummary =
-    application.selectedPackage && application.selectedPackage.trim()
-      ? application.selectedPackage.trim()
-      : "Not provided";
+  const selectedPackageSummary = application.selectedPackage;
   if (Date.now() - application.formStartedAt < MIN_COMPLETION_MS) {
     return NextResponse.json(
       {
