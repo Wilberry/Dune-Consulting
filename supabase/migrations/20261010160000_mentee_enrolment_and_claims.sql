@@ -108,8 +108,11 @@ begin
   where c.token_hash = p_token_hash
   for update of c;
 
-  if not found
-     or lower(btrim(v_claim.email)) <> v_email
+  if not found then
+    raise exception 'Invalid invitation or account';
+  end if;
+
+  if lower(btrim(v_claim.email)) <> v_email
      or v_claim.status <> 'accepted'
      or (v_claim.claimed_at is not null and v_claim.claimed_by is distinct from v_uid)
      or (v_claim.claimed_at is null and v_claim.expires_at <= now()) then
