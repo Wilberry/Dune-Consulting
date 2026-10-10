@@ -1,11 +1,11 @@
 "use server";
 
-import { createHash, randomBytes } from "node:crypto";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { requireAdminUser } from "@/lib/admin/auth";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { generateInvitationCode } from "@/lib/mentorship/invitation-token";
 
 const statusSchema = z.object({
   id: z.uuid(),
@@ -85,8 +85,7 @@ export async function createMentorshipInvitation(
       };
     }
 
-    const code = randomBytes(32).toString("base64url");
-    const tokenHash = createHash("sha256").update(code).digest("hex");
+    const { code, tokenHash } = generateInvitationCode();
     const { error } = await admin.from("mentorship_claims").upsert(
       {
         application_id: application.id,
