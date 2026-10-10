@@ -203,10 +203,10 @@ export default async function AdminMentorshipPage() {
                   >
                     Save status
                   </button>
-                  {application.status === "accepted" && (
-                    <MentorshipInvitation applicationId={application.id} />
-                  )}
                 </form>
+                {application.status === "accepted" && (
+                  <MentorshipInvitation applicationId={application.id} />
+                )}
               </div>
             </article>
           ))}
