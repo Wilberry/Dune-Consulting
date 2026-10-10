@@ -1,12 +1,18 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { claimMentorship, type MenteeActionState } from "@/app/dashboard/actions";
 
 const initialState: MenteeActionState = { status: "idle" };
 
 export function ClaimForm() {
+  const router = useRouter();
   const [state, formAction, pending] = useActionState(claimMentorship, initialState);
+
+  useEffect(() => {
+    if (state.status === "success") router.refresh();
+  }, [state.status, router]);
 
   return (
     <div className="border-line mt-6 rounded-xl border bg-white p-6 shadow-sm">
