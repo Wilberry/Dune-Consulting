@@ -9,12 +9,14 @@ export const metadata: Metadata = {
 };
 
 export default async function MenteeLoginPage() {
+  let signedIn = false;
   try {
     const supabase = await createClient();
     const { data } = await supabase.auth.getUser();
-    if (data.user) redirect("/dashboard");
+    signedIn = !!data.user;
   } catch {
     // Display login UI even when configuration is unavailable.
   }
+  if (signedIn) redirect("/dashboard");
   return <MenteeAuthForm />;
 }
