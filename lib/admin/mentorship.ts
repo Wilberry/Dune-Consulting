@@ -10,6 +10,7 @@ export type MentorshipApplication = {
   name: string;
   email: string;
   phone: string;
+  selectedPackage: "Foundation" | "Momentum" | "Elevation" | null;
   professionalRole: string | null;
   experienceLevel: string | null;
   education: string | null;
@@ -26,7 +27,7 @@ export async function getMentorshipApplications() {
   const { data, error } = await supabase
     .from("mentorship_applications")
     .select(
-      "id,name,email,phone,professional_role,experience_level,education,reason_for_applying,career_goals,additional_information,status,created_at,updated_at",
+      "id,name,email,phone,selected_package,professional_role,experience_level,education,reason_for_applying,career_goals,additional_information,status,created_at,updated_at",
     )
     .order("created_at", { ascending: false })
     .limit(100);
@@ -38,6 +39,8 @@ export async function getMentorshipApplications() {
     name: application.name,
     email: application.email,
     phone: application.phone,
+    selectedPackage:
+      application.selected_package as MentorshipApplication["selectedPackage"],
     professionalRole: application.professional_role,
     experienceLevel: application.experience_level,
     education: application.education,

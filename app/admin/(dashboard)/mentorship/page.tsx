@@ -1,4 +1,5 @@
 import { updateMentorshipStatus } from "@/app/admin/(dashboard)/mentorship/actions";
+import { MentorshipInvitation } from "@/components/admin/mentorship-invitation";
 import { requireAdminUser } from "@/lib/admin/auth";
 import {
   getMentorshipApplications,
@@ -108,6 +109,14 @@ export default async function AdminMentorshipPage() {
                       </dd>
                     </div>
                     <div>
+                      <dt className="text-muted font-semibold">
+                        Preferred package
+                      </dt>
+                      <dd className="text-navy mt-1 font-semibold">
+                        {application.selectedPackage || "Not recorded"}
+                      </dd>
+                    </div>
+                    <div>
                       <dt className="text-muted font-semibold">Current role</dt>
                       <dd className="text-navy mt-1">
                         {application.professionalRole || "Not provided"}
@@ -197,6 +206,9 @@ export default async function AdminMentorshipPage() {
                     Save status
                   </button>
                 </form>
+                {application.status === "accepted" && (
+                  <MentorshipInvitation applicationId={application.id} />
+                )}
               </div>
             </article>
           ))}

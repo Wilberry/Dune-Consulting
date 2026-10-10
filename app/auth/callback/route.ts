@@ -6,9 +6,14 @@ export async function GET(request: NextRequest) {
   const code = requestUrl.searchParams.get("code");
   const requestedNext =
     requestUrl.searchParams.get("next") ?? "/admin/update-password";
-  const next = requestedNext.startsWith("/")
-    ? requestedNext
-    : "/admin/update-password";
+  // Reject scheme-relative URLs, backslashes and controls that could escape
+  // the application origin after URL resolution.
+  const next =
+    requestedNext.startsWith("/") &&
+    !requestedNext.startsWith("//") &&
+    !/[\\\\\u0000-\u001F]/.test(requestedNext)
+      ? requestedNext
+      : "/admin/update-password";
 
   if (code) {
     const supabase = await createClient();
@@ -19,7 +24,9 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  return NextResponse.redirect(
-    new URL("/admin/forgot-password?recovery=invalid", requestUrl.origin),
-  );
+  const failedPath =
+    next === "/dashboard"
+      ? "/mentee/login?verification=invalid"
+      : "/admin/forgot-password?recovery=invalid";
+  return NextResponse.redirect(new URL(failedPath, requestUrl.origin));
 }

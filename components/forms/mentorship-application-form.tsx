@@ -24,21 +24,18 @@ const mentorshipPackages = ["Foundation", "Momentum", "Elevation"] as const;
 const control =
   "mt-2 w-full rounded-md border border-line bg-white px-4 py-3 text-ink placeholder:text-muted/70 focus:border-navy disabled:opacity-60";
 
-function getInitialPackage() {
+function getInitialPackage():
+  MentorshipApplicationInput["selectedPackage"] | undefined {
   if (typeof window === "undefined") {
-    return "";
+    return undefined;
   }
 
   const value = new URLSearchParams(window.location.search).get("package");
   if (!value) {
-    return "";
+    return undefined;
   }
 
-  return mentorshipPackages.includes(
-    value as (typeof mentorshipPackages)[number],
-  )
-    ? value
-    : "";
+  return mentorshipPackages.find((packageName) => packageName === value);
 }
 
 export function MentorshipApplicationForm() {

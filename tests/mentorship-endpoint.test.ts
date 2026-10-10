@@ -8,6 +8,7 @@ const basePayload = {
   email: "ada@example.org",
   phone: "+234 801 234 5678",
   professionalRole: "Graduate trainee",
+  selectedPackage: "Foundation",
   experienceLevel: "Recent graduate",
   education: "BSc Environmental Science",
   reasonForApplying:
@@ -87,6 +88,7 @@ test("mentorship endpoint persistence and notification behavior", async (context
       assert.equal(response.status, 200);
       assert.equal(result.status, "success");
       assert.equal(persisted?.professional_role, "Graduate trainee");
+      assert.equal(persisted?.selected_package, "Momentum");
       assert.equal(persisted?.experience_level, "Recent graduate");
       assert.match(providerBody, /Ada &lt;Example&gt;/);
       assert.match(providerBody, /Momentum/);
@@ -181,6 +183,9 @@ test("mentorship endpoint persistence and notification behavior", async (context
       unconfigure();
       for (const [payload, ip] of [
         [{ ...basePayload, email: "bad" }, "203.0.113.75"],
+        [{ ...basePayload, selectedPackage: "Custom" }, "203.0.113.79"],
+        [{ ...basePayload, selectedPackage: "" }, "203.0.113.80"],
+        [{ ...basePayload, selectedPackage: undefined }, "203.0.113.81"],
         [{ ...basePayload, website: "bot.example" }, "203.0.113.76"],
         [{ ...basePayload, formStartedAt: Date.now() }, "203.0.113.77"],
         [
