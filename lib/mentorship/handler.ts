@@ -13,6 +13,7 @@ export type MentorshipApplicationInsert = {
   email: string;
   phone: string;
   professional_role: string | null;
+  selected_package: string | null;
   experience_level: string | null;
   education: string | null;
   reason_for_applying: string;
@@ -56,6 +57,7 @@ function toInsert(
     email: application.email,
     phone: application.phone,
     professional_role: nullable(application.professionalRole),
+    selected_package: nullable(application.selectedPackage),
     experience_level: nullable(application.experienceLevel),
     education: nullable(application.education),
     reason_for_applying: application.reasonForApplying,

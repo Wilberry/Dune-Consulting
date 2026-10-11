@@ -54,6 +54,65 @@ test("YouTube links are parsed reliably for mentorship video testimonials", () =
   assert.equal(extractYouTubeVideoId("not a url"), null);
 });
 
+test("mentorship application package handling", async () => {
+  for (const packageName of ["Foundation", "Momentum", "Elevation"]) {
+    let persisted: Record<string, unknown> | undefined;
+
+    const response = await handleMentorshipApplication(
+      request({ ...basePayload, selectedPackage: packageName }, "203.0.113.80"),
+      {
+        persist: async (application) => {
+          persisted = application;
+        },
+        fetchImpl: async () =>
+          new Response(JSON.stringify({ id: "email_mentorship_123" }), {
+            status: 200,
+          }),
+      },
+    );
+
+    assert.equal(response.status, 200);
+    assert.equal(persisted?.selected_package, packageName);
+  }
+
+  const invalid = await handleMentorshipApplication(
+    request({ ...basePayload, selectedPackage: "Legacy" }, "203.0.113.81"),
+    {
+      persist: async () => undefined,
+    },
+  );
+  assert.equal(invalid.status, 400);
+
+  let optionalPersisted: Record<string, unknown> | undefined;
+  const optionalResponse = await handleMentorshipApplication(
+    request(
+      {
+        ...basePayload,
+        selectedPackage: "",
+        professionalRole: undefined,
+        education: undefined,
+        additionalInformation: undefined,
+      },
+      "203.0.113.82",
+    ),
+    {
+      persist: async (application) => {
+        optionalPersisted = application;
+      },
+      fetchImpl: async () =>
+        new Response(JSON.stringify({ id: "email_mentorship_456" }), {
+          status: 200,
+        }),
+    },
+  );
+
+  assert.equal(optionalResponse.status, 200);
+  assert.equal(optionalPersisted?.selected_package, null);
+  assert.equal(optionalPersisted?.professional_role, null);
+  assert.equal(optionalPersisted?.education, null);
+  assert.equal(optionalPersisted?.additional_information, null);
+});
+
 test("mentorship endpoint persistence and notification behavior", async (context) => {
   await context.test(
     "valid application is persisted before a secondary notification",
