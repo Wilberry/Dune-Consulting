@@ -1,0 +1,148 @@
+-- Harden enrolment claims without changing existing mentorship/enrolment tables.
+-- Apply only after the October 9 foundation and claim migrations have been
+-- inspected and tested on a disposable Supabase database.
+-- Existing linked users/enrolments are preserved.
+
+create table public.mentorship_claim_invitations (
+  application_id uuid primary key
+    references public.mentorship_applications(id) on delete restrict,
+  token_hash text not null unique,
+  expires_at timestamptz not null,
+  claimed_at timestamptz,
+  claimed_by uuid references auth.users(id) on delete restrict,
+  created_by uuid not null references auth.users(id) on delete restrict,
+  created_at timestamptz not null default now(),
+  constraint mentorship_claim_invitations_hash_valid
+    check (token_hash ~ '^[a-f0-9]{64}$'),
+  constraint mentorship_claim_invitations_claim_pair
+    check ((claimed_at is null) = (claimed_by is null))
+);
+
+create index mentorship_claim_invitations_expiry_idx
+  on public.mentorship_claim_invitations(expires_at);
+
+alter table public.mentorship_claim_invitations enable row level security;
+revoke all on table public.mentorship_claim_invitations
+  from public, anon, authenticated;
+
+-- Old email-only claim mechanism must no longer be callable, including
+-- by clients still using the previously deployed RPC name.
+revoke all on function public.claim_my_mentorship_application()
+  from public, anon, authenticated, service_role;
+
+create or replace function public.claim_mentorship_with_code(p_token_hash text)
+returns text
+language plpgsql
+security definer
+set search_path = ''
+as $$
+declare
+  caller_id uuid := auth.uid();
+  caller_email text;
+  invitation record;
+begin
+  if caller_id is null or p_token_hash is null
+    or p_token_hash !~ '^[a-f0-9]{64}$' then
+    return 'invalid';
+  end if;
+
+  select lower(btrim(account.email))
+    into caller_email
+  from auth.users as account
+  where account.id = caller_id
+    and account.email_confirmed_at is not null;
+
+  if caller_email is null or caller_email = '' then
+    return 'invalid';
+  end if;
+
+  select
+    invite.application_id,
+    invite.expires_at,
+    invite.claimed_at,
+    invite.claimed_by,
+    application.email,
+    application.status,
+    application.selected_package,
+    application.linked_user_id
+  into invitation
+  from public.mentorship_claim_invitations as invite
+  join public.mentorship_applications as application
+    on application.id = invite.application_id
+  where invite.token_hash = p_token_hash
+  for update of invite, application;
+
+  if not found then
+    return 'invalid';
+  end if;
+
+  if lower(btrim(invitation.email)) is distinct from caller_email
+    or invitation.status <> 'accepted'
+    or invitation.selected_package is null then
+    return 'invalid';
+  end if;
+
+  -- A retry by the same linked user is harmless; a second user cannot replay.
+  if invitation.claimed_at is not null then
+    if invitation.claimed_by = caller_id
+      and invitation.linked_user_id = caller_id
+      and exists (
+        select 1 from public.mentorship_enrolments as enrolment
+        where enrolment.application_id = invitation.application_id
+          and enrolment.user_id = caller_id
+      ) then
+      return 'already_claimed';
+    end if;
+    return 'invalid';
+  end if;
+
+  if invitation.expires_at <= now()
+    or invitation.linked_user_id is not null then
+    return 'invalid';
+  end if;
+
+  if exists (
+    select 1 from public.mentorship_applications as candidate
+    where candidate.linked_user_id = caller_id
+  ) or exists (
+    select 1 from public.mentorship_enrolments as enrolment
+    where enrolment.user_id = caller_id
+  ) then
+    return 'invalid';
+  end if;
+
+  update public.mentorship_applications
+    set linked_user_id = caller_id,
+        linked_at = now()
+  where id = invitation.application_id
+    and linked_user_id is null
+    and status = 'accepted';
+
+  if not found then
+    return 'invalid';
+  end if;
+
+  insert into public.mentorship_enrolments (
+    application_id, user_id, package, status
+  ) values (
+    invitation.application_id, caller_id,
+    invitation.selected_package, 'active'
+  );
+
+  update public.mentorship_claim_invitations
+    set claimed_by = caller_id,
+        claimed_at = now()
+  where application_id = invitation.application_id;
+
+  return 'claimed';
+exception
+  when unique_violation then
+    return 'invalid';
+end;
+$$;
+
+alter function public.claim_mentorship_with_code(text) owner to postgres;
+revoke all on function public.claim_mentorship_with_code(text)
+  from public, anon, authenticated, service_role;
+grant execute on function public.claim_mentorship_with_code(text)
+  to authenticated;
