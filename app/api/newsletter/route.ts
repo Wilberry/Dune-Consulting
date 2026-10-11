@@ -1,4 +1,5 @@
 import { handleNewsletterSignup } from "@/lib/newsletter/handler";
+import { allowEmailOnlySignupSync } from "@/lib/newsletter/consent";
 import { syncNewsletterSubscriber } from "@/lib/newsletter/provider";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { verifyTurnstileRequest } from "@/lib/turnstile/server";
@@ -100,7 +101,7 @@ async function persistSubscription(email: string) {
   if (existing) {
     // Public email-only submissions do not establish ownership or fresh consent.
     // Do not silently restore an address that has already opted out.
-    if (existing.status === "unsubscribed") return;
+    if (!allowEmailOnlySignupSync(existing.status)) return;
 
     await syncPersistedSubscriber(await loadSubscriber(email));
     return;
@@ -129,7 +130,7 @@ async function persistSubscription(email: string) {
     }
 
     // Preserve prior opt-out even if two public signup attempts race.
-    if (raced.status === "unsubscribed") return;
+    if (!allowEmailOnlySignupSync(raced.status)) return;
 
     await syncPersistedSubscriber(await loadSubscriber(email));
     return;
