@@ -211,6 +211,7 @@ test("mentorship application can be submitted without depending on live services
   });
 
   await page.goto("/mentorship");
+  await page.getByLabel("Preferred package *").selectOption("Foundation");
   await page.getByLabel("Full name *").fill("Ada Example");
   await page.getByLabel("Email address *").fill("ada@example.org");
   await page.getByLabel("Phone number *").fill("+234 801 234 5678");
