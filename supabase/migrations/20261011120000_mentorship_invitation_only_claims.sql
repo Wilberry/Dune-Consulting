@@ -175,6 +175,107 @@ revoke all on function public.claim_mentorship_with_code(text)
 grant execute on function public.claim_mentorship_with_code(text)
   to authenticated;
 
+-- Issue or replace an invitation atomically under the locked application row.
+-- The caller must be a real authenticated admin; browser tables remain private.
+create or replace function public.issue_mentorship_invitation(
+  p_application_id uuid,
+  p_token_hash text
+)
+returns boolean
+language plpgsql
+security definer
+set search_path = ''
+as $
+declare
+  eligible_id uuid;
+begin
+  if auth.uid() is null or not public.is_admin()
+    or p_application_id is null
+    or p_token_hash is null
+    or p_token_hash !~ '^[a-f0-9]{64}
+-- account ownership and email are never writable through this function.
+create or replace function public.update_mentee_display_name(new_name text)
+returns void
+language plpgsql
+security definer
+set search_path = ''
+as $$
+begin
+  if auth.uid() is null
+    or new_name is null
+    or char_length(btrim(new_name)) not between 2 and 120
+    or not exists (
+      select 1
+      from public.mentorship_enrolments as enrolment
+      join public.mentorship_applications as application
+        on application.id = enrolment.application_id
+      where enrolment.user_id = auth.uid()
+        and application.linked_user_id = auth.uid()
+        and application.status = 'accepted'
+    ) then
+    raise exception 'Invalid profile update';
+  end if;
+
+  update public.profiles
+  set full_name = btrim(new_name)
+  where id = auth.uid();
+end;
+$$;
+
+alter function public.update_mentee_display_name(text) owner to postgres;
+revoke all on function public.update_mentee_display_name(text)
+  from public, anon, authenticated, service_role;
+grant execute on function public.update_mentee_display_name(text)
+  to authenticated;
+ then
+    return false;
+  end if;
+
+  select application.id
+  into eligible_id
+  from public.mentorship_applications as application
+  where application.id = p_application_id
+    and application.status = 'accepted'
+    and application.selected_package is not null
+    and application.linked_user_id is null
+  for update;
+
+  if not found then
+    return false;
+  end if;
+
+  if exists (
+    select 1 from public.mentorship_enrolments as enrolment
+    where enrolment.application_id = eligible_id
+  ) then
+    return false;
+  end if;
+
+  insert into public.mentorship_claim_invitations (
+    application_id, token_hash, expires_at, created_by,
+    claimed_by, claimed_at, created_at
+  ) values (
+    eligible_id, p_token_hash, clock_timestamp() + interval '48 hours',
+    auth.uid(), null, null, clock_timestamp()
+  )
+  on conflict (application_id) do update
+    set token_hash = excluded.token_hash,
+        expires_at = excluded.expires_at,
+        created_by = excluded.created_by,
+        claimed_by = null,
+        claimed_at = null,
+        created_at = excluded.created_at;
+
+  return true;
+end;
+$;
+
+alter function public.issue_mentorship_invitation(uuid, text) owner to postgres;
+revoke all on function public.issue_mentorship_invitation(uuid, text)
+  from public, anon, authenticated, service_role;
+grant execute on function public.issue_mentorship_invitation(uuid, text)
+  to authenticated;
+
 -- Mentees may edit only their own displayed name. Roles, approval, package,
 -- account ownership and email are never writable through this function.
 create or replace function public.update_mentee_display_name(new_name text)
