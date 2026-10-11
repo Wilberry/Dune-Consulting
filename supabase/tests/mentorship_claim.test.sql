@@ -171,5 +171,27 @@ select extensions.ok(
   not has_table_privilege('authenticated', 'public.mentorship_claim_invitations', 'UPDATE'),
   'even editors cannot update invitation digests through the browser'
 );
+select extensions.ok(
+  not has_function_privilege('anon', 'public.update_mentee_display_name(text)', 'EXECUTE'),
+  'anonymous clients cannot call mentee profile updates'
+);
+set local role authenticated;
+select set_config('request.jwt.claim.sub', '10000000-0000-4000-8000-000000000001', true);
+select extensions.lives_ok(
+  $select public.update_mentee_display_name('Alice Updated')$,
+  'approved mentees can change their own display name'
+);
+select extensions.is(
+  (select full_name from public.profiles where id = auth.uid()),
+  'Alice Updated',
+  'display-name update affects only the signed-in profile'
+);
+select set_config('request.jwt.claim.sub', '10000000-0000-4000-8000-000000000002', true);
+select extensions.throws_ok(
+  $select public.update_mentee_display_name('Not Enrolled')$,
+  'P0001',
+  'Invalid profile update',
+  'unlinked account cannot edit a mentee profile'
+);
 select * from extensions.finish();
 rollback;
