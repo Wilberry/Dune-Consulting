@@ -36,11 +36,11 @@ insert into public.mentorship_applications (
 insert into public.mentorship_claim_invitations (
   application_id, token_hash, expires_at, created_by
 ) values
-  ('20000000-0000-4000-8000-000000000001', encode(digest('alice-invitation', 'sha256'), 'hex'), now() + interval '48 hours', '10000000-0000-4000-8000-000000000006'),
-  ('20000000-0000-4000-8000-000000000002', encode(digest('pending-invitation', 'sha256'), 'hex'), now() + interval '48 hours', '10000000-0000-4000-8000-000000000006'),
-  ('20000000-0000-4000-8000-000000000003', encode(digest('declined-invitation', 'sha256'), 'hex'), now() + interval '48 hours', '10000000-0000-4000-8000-000000000006'),
-  ('20000000-0000-4000-8000-000000000004', encode(digest('unverified-invitation', 'sha256'), 'hex'), now() + interval '48 hours', '10000000-0000-4000-8000-000000000006'),
-  ('20000000-0000-4000-8000-000000000006', encode(digest('expired-invitation', 'sha256'), 'hex'), now() - interval '1 minute', '10000000-0000-4000-8000-000000000006');
+  ('20000000-0000-4000-8000-000000000001', 'ef16ea81c9eb6c9cf9afbc1802d00822e5dd935026732df84a156dd43a0bc7c4', now() + interval '48 hours', '10000000-0000-4000-8000-000000000006'),
+  ('20000000-0000-4000-8000-000000000002', 'fd110488da7ca4eddf198c420e4d40ed2708a55fcdd4f4209e0d09b3e05ccb2d', now() + interval '48 hours', '10000000-0000-4000-8000-000000000006'),
+  ('20000000-0000-4000-8000-000000000003', 'eb99566c3fc03382cba604213a8c175d0cce588dfab9723be45e9940baa84a2e', now() + interval '48 hours', '10000000-0000-4000-8000-000000000006'),
+  ('20000000-0000-4000-8000-000000000004', 'da6ebd33002941d839c6a18f764e61488302b938512b217e7ce208570c06eb3e', now() + interval '48 hours', '10000000-0000-4000-8000-000000000006'),
+  ('20000000-0000-4000-8000-000000000006', 'c3ea0f6ab4c0247b784d8c975b3e9801dd8bd03e3892f2021e6187f535fa7b3c', now() - interval '1 minute', '10000000-0000-4000-8000-000000000006');
 
 select extensions.ok(
   not has_function_privilege('authenticated', 'public.claim_my_mentorship_application()', 'EXECUTE'),
@@ -63,45 +63,45 @@ set local role authenticated;
 select set_config('request.jwt.claim.sub', '10000000-0000-4000-8000-000000000002', true);
 
 select extensions.is(
-  public.claim_mentorship_with_code(encode(digest('alice-invitation', 'sha256'), 'hex')),
+  public.claim_mentorship_with_code('ef16ea81c9eb6c9cf9afbc1802d00822e5dd935026732df84a156dd43a0bc7c4'),
   'invalid',
   'another signed-in user cannot steal Alice invitation'
 );
 select extensions.is(
-  public.claim_mentorship_with_code(encode(digest('expired-invitation', 'sha256'), 'hex')),
+  public.claim_mentorship_with_code('c3ea0f6ab4c0247b784d8c975b3e9801dd8bd03e3892f2021e6187f535fa7b3c'),
   'invalid',
   'expired invitation cannot link a user'
 );
 
 select set_config('request.jwt.claim.sub', '10000000-0000-4000-8000-000000000003', true);
 select extensions.is(
-  public.claim_mentorship_with_code(encode(digest('unverified-invitation', 'sha256'), 'hex')),
+  public.claim_mentorship_with_code('da6ebd33002941d839c6a18f764e61488302b938512b217e7ce208570c06eb3e'),
   'invalid',
   'unverified account cannot claim its invitation'
 );
 
 select set_config('request.jwt.claim.sub', '10000000-0000-4000-8000-000000000004', true);
 select extensions.is(
-  public.claim_mentorship_with_code(encode(digest('pending-invitation', 'sha256'), 'hex')),
+  public.claim_mentorship_with_code('fd110488da7ca4eddf198c420e4d40ed2708a55fcdd4f4209e0d09b3e05ccb2d'),
   'invalid',
   'pending applicant cannot claim'
 );
 
 select set_config('request.jwt.claim.sub', '10000000-0000-4000-8000-000000000005', true);
 select extensions.is(
-  public.claim_mentorship_with_code(encode(digest('declined-invitation', 'sha256'), 'hex')),
+  public.claim_mentorship_with_code('eb99566c3fc03382cba604213a8c175d0cce588dfab9723be45e9940baa84a2e'),
   'invalid',
   'rejected applicant cannot claim'
 );
 
 select set_config('request.jwt.claim.sub', '10000000-0000-4000-8000-000000000001', true);
 select extensions.is(
-  public.claim_mentorship_with_code(encode(digest('alice-invitation', 'sha256'), 'hex')),
+  public.claim_mentorship_with_code('ef16ea81c9eb6c9cf9afbc1802d00822e5dd935026732df84a156dd43a0bc7c4'),
   'claimed',
   'accepted verified user with private token links successfully'
 );
 select extensions.is(
-  public.claim_mentorship_with_code(encode(digest('alice-invitation', 'sha256'), 'hex')),
+  public.claim_mentorship_with_code('ef16ea81c9eb6c9cf9afbc1802d00822e5dd935026732df84a156dd43a0bc7c4'),
   'already_claimed',
   'same account retry is idempotent'
 );
@@ -151,7 +151,7 @@ select extensions.is(
   'Bob cannot read Alice enrolment'
 );
 select extensions.is(
-  public.claim_mentorship_with_code(encode(digest('alice-invitation', 'sha256'), 'hex')),
+  public.claim_mentorship_with_code('ef16ea81c9eb6c9cf9afbc1802d00822e5dd935026732df84a156dd43a0bc7c4'),
   'invalid',
   'consumed invitation is not transferable'
 );
