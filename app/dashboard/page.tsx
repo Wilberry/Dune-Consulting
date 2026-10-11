@@ -1,7 +1,12 @@
-import {
-  claimMentorshipApplication,
-  logoutMentee,
-} from "@/app/dashboard/actions";
+import type { Metadata } from "next";
+import { logoutMentee } from "@/app/dashboard/actions";
+import { MenteeClaimForm } from "@/components/mentee/mentee-claim-form";
+
+export const dynamic = "force-dynamic";
+export const metadata: Metadata = {
+  title: "Mentee dashboard",
+  robots: { index: false, follow: false },
+};
 import { getMenteeDashboardData } from "@/lib/mentorship/dashboard";
 
 export default async function DashboardPage({
@@ -53,9 +58,10 @@ export default async function DashboardPage({
               No linked enrolment yet
             </h2>
             <p className="text-muted mt-3 max-w-2xl text-sm leading-6">
-              Your account does not have an eligible linked enrolment. After an
-              administrator accepts your application, use the claim action to
-              link it securely.
+              Your account does not have a linked enrolment. Once the team
+              accepts your application, a staff member can provide you with
+              a private invitation code to link it securely. Matching an email
+              address alone never grants access.
             </p>
             <div className="mt-6 rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-700">
               <p className="font-semibold text-slate-900">Current account</p>
@@ -63,14 +69,7 @@ export default async function DashboardPage({
                 {dashboard.user?.email || "No email on file"}
               </p>
             </div>
-            <form action={claimMentorshipApplication} className="mt-5">
-              <button
-                type="submit"
-                className="bg-amber text-deep-navy hover:bg-amber-hover rounded-lg px-4 py-2.5 text-sm font-bold"
-              >
-                Claim accepted application
-              </button>
-            </form>
+            <MenteeClaimForm />
           </div>
         ) : (
           <div className="grid gap-6 lg:grid-cols-[1.5fr_1fr]">
