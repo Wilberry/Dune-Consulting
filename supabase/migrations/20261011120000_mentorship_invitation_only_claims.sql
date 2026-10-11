@@ -28,6 +28,31 @@ revoke all on table public.mentorship_claim_invitations
 -- Grant it explicitly instead of depending on Supabase default privileges.
 grant select, insert, update on public.mentorship_claim_invitations to service_role;
 
+-- Reject previously issued codes if an accepted application is withdrawn.
+-- A later re-acceptance requires staff to generate a fresh invitation.
+create or replace function public.expire_mentorship_invite_on_status_change()
+returns trigger
+language plpgsql
+security definer
+set search_path = ''
+as $
+begin
+  if old.status = 'accepted' and new.status <> 'accepted' then
+    update public.mentorship_claim_invitations
+    set expires_at = least(expires_at, now())
+    where application_id = new.id and claimed_at is null;
+  end if;
+  return new;
+end;
+$;
+
+revoke all on function public.expire_mentorship_invite_on_status_change()
+  from public, anon, authenticated, service_role;
+
+create trigger mentorship_invitation_expire_on_unapproval
+after update of status on public.mentorship_applications
+for each row execute function public.expire_mentorship_invite_on_status_change();
+
 -- Old email-only claim mechanism must no longer be callable, including
 -- by clients still using the previously deployed RPC name.
 revoke all on function public.claim_my_mentorship_application()
