@@ -59,18 +59,18 @@ export async function getMenteeDashboardData(): Promise<MenteeDashboardData> {
     throw new Error("Mentee profile could not be loaded.");
   }
 
-  if (!profile) {
-    return {
-      user: {
-        id: user.id,
-        email: user.email ?? null,
-        emailVerified: Boolean(user.email_confirmed_at),
-        fullName: user.user_metadata?.full_name ?? null,
-      },
-      linkedApplication: null,
-      enrolment: null,
-    };
-  }
+  // A profile trigger or backfill may be delayed. Authentication and the
+  // immutable user UUID, not profile-row presence, determine enrolment access.
+  const dashboardUser: MenteeDashboardProfile = {
+    id: user.id,
+    email: profile?.email ?? user.email ?? null,
+    emailVerified: Boolean(user.email_confirmed_at),
+    fullName:
+      profile?.full_name ??
+      (typeof user.user_metadata?.full_name === "string"
+        ? user.user_metadata.full_name
+        : null),
+  };
 
   const { data: enrolmentData, error: enrolmentError } = await supabase
     .from("mentorship_enrolments")
@@ -86,12 +86,7 @@ export async function getMenteeDashboardData(): Promise<MenteeDashboardData> {
 
   if (!enrolmentData) {
     return {
-      user: {
-        id: profile.id,
-        email: profile.email ?? user.email ?? null,
-        emailVerified: Boolean(user.email_confirmed_at),
-        fullName: profile.full_name ?? user.user_metadata?.full_name ?? null,
-      },
+      user: dashboardUser,
       linkedApplication: null,
       enrolment: null,
     };
@@ -126,12 +121,7 @@ export async function getMenteeDashboardData(): Promise<MenteeDashboardData> {
     : null;
 
   return {
-    user: {
-      id: profile.id,
-      email: profile.email ?? user.email ?? null,
-      emailVerified: Boolean(user.email_confirmed_at),
-      fullName: profile.full_name ?? user.user_metadata?.full_name ?? null,
-    },
+    user: dashboardUser,
     linkedApplication: application
       ? {
           id: application.id,
