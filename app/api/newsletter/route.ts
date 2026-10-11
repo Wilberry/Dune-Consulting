@@ -98,22 +98,9 @@ async function persistSubscription(email: string) {
   }
 
   if (existing) {
-    if (existing.status === "unsubscribed") {
-      const { error: updateError } = await supabase
-        .from("newsletter_subscribers")
-        .update({
-          status: "subscribed",
-          subscribed_at: new Date().toISOString(),
-          unsubscribed_at: null,
-        })
-        .eq("id", existing.id);
-
-      if (updateError) {
-        const error = new Error("Newsletter re-subscription failed");
-        error.name = updateError.code || "SupabaseError";
-        throw error;
-      }
-    }
+    // Public email-only submissions do not establish ownership or fresh consent.
+    // Do not silently restore an address that has already opted out.
+    if (existing.status === "unsubscribed") return;
 
     await syncPersistedSubscriber(await loadSubscriber(email));
     return;
@@ -141,22 +128,8 @@ async function persistSubscription(email: string) {
       throw error;
     }
 
-    if (raced.status === "unsubscribed") {
-      const { error: reactivateError } = await supabase
-        .from("newsletter_subscribers")
-        .update({
-          status: "subscribed",
-          subscribed_at: new Date().toISOString(),
-          unsubscribed_at: null,
-        })
-        .eq("id", raced.id);
-
-      if (reactivateError) {
-        const error = new Error("Newsletter duplicate reactivation failed");
-        error.name = reactivateError.code || "SupabaseError";
-        throw error;
-      }
-    }
+    // Preserve prior opt-out even if two public signup attempts race.
+    if (raced.status === "unsubscribed") return;
 
     await syncPersistedSubscriber(await loadSubscriber(email));
     return;
