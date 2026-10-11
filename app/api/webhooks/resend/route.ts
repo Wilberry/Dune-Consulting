@@ -2,7 +2,10 @@ import { NextResponse } from "next/server";
 import { getResendWebhookSecret } from "@/lib/server-env";
 import { consentAfterProviderUpdate } from "@/lib/newsletter/consent";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { verifySvixWebhook } from "@/lib/newsletter/webhook";
+import {
+  readBoundedWebhookPayload,
+  verifySvixWebhook,
+} from "@/lib/newsletter/webhook";
 
 type WebhookEvent = {
   type: string;
@@ -223,7 +226,10 @@ export async function POST(request: Request) {
     return NextResponse.json({ status: "invalid" }, { status: 400 });
   }
 
-  const payload = await request.text();
+  const payload = await readBoundedWebhookPayload(request);
+  if (payload === null) {
+    return NextResponse.json({ status: "too_large" }, { status: 413 });
+  }
   if (!verifySvixWebhook(payload, { id, timestamp, signature }, secret)) {
     return NextResponse.json({ status: "invalid" }, { status: 400 });
   }
