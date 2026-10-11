@@ -144,13 +144,17 @@ async function applyContactEvent(
   const update: Record<string, unknown> = {
     external_contact_id: providerContactId,
     provider_synced_at: event.created_at,
-    // Provider events may suppress consent, but must never manufacture renewed consent.
-    status: consentAfterProviderUpdate(subscriber.status, unsubscribed),
   };
   if (segmentSyncError !== undefined) {
     update.provider_sync_error = segmentSyncError;
   }
-  if (unsubscribed) update.unsubscribed_at = event.created_at;
+  // A webhook is not an authenticated request to renew mailing consent.
+  // Do not send the previous status back in an update: it might be stale
+  // by the time this write reaches PostgreSQL.
+  if (unsubscribed) {
+    update.status = consentAfterProviderUpdate(subscriber.status, true);
+    update.unsubscribed_at = event.created_at;
+  }
 
   const { error } = await supabase
     .from("newsletter_subscribers")
