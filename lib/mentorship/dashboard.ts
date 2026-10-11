@@ -55,7 +55,11 @@ export async function getMenteeDashboardData(): Promise<MenteeDashboardData> {
     .eq("id", user.id)
     .maybeSingle();
 
-  if (profileError || !profile) {
+  if (profileError) {
+    throw new Error("Mentee profile could not be loaded.");
+  }
+
+  if (!profile) {
     return {
       user: {
         id: user.id,
@@ -76,7 +80,11 @@ export async function getMenteeDashboardData(): Promise<MenteeDashboardData> {
     .eq("user_id", user.id)
     .maybeSingle();
 
-  if (enrolmentError || !enrolmentData) {
+  if (enrolmentError) {
+    throw new Error("Mentee enrolment could not be loaded.");
+  }
+
+  if (!enrolmentData) {
     return {
       user: {
         id: profile.id,
@@ -89,7 +97,7 @@ export async function getMenteeDashboardData(): Promise<MenteeDashboardData> {
     };
   }
 
-  const { data: application } = await supabase
+  const { data: application, error: applicationError } = await supabase
     .from("mentorship_applications")
     .select(
       "id,email,status,selected_package,linked_user_id,created_at,updated_at",
@@ -98,6 +106,10 @@ export async function getMenteeDashboardData(): Promise<MenteeDashboardData> {
     .eq("linked_user_id", user.id)
     .eq("status", "accepted")
     .maybeSingle();
+
+  if (applicationError) {
+    throw new Error("Mentee application could not be loaded.");
+  }
 
   const enrolment: MenteeDashboardEnrolment | null = application
     ? {
