@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getResendWebhookSecret } from "@/lib/server-env";
+import { consentAfterProviderUpdate } from "@/lib/newsletter/consent";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { verifySvixWebhook } from "@/lib/newsletter/webhook";
 
@@ -14,7 +15,7 @@ type AdminClient = ReturnType<typeof createAdminClient>;
 type SubscriberEventTarget = {
   id: string;
   email: string;
-  status: string;
+  status: "subscribed" | "unsubscribed";
   deliverability_status: string;
   provider_synced_at: string | null;
   deliverability_updated_at: string | null;
@@ -144,7 +145,7 @@ async function applyContactEvent(
     external_contact_id: providerContactId,
     provider_synced_at: event.created_at,
     // Provider events may suppress consent, but must never manufacture renewed consent.
-    status: unsubscribed ? "unsubscribed" : subscriber.status,
+    status: consentAfterProviderUpdate(subscriber.status, unsubscribed),
   };
   if (segmentSyncError !== undefined) {
     update.provider_sync_error = segmentSyncError;
