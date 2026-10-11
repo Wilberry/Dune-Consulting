@@ -1,4 +1,5 @@
 import { updateMentorshipStatus } from "@/app/admin/(dashboard)/mentorship/actions";
+import { MentorshipInvitation } from "@/components/admin/mentorship-invitation";
 import { requireAdminUser } from "@/lib/admin/auth";
 import {
   getMentorshipApplications,
@@ -203,6 +204,9 @@ export default async function AdminMentorshipPage() {
                     Save status
                   </button>
                 </form>
+                {application.status === "accepted" && (
+                  <MentorshipInvitation applicationId={application.id} />
+                )}
               </div>
             </article>
           ))}
