@@ -12,7 +12,7 @@ test("footer newsletter signup succeeds without depending on live services", asy
       body: JSON.stringify({
         status: "success",
         message:
-          "You are subscribed to Dune Consulting insights. We will share practical HSE updates using this email address.",
+          "Thanks for your interest. If this address is eligible for updates, you will receive Dune Consulting insights.",
       }),
     });
   });
@@ -24,7 +24,7 @@ test("footer newsletter signup succeeds without depending on live services", asy
   await page.getByRole("button", { name: "Subscribe", exact: true }).click();
 
   await expect(page.getByRole("status")).toContainText(
-    "You are subscribed to Dune Consulting insights.",
+    "Thanks for your interest.",
   );
   await expect(page.getByLabel("Email address", { exact: true })).toHaveValue(
     "",
@@ -43,7 +43,7 @@ test("pending newsletter signup cannot be duplicated", async ({ page }) => {
       body: JSON.stringify({
         status: "success",
         message:
-          "You are subscribed to Dune Consulting insights. We will share practical HSE updates using this email address.",
+          "Thanks for your interest. If this address is eligible for updates, you will receive Dune Consulting insights.",
       }),
     });
   });
