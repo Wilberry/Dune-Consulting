@@ -215,5 +215,25 @@ select extensions.is(
   'accepted',
   'admin review persisted under RLS'
 );
+reset role;
+update public.mentorship_applications
+set status='declined'
+where id='20000000-0000-4000-8000-000000000004';
+reset role;
+select extensions.ok(
+  (select expires_at <= now()
+   from public.mentorship_claim_invitations
+   where application_id = '20000000-0000-4000-8000-000000000004'),
+  'withdrawn application invitation is immediately invalidated'
+);
+update public.mentorship_applications
+set status='accepted'
+where id='20000000-0000-4000-8000-000000000004';
+select extensions.ok(
+  (select expires_at <= now()
+   from public.mentorship_claim_invitations
+   where application_id = '20000000-0000-4000-8000-000000000004'),
+  'reapproving an application does not resurrect an old invitation'
+);
 select * from extensions.finish();
 rollback;
