@@ -174,10 +174,11 @@ export default async function AdminMentorshipPage() {
                   )}
                 </div>
 
-                <form
-                  action={updateMentorshipStatus}
-                  className="border-line bg-off-white w-full rounded-lg border p-4 xl:w-60"
-                >
+                <div className="w-full shrink-0 xl:w-60">
+                  <form
+                    action={updateMentorshipStatus}
+                    className="border-line bg-off-white w-full rounded-lg border p-4"
+                  >
                   <input type="hidden" name="id" value={application.id} />
                   <label
                     htmlFor={`mentorship-status-${application.id}`}
@@ -203,10 +204,11 @@ export default async function AdminMentorshipPage() {
                   >
                     Save status
                   </button>
-                </form>
-                {application.status === "accepted" && (
-                  <MentorshipInvitation applicationId={application.id} />
-                )}
+                  </form>
+                  {application.status === "accepted" && (
+                    <MentorshipInvitation applicationId={application.id} />
+                  )}
+                </div>
               </div>
             </article>
           ))}
