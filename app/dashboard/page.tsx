@@ -38,7 +38,7 @@ export default async function DashboardPage() {
           </form>
         </div>
 
-        {!dashboard.linkedApplication || !dashboard.enrolment ? (
+        {!dashboard.linkedApplication ? (
           <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-8 shadow-sm">
             <h2 className="text-navy text-xl font-bold">
               No linked enrolment yet
@@ -57,6 +57,19 @@ export default async function DashboardPage() {
             </div>
             <MenteeClaimForm />
           </div>
+        ) : !dashboard.enrolment ? (
+          <section className="rounded-2xl border border-slate-300 bg-white p-8 shadow-sm">
+            <h2 className="text-navy text-xl font-bold">Application status</h2>
+            <p className="text-muted mt-3 text-sm leading-6">
+              Your linked application is currently{" "}
+              <strong className="capitalize">{dashboard.linkedApplication.status ?? "under review"}</strong>.
+              Programme access is unavailable until the team confirms an
+              active enrolment. Please contact Dune Consulting if you need help.
+            </p>
+            <p className="text-muted mt-4 text-sm">
+              Package: {dashboard.linkedApplication.selectedPackage ?? "Not recorded"}
+            </p>
+          </section>
         ) : (
           <div className="grid gap-6 lg:grid-cols-[1.5fr_1fr]">
             <div className="space-y-6">
