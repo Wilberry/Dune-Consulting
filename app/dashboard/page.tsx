@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import { logoutMentee } from "@/app/dashboard/actions";
 import { MenteeClaimForm } from "@/components/mentee/mentee-claim-form";
+import { getMenteeDashboardData } from "@/lib/mentorship/dashboard";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: "Mentee dashboard",
   robots: { index: false, follow: false },
 };
-import { getMenteeDashboardData } from "@/lib/mentorship/dashboard";
 
 export default async function DashboardPage() {
   const dashboard = await getMenteeDashboardData();
