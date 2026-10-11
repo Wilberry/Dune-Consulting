@@ -51,7 +51,9 @@ function providerSegmentSyncError(
   if (!segmentId || !segmentIds) return undefined;
 
   const shouldBelong =
-    !unsubscribed && subscriber.deliverability_status === "ok";
+    !unsubscribed &&
+    subscriber.status === "subscribed" &&
+    subscriber.deliverability_status === "ok";
   const belongs = segmentIds.includes(segmentId);
   return belongs === shouldBelong
     ? null
@@ -141,13 +143,13 @@ async function applyContactEvent(
   const update: Record<string, unknown> = {
     external_contact_id: providerContactId,
     provider_synced_at: event.created_at,
-    status: unsubscribed ? "unsubscribed" : "subscribed",
+    // Provider events may suppress consent, but must never manufacture renewed consent.
+    status: unsubscribed ? "unsubscribed" : subscriber.status,
   };
   if (segmentSyncError !== undefined) {
     update.provider_sync_error = segmentSyncError;
   }
   if (unsubscribed) update.unsubscribed_at = event.created_at;
-  else update.unsubscribed_at = null;
 
   const { error } = await supabase
     .from("newsletter_subscribers")
