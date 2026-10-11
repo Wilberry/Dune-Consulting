@@ -54,6 +54,11 @@ from the latest main and adds only a compatible new migration.
 | UX | A previously linked but later declined applicant was shown as unlinked | Read linked application status under owner-scoped RLS; withhold active programme features |
 | UX | An email-only newsletter signup could claim success for a suppressed contact | Return an eligibility-neutral confirmation without disclosing subscription state |
 | Navigation | Mentee portal was difficult to discover from the mentorship landing page | Add a small sign-in link within existing branding |
+| High | Concurrent/stale provider webhook could race with a user's opt-out | Avoid writing stale provider subscription state and add PostgreSQL opt-out guard migration |
+| High | Withdrawing an accepted mentorship application did not revoke its outstanding invitation | Database trigger expires unclaimed codes; reapproval requires new invitation |
+| Medium | In-memory rate-limit keys were unbounded | Cap tracked identifiers and fail closed rather than eviction-bypassing limits |
+| Medium | Signed provider webhook body was read without a size cap | Read streaming body with a 256 KiB maximum and return HTTP 413 for oversized payloads |
+| UX | Staff review showed an invite action for already linked mentees | Suppress invitation control when a linked user ID is present |
 | UX | Public website chrome appeared in the mentee portal | Render private dashboard/login shell independently |
 
 ### Invitation lifecycle
@@ -79,15 +84,18 @@ automatically or implement payments/assignments/certificates.
 
 ### Database and permissions
 
-New migration:
-`supabase/migrations/20261011120000_mentorship_invitation_only_claims.sql`
+New migrations:
+- `supabase/migrations/20261011120000_mentorship_invitation_only_claims.sql`
+- `supabase/migrations/20261011130000_newsletter_optout_integrity.sql`
 
 It assumes the five `20261009...` main-branch migrations already exist in
 the intended database. It does **not** recreate or overwrite their application
 or enrolment tables, avoiding the collision with draft PR #6.
 
 The new invitation table has RLS enabled with no browser policies and no
-anon/authenticated table grants. The claim RPC uses `SECURITY DEFINER`,
+anon/authenticated table grants. An explicit `service_role` grant permits the
+staff-authenticated server action to issue invitations. Withdrawing approval
+expires any unclaimed invitation and reapproval cannot resurrect it. The claim RPC uses `SECURITY DEFINER`,
 an empty `search_path`, an explicit authenticated-only EXECUTE grant,
 row locks, validation and uniqueness constraints. The old email-only
 RPC loses EXECUTE for authenticated clients. A limited profile-name RPC
@@ -95,8 +103,10 @@ cannot update role, package, approval or ownership.
 
 Review all owner, grant and RLS assumptions on a disposable local Supabase
 database before staging. Test concurrent claims in separate connections.
-The added pgTAP test source is a proposed executable test, **not proof** that
-the new SQL has passed.
+The added pgTAP test sources (mentorship claims and newsletter opt-outs) are
+proposed executable tests, **not proof** that the new SQL has passed.
+Concurrent invitation issuance/claim/revocation needs real staging concurrency
+checks with two database connections.
 
 ## Wider workflow review
 
@@ -117,8 +127,8 @@ subscribers whose addresses were previously unsubscribed must use a separately
 verified consent process. The new public acknowledgement is deliberately
 neutral and does not disclose whether an address was suppressed.
 
-The repo's memory-based rate limiter does **not** provide globally shared,
-persistent throttling across serverless instances. Distributed rate limiting,
+The repo's bounded memory-based rate limiter still does **not** provide globally
+shared, persistent throttling across serverless instances. Distributed rate limiting,
 account-lockout controls, verified newsletter re-opt-in and published session
 data are additional scoped work, not implemented here.
 
@@ -136,6 +146,12 @@ data are additional scoped work, not implemented here.
 | Real Supabase Auth, RLS, invite and concurrency tests | **Not run** |
 | Live Supabase migration history, Vercel logs, DNS/email checks | **Not verified** |
 | Production database/deployment changes | **Not performed** |
+
+GitHub Quality jobs on main and the draft PR have been marked failed without
+usable job-step details; attempts to fetch the job logs returned unavailable.
+This may be a CI infrastructure or application issue, but the current evidence
+does not isolate a cause. Diagnose the GitHub Actions account/runners and run
+all gates from a developer checkout.
 
 The latest available GitHub Quality workflow on main was marked failed.
 Whether the failure is account/platform setup or application code cannot be
