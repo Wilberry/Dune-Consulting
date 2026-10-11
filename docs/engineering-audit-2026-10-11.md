@@ -51,6 +51,9 @@ from the latest main and adds only a compatible new migration.
 | Functional | Mentee sign-in lacked a registration path | Add Supabase Auth signup with email verification callback |
 | Functional | Mentee profile name was read-only | Add enrolled-user-only RPC and name-only form |
 | UX | Dashboard could show claim success from an arbitrary query string | Remove query-supplied success claim |
+| UX | A previously linked but later declined applicant was shown as unlinked | Read linked application status under owner-scoped RLS; withhold active programme features |
+| UX | An email-only newsletter signup could claim success for a suppressed contact | Return an eligibility-neutral confirmation without disclosing subscription state |
+| Navigation | Mentee portal was difficult to discover from the mentorship landing page | Add a small sign-in link within existing branding |
 | UX | Public website chrome appeared in the mentee portal | Render private dashboard/login shell independently |
 
 ### Invitation lifecycle
@@ -108,6 +111,11 @@ the new SQL has passed.
 | FAQ/testimonials | Admin code + October 7 migration files | Confirm live migrations and authorized editorial assets/copy |
 | Public site | Responsive pages, tests and asset/content auditors | Broken links, keyboard/mobile flows, design snapshots, approved legal/content/assets |
 | Deployment | Node 22, Next.js 16, npm scripts, GitHub Quality workflow | Build logs, Vercel environment mapping, preview checks, safe rollback |
+
+No automatic double opt-in/resubscribe mechanism is present; returning
+subscribers whose addresses were previously unsubscribed must use a separately
+verified consent process. The new public acknowledgement is deliberately
+neutral and does not disclose whether an address was suppressed.
 
 The repo's memory-based rate limiter does **not** provide globally shared,
 persistent throttling across serverless instances. Distributed rate limiting,
