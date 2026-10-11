@@ -2,7 +2,10 @@ import "server-only";
 
 import { NextResponse } from "next/server";
 import { checkRateLimit } from "@/lib/rate-limit";
-import { getTurnstileEnvironment } from "@/lib/server-env";
+import {
+  getTurnstileEnvironment,
+  requiresTurnstileVerification,
+} from "@/lib/server-env";
 import {
   isTurnstileResponseValid,
   type TurnstileSiteverifyResponse,
@@ -53,6 +56,18 @@ export async function verifyTurnstileRequest(
   const environment = getTurnstileEnvironment();
 
   if (environment.status === "disabled") {
+    if (requiresTurnstileVerification()) {
+      return {
+        ok: false,
+        response: NextResponse.json(
+          {
+            status: "error",
+            message: "Spam protection is temporarily unavailable. Please try again shortly.",
+          },
+          { status: 503 },
+        ),
+      };
+    }
     return { ok: true, status: "disabled" };
   }
 

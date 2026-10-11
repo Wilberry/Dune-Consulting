@@ -8,6 +8,7 @@ const basePayload = {
   email: "ada@example.org",
   phone: "+234 801 234 5678",
   professionalRole: "Graduate trainee",
+  selectedPackage: "Foundation",
   experienceLevel: "Recent graduate",
   education: "BSc Environmental Science",
   reasonForApplying:
@@ -83,12 +84,24 @@ test("mentorship application package handling", async () => {
   );
   assert.equal(invalid.status, 400);
 
+  for (const value of ["", "Unknown", undefined]) {
+    let persisted = false;
+    const response = await handleMentorshipApplication(
+      request({ ...basePayload, selectedPackage: value }, "203.0.113.83"),
+      {
+        persist: async () => { persisted = true; },
+      },
+    );
+    assert.equal(response.status, 400);
+    assert.equal(persisted, false);
+  }
+
   let optionalPersisted: Record<string, unknown> | undefined;
   const optionalResponse = await handleMentorshipApplication(
     request(
       {
         ...basePayload,
-        selectedPackage: "",
+        selectedPackage: "Foundation",
         professionalRole: undefined,
         education: undefined,
         additionalInformation: undefined,
@@ -107,7 +120,7 @@ test("mentorship application package handling", async () => {
   );
 
   assert.equal(optionalResponse.status, 200);
-  assert.equal(optionalPersisted?.selected_package, null);
+  assert.equal(optionalPersisted?.selected_package, "Foundation");
   assert.equal(optionalPersisted?.professional_role, null);
   assert.equal(optionalPersisted?.education, null);
   assert.equal(optionalPersisted?.additional_information, null);

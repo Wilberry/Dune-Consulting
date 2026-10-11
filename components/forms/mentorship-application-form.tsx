@@ -24,21 +24,12 @@ const mentorshipPackages = ["Foundation", "Momentum", "Elevation"] as const;
 const control =
   "mt-2 w-full rounded-md border border-line bg-white px-4 py-3 text-ink placeholder:text-muted/70 focus:border-navy disabled:opacity-60";
 
-function getInitialPackage() {
-  if (typeof window === "undefined") {
-    return "";
-  }
+type MentorshipPackage = (typeof mentorshipPackages)[number];
 
+function getInitialPackage(): MentorshipPackage | undefined {
+  if (typeof window === "undefined") return undefined;
   const value = new URLSearchParams(window.location.search).get("package");
-  if (!value) {
-    return "";
-  }
-
-  return mentorshipPackages.includes(
-    value as (typeof mentorshipPackages)[number],
-  )
-    ? value
-    : "";
+  return mentorshipPackages.find((item) => item === value);
 }
 
 export function MentorshipApplicationForm() {
@@ -159,18 +150,18 @@ export function MentorshipApplicationForm() {
       />
 
       <div className="mt-7 grid gap-5 sm:grid-cols-2">
-        <Field id="mentorship-package" label="Preferred package">
+        <Field id="mentorship-package" label="Preferred package *">
           <select
             id="mentorship-package"
             className={control}
-            defaultValue={getInitialPackage()}
+            defaultValue={getInitialPackage() ?? ""}
             aria-invalid={!!errors.selectedPackage}
             aria-describedby={
               errors.selectedPackage ? "mentorship-package-error" : undefined
             }
             {...register("selectedPackage")}
           >
-            <option value="">No package selected</option>
+            <option value="">Select a mentorship package</option>
             {mentorshipPackages.map((packageName) => (
               <option key={packageName} value={packageName}>
                 {packageName}

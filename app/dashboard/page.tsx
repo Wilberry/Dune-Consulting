@@ -1,33 +1,24 @@
-import {
-  claimMentorshipApplication,
-  logoutMentee,
-} from "@/app/dashboard/actions";
+import type { Metadata } from "next";
+import { logoutMentee } from "@/app/dashboard/actions";
+import { MenteeClaimForm } from "@/components/mentee/mentee-claim-form";
+import { MenteeProfileForm } from "@/components/mentee/mentee-profile-form";
 import { getMenteeDashboardData } from "@/lib/mentorship/dashboard";
 
-export default async function DashboardPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ claim?: string }>;
-}) {
+export const dynamic = "force-dynamic";
+export const metadata: Metadata = {
+  title: "Mentee dashboard",
+  robots: { index: false, follow: false },
+};
+
+export default async function DashboardPage() {
   const dashboard = await getMenteeDashboardData();
-  const { claim } = await searchParams;
   const displayName =
     dashboard.user?.fullName || dashboard.user?.email || "Mentee";
   const currentStatus = dashboard.enrolment?.status || "Not enrolled";
 
   return (
-    <main className="bg-off-white min-h-screen px-4 py-8 sm:px-6 lg:px-8">
+    <main id="main-content" className="bg-off-white min-h-screen px-4 py-8 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-6xl">
-        {claim === "success" || claim === "unavailable" ? (
-          <p
-            className="mb-5 rounded-lg border border-slate-200 bg-white p-4 text-sm text-slate-700"
-            role="status"
-          >
-            {claim === "success"
-              ? "Your accepted application is linked to this account."
-              : "No eligible accepted application could be linked to this account."}
-          </p>
-        ) : null}
         <div className="mb-8 flex flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:flex-row sm:items-center sm:justify-between">
           <div>
             <p className="text-amber-text text-xs font-extrabold tracking-[0.16em] uppercase">
@@ -47,15 +38,16 @@ export default async function DashboardPage({
           </form>
         </div>
 
-        {!dashboard.linkedApplication || !dashboard.enrolment ? (
+        {!dashboard.linkedApplication ? (
           <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-8 shadow-sm">
             <h2 className="text-navy text-xl font-bold">
               No linked enrolment yet
             </h2>
             <p className="text-muted mt-3 max-w-2xl text-sm leading-6">
-              Your account does not have an eligible linked enrolment. After an
-              administrator accepts your application, use the claim action to
-              link it securely.
+              Your account does not have a linked enrolment. Once the team
+              accepts your application, a staff member can provide you with
+              a private invitation code to link it securely. Matching an email
+              address alone never grants access.
             </p>
             <div className="mt-6 rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-700">
               <p className="font-semibold text-slate-900">Current account</p>
@@ -63,15 +55,21 @@ export default async function DashboardPage({
                 {dashboard.user?.email || "No email on file"}
               </p>
             </div>
-            <form action={claimMentorshipApplication} className="mt-5">
-              <button
-                type="submit"
-                className="bg-amber text-deep-navy hover:bg-amber-hover rounded-lg px-4 py-2.5 text-sm font-bold"
-              >
-                Claim accepted application
-              </button>
-            </form>
+            <MenteeClaimForm />
           </div>
+        ) : !dashboard.enrolment ? (
+          <section className="rounded-2xl border border-slate-300 bg-white p-8 shadow-sm">
+            <h2 className="text-navy text-xl font-bold">Application status</h2>
+            <p className="text-muted mt-3 text-sm leading-6">
+              Your linked application is currently{" "}
+              <strong className="capitalize">{dashboard.linkedApplication.status ?? "under review"}</strong>.
+              Programme access is unavailable until the team confirms an
+              active enrolment. Please contact Dune Consulting if you need help.
+            </p>
+            <p className="text-muted mt-4 text-sm">
+              Package: {dashboard.linkedApplication.selectedPackage ?? "Not recorded"}
+            </p>
+          </section>
         ) : (
           <div className="grid gap-6 lg:grid-cols-[1.5fr_1fr]">
             <div className="space-y-6">
@@ -143,6 +141,7 @@ export default async function DashboardPage({
                     </dd>
                   </div>
                 </dl>
+                <MenteeProfileForm name={dashboard.user?.fullName ?? null} />
               </div>
             </aside>
           </div>

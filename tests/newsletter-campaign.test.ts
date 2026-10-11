@@ -7,7 +7,10 @@ import {
   sendNewsletterBroadcast,
   syncNewsletterSubscriber,
 } from "../lib/newsletter/provider";
-import { verifySvixWebhook } from "../lib/newsletter/webhook";
+import {
+  readBoundedWebhookPayload,
+  verifySvixWebhook,
+} from "../lib/newsletter/webhook";
 import { newsletterCampaignSchema } from "../lib/validations";
 
 const segmentId = "78261eea-8f8b-4381-83c6-79fa7120f1cf";
@@ -213,4 +216,28 @@ test("Svix webhook verification accepts the signed raw body and rejects tamperin
     verifySvixWebhook(payload, headers, secret, now + 6 * 60 * 1000),
     false,
   );
+});
+
+test("Resend webhook payload reader enforces real streamed byte length", async () => {
+  const ordinary = new Request("https://example.test/webhook", {
+    method: "POST",
+    body: '{"type":"contact.updated"}',
+  });
+  assert.equal(
+    await readBoundedWebhookPayload(ordinary, 50),
+    '{"type":"contact.updated"}',
+  );
+
+  const tooLong = new Request("https://example.test/webhook", {
+    method: "POST",
+    body: "x".repeat(51),
+  });
+  assert.equal(await readBoundedWebhookPayload(tooLong, 50), null);
+
+  const declaredLong = new Request("https://example.test/webhook", {
+    method: "POST",
+    headers: { "content-length": "1000" },
+    body: "short",
+  });
+  assert.equal(await readBoundedWebhookPayload(declaredLong, 50), null);
 });

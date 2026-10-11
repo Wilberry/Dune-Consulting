@@ -43,11 +43,6 @@ export function AdminLoginForm() {
         await supabase.auth.signInWithPassword(parsed.data);
 
       if (signInError || !data.user) {
-        console.error(
-          "Sign-in error:",
-          signInError ?? "no user returned",
-          data,
-        );
         setError(
           "The email or password is incorrect, or this account is unavailable.",
         );

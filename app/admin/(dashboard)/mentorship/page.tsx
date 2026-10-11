@@ -1,4 +1,5 @@
 import { updateMentorshipStatus } from "@/app/admin/(dashboard)/mentorship/actions";
+import { MentorshipInvitation } from "@/components/admin/mentorship-invitation";
 import { requireAdminUser } from "@/lib/admin/auth";
 import {
   getMentorshipApplications,
@@ -173,10 +174,11 @@ export default async function AdminMentorshipPage() {
                   )}
                 </div>
 
-                <form
-                  action={updateMentorshipStatus}
-                  className="border-line bg-off-white w-full rounded-lg border p-4 xl:w-60"
-                >
+                <div className="w-full shrink-0 xl:w-60">
+                  <form
+                    action={updateMentorshipStatus}
+                    className="border-line bg-off-white w-full rounded-lg border p-4"
+                  >
                   <input type="hidden" name="id" value={application.id} />
                   <label
                     htmlFor={`mentorship-status-${application.id}`}
@@ -202,7 +204,16 @@ export default async function AdminMentorshipPage() {
                   >
                     Save status
                   </button>
-                </form>
+                  </form>
+                  {application.status === "accepted" &&
+                    (application.linkedUserId ? (
+                      <p className="text-muted mt-3 text-xs" role="status">
+                        Linked to a verified mentee account.
+                      </p>
+                    ) : (
+                      <MentorshipInvitation applicationId={application.id} />
+                    ))}
+                </div>
               </div>
             </article>
           ))}
