@@ -34,7 +34,7 @@ The default branch moved forward on 11 October 2026 with commit
 October 9 migrations. Existing draft PR #6 proposes a separate dashboard
 and two October 10 migrations on an older base. **Do not merge PR #6 into
 main as-is or apply both sets of SQL migrations.** This remediation starts
-from the latest main and adds only a compatible new migration.
+from the latest main and adds only additive migrations compatible with the current data model.
 
 ## Findings and implemented changes
 
@@ -93,8 +93,12 @@ the intended database. It does **not** recreate or overwrite their application
 or enrolment tables, avoiding the collision with draft PR #6.
 
 The new invitation table has RLS enabled with no browser policies and no
-anon/authenticated table grants. An explicit `service_role` grant permits the
-staff-authenticated server action to issue invitations. Withdrawing approval
+anon/authenticated table grants. A dedicated `SECURITY DEFINER` issuance
+RPC verifies `auth.uid()`, admin role and application approval under a row
+lock, before writing the invitation atomically; the server action uses the
+user-scoped Supabase client rather than a service key. An explicit
+`service_role` grant remains available for privileged operational access.
+Withdrawing approval
 expires any unclaimed invitation and reapproval cannot resurrect it. The claim RPC uses `SECURITY DEFINER`,
 an empty `search_path`, an explicit authenticated-only EXECUTE grant,
 row locks, validation and uniqueness constraints. The old email-only
@@ -178,7 +182,8 @@ test result.
    Capture exit codes, outputs and exact files. Do not ignore inherited
    failures, but distinguish them from feature regressions.
 4. Confirm a **disposable**, unlinked local Supabase stack. Apply all main
-   migrations in order and then the new `20261011120000` migration. Run
+   migrations in order and then both `20261011120000` and
+   `20261011130000` migrations. Run
    `supabase test db` (or psql on the test file in a transaction) and
    inspect each grant/role/RLS outcome.
 5. Test an accepted Foundation, Momentum and Elevation applicant; a wrong
@@ -194,6 +199,20 @@ test result.
 8. Test production-like Turnstile missing keys in isolation: expect public
    form APIs to return 503, not silently skip bot checks. Confirm real
    approved keys before any production promotion.
+
+### Additional production blockers
+
+- There is no implemented verified public newsletter re-subscription flow for
+  previously opted-out addresses. Admins can intentionally record consent,
+  but should retain proof of that consent outside the application until a
+  first-class audit trail is built.
+- The programme advertises limited Momentum and Elevation seats, but
+  programme capacity enforcement, invoicing/payment reconciliation and
+  paid-content access policies have not been implemented. Do not describe
+  paid reservations as automatic or guaranteed.
+- The recent GitHub Quality job lists did not expose test-step results; the
+  decoded log endpoint returned an unavailable object. Diagnose CI account,
+  runner and job setup before relying on GitHub badges.
 
 ### Production approval gate
 
