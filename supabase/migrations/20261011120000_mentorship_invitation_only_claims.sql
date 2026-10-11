@@ -35,7 +35,7 @@ returns trigger
 language plpgsql
 security definer
 set search_path = ''
-as $
+as $$
 begin
   if old.status = 'accepted' and new.status <> 'accepted' then
     update public.mentorship_claim_invitations
@@ -44,7 +44,7 @@ begin
   end if;
   return new;
 end;
-$;
+$$;
 
 revoke all on function public.expire_mentorship_invite_on_status_change()
   from public, anon, authenticated, service_role;
