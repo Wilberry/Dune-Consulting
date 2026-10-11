@@ -62,3 +62,37 @@ export async function claimMentorshipApplication(
     };
   }
 }
+
+export async function updateMenteeDisplayName(
+  _previous: ClaimState,
+  formData: FormData,
+): Promise<ClaimState> {
+  const name = formData.get("displayName");
+  if (
+    typeof name !== "string" ||
+    name.trim().length < 2 ||
+    name.trim().length > 120
+  ) {
+    return { status: "error", message: "Enter a name between 2 and 120 characters." };
+  }
+
+  try {
+    const supabase = await createClient();
+    const { data: auth, error: authError } = await supabase.auth.getUser();
+    if (authError || !auth.user) {
+      return { status: "error", message: "Please sign in again." };
+    }
+
+    const { error } = await supabase.rpc("update_mentee_display_name", {
+      new_name: name.trim(),
+    });
+    if (error) {
+      return { status: "error", message: "Your profile could not be updated." };
+    }
+
+    revalidatePath("/dashboard");
+    return { status: "success", message: "Display name updated." };
+  } catch {
+    return { status: "error", message: "Profile editing is temporarily unavailable." };
+  }
+}
