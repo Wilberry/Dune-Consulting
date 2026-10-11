@@ -72,6 +72,31 @@ export async function getMenteeDashboardData(): Promise<MenteeDashboardData> {
         : null),
   };
 
+  // Linked users may inspect their own application status even when their
+  // programme access is suspended or withdrawn. RLS still prevents reading
+  // other applicants' records.
+  const { data: linked, error: linkedError } = await supabase
+    .from("mentorship_applications")
+    .select("id,email,status,selected_package,linked_user_id,created_at,updated_at")
+    .eq("linked_user_id", user.id)
+    .maybeSingle();
+
+  if (linkedError) {
+    throw new Error("Linked application status could not be loaded.");
+  }
+
+  const linkedApplication: MenteeDashboardApplication | null = linked
+    ? {
+        id: linked.id,
+        email: linked.email,
+        status: linked.status,
+        selectedPackage: linked.selected_package,
+        linkedUserId: linked.linked_user_id,
+        createdAt: linked.created_at,
+        updatedAt: linked.updated_at,
+      }
+    : null;
+
   const { data: enrolmentData, error: enrolmentError } = await supabase
     .from("mentorship_enrolments")
     .select(
@@ -87,7 +112,7 @@ export async function getMenteeDashboardData(): Promise<MenteeDashboardData> {
   if (!enrolmentData) {
     return {
       user: dashboardUser,
-      linkedApplication: null,
+      linkedApplication,
       enrolment: null,
     };
   }
@@ -132,7 +157,7 @@ export async function getMenteeDashboardData(): Promise<MenteeDashboardData> {
           createdAt: application.created_at,
           updatedAt: application.updated_at,
         }
-      : null,
+      : linkedApplication,
     enrolment,
   };
 }
