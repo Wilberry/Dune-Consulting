@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { logoutMentee } from "@/app/dashboard/actions";
 import { MenteeClaimForm } from "@/components/mentee/mentee-claim-form";
+import { MenteeProfileForm } from "@/components/mentee/mentee-profile-form";
 import { getMenteeDashboardData } from "@/lib/mentorship/dashboard";
 
 export const dynamic = "force-dynamic";
@@ -127,6 +128,7 @@ export default async function DashboardPage() {
                     </dd>
                   </div>
                 </dl>
+                <MenteeProfileForm name={dashboard.user?.fullName ?? null} />
               </div>
             </aside>
           </div>
