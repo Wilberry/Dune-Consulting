@@ -205,9 +205,14 @@ export default async function AdminMentorshipPage() {
                     Save status
                   </button>
                   </form>
-                  {application.status === "accepted" && (
-                    <MentorshipInvitation applicationId={application.id} />
-                  )}
+                  {application.status === "accepted" &&
+                    (application.linkedUserId ? (
+                      <p className="text-muted mt-3 text-xs" role="status">
+                        Linked to a verified mentee account.
+                      </p>
+                    ) : (
+                      <MentorshipInvitation applicationId={application.id} />
+                    ))}
                 </div>
               </div>
             </article>
