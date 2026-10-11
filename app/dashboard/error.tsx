@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect } from "react";
 
 export default function DashboardError({
   error,
@@ -10,10 +9,8 @@ export default function DashboardError({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
-  useEffect(() => {
-    // Do not print exceptions containing private profile or database values.
-    void error;
-  }, [error]);
+  // Do not print exceptions containing private profile or database values.
+  void error;
 
   return (
     <main className="bg-off-white flex min-h-screen items-center justify-center p-6">
