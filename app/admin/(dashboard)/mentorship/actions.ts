@@ -4,7 +4,6 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { requireAdminUser } from "@/lib/admin/auth";
 import { createClient } from "@/lib/supabase/server";
-import { createAdminClient } from "@/lib/supabase/admin";
 import { generateInvitationCode } from "@/lib/mentorship/invitation-token";
 
 const statusSchema = z.object({
@@ -45,64 +44,37 @@ export async function createMentorshipInvitation(
   _previous: InvitationActionState,
   formData: FormData,
 ): Promise<InvitationActionState> {
-  const staff = await requireAdminUser();
+  await requireAdminUser();
   const parsed = z.uuid().safeParse(formData.get("applicationId"));
   if (!parsed.success) {
     return { status: "error", message: "Invalid application." };
   }
 
   try {
-    const admin = createAdminClient();
-    const { data: application, error: applicationError } = await admin
-      .from("mentorship_applications")
-      .select("id,status,selected_package,linked_user_id")
-      .eq("id", parsed.data)
-      .maybeSingle();
-
-    if (
-      applicationError ||
-      !application ||
-      application.status !== "accepted" ||
-      !application.selected_package ||
-      application.linked_user_id
-    ) {
-      return {
-        status: "error",
-        message: "Only accepted, unlinked applications with a saved package can receive invitations.",
-      };
-    }
-
-    const { data: enrolment, error: enrolmentError } = await admin
-      .from("mentorship_enrolments")
-      .select("id")
-      .eq("application_id", application.id)
-      .maybeSingle();
-
-    if (enrolmentError || enrolment) {
-      return { status: "error", message: "This application is already linked or unavailable." };
-    }
-
     const { code, tokenHash } = generateInvitationCode();
-    const { error } = await admin.from("mentorship_claim_invitations").upsert(
+    const supabase = await createClient();
+    const { data: issued, error } = await supabase.rpc(
+      "issue_mentorship_invitation",
       {
-        application_id: application.id,
-        token_hash: tokenHash,
-        expires_at: new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString(),
-        claimed_by: null,
-        claimed_at: null,
-        created_by: staff.id,
+        p_application_id: parsed.data,
+        p_token_hash: tokenHash,
       },
-      { onConflict: "application_id" },
     );
 
-    if (error) throw error;
+    if (error || issued !== true) {
+      return {
+        status: "error",
+        message:
+          "Only approved, unlinked applications with a recorded package can receive invitations.",
+      };
+    }
 
     revalidatePath("/admin/mentorship");
     return { status: "created", code };
   } catch {
     return {
       status: "error",
-      message: "Invitation could not be generated. Verify the development migration and try again.",
+      message: "Invitation service is unavailable. Please try again later.",
     };
   }
 }
