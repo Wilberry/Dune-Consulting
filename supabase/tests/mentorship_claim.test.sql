@@ -193,5 +193,27 @@ select extensions.throws_ok(
   'Invalid profile update',
   'unlinked account cannot edit a mentee profile'
 );
+select set_config('request.jwt.claim.sub', '10000000-0000-4000-8000-000000000007', true);
+select extensions.lives_ok(
+  $update public.mentorship_applications set status = 'accepted' where id = '20000000-0000-4000-8000-000000000002'$,
+  'editor status update is RLS filtered'
+);
+reset role;
+select extensions.is(
+  (select status from public.mentorship_applications where id = '20000000-0000-4000-8000-000000000002'),
+  'reviewing',
+  'editors cannot approve applicants'
+);
+set local role authenticated;
+select set_config('request.jwt.claim.sub', '10000000-0000-4000-8000-000000000006', true);
+select extensions.lives_ok(
+  $update public.mentorship_applications set status = 'accepted' where id = '20000000-0000-4000-8000-000000000002'$,
+  'admin can review applicants'
+);
+select extensions.is(
+  (select status from public.mentorship_applications where id = '20000000-0000-4000-8000-000000000002'),
+  'accepted',
+  'admin review persisted under RLS'
+);
 select * from extensions.finish();
 rollback;
