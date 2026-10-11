@@ -9,30 +9,15 @@ export const metadata: Metadata = {
 };
 import { getMenteeDashboardData } from "@/lib/mentorship/dashboard";
 
-export default async function DashboardPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ claim?: string }>;
-}) {
+export default async function DashboardPage() {
   const dashboard = await getMenteeDashboardData();
-  const { claim } = await searchParams;
   const displayName =
     dashboard.user?.fullName || dashboard.user?.email || "Mentee";
   const currentStatus = dashboard.enrolment?.status || "Not enrolled";
 
   return (
-    <main className="bg-off-white min-h-screen px-4 py-8 sm:px-6 lg:px-8">
+    <main id="main-content" className="bg-off-white min-h-screen px-4 py-8 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-6xl">
-        {claim === "success" || claim === "unavailable" ? (
-          <p
-            className="mb-5 rounded-lg border border-slate-200 bg-white p-4 text-sm text-slate-700"
-            role="status"
-          >
-            {claim === "success"
-              ? "Your accepted application is linked to this account."
-              : "No eligible accepted application could be linked to this account."}
-          </p>
-        ) : null}
         <div className="mb-8 flex flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:flex-row sm:items-center sm:justify-between">
           <div>
             <p className="text-amber-text text-xs font-extrabold tracking-[0.16em] uppercase">
