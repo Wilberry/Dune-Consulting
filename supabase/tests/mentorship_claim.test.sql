@@ -235,5 +235,65 @@ select extensions.ok(
    where application_id = '20000000-0000-4000-8000-000000000004'),
   'reapproving an application does not resurrect an old invitation'
 );
+select extensions.ok(
+  not has_function_privilege('anon', 'public.issue_mentorship_invitation(uuid,text)', 'EXECUTE'),
+  'anonymous clients cannot issue invitations'
+);
+set local role authenticated;
+select set_config('request.jwt.claim.sub', '10000000-0000-4000-8000-000000000007', true);
+select extensions.is(
+  public.issue_mentorship_invitation(
+    '20000000-0000-4000-8000-000000000006',
+    '8198f05c28f5d6dceee8b285e682d8d022f271a16286f048160b0683af45da2f'
+  ),
+  false,
+  'editors cannot issue staff-only invitation codes'
+);
+select set_config('request.jwt.claim.sub', '10000000-0000-4000-8000-000000000002', true);
+select extensions.is(
+  public.issue_mentorship_invitation(
+    '20000000-0000-4000-8000-000000000006',
+    '8198f05c28f5d6dceee8b285e682d8d022f271a16286f048160b0683af45da2f'
+  ),
+  false,
+  'unprivileged mentees cannot generate their own invite'
+);
+select set_config('request.jwt.claim.sub', '10000000-0000-4000-8000-000000000006', true);
+select extensions.is(
+  public.issue_mentorship_invitation(
+    '20000000-0000-4000-8000-000000000006',
+    '8198f05c28f5d6dceee8b285e682d8d022f271a16286f048160b0683af45da2f'
+  ),
+  true,
+  'administrator can issue a code for an accepted unlinked application'
+);
+select extensions.is(
+  public.issue_mentorship_invitation(
+    '20000000-0000-4000-8000-000000000006',
+    '7f26c9a909713af307392a0be523e2b4493d33c9a983d8bb2ef5adef5b2f9450'
+  ),
+  true,
+  'new admin invitation supersedes earlier unclaimed invitation'
+);
+select set_config('request.jwt.claim.sub', '10000000-0000-4000-8000-000000000002', true);
+select extensions.is(
+  public.claim_mentorship_with_code(
+    '8198f05c28f5d6dceee8b285e682d8d022f271a16286f048160b0683af45da2f'
+  ),
+  'invalid',
+  'superseded invite cannot be redeemed'
+);
+select extensions.is(
+  public.claim_mentorship_with_code(
+    '7f26c9a909713af307392a0be523e2b4493d33c9a983d8bb2ef5adef5b2f9450'
+  ),
+  'claimed',
+  'issued invite can be redeemed by the approved verified applicant'
+);
+select extensions.is(
+  (select package from public.mentorship_enrolments where user_id = auth.uid()),
+  'Elevation',
+  'new invitation links the correct package and applicant'
+);
 select * from extensions.finish();
 rollback;
