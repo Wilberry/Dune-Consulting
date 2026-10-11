@@ -178,7 +178,7 @@ select extensions.ok(
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '10000000-0000-4000-8000-000000000001', true);
 select extensions.lives_ok(
-  $select public.update_mentee_display_name('Alice Updated')$,
+  $$select public.update_mentee_display_name('Alice Updated')$$,
   'approved mentees can change their own display name'
 );
 select extensions.is(
@@ -188,14 +188,14 @@ select extensions.is(
 );
 select set_config('request.jwt.claim.sub', '10000000-0000-4000-8000-000000000002', true);
 select extensions.throws_ok(
-  $select public.update_mentee_display_name('Not Enrolled')$,
+  $$select public.update_mentee_display_name('Not Enrolled')$$,
   'P0001',
   'Invalid profile update',
   'unlinked account cannot edit a mentee profile'
 );
 select set_config('request.jwt.claim.sub', '10000000-0000-4000-8000-000000000007', true);
 select extensions.lives_ok(
-  $update public.mentorship_applications set status = 'accepted' where id = '20000000-0000-4000-8000-000000000002'$,
+  $$update public.mentorship_applications set status = 'accepted' where id = '20000000-0000-4000-8000-000000000002'$$,
   'editor status update is RLS filtered'
 );
 reset role;
@@ -207,7 +207,7 @@ select extensions.is(
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '10000000-0000-4000-8000-000000000006', true);
 select extensions.lives_ok(
-  $update public.mentorship_applications set status = 'accepted' where id = '20000000-0000-4000-8000-000000000002'$,
+  $$update public.mentorship_applications set status = 'accepted' where id = '20000000-0000-4000-8000-000000000002'$$,
   'admin can review applicants'
 );
 select extensions.is(
