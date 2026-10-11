@@ -146,3 +146,39 @@ revoke all on function public.claim_mentorship_with_code(text)
   from public, anon, authenticated, service_role;
 grant execute on function public.claim_mentorship_with_code(text)
   to authenticated;
+
+-- Mentees may edit only their own displayed name. Roles, approval, package,
+-- account ownership and email are never writable through this function.
+create or replace function public.update_mentee_display_name(new_name text)
+returns void
+language plpgsql
+security definer
+set search_path = ''
+as $$
+begin
+  if auth.uid() is null
+    or new_name is null
+    or char_length(btrim(new_name)) not between 2 and 120
+    or not exists (
+      select 1
+      from public.mentorship_enrolments as enrolment
+      join public.mentorship_applications as application
+        on application.id = enrolment.application_id
+      where enrolment.user_id = auth.uid()
+        and application.linked_user_id = auth.uid()
+        and application.status = 'accepted'
+    ) then
+    raise exception 'Invalid profile update';
+  end if;
+
+  update public.profiles
+  set full_name = btrim(new_name)
+  where id = auth.uid();
+end;
+$$;
+
+alter function public.update_mentee_display_name(text) owner to postgres;
+revoke all on function public.update_mentee_display_name(text)
+  from public, anon, authenticated, service_role;
+grant execute on function public.update_mentee_display_name(text)
+  to authenticated;
