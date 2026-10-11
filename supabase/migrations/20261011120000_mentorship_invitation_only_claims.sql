@@ -24,6 +24,9 @@ create index mentorship_claim_invitations_expiry_idx
 alter table public.mentorship_claim_invitations enable row level security;
 revoke all on table public.mentorship_claim_invitations
   from public, anon, authenticated;
+-- The staff-only server action uses the privileged backend client.
+-- Grant it explicitly instead of depending on Supabase default privileges.
+grant select, insert, update on public.mentorship_claim_invitations to service_role;
 
 -- Old email-only claim mechanism must no longer be callable, including
 -- by clients still using the previously deployed RPC name.
