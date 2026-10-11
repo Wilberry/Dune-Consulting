@@ -103,3 +103,11 @@ export function getResendWebhookSecret() {
   );
   return result.success ? result.data : null;
 }
+
+/** Vercel production must never silently bypass configured bot protection. */
+export function requiresTurnstileVerification(): boolean {
+  return (
+    process.env.VERCEL_ENV === "production" ||
+    process.env.REQUIRE_TURNSTILE === "true"
+  );
+}
