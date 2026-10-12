@@ -85,7 +85,7 @@ export function TurnstileWidget({
   if (!siteKey) return null;
 
   return (
-    <div className="mt-4 min-h-1" aria-label="Spam protection">
+    <div className="mt-4 min-h-1" role="group" aria-label="Spam protection">
       <Script
         id="cloudflare-turnstile"
         src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
