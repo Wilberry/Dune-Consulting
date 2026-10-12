@@ -17,7 +17,9 @@ export function MenteeLoginForm() {
     setMessage(null);
 
     const formData = new FormData(event.currentTarget);
-    const email = String(formData.get("email") ?? "").trim().toLowerCase();
+    const email = String(formData.get("email") ?? "")
+      .trim()
+      .toLowerCase();
     const password = String(formData.get("password") ?? "");
 
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || !password) {
@@ -42,7 +44,9 @@ export function MenteeLoginForm() {
         });
 
         if (error) {
-          setMessage("Account registration is unavailable. Check your details or try again later.");
+          setMessage(
+            "Account registration is unavailable. Check your details or try again later.",
+          );
         } else if (!data.session) {
           setMessage(
             "If registration is available for this email, check your inbox for a verification link. An account alone does not grant enrolment.",
@@ -58,7 +62,9 @@ export function MenteeLoginForm() {
         });
 
         if (error) {
-          setMessage("Your credentials are incorrect or the account is not verified.");
+          setMessage(
+            "Your credentials are incorrect or the account is not verified.",
+          );
         } else {
           router.replace("/dashboard");
           router.refresh();
@@ -92,7 +98,10 @@ export function MenteeLoginForm() {
 
           <form className="mt-7 space-y-5" onSubmit={handleSubmit} noValidate>
             <div>
-              <label htmlFor="mentee-email" className="text-navy text-sm font-bold">
+              <label
+                htmlFor="mentee-email"
+                className="text-navy text-sm font-bold"
+              >
                 Email address
               </label>
               <input
@@ -105,7 +114,10 @@ export function MenteeLoginForm() {
               />
             </div>
             <div>
-              <label htmlFor="mentee-password" className="text-navy text-sm font-bold">
+              <label
+                htmlFor="mentee-password"
+                className="text-navy text-sm font-bold"
+              >
                 Password
               </label>
               <div className="relative mt-2">
@@ -113,7 +125,9 @@ export function MenteeLoginForm() {
                   id="mentee-password"
                   name="password"
                   type={showPassword ? "text" : "password"}
-                  autoComplete={mode === "signup" ? "new-password" : "current-password"}
+                  autoComplete={
+                    mode === "signup" ? "new-password" : "current-password"
+                  }
                   minLength={mode === "signup" ? 8 : undefined}
                   required
                   className="border-line text-ink w-full rounded-lg border bg-white px-4 py-3 pr-20"
@@ -131,7 +145,10 @@ export function MenteeLoginForm() {
 
             <div className="min-h-12" aria-live="polite">
               {message && (
-                <p className="rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm text-slate-800" role="status">
+                <p
+                  className="rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm text-slate-800"
+                  role="status"
+                >
                   {message}
                 </p>
               )}
@@ -152,12 +169,16 @@ export function MenteeLoginForm() {
           <button
             type="button"
             onClick={() => {
-              setMode((current) => current === "signin" ? "signup" : "signin");
+              setMode((current) =>
+                current === "signin" ? "signup" : "signin",
+              );
               setMessage(null);
             }}
             className="text-navy mt-5 text-sm font-semibold underline"
           >
-            {mode === "signin" ? "Create a mentee account" : "Already registered? Sign in"}
+            {mode === "signin"
+              ? "Create a mentee account"
+              : "Already registered? Sign in"}
           </button>
         </div>
       </div>

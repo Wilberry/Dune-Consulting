@@ -39,9 +39,9 @@ export function MenteeClaimForm() {
         className="border-line w-full max-w-lg rounded-lg border bg-white px-4 py-3 font-mono text-sm"
       />
       <p className="text-muted max-w-lg text-xs leading-5">
-        After approving your application, Dune Consulting staff will share
-        a one-use invitation with you privately. Enter it while signed in
-        using the verified email on your application.
+        After approving your application, Dune Consulting staff will share a
+        one-use invitation with you privately. Enter it while signed in using
+        the verified email on your application.
       </p>
       <button
         type="submit"
@@ -51,9 +51,14 @@ export function MenteeClaimForm() {
         {pending ? "Linking…" : "Link accepted application"}
       </button>
       {state.message && (
-        <p role="status" className={state.status === "error"
-          ? "text-sm text-red-800"
-          : "text-sm text-green-800"}>
+        <p
+          role="status"
+          className={
+            state.status === "error"
+              ? "text-sm text-red-800"
+              : "text-sm text-green-800"
+          }
+        >
           {state.message}
         </p>
       )}

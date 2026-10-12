@@ -115,7 +115,9 @@ export default async function AdminMentorshipPage() {
                       </dd>
                     </div>
                     <div>
-                      <dt className="text-muted font-semibold">Selected package</dt>
+                      <dt className="text-muted font-semibold">
+                        Selected package
+                      </dt>
                       <dd className="text-navy mt-1">
                         {application.selectedPackage || "Not recorded"}
                       </dd>
@@ -179,31 +181,31 @@ export default async function AdminMentorshipPage() {
                     action={updateMentorshipStatus}
                     className="border-line bg-off-white w-full rounded-lg border p-4"
                   >
-                  <input type="hidden" name="id" value={application.id} />
-                  <label
-                    htmlFor={`mentorship-status-${application.id}`}
-                    className="text-navy text-sm font-bold"
-                  >
-                    Application status
-                  </label>
-                  <select
-                    id={`mentorship-status-${application.id}`}
-                    name="status"
-                    defaultValue={application.status}
-                    className="border-line text-ink mt-2 w-full rounded-md border bg-white px-3 py-2.5 text-sm"
-                  >
-                    {statuses.map((status) => (
-                      <option key={status.value} value={status.value}>
-                        {status.label}
-                      </option>
-                    ))}
-                  </select>
-                  <button
-                    type="submit"
-                    className="bg-navy hover:bg-deep-navy mt-3 w-full rounded-md px-4 py-2.5 text-sm font-bold text-white"
-                  >
-                    Save status
-                  </button>
+                    <input type="hidden" name="id" value={application.id} />
+                    <label
+                      htmlFor={`mentorship-status-${application.id}`}
+                      className="text-navy text-sm font-bold"
+                    >
+                      Application status
+                    </label>
+                    <select
+                      id={`mentorship-status-${application.id}`}
+                      name="status"
+                      defaultValue={application.status}
+                      className="border-line text-ink mt-2 w-full rounded-md border bg-white px-3 py-2.5 text-sm"
+                    >
+                      {statuses.map((status) => (
+                        <option key={status.value} value={status.value}>
+                          {status.label}
+                        </option>
+                      ))}
+                    </select>
+                    <button
+                      type="submit"
+                      className="bg-navy hover:bg-deep-navy mt-3 w-full rounded-md px-4 py-2.5 text-sm font-bold text-white"
+                    >
+                      Save status
+                    </button>
                   </form>
                   {application.status === "accepted" &&
                     (application.linkedUserId ? (

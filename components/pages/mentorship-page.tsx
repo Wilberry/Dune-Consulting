@@ -106,7 +106,10 @@ export function MentorshipPage() {
       />
       <div className="border-line bg-off-white border-b px-5 py-4 text-center text-sm">
         <span className="text-muted">Already an approved mentee? </span>
-        <Link href="/dashboard/login" className="text-navy font-semibold underline underline-offset-2">
+        <Link
+          href="/dashboard/login"
+          className="text-navy font-semibold underline underline-offset-2"
+        >
           Sign in to your dashboard
         </Link>
       </div>

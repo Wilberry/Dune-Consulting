@@ -21,7 +21,10 @@ test("secure invitation codes are random, hashed and strictly validated", () => 
 
 test("auth callbacks accept only the two intentional internal destinations", () => {
   assert.equal(callbackDestination("/dashboard"), "/dashboard");
-  assert.equal(callbackDestination("/admin/update-password"), "/admin/update-password");
+  assert.equal(
+    callbackDestination("/admin/update-password"),
+    "/admin/update-password",
+  );
   for (const bad of [
     "//evil.example",
     "https://evil.example",

@@ -38,28 +38,28 @@ from the latest main and adds only additive migrations compatible with the curre
 
 ## Findings and implemented changes
 
-| Severity | Finding | Change |
-| --- | --- | --- |
-| High | Any confirmed Auth email matching an accepted application could invoke the existing email-only claim RPC without a distinct claim credential | New one-use admin invitation claim, token hash, expiry, replay checks and revocation of the email-only RPC |
-| High | A Resend contact webhook could restore `subscribed` despite a local unsubscribe | Provider state may opt someone out, never opt them back in; preserve local consent |
-| High | Public email-only newsletter signup could reactivate an unsubscribed address without proven ownership | Suppress unverified reactivation; future double opt-in needed |
-| Medium | Public forms silently bypass Turnstile when both keys are absent, even in Vercel production | Fail closed in Vercel production or when `REQUIRE_TURNSTILE=true` |
-| Medium | Public mentorship form allows missing package despite new dashboard requiring it | Require Foundation, Momentum or Elevation for new submissions; preserve historical NULL records |
-| Medium | Auth callback permits arbitrary slash-prefixed redirect paths | Allow only `/dashboard` and `/admin/update-password` |
-| Medium | Dashboard data-fetch failures could appear as no enrolment | Differentiate database errors, add recoverable error boundary |
-| Medium | Staff sign-in logged the Supabase auth response | Remove auth-response logging |
-| Functional | Mentee sign-in lacked a registration path | Add Supabase Auth signup with email verification callback |
-| Functional | Mentee profile name was read-only | Add enrolled-user-only RPC and name-only form |
-| UX | Dashboard could show claim success from an arbitrary query string | Remove query-supplied success claim |
-| UX | A previously linked but later declined applicant was shown as unlinked | Read linked application status under owner-scoped RLS; withhold active programme features |
-| UX | An email-only newsletter signup could claim success for a suppressed contact | Return an eligibility-neutral confirmation without disclosing subscription state |
-| Navigation | Mentee portal was difficult to discover from the mentorship landing page | Add a small sign-in link within existing branding |
-| High | Concurrent/stale provider webhook could race with a user's opt-out | Avoid writing stale provider subscription state and add PostgreSQL opt-out guard migration |
-| High | Withdrawing an accepted mentorship application did not revoke its outstanding invitation | Database trigger expires unclaimed codes; reapproval requires new invitation |
-| Medium | In-memory rate-limit keys were unbounded | Cap tracked identifiers and fail closed rather than eviction-bypassing limits |
-| Medium | Signed provider webhook body was read without a size cap | Read streaming body with a 256 KiB maximum and return HTTP 413 for oversized payloads |
-| UX | Staff review showed an invite action for already linked mentees | Suppress invitation control when a linked user ID is present |
-| UX | Public website chrome appeared in the mentee portal | Render private dashboard/login shell independently |
+| Severity   | Finding                                                                                                                                      | Change                                                                                                     |
+| ---------- | -------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| High       | Any confirmed Auth email matching an accepted application could invoke the existing email-only claim RPC without a distinct claim credential | New one-use admin invitation claim, token hash, expiry, replay checks and revocation of the email-only RPC |
+| High       | A Resend contact webhook could restore `subscribed` despite a local unsubscribe                                                              | Provider state may opt someone out, never opt them back in; preserve local consent                         |
+| High       | Public email-only newsletter signup could reactivate an unsubscribed address without proven ownership                                        | Suppress unverified reactivation; future double opt-in needed                                              |
+| Medium     | Public forms silently bypass Turnstile when both keys are absent, even in Vercel production                                                  | Fail closed in Vercel production or when `REQUIRE_TURNSTILE=true`                                          |
+| Medium     | Public mentorship form allows missing package despite new dashboard requiring it                                                             | Require Foundation, Momentum or Elevation for new submissions; preserve historical NULL records            |
+| Medium     | Auth callback permits arbitrary slash-prefixed redirect paths                                                                                | Allow only `/dashboard` and `/admin/update-password`                                                       |
+| Medium     | Dashboard data-fetch failures could appear as no enrolment                                                                                   | Differentiate database errors, add recoverable error boundary                                              |
+| Medium     | Staff sign-in logged the Supabase auth response                                                                                              | Remove auth-response logging                                                                               |
+| Functional | Mentee sign-in lacked a registration path                                                                                                    | Add Supabase Auth signup with email verification callback                                                  |
+| Functional | Mentee profile name was read-only                                                                                                            | Add enrolled-user-only RPC and name-only form                                                              |
+| UX         | Dashboard could show claim success from an arbitrary query string                                                                            | Remove query-supplied success claim                                                                        |
+| UX         | A previously linked but later declined applicant was shown as unlinked                                                                       | Read linked application status under owner-scoped RLS; withhold active programme features                  |
+| UX         | An email-only newsletter signup could claim success for a suppressed contact                                                                 | Return an eligibility-neutral confirmation without disclosing subscription state                           |
+| Navigation | Mentee portal was difficult to discover from the mentorship landing page                                                                     | Add a small sign-in link within existing branding                                                          |
+| High       | Concurrent/stale provider webhook could race with a user's opt-out                                                                           | Avoid writing stale provider subscription state and add PostgreSQL opt-out guard migration                 |
+| High       | Withdrawing an accepted mentorship application did not revoke its outstanding invitation                                                     | Database trigger expires unclaimed codes; reapproval requires new invitation                               |
+| Medium     | In-memory rate-limit keys were unbounded                                                                                                     | Cap tracked identifiers and fail closed rather than eviction-bypassing limits                              |
+| Medium     | Signed provider webhook body was read without a size cap                                                                                     | Read streaming body with a 256 KiB maximum and return HTTP 413 for oversized payloads                      |
+| UX         | Staff review showed an invite action for already linked mentees                                                                              | Suppress invitation control when a linked user ID is present                                               |
+| UX         | Public website chrome appeared in the mentee portal                                                                                          | Render private dashboard/login shell independently                                                         |
 
 ### Invitation lifecycle
 
@@ -85,6 +85,7 @@ automatically or implement payments/assignments/certificates.
 ### Database and permissions
 
 New migrations:
+
 - `supabase/migrations/20261011120000_mentorship_invitation_only_claims.sql`
 - `supabase/migrations/20261011130000_newsletter_optout_integrity.sql`
 
@@ -114,17 +115,17 @@ checks with two database connections.
 
 ## Wider workflow review
 
-| Area | Repository state | Remaining end-to-end evidence |
-| --- | --- | --- |
-| Contact | Validated API, persistence-before-notification, admin review | Submit with isolated DB + mocked Resend; real staff inbox smoke only when approved |
-| Quotes | Validated form, unique reference generator, admin statuses | Persistence/concurrent reference tests, error states and actual inbox |
-| Mentorship | Public form, package mapping, review, secure claim branch | Full review → invite → signup → verify → redeem → dashboard staging test |
-| Insights | Published-only access, admin editor, stored covers | Actual image storage policies, slugs, missing articles and metadata |
-| Newsletter | Subscriber DB, campaigns, Resend Broadcast/provider webhook | Verify opt-out suppression, delayed/replayed webhook events and provider reconciliation; do not send campaigns |
-| Turnstile | Server-side Siteverify with error handling | Verify actual production site/secret keys, action/host validation; 503 if absent in production |
-| FAQ/testimonials | Admin code + October 7 migration files | Confirm live migrations and authorized editorial assets/copy |
-| Public site | Responsive pages, tests and asset/content auditors | Broken links, keyboard/mobile flows, design snapshots, approved legal/content/assets |
-| Deployment | Node 22, Next.js 16, npm scripts, GitHub Quality workflow | Build logs, Vercel environment mapping, preview checks, safe rollback |
+| Area             | Repository state                                             | Remaining end-to-end evidence                                                                                  |
+| ---------------- | ------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------- |
+| Contact          | Validated API, persistence-before-notification, admin review | Submit with isolated DB + mocked Resend; real staff inbox smoke only when approved                             |
+| Quotes           | Validated form, unique reference generator, admin statuses   | Persistence/concurrent reference tests, error states and actual inbox                                          |
+| Mentorship       | Public form, package mapping, review, secure claim branch    | Full review → invite → signup → verify → redeem → dashboard staging test                                       |
+| Insights         | Published-only access, admin editor, stored covers           | Actual image storage policies, slugs, missing articles and metadata                                            |
+| Newsletter       | Subscriber DB, campaigns, Resend Broadcast/provider webhook  | Verify opt-out suppression, delayed/replayed webhook events and provider reconciliation; do not send campaigns |
+| Turnstile        | Server-side Siteverify with error handling                   | Verify actual production site/secret keys, action/host validation; 503 if absent in production                 |
+| FAQ/testimonials | Admin code + October 7 migration files                       | Confirm live migrations and authorized editorial assets/copy                                                   |
+| Public site      | Responsive pages, tests and asset/content auditors           | Broken links, keyboard/mobile flows, design snapshots, approved legal/content/assets                           |
+| Deployment       | Node 22, Next.js 16, npm scripts, GitHub Quality workflow    | Build logs, Vercel environment mapping, preview checks, safe rollback                                          |
 
 No automatic double opt-in/resubscribe mechanism is present; returning
 subscribers whose addresses were previously unsubscribed must use a separately
@@ -138,18 +139,18 @@ data are additional scoped work, not implemented here.
 
 ## Verification gate (current evidence)
 
-| Check | Result |
-| --- | --- |
-| Source repository branch/PR/migration inspection | Reviewed |
-| Isolated remediation commits | Created |
-| Added unit and SQL security tests | Written, **not run** |
-| `npm ci`, Prettier, ESLint, TypeScript | **Not run** |
-| `npm run test`, production build | **Not run** |
-| Playwright desktop/mobile, accessibility | **Not run** |
-| Local Supabase migrations and pgtap | **Not run** |
-| Real Supabase Auth, RLS, invite and concurrency tests | **Not run** |
-| Live Supabase migration history, Vercel logs, DNS/email checks | **Not verified** |
-| Production database/deployment changes | **Not performed** |
+| Check                                                          | Result               |
+| -------------------------------------------------------------- | -------------------- |
+| Source repository branch/PR/migration inspection               | Reviewed             |
+| Isolated remediation commits                                   | Created              |
+| Added unit and SQL security tests                              | Written, **not run** |
+| `npm ci`, Prettier, ESLint, TypeScript                         | **Not run**          |
+| `npm run test`, production build                               | **Not run**          |
+| Playwright desktop/mobile, accessibility                       | **Not run**          |
+| Local Supabase migrations and pgtap                            | **Not run**          |
+| Real Supabase Auth, RLS, invite and concurrency tests          | **Not run**          |
+| Live Supabase migration history, Vercel logs, DNS/email checks | **Not verified**     |
+| Production database/deployment changes                         | **Not performed**    |
 
 GitHub Quality jobs on main and the draft PR have been marked failed without
 usable job-step details; attempts to fetch the job logs returned unavailable.

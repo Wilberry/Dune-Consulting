@@ -77,7 +77,9 @@ export async function getMenteeDashboardData(): Promise<MenteeDashboardData> {
   // other applicants' records.
   const { data: linked, error: linkedError } = await supabase
     .from("mentorship_applications")
-    .select("id,email,status,selected_package,linked_user_id,created_at,updated_at")
+    .select(
+      "id,email,status,selected_package,linked_user_id,created_at,updated_at",
+    )
     .eq("linked_user_id", user.id)
     .maybeSingle();
 

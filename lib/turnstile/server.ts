@@ -62,7 +62,8 @@ export async function verifyTurnstileRequest(
         response: NextResponse.json(
           {
             status: "error",
-            message: "Spam protection is temporarily unavailable. Please try again shortly.",
+            message:
+              "Spam protection is temporarily unavailable. Please try again shortly.",
           },
           { status: 503 },
         ),

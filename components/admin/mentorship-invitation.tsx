@@ -8,7 +8,11 @@ import {
 
 const initialState: InvitationActionState = { status: "idle" };
 
-export function MentorshipInvitation({ applicationId }: { applicationId: string }) {
+export function MentorshipInvitation({
+  applicationId,
+}: {
+  applicationId: string;
+}) {
   const [state, action, pending] = useActionState(
     createMentorshipInvitation,
     initialState,
@@ -41,7 +45,7 @@ export function MentorshipInvitation({ applicationId }: { applicationId: string 
           <p className="text-navy text-xs font-bold">
             Copy now — the code will not be shown again.
           </p>
-          <code className="mt-2 block break-all select-all text-xs">
+          <code className="mt-2 block text-xs break-all select-all">
             {state.code}
           </code>
           <p className="text-muted mt-2 text-xs leading-5">

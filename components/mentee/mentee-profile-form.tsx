@@ -22,7 +22,10 @@ export function MenteeProfileForm({ name }: { name: string | null }) {
 
   return (
     <form action={action} className="mt-5 space-y-3">
-      <label htmlFor="mentee-name" className="text-navy block text-sm font-semibold">
+      <label
+        htmlFor="mentee-name"
+        className="text-navy block text-sm font-semibold"
+      >
         Display name
       </label>
       <input
@@ -41,7 +44,11 @@ export function MenteeProfileForm({ name }: { name: string | null }) {
       >
         {pending ? "Saving…" : "Save display name"}
       </button>
-      {state.message && <p role="status" className="text-muted text-sm">{state.message}</p>}
+      {state.message && (
+        <p role="status" className="text-muted text-sm">
+          {state.message}
+        </p>
+      )}
     </form>
   );
 }

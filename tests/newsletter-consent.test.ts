@@ -13,6 +13,12 @@ test("email-only signups do not revive an unsubscribed contact", () => {
 test("provider updates can suppress but never regrant newsletter consent", () => {
   assert.equal(consentAfterProviderUpdate("subscribed", true), "unsubscribed");
   assert.equal(consentAfterProviderUpdate("subscribed", false), "subscribed");
-  assert.equal(consentAfterProviderUpdate("unsubscribed", true), "unsubscribed");
-  assert.equal(consentAfterProviderUpdate("unsubscribed", false), "unsubscribed");
+  assert.equal(
+    consentAfterProviderUpdate("unsubscribed", true),
+    "unsubscribed",
+  );
+  assert.equal(
+    consentAfterProviderUpdate("unsubscribed", false),
+    "unsubscribed",
+  );
 });

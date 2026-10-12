@@ -14,20 +14,45 @@ test("testimonial default seed keeps the current client stories", () => {
   );
   assert.ok(
     testimonialDefaultItems.some(
-      (item) => item.name === "Michael Ade" && item.role === "Event Operations Manager",
+      (item) =>
+        item.name === "Michael Ade" && item.role === "Event Operations Manager",
     ),
   );
 });
 
 test("normalizeTestimonials removes incomplete entries and trims text", () => {
   const items = normalizeTestimonials([
-    { name: "  Jane Doe  ", role: "Manager", quote: "Good", image: "https://example.com/avatar.jpg", rating: 5 },
+    {
+      name: "  Jane Doe  ",
+      role: "Manager",
+      quote: "Good",
+      image: "https://example.com/avatar.jpg",
+      rating: 5,
+    },
     { name: "", role: "", quote: "   ", image: "", rating: 0 },
-    { name: "John Smith", role: "Lead", quote: "Great support", image: "/img/john.jpg", rating: 4 },
+    {
+      name: "John Smith",
+      role: "Lead",
+      quote: "Great support",
+      image: "/img/john.jpg",
+      rating: 4,
+    },
   ]);
 
   assert.deepEqual(items, [
-    { name: "Jane Doe", role: "Manager", quote: "Good", image: "https://example.com/avatar.jpg", rating: 5 },
-    { name: "John Smith", role: "Lead", quote: "Great support", image: "/img/john.jpg", rating: 4 },
+    {
+      name: "Jane Doe",
+      role: "Manager",
+      quote: "Good",
+      image: "https://example.com/avatar.jpg",
+      rating: 5,
+    },
+    {
+      name: "John Smith",
+      role: "Lead",
+      quote: "Great support",
+      image: "/img/john.jpg",
+      rating: 4,
+    },
   ]);
 });

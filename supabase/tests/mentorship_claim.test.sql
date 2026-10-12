@@ -120,9 +120,10 @@ select extensions.is(
   1::bigint,
   'mentee can read own linked application'
 );
-select extensions.is(
-  (select count(*) from public.mentorship_claim_invitations),
-  0::bigint,
+select extensions.throws_ok(
+  $$select count(*) from public.mentorship_claim_invitations$$,
+  '42501',
+  'permission denied for table mentorship_claim_invitations',
   'no authenticated user can read invitation hashes'
 );
 select extensions.lives_ok(

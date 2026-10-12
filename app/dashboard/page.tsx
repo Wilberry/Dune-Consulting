@@ -17,7 +17,10 @@ export default async function DashboardPage() {
   const currentStatus = dashboard.enrolment?.status || "Not enrolled";
 
   return (
-    <main id="main-content" className="bg-off-white min-h-screen px-4 py-8 sm:px-6 lg:px-8">
+    <main
+      id="main-content"
+      className="bg-off-white min-h-screen px-4 py-8 sm:px-6 lg:px-8"
+    >
       <div className="mx-auto max-w-6xl">
         <div className="mb-8 flex flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:flex-row sm:items-center sm:justify-between">
           <div>
@@ -45,8 +48,8 @@ export default async function DashboardPage() {
             </h2>
             <p className="text-muted mt-3 max-w-2xl text-sm leading-6">
               Your account does not have a linked enrolment. Once the team
-              accepts your application, a staff member can provide you with
-              a private invitation code to link it securely. Matching an email
+              accepts your application, a staff member can provide you with a
+              private invitation code to link it securely. Matching an email
               address alone never grants access.
             </p>
             <div className="mt-6 rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-700">
@@ -62,12 +65,15 @@ export default async function DashboardPage() {
             <h2 className="text-navy text-xl font-bold">Application status</h2>
             <p className="text-muted mt-3 text-sm leading-6">
               Your linked application is currently{" "}
-              <strong className="capitalize">{dashboard.linkedApplication.status ?? "under review"}</strong>.
-              Programme access is unavailable until the team confirms an
+              <strong className="capitalize">
+                {dashboard.linkedApplication.status ?? "under review"}
+              </strong>
+              . Programme access is unavailable until the team confirms an
               active enrolment. Please contact Dune Consulting if you need help.
             </p>
             <p className="text-muted mt-4 text-sm">
-              Package: {dashboard.linkedApplication.selectedPackage ?? "Not recorded"}
+              Package:{" "}
+              {dashboard.linkedApplication.selectedPackage ?? "Not recorded"}
             </p>
           </section>
         ) : (

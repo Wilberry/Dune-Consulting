@@ -89,7 +89,9 @@ test("mentorship application package handling", async () => {
     const response = await handleMentorshipApplication(
       request({ ...basePayload, selectedPackage: value }, "203.0.113.83"),
       {
-        persist: async () => { persisted = true; },
+        persist: async () => {
+          persisted = true;
+        },
       },
     );
     assert.equal(response.status, 400);

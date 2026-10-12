@@ -15,8 +15,8 @@ export default async function TestimonialAdminPage() {
         Client feedback management
       </h1>
       <p className="text-muted mt-3 max-w-2xl leading-7">
-        Update the client feedback section with the latest reviews, profile image,
-        client role, star rating and written experience.
+        Update the client feedback section with the latest reviews, profile
+        image, client role, star rating and written experience.
       </p>
 
       <div className="mt-8">

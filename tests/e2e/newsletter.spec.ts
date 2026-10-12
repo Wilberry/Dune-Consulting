@@ -1,4 +1,9 @@
 import { expect, test } from "@playwright/test";
+import { installTurnstileMock } from "./turnstile-mock";
+
+test.beforeEach(async ({ page }) => {
+  await installTurnstileMock(page);
+});
 
 test("footer newsletter signup succeeds without depending on live services", async ({
   page,
@@ -21,7 +26,9 @@ test("footer newsletter signup succeeds without depending on live services", asy
   await page
     .getByLabel("Email address", { exact: true })
     .fill("reader@example.org");
-  await page.getByRole("button", { name: "Subscribe", exact: true }).click();
+  const submit = page.getByRole("button", { name: "Subscribe", exact: true });
+  await expect(submit).toBeEnabled();
+  await submit.click();
 
   await expect(page.getByRole("status")).toContainText(
     "Thanks for your interest.",
@@ -34,9 +41,13 @@ test("footer newsletter signup succeeds without depending on live services", asy
 
 test("pending newsletter signup cannot be duplicated", async ({ page }) => {
   let requests = 0;
+  let releaseResponse!: () => void;
+  const responsePending = new Promise<void>((resolve) => {
+    releaseResponse = resolve;
+  });
   await page.route("**/api/newsletter", async (route) => {
     requests += 1;
-    await new Promise((resolve) => setTimeout(resolve, 400));
+    await responsePending;
     await route.fulfill({
       status: 200,
       contentType: "application/json",
@@ -53,13 +64,18 @@ test("pending newsletter signup cannot be duplicated", async ({ page }) => {
     .getByLabel("Email address", { exact: true })
     .fill("reader@example.org");
   const submit = page.getByRole("button", { name: "Subscribe", exact: true });
+  await expect(submit).toBeEnabled();
   await submit.click();
-  await expect(
-    page.getByRole("button", { name: "Subscribing…", exact: true }),
-  ).toBeDisabled();
-  await page
-    .getByRole("button", { name: "Subscribing…", exact: true })
-    .click({ force: true });
+  try {
+    const pendingSubmit = page.getByRole("button", {
+      name: "Subscribing…",
+      exact: true,
+    });
+    await expect(pendingSubmit).toBeDisabled();
+    await pendingSubmit.click({ force: true });
+    expect(requests).toBe(1);
+  } finally {
+    releaseResponse();
+  }
   await expect(page.getByRole("status")).toBeVisible();
-  expect(requests).toBe(1);
 });

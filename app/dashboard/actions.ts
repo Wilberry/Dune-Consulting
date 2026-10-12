@@ -27,7 +27,10 @@ export async function claimMentorshipApplication(
 ): Promise<ClaimState> {
   const tokenHash = hashInvitationCode(formData.get("invitationCode"));
   if (!tokenHash) {
-    return { status: "error", message: "Enter the private invitation code provided by staff." };
+    return {
+      status: "error",
+      message: "Enter the private invitation code provided by staff.",
+    };
   }
 
   try {
@@ -49,16 +52,21 @@ export async function claimMentorshipApplication(
     if (error || (result !== "claimed" && result !== "already_claimed")) {
       return {
         status: "error",
-        message: "The invitation could not be used. Confirm your account email is verified and ask staff for a valid code.",
+        message:
+          "The invitation could not be used. Confirm your account email is verified and ask staff for a valid code.",
       };
     }
 
     revalidatePath("/dashboard");
-    return { status: "success", message: "Your approved enrolment is now linked." };
+    return {
+      status: "success",
+      message: "Your approved enrolment is now linked.",
+    };
   } catch {
     return {
       status: "error",
-      message: "The invitation service is temporarily unavailable. Please try again.",
+      message:
+        "The invitation service is temporarily unavailable. Please try again.",
     };
   }
 }
@@ -73,7 +81,10 @@ export async function updateMenteeDisplayName(
     name.trim().length < 2 ||
     name.trim().length > 120
   ) {
-    return { status: "error", message: "Enter a name between 2 and 120 characters." };
+    return {
+      status: "error",
+      message: "Enter a name between 2 and 120 characters.",
+    };
   }
 
   try {
@@ -93,6 +104,9 @@ export async function updateMenteeDisplayName(
     revalidatePath("/dashboard");
     return { status: "success", message: "Display name updated." };
   } catch {
-    return { status: "error", message: "Profile editing is temporarily unavailable." };
+    return {
+      status: "error",
+      message: "Profile editing is temporarily unavailable.",
+    };
   }
 }
