@@ -28,3 +28,18 @@ for (const path of pages)
       blocking.map((item) => `${item.id}: ${item.help}`).join("\n"),
     ).toEqual([]);
   });
+
+
+test("@a11y Turnstile spam-protection labels use a permitted group role", async ({
+  page,
+}) => {
+  await page.goto("/contact");
+
+  // Turnstile is optional in local development. When a public site key is
+  // configured, every named wrapper must expose its label through a role
+  // that permits aria-label, not an unnamed generic <div>.
+  const widgets = page.locator('[aria-label="Spam protection"]');
+  for (let index = 0; index < (await widgets.count()); index++) {
+    await expect(widgets.nth(index)).toHaveAttribute("role", "group");
+  }
+});
