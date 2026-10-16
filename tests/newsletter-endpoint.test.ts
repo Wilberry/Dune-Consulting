@@ -32,7 +32,7 @@ test("newsletter endpoint persistence behavior", async (context) => {
     assert.equal(response.status, 200);
     assert.equal(result.status, "success");
     assert.equal(persisted, "subscriber@example.org");
-    assert.match(result.message, /subscribed/i);
+    assert.match(result.message, /eligible for updates/i);
   });
 
   await context.test(

@@ -48,7 +48,10 @@ export function TestimonialManager({ items }: { items: Testimonial[] }) {
         <div className="mt-6 grid gap-5">
           <div className="grid gap-5 md:grid-cols-2">
             <div>
-              <label htmlFor="testimonial-name" className="text-navy text-sm font-bold">
+              <label
+                htmlFor="testimonial-name"
+                className="text-navy text-sm font-bold"
+              >
                 Client name
               </label>
               <input
@@ -62,7 +65,10 @@ export function TestimonialManager({ items }: { items: Testimonial[] }) {
               />
             </div>
             <div>
-              <label htmlFor="testimonial-role" className="text-navy text-sm font-bold">
+              <label
+                htmlFor="testimonial-role"
+                className="text-navy text-sm font-bold"
+              >
                 Position
               </label>
               <input
@@ -78,7 +84,10 @@ export function TestimonialManager({ items }: { items: Testimonial[] }) {
           </div>
 
           <div>
-            <label htmlFor="testimonial-image" className="text-navy text-sm font-bold">
+            <label
+              htmlFor="testimonial-image"
+              className="text-navy text-sm font-bold"
+            >
               Avatar or photo URL
             </label>
             <input
@@ -92,7 +101,10 @@ export function TestimonialManager({ items }: { items: Testimonial[] }) {
           </div>
 
           <div>
-            <label htmlFor="testimonial-rating" className="text-navy text-sm font-bold">
+            <label
+              htmlFor="testimonial-rating"
+              className="text-navy text-sm font-bold"
+            >
               Star rating
             </label>
             <select
@@ -110,7 +122,10 @@ export function TestimonialManager({ items }: { items: Testimonial[] }) {
           </div>
 
           <div>
-            <label htmlFor="testimonial-quote" className="text-navy text-sm font-bold">
+            <label
+              htmlFor="testimonial-quote"
+              className="text-navy text-sm font-bold"
+            >
               Review write-up
             </label>
             <textarea
@@ -216,7 +231,7 @@ export function TestimonialManager({ items }: { items: Testimonial[] }) {
                         {item.name}
                       </h3>
                       <p className="text-muted text-sm">{item.role}</p>
-                      <p className="mt-2 text-amber text-sm font-bold">
+                      <p className="text-amber mt-2 text-sm font-bold">
                         {"★".repeat(item.rating)}
                         {"☆".repeat(5 - item.rating)}
                       </p>

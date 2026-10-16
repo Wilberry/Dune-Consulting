@@ -15,8 +15,8 @@ export default async function FAQAdminPage() {
         FAQ management
       </h1>
       <p className="text-muted mt-3 max-w-2xl leading-7">
-        Add new questions, edit existing answers and keep the homepage FAQ aligned
-        with the current service offers and client needs.
+        Add new questions, edit existing answers and keep the homepage FAQ
+        aligned with the current service offers and client needs.
       </p>
 
       <div className="mt-8">

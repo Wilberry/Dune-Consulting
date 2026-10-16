@@ -1,7 +1,11 @@
 import { NextResponse } from "next/server";
 import { getResendWebhookSecret } from "@/lib/server-env";
+import { consentAfterProviderUpdate } from "@/lib/newsletter/consent";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { verifySvixWebhook } from "@/lib/newsletter/webhook";
+import {
+  readBoundedWebhookPayload,
+  verifySvixWebhook,
+} from "@/lib/newsletter/webhook";
 
 type WebhookEvent = {
   type: string;
@@ -14,7 +18,7 @@ type AdminClient = ReturnType<typeof createAdminClient>;
 type SubscriberEventTarget = {
   id: string;
   email: string;
-  status: string;
+  status: "subscribed" | "unsubscribed";
   deliverability_status: string;
   provider_synced_at: string | null;
   deliverability_updated_at: string | null;
@@ -51,7 +55,9 @@ function providerSegmentSyncError(
   if (!segmentId || !segmentIds) return undefined;
 
   const shouldBelong =
-    !unsubscribed && subscriber.deliverability_status === "ok";
+    !unsubscribed &&
+    subscriber.status === "subscribed" &&
+    subscriber.deliverability_status === "ok";
   const belongs = segmentIds.includes(segmentId);
   return belongs === shouldBelong
     ? null
@@ -141,13 +147,17 @@ async function applyContactEvent(
   const update: Record<string, unknown> = {
     external_contact_id: providerContactId,
     provider_synced_at: event.created_at,
-    status: unsubscribed ? "unsubscribed" : "subscribed",
   };
   if (segmentSyncError !== undefined) {
     update.provider_sync_error = segmentSyncError;
   }
-  if (unsubscribed) update.unsubscribed_at = event.created_at;
-  else update.unsubscribed_at = null;
+  // A webhook is not an authenticated request to renew mailing consent.
+  // Do not send the previous status back in an update: it might be stale
+  // by the time this write reaches PostgreSQL.
+  if (unsubscribed) {
+    update.status = consentAfterProviderUpdate(subscriber.status, true);
+    update.unsubscribed_at = event.created_at;
+  }
 
   const { error } = await supabase
     .from("newsletter_subscribers")
@@ -216,7 +226,10 @@ export async function POST(request: Request) {
     return NextResponse.json({ status: "invalid" }, { status: 400 });
   }
 
-  const payload = await request.text();
+  const payload = await readBoundedWebhookPayload(request);
+  if (payload === null) {
+    return NextResponse.json({ status: "too_large" }, { status: 413 });
+  }
   if (!verifySvixWebhook(payload, { id, timestamp, signature }, secret)) {
     return NextResponse.json({ status: "invalid" }, { status: 400 });
   }

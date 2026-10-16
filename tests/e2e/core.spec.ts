@@ -1,4 +1,9 @@
 import { expect, test } from "@playwright/test";
+import { installTurnstileMock } from "./turnstile-mock";
+
+test.beforeEach(async ({ page }) => {
+  await installTurnstileMock(page);
+});
 
 test("homepage and primary navigation load without console errors", async ({
   page,
@@ -40,7 +45,7 @@ test("services menu supports pointer and keyboard", async ({
   test.skip(isMobile, "Desktop dropdown test");
   await page.goto("/");
   const nav = page.getByRole("navigation", { name: "Main navigation" });
-  const services = nav.getByRole("link", { name: "Services", exact: true });
+  const services = nav.getByRole("button", { name: "Services menu" });
   await services.hover();
   await expect(
     nav.getByRole("link", { name: "Event Safety Management" }),
@@ -92,7 +97,9 @@ test("contact validation and stored delivery are honest", async ({ page }) => {
   });
 
   await page.goto("/contact");
-  await page.getByRole("button", { name: "Send enquiry" }).click();
+  const emptySubmit = page.getByRole("button", { name: "Send enquiry" });
+  await expect(emptySubmit).toBeEnabled();
+  await emptySubmit.click();
   await expect(page.locator("[aria-invalid=true]")).toHaveCount(6);
   await page.getByLabel("Email address *").fill("not-an-email");
   await page.getByLabel("Full name *").fill("Ada Example");
@@ -103,7 +110,9 @@ test("contact validation and stored delivery are honest", async ({ page }) => {
   await page
     .getByLabel("How can we help? *")
     .fill("Please help us plan a safe event for our team.");
-  await page.getByRole("button", { name: "Send enquiry" }).click();
+  const submit = page.getByRole("button", { name: "Send enquiry" });
+  await expect(submit).toBeEnabled();
+  await submit.click();
   await expect(
     page.getByText("Please enter a valid email address."),
   ).toBeVisible();
@@ -112,8 +121,8 @@ test("contact validation and stored delivery are honest", async ({ page }) => {
   ).toBeVisible();
   await page.getByLabel("Email address *").fill("ada@example.org");
   await page.getByRole("checkbox").check();
-  await page.waitForTimeout(3000);
-  await page.getByRole("button", { name: "Send enquiry" }).click();
+  await expect(submit).toBeEnabled();
+  await submit.click();
   await expect(page.getByRole("status")).toContainText("Enquiry received");
   await expect(page.getByRole("status")).toContainText(
     "Your enquiry has been received. Our team will respond using the details provided.",
@@ -125,9 +134,13 @@ test("contact validation and stored delivery are honest", async ({ page }) => {
 
 test("pending contact submission cannot be duplicated", async ({ page }) => {
   let requests = 0;
+  let releaseResponse!: () => void;
+  const responsePending = new Promise<void>((resolve) => {
+    releaseResponse = resolve;
+  });
   await page.route("**/api/contact", async (route) => {
     requests += 1;
-    await new Promise((resolve) => setTimeout(resolve, 500));
+    await responsePending;
     await route.fulfill({
       status: 503,
       contentType: "application/json",
@@ -149,15 +162,19 @@ test("pending contact submission cannot be duplicated", async ({ page }) => {
     .fill("Please help us plan a safe event for our team.");
   await page.getByRole("checkbox").check();
   const submit = page.getByRole("button", { name: "Send enquiry" });
+  await expect(submit).toBeEnabled();
   await submit.click();
-  await expect(
-    page.getByRole("button", { name: "Sending enquiry…" }),
-  ).toBeDisabled();
-  await page
-    .getByRole("button", { name: "Sending enquiry…" })
-    .click({ force: true });
+  try {
+    const pendingSubmit = page.getByRole("button", {
+      name: "Sending enquiry…",
+    });
+    await expect(pendingSubmit).toBeDisabled();
+    await pendingSubmit.click({ force: true });
+    expect(requests).toBe(1);
+  } finally {
+    releaseResponse();
+  }
   await expect(page.getByRole("status")).toBeVisible();
-  expect(requests).toBe(1);
 });
 
 test("quote request returns a Dune reference without depending on live services", async ({
@@ -187,7 +204,9 @@ test("quote request returns a Dune reference without depending on live services"
     .getByLabel("Project or event description *")
     .fill("Please provide event safety planning for our annual conference.");
   await page.getByRole("checkbox").check();
-  await page.getByRole("button", { name: "Request a quote" }).click();
+  const submit = page.getByRole("button", { name: "Request a quote" });
+  await expect(submit).toBeEnabled();
+  await submit.click();
 
   await expect(page.getByRole("status")).toContainText(
     "Quote request received",
@@ -211,6 +230,7 @@ test("mentorship application can be submitted without depending on live services
   });
 
   await page.goto("/mentorship");
+  await page.getByLabel("Preferred package *").selectOption("Foundation");
   await page.getByLabel("Full name *").fill("Ada Example");
   await page.getByLabel("Email address *").fill("ada@example.org");
   await page.getByLabel("Phone number *").fill("+234 801 234 5678");
@@ -226,7 +246,9 @@ test("mentorship application can be submitted without depending on live services
       "I want to become a confident safety professional with strong risk assessment and communication skills.",
     );
   await page.getByRole("checkbox").check();
-  await page.getByRole("button", { name: "Submit application" }).click();
+  const submit = page.getByRole("button", { name: "Submit application" });
+  await expect(submit).toBeEnabled();
+  await submit.click();
 
   await expect(page.getByRole("status")).toContainText("Application received");
   await expect(page.getByRole("status")).toContainText(
