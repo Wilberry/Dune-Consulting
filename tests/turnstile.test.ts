@@ -4,7 +4,10 @@ import {
   getTurnstileEnvironment,
   requiresTurnstileVerification,
 } from "../lib/server-env";
-import { isTurnstileResponseValid } from "../lib/turnstile/verification";
+import {
+  isTurnstileResponseValid,
+  parseProductionTurnstileHostname,
+} from "../lib/turnstile/verification";
 
 test("Turnstile Siteverify responses require success, matching action and production hostname", () => {
   const valid = {
@@ -80,4 +83,55 @@ test("Turnstile is mandatory in deployed production and when explicitly required
     if (priorRequired === undefined) delete process.env.REQUIRE_TURNSTILE;
     else process.env.REQUIRE_TURNSTILE = priorRequired;
   }
+});
+
+test("production Turnstile hostname validation requires an exact canonical HTTPS origin", () => {
+  for (const url of [
+    "https://duneconsulting.vercel.app",
+    "https://duneconsulting.vercel.app/",
+    "https://www.duneconsult.ng",
+  ]) {
+    assert.equal(
+      parseProductionTurnstileHostname(url),
+      new URL(url).hostname,
+      url,
+    );
+  }
+
+  for (const url of [
+    undefined,
+    "",
+    "not-a-url",
+    "http://duneconsulting.vercel.app",
+    "https://localhost",
+    "https://127.0.0.1",
+    "https://www.duneconsulting.example",
+    "https://duneconsulting.vercel.app:8443",
+    "https://duneconsulting.vercel.app/contact",
+    "https://duneconsulting.vercel.app?source=test",
+    "https://duneconsulting.vercel.app/#contact",
+    "https://user:password@duneconsulting.vercel.app",
+  ]) {
+    assert.equal(parseProductionTurnstileHostname(url), null, String(url));
+  }
+});
+
+test("mentorship tokens cannot be replayed for a different form action or hostname", () => {
+  const valid = {
+    success: true,
+    action: "mentorship",
+    hostname: "duneconsulting.vercel.app",
+  };
+  assert.equal(
+    isTurnstileResponseValid(valid, "mentorship", "duneconsulting.vercel.app"),
+    true,
+  );
+  assert.equal(
+    isTurnstileResponseValid(valid, "quote", "duneconsulting.vercel.app"),
+    false,
+  );
+  assert.equal(
+    isTurnstileResponseValid(valid, "mentorship", "duneconsult.ng"),
+    false,
+  );
 });
