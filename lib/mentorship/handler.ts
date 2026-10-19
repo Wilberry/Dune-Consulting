@@ -57,7 +57,7 @@ function toInsert(
     email: application.email,
     phone: application.phone,
     professional_role: nullable(application.professionalRole),
-    selected_package: nullable(application.selectedPackage),
+    selected_package: application.selectedPackage,
     experience_level: nullable(application.experienceLevel),
     education: nullable(application.education),
     reason_for_applying: application.reasonForApplying,
@@ -117,10 +117,7 @@ export async function handleMentorshipApplication(
   }
 
   const application = parsed.data;
-  const selectedPackageSummary =
-    application.selectedPackage && application.selectedPackage.trim()
-      ? application.selectedPackage.trim()
-      : "Not provided";
+  const selectedPackageSummary = application.selectedPackage;
   if (Date.now() - application.formStartedAt < MIN_COMPLETION_MS) {
     return NextResponse.json(
       {

@@ -9,8 +9,10 @@ import { WhatsAppButton } from "@/components/WhatsAppButton";
 export function SiteChrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const isAdmin = pathname === "/admin" || pathname.startsWith("/admin/");
+  const isMentee =
+    pathname === "/dashboard" || pathname.startsWith("/dashboard/");
 
-  if (isAdmin) return children;
+  if (isAdmin || isMentee) return children;
 
   return (
     <>

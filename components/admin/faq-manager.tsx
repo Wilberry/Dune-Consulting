@@ -32,7 +32,9 @@ export function FAQManager({ items }: { items: FAQItem[] }) {
               {editingId ? "Edit FAQ" : "Add FAQ"}
             </p>
             <h2 className="text-navy mt-2 text-2xl font-extrabold">
-              {editingId ? "Update an existing question" : "Create a new question"}
+              {editingId
+                ? "Update an existing question"
+                : "Create a new question"}
             </h2>
           </div>
           {editingId && (
@@ -48,7 +50,10 @@ export function FAQManager({ items }: { items: FAQItem[] }) {
 
         <div className="mt-6 grid gap-5">
           <div>
-            <label htmlFor="faq-question" className="text-navy text-sm font-bold">
+            <label
+              htmlFor="faq-question"
+              className="text-navy text-sm font-bold"
+            >
               Question
             </label>
             <input

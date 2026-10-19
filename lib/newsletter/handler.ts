@@ -12,7 +12,7 @@ function successResponse() {
   return NextResponse.json({
     status: "success",
     message:
-      "You are subscribed to Dune Consulting insights. We will share practical HSE updates using this email address.",
+      "Thanks for your interest. If this address is eligible for updates, you will receive Dune Consulting insights.",
   });
 }
 
