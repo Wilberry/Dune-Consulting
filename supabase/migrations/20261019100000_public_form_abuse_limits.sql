@@ -43,7 +43,7 @@ declare
   email_used integer;
   lock_key text;
 begin
-  if p_action not in ('mentorship', 'contact', 'quote', 'newsletter')
+  if p_action is null or p_action not in ('mentorship', 'contact', 'quote', 'newsletter')
     or p_ip_hash is null or p_email_hash is null
     or p_ip_hash !~ '^[a-f0-9]{64}$'
     or p_email_hash !~ '^[a-f0-9]{64}$' then
