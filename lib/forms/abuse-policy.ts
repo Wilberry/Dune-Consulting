@@ -69,7 +69,7 @@ export function isAllowedProductionFormOrigin(
       site.hostname === "localhost" ||
       site.hostname === "127.0.0.1" ||
       site.hostname.endsWith(".example") ||
-      site.origin !== siteUrl.replace(/\\/$/, "")
+      site.origin !== (siteUrl.endsWith("/") ? siteUrl.slice(0, -1) : siteUrl)
     ) {
       return false;
     }
