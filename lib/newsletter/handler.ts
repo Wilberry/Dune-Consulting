@@ -27,7 +27,10 @@ export async function handleNewsletterSignup(
 
   // Production enforces the atomic PostgreSQL limit in the API route.
   // Keep this bounded in-memory fallback for local/preview development only.
-  if (process.env.VERCEL_ENV !== "production" && !checkRateLimit(`newsletter:${ip}`).allowed) {
+  if (
+    process.env.VERCEL_ENV !== "production" &&
+    !checkRateLimit(`newsletter:${ip}`).allowed
+  ) {
     return NextResponse.json(
       {
         status: "error",
