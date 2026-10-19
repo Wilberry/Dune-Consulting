@@ -1,10 +1,10 @@
 import { handleQuoteRequest } from "@/lib/quote/handler";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { verifyTurnstileRequest } from "@/lib/turnstile/server";
+import { checkPublicFormAbuse } from "@/lib/forms/abuse-guard";
 
 export async function POST(request: Request) {
-  const turnstile = await verifyTurnstileRequest(request, "quote");
-  if (!turnstile.ok) return turnstile.response;
+  const abuse = await checkPublicFormAbuse(request, "quote");
+  if (!abuse.ok) return abuse.response;
 
   return handleQuoteRequest(request, {
     persist: async (quote) => {
