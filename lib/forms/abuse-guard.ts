@@ -38,8 +38,7 @@ export async function checkPublicFormAbuse(
   }
 
   const secret =
-    process.env.SUPABASE_SECRET_KEY ??
-    process.env.SUPABASE_SERVICE_ROLE_KEY;
+    process.env.SUPABASE_SECRET_KEY ?? process.env.SUPABASE_SERVICE_ROLE_KEY;
 
   if (!secret || secret.length < 24) {
     console.error("Public form abuse protection is not configured");
@@ -54,17 +53,17 @@ export async function checkPublicFormAbuse(
     if (!isAllowedProductionFormOrigin(siteUrl, null)) {
       console.error("Public form canonical HTTPS origin is not configured");
       return denied(
-      503,
-      "Submission protection is temporarily unavailable. Please try again shortly.",
-    );
+        503,
+        "Submission protection is temporarily unavailable. Please try again shortly.",
+      );
     }
     if (
       !isAllowedProductionFormOrigin(siteUrl, request.headers.get("origin"))
     ) {
       return denied(
-      403,
-      "This submission cannot be accepted from another website.",
-    );
+        403,
+        "This submission cannot be accepted from another website.",
+      );
     }
   }
 
@@ -128,15 +127,15 @@ export async function checkPublicFormAbuse(
         error?.code ?? "UnexpectedResult",
       );
       return denied(
-      503,
-      "Submission protection is temporarily unavailable. Please try again shortly.",
-    );
+        503,
+        "Submission protection is temporarily unavailable. Please try again shortly.",
+      );
     }
     if (!data) {
       return denied(
-      429,
-      "Too many submissions were attempted. Please try again later.",
-    );
+        429,
+        "Too many submissions were attempted. Please try again later.",
+      );
     }
     return { ok: true };
   } catch (error) {
