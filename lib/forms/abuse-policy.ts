@@ -28,7 +28,11 @@ export function abuseSubjectHash(
 export function normalizedSubmissionEmail(value: unknown): string | null {
   if (typeof value !== "string") return null;
   const email = value.trim().toLowerCase();
-  if (email.length < 3 || email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+  if (
+    email.length < 3 ||
+    email.length > 254 ||
+    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+  ) {
     return null;
   }
   return email;
@@ -69,7 +73,8 @@ export function isAllowedProductionFormOrigin(
       site.hostname === "localhost" ||
       site.hostname === "127.0.0.1" ||
       site.hostname.endsWith(".example") ||
-      site.origin !== (siteUrl.endsWith("/") ? siteUrl.slice(0, -1) : siteUrl)
+      site.origin !==
+        (siteUrl.endsWith("/") ? siteUrl.slice(0, -1) : siteUrl)
     ) {
       return false;
     }
