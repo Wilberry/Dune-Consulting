@@ -7,6 +7,7 @@ import {
 import {
   isTurnstileResponseValid,
   parseProductionTurnstileHostname,
+  usesTurnstileTestKeys,
 } from "../lib/turnstile/verification";
 
 test("Turnstile Siteverify responses require success, matching action and production hostname", () => {
@@ -134,4 +135,28 @@ test("mentorship tokens cannot be replayed for a different form action or hostna
     isTurnstileResponseValid(valid, "mentorship", "duneconsult.ng"),
     false,
   );
+});
+
+test("production Turnstile rejects Cloudflare's always-pass and other published dummy keys", () => {
+  const productionSite = "0x1234567890123456789012AA";
+  const productionSecret = "0x123456789012345678901234567890AA";
+  assert.equal(usesTurnstileTestKeys(productionSite, productionSecret), false);
+
+  for (const testSite of [
+    "1x00000000000000000000AA",
+    "2x00000000000000000000AB",
+    "1x00000000000000000000BB",
+    "2x00000000000000000000BB",
+    "3x00000000000000000000FF",
+  ]) {
+    assert.equal(usesTurnstileTestKeys(testSite, productionSecret), true);
+  }
+
+  for (const testSecret of [
+    "1x0000000000000000000000000000000AA",
+    "2x0000000000000000000000000000000AA",
+    "3x0000000000000000000000000000000AA",
+  ]) {
+    assert.equal(usesTurnstileTestKeys(productionSite, testSecret), true);
+  }
 });
