@@ -67,7 +67,13 @@ if (!getResendWebhookSecret())
     "BLOCKER",
     "Resend webhook signing secret is not configured.",
   );
-if (!process.env.SUPABASE_SECRET_KEY && !process.env.SUPABASE_SERVICE_ROLE_KEY)\n  add(\n    "Form protection",\n    "BLOCKER",\n    "Invisible PostgreSQL form abuse protection needs the server-only Supabase secret key.",\n  );\n
+if (!process.env.SUPABASE_SECRET_KEY && !process.env.SUPABASE_SERVICE_ROLE_KEY)
+  add(
+    "Form protection",
+    "BLOCKER",
+    "Invisible PostgreSQL form abuse protection needs the server-only Supabase secret key.",
+  );
+
 const pendingImages = siteImages.filter(
   (image) => image.status === "placeholder",
 );
