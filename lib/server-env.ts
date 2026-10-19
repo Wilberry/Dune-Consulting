@@ -12,18 +12,12 @@ const newsletterProviderEnvironmentSchema = z.object({
   NEWSLETTER_SEGMENT_ID: z.uuid(),
 });
 
-const turnstileEnvironmentSchema = z.object({
-  NEXT_PUBLIC_TURNSTILE_SITE_KEY: z.string().trim().min(5),
-  TURNSTILE_SECRET_KEY: z.string().trim().min(10),
-});
-
 const resendWebhookSecretSchema = z.string().trim().min(10);
 
 export type EmailEnvironment = z.infer<typeof emailEnvironmentSchema>;
 export type NewsletterProviderEnvironment = z.infer<
   typeof newsletterProviderEnvironmentSchema
 >;
-export type TurnstileEnvironment = z.infer<typeof turnstileEnvironmentSchema>;
 
 function previewDeliveryBlocked() {
   return (
@@ -76,27 +70,6 @@ export function getNewsletterProviderEnvironment():
   };
 }
 
-export function getTurnstileEnvironment():
-  | { status: "disabled" }
-  | { status: "misconfigured"; missing: string[] }
-  | { status: "configured"; values: TurnstileEnvironment } {
-  const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
-  const secretKey = process.env.TURNSTILE_SECRET_KEY;
-
-  if (!siteKey && !secretKey) return { status: "disabled" };
-
-  const result = turnstileEnvironmentSchema.safeParse({
-    NEXT_PUBLIC_TURNSTILE_SITE_KEY: siteKey,
-    TURNSTILE_SECRET_KEY: secretKey,
-  });
-  if (result.success) return { status: "configured", values: result.data };
-
-  return {
-    status: "misconfigured",
-    missing: result.error.issues.map((issue) => String(issue.path[0])),
-  };
-}
-
 export function getResendWebhookSecret() {
   const result = resendWebhookSecretSchema.safeParse(
     process.env.RESEND_WEBHOOK_SECRET,
@@ -104,10 +77,3 @@ export function getResendWebhookSecret() {
   return result.success ? result.data : null;
 }
 
-/** Vercel production must never silently bypass configured bot protection. */
-export function requiresTurnstileVerification(): boolean {
-  return (
-    process.env.VERCEL_ENV === "production" ||
-    process.env.REQUIRE_TURNSTILE === "true"
-  );
-}
