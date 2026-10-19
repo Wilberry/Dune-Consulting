@@ -45,3 +45,36 @@ export function requestClientIp(headers: Headers): string | null {
   if (!candidate || !isIP(candidate)) return null;
   return candidate.toLowerCase();
 }
+
+/**
+ * A public production submission must originate from the configured HTTPS
+ * site (when browsers send Origin). Placeholders and local origins are never
+ * accepted as production deployment configuration.
+ */
+export function isAllowedProductionFormOrigin(
+  siteUrl: string | undefined,
+  origin: string | null,
+): boolean {
+  if (!siteUrl) return false;
+  try {
+    const site = new URL(siteUrl);
+    if (
+      site.protocol !== "https:" ||
+      site.username ||
+      site.password ||
+      site.port ||
+      site.pathname !== "/" ||
+      site.search ||
+      site.hash ||
+      site.hostname === "localhost" ||
+      site.hostname === "127.0.0.1" ||
+      site.hostname.endsWith(".example") ||
+      site.origin !== siteUrl.replace(/\\/$/, "")
+    ) {
+      return false;
+    }
+    return origin === null || origin === site.origin;
+  } catch {
+    return false;
+  }
+}
