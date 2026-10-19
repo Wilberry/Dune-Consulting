@@ -2,7 +2,7 @@ import { handleNewsletterSignup } from "@/lib/newsletter/handler";
 import { allowEmailOnlySignupSync } from "@/lib/newsletter/consent";
 import { syncNewsletterSubscriber } from "@/lib/newsletter/provider";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { verifyTurnstileRequest } from "@/lib/turnstile/server";
+import { checkPublicFormAbuse } from "@/lib/forms/abuse-guard";
 
 type DeliverabilityStatus =
   "ok" | "bounced" | "complained" | "suppressed" | "failed";
@@ -142,8 +142,8 @@ async function persistSubscription(email: string) {
 }
 
 export async function POST(request: Request) {
-  const turnstile = await verifyTurnstileRequest(request, "newsletter");
-  if (!turnstile.ok) return turnstile.response;
+  const abuse = await checkPublicFormAbuse(request, "newsletter");
+  if (!abuse.ok) return abuse.response;
 
   return handleNewsletterSignup(request, { persist: persistSubscription });
 }
