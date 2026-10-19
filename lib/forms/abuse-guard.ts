@@ -43,26 +43,45 @@ export async function checkPublicFormAbuse(
 
   if (!secret || secret.length < 24) {
     console.error("Public form abuse protection is not configured");
-    return denied(503, "Submission protection is temporarily unavailable. Please try again shortly.");
+    return denied(
+      503,
+      "Submission protection is temporarily unavailable. Please try again shortly.",
+    );
   }
 
   if (process.env.VERCEL_ENV === "production") {
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
     if (!isAllowedProductionFormOrigin(siteUrl, null)) {
       console.error("Public form canonical HTTPS origin is not configured");
-      return denied(503, "Submission protection is temporarily unavailable. Please try again shortly.");
+      return denied(
+      503,
+      "Submission protection is temporarily unavailable. Please try again shortly.",
+    );
     }
-    if (!isAllowedProductionFormOrigin(siteUrl, request.headers.get("origin"))) {
-      return denied(403, "This submission cannot be accepted from another website.");
+    if (
+      !isAllowedProductionFormOrigin(siteUrl, request.headers.get("origin"))
+    ) {
+      return denied(
+      403,
+      "This submission cannot be accepted from another website.",
+    );
     }
   }
 
   const ip = requestClientIp(request.headers);
   if (!ip) {
-    return denied(503, "Submission protection is temporarily unavailable. Please try again shortly.");
+    return denied(
+      503,
+      "Submission protection is temporarily unavailable. Please try again shortly.",
+    );
   }
 
-  if (!request.headers.get("content-type")?.toLowerCase().startsWith("application/json")) {
+  if (
+    !request.headers
+      .get("content-type")
+      ?.toLowerCase()
+      .startsWith("application/json")
+  ) {
     return denied(415, "Please submit this form using the website.");
   }
 
@@ -104,15 +123,30 @@ export async function checkPublicFormAbuse(
     });
 
     if (error || typeof data !== "boolean") {
-      console.error("Public form rate limit RPC unavailable", error?.code ?? "UnexpectedResult");
-      return denied(503, "Submission protection is temporarily unavailable. Please try again shortly.");
+      console.error(
+        "Public form rate limit RPC unavailable",
+        error?.code ?? "UnexpectedResult",
+      );
+      return denied(
+      503,
+      "Submission protection is temporarily unavailable. Please try again shortly.",
+    );
     }
     if (!data) {
-      return denied(429, "Too many submissions were attempted. Please try again later.");
+      return denied(
+      429,
+      "Too many submissions were attempted. Please try again later.",
+    );
     }
     return { ok: true };
   } catch (error) {
-    console.error("Public form abuse guard failed", error instanceof Error ? error.name : "UnknownError");
-    return denied(503, "Submission protection is temporarily unavailable. Please try again shortly.");
+    console.error(
+      "Public form abuse guard failed",
+      error instanceof Error ? error.name : "UnknownError",
+    );
+    return denied(
+      503,
+      "Submission protection is temporarily unavailable. Please try again shortly.",
+    );
   }
 }
