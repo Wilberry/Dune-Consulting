@@ -1,10 +1,4 @@
 import { expect, test } from "@playwright/test";
-import { installTurnstileMock } from "./turnstile-mock";
-
-test.beforeEach(async ({ page }) => {
-  await installTurnstileMock(page);
-});
-
 test("footer newsletter signup succeeds without depending on live services", async ({
   page,
 }) => {
