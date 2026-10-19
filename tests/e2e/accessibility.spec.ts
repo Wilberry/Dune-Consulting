@@ -28,4 +28,3 @@ for (const path of pages)
       blocking.map((item) => `${item.id}: ${item.help}`).join("\n"),
     ).toEqual([]);
   });
-
