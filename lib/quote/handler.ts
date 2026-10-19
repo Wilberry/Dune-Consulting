@@ -83,7 +83,10 @@ export async function handleQuoteRequest(
 
   // Production enforces the atomic PostgreSQL limit in the API route.
   // Keep this bounded in-memory fallback for local/preview development only.
-  if (process.env.VERCEL_ENV !== "production" && !checkRateLimit(`quote:${ip}`).allowed) {
+  if (
+    process.env.VERCEL_ENV !== "production" &&
+    !checkRateLimit(`quote:${ip}`).allowed
+  ) {
     return NextResponse.json(
       {
         status: "error",
