@@ -6,7 +6,9 @@
  * This is intentionally a pure helper so tests can cover deployment
  * misconfiguration without depending on Next.js server-only imports.
  */
-export function parseProductionTurnstileHostname(siteUrl: string | undefined): string | null {
+export function parseProductionTurnstileHostname(
+  siteUrl: string | undefined,
+): string | null {
   if (!siteUrl) return null;
   try {
     const url = new URL(siteUrl);
@@ -31,6 +33,26 @@ export function parseProductionTurnstileHostname(siteUrl: string | undefined): s
   } catch {
     return null;
   }
+}
+
+// Cloudflare's published dummy sitekeys/secrets must never be accepted
+// in Vercel production, even when a developer accidentally configures them.
+const dummySitekeys = new Set([
+  "1x00000000000000000000AA",
+  "2x00000000000000000000AB",
+  "1x00000000000000000000BB",
+  "2x00000000000000000000BB",
+  "3x00000000000000000000FF",
+]);
+
+const dummySecrets = new Set([
+  "1x0000000000000000000000000000000AA",
+  "2x0000000000000000000000000000000AA",
+  "3x0000000000000000000000000000000AA",
+]);
+
+export function usesTurnstileTestKeys(sitekey: string, secret: string): boolean {
+  return dummySitekeys.has(sitekey) || dummySecrets.has(secret);
 }
 
 export type TurnstileSiteverifyResponse = {
