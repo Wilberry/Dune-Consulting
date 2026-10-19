@@ -76,4 +76,3 @@ export function getResendWebhookSecret() {
   );
   return result.success ? result.data : null;
 }
-
