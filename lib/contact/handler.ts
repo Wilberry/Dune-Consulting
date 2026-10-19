@@ -76,7 +76,9 @@ export async function handleContactRequest(
     request.headers.get("x-real-ip") ||
     "unknown";
 
-  if (!checkRateLimit(ip).allowed) {
+  // Production enforces the atomic PostgreSQL limit in the API route.
+  // Keep this bounded in-memory fallback for local/preview development only.
+  if (process.env.VERCEL_ENV !== "production" && !checkRateLimit(ip).allowed) {
     return NextResponse.json(
       {
         status: "error",
