@@ -9,6 +9,7 @@ import {
 import {
   isTurnstileResponseValid,
   parseProductionTurnstileHostname,
+  usesTurnstileTestKeys,
   type TurnstileSiteverifyResponse,
 } from "@/lib/turnstile/verification";
 
@@ -77,6 +78,27 @@ export async function verifyTurnstileRequest(
 
   if (process.env.VERCEL_ENV === "production" && !productionHostname) {
     console.error("Production Turnstile canonical hostname is not configured");
+    return {
+      ok: false,
+      response: NextResponse.json(
+        {
+          status: "error",
+          message:
+            "Spam protection is temporarily unavailable. Please try again shortly.",
+        },
+        { status: 503 },
+      ),
+    };
+  }
+
+  if (
+    process.env.VERCEL_ENV === "production" &&
+    usesTurnstileTestKeys(
+      environment.values.NEXT_PUBLIC_TURNSTILE_SITE_KEY,
+      environment.values.TURNSTILE_SECRET_KEY,
+    )
+  ) {
+    console.error("Production Turnstile is configured with testing keys");
     return {
       ok: false,
       response: NextResponse.json(
