@@ -8,7 +8,6 @@ import {
   getEmailEnvironment,
   getNewsletterProviderEnvironment,
   getResendWebhookSecret,
-  getTurnstileEnvironment,
 } from "../lib/server-env";
 
 type Finding = {
@@ -68,13 +67,7 @@ if (!getResendWebhookSecret())
     "BLOCKER",
     "Resend webhook signing secret is not configured.",
   );
-if (getTurnstileEnvironment().status !== "configured")
-  add(
-    "Form protection",
-    "BLOCKER",
-    "Cloudflare Turnstile site and secret keys are not fully configured for public forms.",
-  );
-
+if (!process.env.SUPABASE_SECRET_KEY && !process.env.SUPABASE_SERVICE_ROLE_KEY)\n  add(\n    "Form protection",\n    "BLOCKER",\n    "Invisible PostgreSQL form abuse protection needs the server-only Supabase secret key.",\n  );\n
 const pendingImages = siteImages.filter(
   (image) => image.status === "placeholder",
 );
