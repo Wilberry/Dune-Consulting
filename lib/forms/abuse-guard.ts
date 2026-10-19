@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import {
   abuseSubjectHash,
+  isAllowedProductionFormOrigin,
   normalizedSubmissionEmail,
   requestClientIp,
   type FormAction,
@@ -45,20 +46,14 @@ export async function checkPublicFormAbuse(
     return denied(503, "Submission protection is temporarily unavailable. Please try again shortly.");
   }
 
-  const origin = request.headers.get("origin");
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
   if (process.env.VERCEL_ENV === "production") {
-    if (!siteUrl) return denied(503, "Submission protection is temporarily unavailable. Please try again shortly.");
-    try {
-      const site = new URL(siteUrl);
-      if (site.protocol !== "https:" || site.origin !== siteUrl.replace(/\/$/, "")) {
-        return denied(503, "Submission protection is temporarily unavailable. Please try again shortly.");
-      }
-      if (origin && origin !== site.origin) {
-        return denied(403, "This submission cannot be accepted from another website.");
-      }
-    } catch {
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+    if (!isAllowedProductionFormOrigin(siteUrl, null)) {
+      console.error("Public form canonical HTTPS origin is not configured");
       return denied(503, "Submission protection is temporarily unavailable. Please try again shortly.");
+    }
+    if (!isAllowedProductionFormOrigin(siteUrl, request.headers.get("origin"))) {
+      return denied(403, "This submission cannot be accepted from another website.");
     }
   }
 
