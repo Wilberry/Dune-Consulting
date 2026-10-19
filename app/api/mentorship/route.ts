@@ -1,10 +1,10 @@
 import { handleMentorshipApplication } from "@/lib/mentorship/handler";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { verifyTurnstileRequest } from "@/lib/turnstile/server";
+import { checkPublicFormAbuse } from "@/lib/forms/abuse-guard";
 
 export async function POST(request: Request) {
-  const turnstile = await verifyTurnstileRequest(request, "mentorship");
-  if (!turnstile.ok) return turnstile.response;
+  const abuse = await checkPublicFormAbuse(request, "mentorship");
+  if (!abuse.ok) return abuse.response;
 
   return handleMentorshipApplication(request, {
     persist: async (application) => {
