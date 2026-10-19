@@ -1,10 +1,10 @@
 import { handleContactRequest } from "@/lib/contact/handler";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { verifyTurnstileRequest } from "@/lib/turnstile/server";
+import { checkPublicFormAbuse } from "@/lib/forms/abuse-guard";
 
 export async function POST(request: Request) {
-  const turnstile = await verifyTurnstileRequest(request, "contact");
-  if (!turnstile.ok) return turnstile.response;
+  const abuse = await checkPublicFormAbuse(request, "contact");
+  if (!abuse.ok) return abuse.response;
 
   return handleContactRequest(request, {
     persist: async (enquiry) => {
