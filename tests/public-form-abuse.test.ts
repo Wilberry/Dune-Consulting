@@ -35,7 +35,10 @@ test("rate limit uses a normalized email to prevent case/space bypasses", () => 
   assert.equal(normalizedSubmissionEmail(null), null);
   assert.equal(normalizedSubmissionEmail("nonsense"), null);
   assert.equal(normalizedSubmissionEmail("a@"), null);
-  assert.equal(normalizedSubmissionEmail("a".repeat(260) + "@example.org"), null);
+  assert.equal(
+    normalizedSubmissionEmail("a".repeat(260) + "@example.org"),
+    null,
+  );
 });
 
 test("request identifiers require a valid ingress-supplied IP", () => {
@@ -49,7 +52,10 @@ test("request identifiers require a valid ingress-supplied IP", () => {
     requestClientIp(new Headers({ "x-real-ip": "2001:db8::1" })),
     "2001:db8::1",
   );
-  assert.equal(requestClientIp(new Headers({ "x-forwarded-for": "bogus" })), null);
+  assert.equal(
+    requestClientIp(new Headers({ "x-forwarded-for": "bogus" })),
+    null,
+  );
   assert.equal(requestClientIp(new Headers()), null);
 });
 
@@ -58,7 +64,10 @@ test("production form origins reject placeholder and cross-site requests", () =>
   assert.equal(isAllowedProductionFormOrigin(canonical, null), true);
   assert.equal(isAllowedProductionFormOrigin(canonical, canonical), true);
   assert.equal(isAllowedProductionFormOrigin(canonical + "/", canonical), true);
-  assert.equal(isAllowedProductionFormOrigin(canonical, "https://evil.test"), false);
+  assert.equal(
+    isAllowedProductionFormOrigin(canonical, "https://evil.test"),
+    false,
+  );
   for (const invalid of [
     undefined,
     "",
