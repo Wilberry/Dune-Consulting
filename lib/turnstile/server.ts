@@ -8,6 +8,7 @@ import {
 } from "@/lib/server-env";
 import {
   isTurnstileResponseValid,
+  parseProductionTurnstileHostname,
   type TurnstileSiteverifyResponse,
 } from "@/lib/turnstile/verification";
 
@@ -21,27 +22,6 @@ function requestIp(request: Request) {
     request.headers.get("x-real-ip") ||
     undefined
   );
-}
-
-function expectedHostname() {
-  if (process.env.NODE_ENV !== "production") return null;
-
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
-  if (!siteUrl) return null;
-
-  try {
-    const hostname = new URL(siteUrl).hostname;
-    if (
-      hostname === "localhost" ||
-      hostname === "127.0.0.1" ||
-      hostname.endsWith(".example")
-    ) {
-      return null;
-    }
-    return hostname;
-  } catch {
-    return null;
-  }
 }
 
 export type TurnstileVerificationResult =
@@ -74,6 +54,29 @@ export async function verifyTurnstileRequest(
 
   if (environment.status === "misconfigured") {
     console.error("Turnstile configuration is incomplete");
+    return {
+      ok: false,
+      response: NextResponse.json(
+        {
+          status: "error",
+          message:
+            "Spam protection is temporarily unavailable. Please try again shortly.",
+        },
+        { status: 503 },
+      ),
+    };
+  }
+
+  // Vercel production must validate both Turnstile action and hostname.
+  // A missing, non-HTTPS or placeholder canonical URL is misconfiguration,
+  // not a reason to silently skip the hostname security boundary.
+  const productionHostname =
+    process.env.VERCEL_ENV === "production"
+      ? parseProductionTurnstileHostname(process.env.NEXT_PUBLIC_SITE_URL)
+      : null;
+
+  if (process.env.VERCEL_ENV === "production" && !productionHostname) {
+    console.error("Production Turnstile canonical hostname is not configured");
     return {
       ok: false,
       response: NextResponse.json(
@@ -161,7 +164,7 @@ export async function verifyTurnstileRequest(
     };
   }
 
-  if (!isTurnstileResponseValid(result, action, expectedHostname())) {
+  if (!isTurnstileResponseValid(result, action, productionHostname)) {
     return {
       ok: false,
       response: NextResponse.json(
