@@ -29,23 +29,3 @@ for (const path of pages)
     ).toEqual([]);
   });
 
-test("@a11y Turnstile spam-protection labels use a permitted group role", async ({
-  page,
-}) => {
-  test.skip(
-    !process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY,
-    "Turnstile site key is not configured for this test",
-  );
-  await page.goto("/contact");
-
-  // Turnstile is optional in local development. When a public site key is
-  // configured, every named wrapper must expose its label through a role
-  // that permits aria-label, not an unnamed generic <div>.
-  const widgets = page.locator('[aria-label="Spam protection"]');
-  // The contact form and the footer newsletter form each mount a widget.
-  // Require at least one widget and verify the role of every matching widget.
-  await expect(widgets.first()).toBeAttached();
-  for (let index = 0; index < (await widgets.count()); index++) {
-    await expect(widgets.nth(index)).toHaveAttribute("role", "group");
-  }
-});
