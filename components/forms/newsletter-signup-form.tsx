@@ -2,10 +2,6 @@
 
 import { type FormEvent, useState } from "react";
 import Link from "next/link";
-import {
-  TurnstileWidget,
-  turnstileClientEnabled,
-} from "@/components/forms/turnstile-widget";
 
 type SubmissionState = {
   kind: "idle" | "success" | "error";
@@ -16,8 +12,6 @@ export function NewsletterSignupForm() {
   const [email, setEmail] = useState("");
   const [website, setWebsite] = useState("");
   const [startedAt, setStartedAt] = useState(() => Date.now());
-  const [turnstileToken, setTurnstileToken] = useState("");
-  const [turnstileReset, setTurnstileReset] = useState(0);
   const [submitting, setSubmitting] = useState(false);
   const [submission, setSubmission] = useState<SubmissionState>({
     kind: "idle",
@@ -38,7 +32,6 @@ export function NewsletterSignupForm() {
           email,
           website,
           formStartedAt: startedAt,
-          turnstileToken,
         }),
       });
       const result = (await response.json()) as {
@@ -60,10 +53,6 @@ export function NewsletterSignupForm() {
       });
     } finally {
       setSubmitting(false);
-      if (turnstileClientEnabled) {
-        setTurnstileToken("");
-        setTurnstileReset((value) => value + 1);
-      }
     }
   }
 
@@ -96,16 +85,9 @@ export function NewsletterSignupForm() {
           className="focus:border-amber min-h-10 rounded-md border border-white/15 bg-white/5 px-3 text-xs text-white transition placeholder:text-white/40 focus:outline-none disabled:opacity-60"
         />
 
-        <TurnstileWidget
-          action="newsletter"
-          onToken={setTurnstileToken}
-          resetSignal={turnstileReset}
-          theme="dark"
-        />
-
         <button
           type="submit"
-          disabled={submitting || (turnstileClientEnabled && !turnstileToken)}
+          disabled={submitting}
           className="bg-amber text-deep-navy hover:bg-amber-hover disabled:bg-amber-hover min-h-10 rounded-md px-3 text-xs font-bold transition disabled:cursor-wait"
         >
           {submitting ? "Subscribing…" : "Subscribe"}
