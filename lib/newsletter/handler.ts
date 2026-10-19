@@ -25,7 +25,9 @@ export async function handleNewsletterSignup(
     request.headers.get("x-real-ip") ||
     "unknown";
 
-  if (!checkRateLimit(`newsletter:${ip}`).allowed) {
+  // Production enforces the atomic PostgreSQL limit in the API route.
+  // Keep this bounded in-memory fallback for local/preview development only.
+  if (process.env.VERCEL_ENV !== "production" && !checkRateLimit(`newsletter:${ip}`).allowed) {
     return NextResponse.json(
       {
         status: "error",
