@@ -31,18 +31,24 @@ npm run typecheck
 npm test
 npm run build
 
-# Browser tests intentionally mock API submission; do not mistake these for
-# real database/SMTP end-to-end proof.
-npx playwright test tests/e2e/core.spec.ts \
+# Test the production build, not the Next.js development server. playwright.config.ts
+# uses `next start` when CI=1; npm run build has already completed above.
+# API submissions are mocked. This is NOT live database/SMTP acceptance.
+# Repeating the mentorship test checks desktop/mobile stability without retries.
+CI=1 npx playwright test tests/e2e/core.spec.ts \
   --project=chromium-desktop \
   --project=chromium-mobile \
   --grep 'mentorship application can be submitted' \
-  --workers=2
+  --workers=2 \
+  --repeat-each=2 \
+  --retries=0
 
-npx playwright test tests/e2e/accessibility.spec.ts \
+# Single-worker accessibility checks reduce resource pressure on small laptops.
+CI=1 npx playwright test tests/e2e/accessibility.spec.ts \
   --project=chromium-desktop \
   --project=chromium-mobile \
-  --workers=2
+  --workers=1 \
+  --retries=0
 
 echo "PASS: offline code and targeted browser checks completed."
 echo "PENDING: real Postgres limiter RPC, Supabase submission, role checks,"
