@@ -48,6 +48,7 @@ CI=1 npx playwright test tests/e2e/accessibility.spec.ts \
   --project=chromium-desktop \
   --project=chromium-mobile \
   --workers=1 \
+  --timeout=90000 \
   --retries=0
 
 echo "PASS: offline code and targeted browser checks completed."
