@@ -1,10 +1,4 @@
 import { expect, test } from "@playwright/test";
-import { installTurnstileMock } from "./turnstile-mock";
-
-test.beforeEach(async ({ page }) => {
-  await installTurnstileMock(page);
-});
-
 test("homepage and primary navigation load without console errors", async ({
   page,
 }) => {

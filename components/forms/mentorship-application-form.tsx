@@ -5,10 +5,6 @@ import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import {
-  TurnstileWidget,
-  turnstileClientEnabled,
-} from "@/components/forms/turnstile-widget";
-import {
   mentorshipApplicationSchema,
   type MentorshipApplicationFormInput,
   type MentorshipApplicationInput,
@@ -34,8 +30,6 @@ function getInitialPackage(): MentorshipPackage | undefined {
 
 export function MentorshipApplicationForm() {
   const [startedAt] = useState(() => Date.now());
-  const [turnstileToken, setTurnstileToken] = useState("");
-  const [turnstileReset, setTurnstileReset] = useState(0);
   const [submission, setSubmission] = useState<SubmissionState>({
     kind: "idle",
   });
@@ -77,7 +71,6 @@ export function MentorshipApplicationForm() {
         body: JSON.stringify({
           ...values,
           formStartedAt: startedAt,
-          turnstileToken,
         }),
       });
       const result = (await response.json()) as {
@@ -112,11 +105,6 @@ export function MentorshipApplicationForm() {
         message:
           "The application service could not be reached. Your information remains in the form so you can try again.",
       });
-    } finally {
-      if (turnstileClientEnabled) {
-        setTurnstileToken("");
-        setTurnstileReset((value) => value + 1);
-      }
     }
   }
 
@@ -350,12 +338,6 @@ export function MentorshipApplicationForm() {
         </p>
       )}
 
-      <TurnstileWidget
-        action="mentorship"
-        onToken={setTurnstileToken}
-        resetSignal={turnstileReset}
-      />
-
       <div className="mt-5 min-h-14" aria-live="polite" aria-atomic="true">
         {submission.message && (
           <div
@@ -373,7 +355,7 @@ export function MentorshipApplicationForm() {
       </div>
 
       <button
-        disabled={isSubmitting || (turnstileClientEnabled && !turnstileToken)}
+        disabled={isSubmitting}
         className="bg-amber text-deep-navy hover:bg-amber-hover mt-2 min-h-12 rounded-md px-6 py-3 font-bold disabled:cursor-wait disabled:opacity-60"
         type="submit"
       >

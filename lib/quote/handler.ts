@@ -81,7 +81,12 @@ export async function handleQuoteRequest(
     request.headers.get("x-real-ip") ||
     "unknown";
 
-  if (!checkRateLimit(`quote:${ip}`).allowed) {
+  // Production enforces the atomic PostgreSQL limit in the API route.
+  // Keep this bounded in-memory fallback for local/preview development only.
+  if (
+    process.env.VERCEL_ENV !== "production" &&
+    !checkRateLimit(`quote:${ip}`).allowed
+  ) {
     return NextResponse.json(
       {
         status: "error",

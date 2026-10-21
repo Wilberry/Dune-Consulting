@@ -4,10 +4,6 @@ import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import {
-  TurnstileWidget,
-  turnstileClientEnabled,
-} from "@/components/forms/turnstile-widget";
-import {
   consultationSchema,
   type ConsultationFormInput,
   type ConsultationInput,
@@ -22,8 +18,6 @@ const control =
 
 export function ConsultationForm() {
   const [startedAt] = useState(() => Date.now());
-  const [turnstileToken, setTurnstileToken] = useState("");
-  const [turnstileReset, setTurnstileReset] = useState(0);
   const [submission, setSubmission] = useState<SubmissionState>({
     kind: "idle",
   });
@@ -49,7 +43,6 @@ export function ConsultationForm() {
       ...values,
       formStartedAt: startedAt,
       originPage: window.location.href,
-      turnstileToken,
     };
     try {
       const response = await fetch("/api/contact", {
@@ -83,11 +76,6 @@ export function ConsultationForm() {
         message:
           "The enquiry service could not be reached. Your information remains in the form so you can try again.",
       });
-    } finally {
-      if (turnstileClientEnabled) {
-        setTurnstileToken("");
-        setTurnstileReset((value) => value + 1);
-      }
     }
   }
 
@@ -238,12 +226,6 @@ export function ConsultationForm() {
         </p>
       )}
 
-      <TurnstileWidget
-        action="contact"
-        onToken={setTurnstileToken}
-        resetSignal={turnstileReset}
-      />
-
       <div className="mt-5 min-h-14" aria-live="polite" aria-atomic="true">
         {submission.message && (
           <div
@@ -260,7 +242,7 @@ export function ConsultationForm() {
         )}
       </div>
       <button
-        disabled={isSubmitting || (turnstileClientEnabled && !turnstileToken)}
+        disabled={isSubmitting}
         className="bg-amber text-deep-navy hover:bg-amber-hover mt-2 min-h-12 rounded-md px-6 py-3 font-bold disabled:cursor-wait disabled:opacity-60"
         type="submit"
       >
