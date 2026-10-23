@@ -6,7 +6,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const paths = [
     "/",
     "/contact",
-    "/request-quote",
     ...Object.values(supportedRoutes).map((route) => route.path),
   ];
   return paths.map((path) => ({

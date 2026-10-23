@@ -11,7 +11,7 @@ const pages = [
   "/portfolio/jameson-distillery-on-tour",
   "/insights",
   "/contact",
-  "/request-quote",
+  "/contact?type=quote",
   "/not-an-approved-route",
 ];
 for (const path of pages)
