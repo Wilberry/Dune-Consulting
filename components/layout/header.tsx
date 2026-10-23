@@ -106,7 +106,7 @@ export function Header() {
             )}
           </nav>
           <Link
-            href="/request-quote"
+            href="/contact?type=quote"
             className="bg-amber text-deep-navy hover:bg-amber-hover hidden rounded-md px-4 py-3 text-sm font-bold lg:block"
           >
             Request a Quote
@@ -208,7 +208,7 @@ export function Header() {
           )}
         </nav>
         <Link
-          href="/request-quote"
+          href="/contact?type=quote"
           onClick={() => setOpen(false)}
           className="bg-amber text-deep-navy mt-8 block rounded-md px-5 py-4 text-center font-bold"
         >

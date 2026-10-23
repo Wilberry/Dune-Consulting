@@ -168,3 +168,46 @@ export type MentorshipApplicationFormInput = z.input<
 export type ArticleEditorInput = z.infer<typeof articleEditorSchema>;
 export type NewsletterSignupInput = z.infer<typeof newsletterSignupSchema>;
 export type NewsletterCampaignInput = z.infer<typeof newsletterCampaignSchema>;
+
+/** Shared user-facing form; the server APIs remain independently validated. */
+export const unifiedEnquirySchema = z
+  .object({
+    intent: z.enum(["enquiry", "quote"]),
+    name: consultationSchema.shape.name,
+    email: consultationSchema.shape.email,
+    phone: consultationSchema.shape.phone,
+    organisation: consultationSchema.shape.organisation,
+    service: consultationSchema.shape.service,
+    location: consultationSchema.shape.location,
+    projectDate: consultationSchema.shape.projectDate,
+    message: z
+      .string()
+      .trim()
+      .min(10, "Please provide a little more detail.")
+      .max(5000),
+    participantCount: quoteRequestSchema.shape.participantCount,
+    additionalRequirements: quoteRequestSchema.shape.additionalRequirements,
+    consent: consultationSchema.shape.consent,
+    website: consultationSchema.shape.website,
+    formStartedAt: consultationSchema.shape.formStartedAt,
+    originPage: consultationSchema.shape.originPage,
+  })
+  .superRefine((value, context) => {
+    if (value.intent === "quote" && value.message.length < 20) {
+      context.addIssue({
+        code: "custom",
+        path: ["message"],
+        message: "Please provide a little more detail about the work required.",
+      });
+    }
+    if (value.intent === "enquiry" && value.message.length > 4000) {
+      context.addIssue({
+        code: "custom",
+        path: ["message"],
+        message: "Please keep your enquiry within 4,000 characters.",
+      });
+    }
+  });
+
+export type UnifiedEnquiryInput = z.infer<typeof unifiedEnquirySchema>;
+export type UnifiedEnquiryFormInput = z.input<typeof unifiedEnquirySchema>;

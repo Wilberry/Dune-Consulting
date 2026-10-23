@@ -188,6 +188,10 @@ test("quote request returns a Dune reference without depending on live services"
   });
 
   await page.goto("/request-quote");
+  await expect(page).toHaveURL(/\/contact\?type=quote$/);
+  await expect(
+    page.getByRole("radio", { name: "Request a quote" }),
+  ).toBeChecked();
   await page.getByLabel("Full name *").fill("Ada Example");
   await page.getByLabel("Email address *").fill("ada@example.org");
   await page.getByLabel("Phone number *").fill("+234 801 234 5678");
@@ -206,6 +210,67 @@ test("quote request returns a Dune reference without depending on live services"
     "Quote request received",
   );
   await expect(page.getByRole("status")).toContainText("DUNE-Q-000123");
+});
+
+test("contact preserves details while switching between enquiry and quote", async ({
+  page,
+}) => {
+  await page.goto("/contact");
+  await page.getByLabel("Full name *").fill("Ada Example");
+  await page.getByLabel("Email address *").fill("ada@example.org");
+  await page
+    .getByLabel("How can we help? *")
+    .fill("Please discuss safety support for our upcoming event.");
+  await page.getByRole("radio", { name: "Request a quote" }).check();
+  await expect(page.getByLabel("Full name *")).toHaveValue("Ada Example");
+  await expect(page.getByLabel("Email address *")).toHaveValue(
+    "ada@example.org",
+  );
+  await expect(page.getByLabel("Project or event description *")).toHaveValue(
+    "Please discuss safety support for our upcoming event.",
+  );
+  await expect(page.getByLabel("Participants or people covered")).toBeVisible();
+  await page.getByRole("radio", { name: "General enquiry" }).check();
+  await expect(page.getByLabel("How can we help? *")).toHaveValue(
+    "Please discuss safety support for our upcoming event.",
+  );
+  await expect(page.getByLabel("Participants or people covered")).toHaveCount(
+    0,
+  );
+});
+
+test("quote CTA selects quote purpose from the existing contact page", async ({
+  page,
+  isMobile,
+}) => {
+  await page.goto("/contact");
+  if (isMobile) {
+    await page.getByRole("button", { name: "Open navigation menu" }).click();
+    await page
+      .getByRole("dialog", { name: "Mobile navigation" })
+      .getByRole("link", { name: "Request a Quote" })
+      .click();
+  } else {
+    await page.getByRole("link", { name: "Request a Quote" }).click();
+  }
+  await expect(page).toHaveURL(/\/contact\?type=quote$/);
+  await expect(
+    page.getByRole("radio", { name: "Request a quote" }),
+  ).toBeChecked();
+});
+
+test("old quote URL redirects to the unified contact quote mode", async ({
+  page,
+  request,
+}) => {
+  const response = await request.get("/request-quote", { maxRedirects: 0 });
+  expect(response.status()).toBe(308);
+  expect(response.headers().location).toContain("/contact?type=quote");
+  await page.goto("/request-quote");
+  await expect(page).toHaveURL(/\/contact\?type=quote$/);
+  await expect(
+    page.getByRole("radio", { name: "Request a quote" }),
+  ).toBeChecked();
 });
 
 test("mentorship application can be submitted without depending on live services", async ({
@@ -255,7 +320,7 @@ test("content routes have one H1 and expected status", async ({
   request,
 }) => {
   for (const path of [
-    "/request-quote",
+    "/contact?type=quote",
     "/services/event-safety-management",
     "/services/hse-training",
     "/services/personnel-outsourcing",
