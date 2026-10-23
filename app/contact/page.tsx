@@ -21,7 +21,13 @@ export const metadata: Metadata = {
     description: pageDescription,
   },
 };
-export default function ContactPage() {
+type ContactPageProps = {
+  searchParams: Promise<{ type?: string }>;
+};
+
+export default async function ContactPage({ searchParams }: ContactPageProps) {
+  const { type } = await searchParams;
+  const initialIntent = type === "quote" ? "quote" : "enquiry";
   return (
     <main id="main-content">
       <PageHero
@@ -72,7 +78,7 @@ export default function ContactPage() {
           </div>
 
           {/* One adaptive form, retaining two separate API workflows */}
-          <UnifiedEnquiryForm />
+          <UnifiedEnquiryForm key={initialIntent} initialIntent={initialIntent} />
         </Container>
       </section>
     </main>

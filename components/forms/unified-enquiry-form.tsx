@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -19,11 +19,15 @@ type SubmissionState = {
 const control =
   "mt-2 w-full rounded-md border border-line bg-white px-4 py-3 text-ink placeholder:text-muted/70 focus:border-navy disabled:opacity-60";
 
-export function UnifiedEnquiryForm() {
+export function UnifiedEnquiryForm({
+  initialIntent = "enquiry",
+}: {
+  initialIntent?: "enquiry" | "quote";
+}) {
   const [startedAt] = useState(() => Date.now());
   const [submission, setSubmission] = useState<SubmissionState>({ kind: "idle" });
   const defaults = {
-    intent: "enquiry" as const,
+    intent: initialIntent,
     consent: false,
     website: "",
     formStartedAt: startedAt,
@@ -44,13 +48,6 @@ export function UnifiedEnquiryForm() {
   });
   const intent = watch("intent");
   const isQuote = intent === "quote";
-
-  // Legacy /request-quote links redirect to /contact?type=quote.
-  useEffect(() => {
-    if (new URLSearchParams(window.location.search).get("type") === "quote") {
-      setValue("intent", "quote");
-    }
-  }, [setValue]);
 
   function selectIntent(next: "enquiry" | "quote") {
     if (isSubmitting) return;
