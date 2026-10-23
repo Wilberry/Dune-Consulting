@@ -24,7 +24,11 @@ const base = {
 
 test("the unified form retains contact workflow and payload validation", () => {
   const parsed = unifiedEnquirySchema.parse({ ...base, intent: "enquiry" });
-  const result = buildEnquirySubmission(parsed, base.originPage, base.formStartedAt);
+  const result = buildEnquirySubmission(
+    parsed,
+    base.originPage,
+    base.formStartedAt,
+  );
   assert.equal(result.endpoint, "/api/contact");
   assert.equal(consultationSchema.safeParse(result.payload).success, true);
   assert.equal("projectDescription" in result.payload, false);
@@ -37,7 +41,11 @@ test("the unified form retains commercial workflow and quote-specific fields", (
     participantCount: 120,
     additionalRequirements: "Provide trained marshals.",
   });
-  const result = buildEnquirySubmission(parsed, base.originPage, base.formStartedAt);
+  const result = buildEnquirySubmission(
+    parsed,
+    base.originPage,
+    base.formStartedAt,
+  );
   assert.equal(result.endpoint, "/api/quote");
   assert.equal(quoteRequestSchema.safeParse(result.payload).success, true);
   assert.equal("message" in result.payload, false);
@@ -45,9 +53,21 @@ test("the unified form retains commercial workflow and quote-specific fields", (
 
 test("quote detail and both purposes retain their own length rules", () => {
   const short = { ...base, message: "A brief note." };
-  assert.equal(unifiedEnquirySchema.safeParse({ ...short, intent: "enquiry" }).success, true);
-  assert.equal(unifiedEnquirySchema.safeParse({ ...short, intent: "quote" }).success, false);
+  assert.equal(
+    unifiedEnquirySchema.safeParse({ ...short, intent: "enquiry" }).success,
+    true,
+  );
+  assert.equal(
+    unifiedEnquirySchema.safeParse({ ...short, intent: "quote" }).success,
+    false,
+  );
   const long = { ...base, message: "a".repeat(4500) };
-  assert.equal(unifiedEnquirySchema.safeParse({ ...long, intent: "enquiry" }).success, false);
-  assert.equal(unifiedEnquirySchema.safeParse({ ...long, intent: "quote" }).success, true);
+  assert.equal(
+    unifiedEnquirySchema.safeParse({ ...long, intent: "enquiry" }).success,
+    false,
+  );
+  assert.equal(
+    unifiedEnquirySchema.safeParse({ ...long, intent: "quote" }).success,
+    true,
+  );
 });
