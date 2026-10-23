@@ -25,7 +25,9 @@ export function UnifiedEnquiryForm({
   initialIntent?: "enquiry" | "quote";
 }) {
   const [startedAt] = useState(() => Date.now());
-  const [submission, setSubmission] = useState<SubmissionState>({ kind: "idle" });
+  const [submission, setSubmission] = useState<SubmissionState>({
+    kind: "idle",
+  });
   const defaults = {
     intent: initialIntent,
     consent: false,
@@ -83,23 +85,29 @@ export function UnifiedEnquiryForm({
         };
         for (const [field, messages] of Object.entries(result.issues)) {
           if (messages?.[0]) {
-            setError(aliases[field] ?? (field as keyof UnifiedEnquiryFormInput), {
-              message: messages[0],
-            });
+            setError(
+              aliases[field] ?? (field as keyof UnifiedEnquiryFormInput),
+              {
+                message: messages[0],
+              },
+            );
           }
         }
       }
       const success = response.ok && result.status === "success";
       setSubmission({
         kind: success ? "success" : "error",
-        message: result.message ?? "We could not record your request. Please try again.",
+        message:
+          result.message ??
+          "We could not record your request. Please try again.",
         referenceNumber: success ? result.referenceNumber : undefined,
       });
       if (success) reset({ ...defaults, intent: values.intent });
     } catch {
       setSubmission({
         kind: "error",
-        message: "The enquiry service could not be reached. Your information remains in the form so you can try again.",
+        message:
+          "The enquiry service could not be reached. Your information remains in the form so you can try again.",
       });
     }
   }
@@ -130,8 +138,8 @@ export function UnifiedEnquiryForm({
               className={[
                 "flex min-h-12 cursor-pointer items-center gap-3 rounded-lg border px-4 py-3 text-sm font-semibold transition",
                 intent === purpose
-                  ? "border-navy bg-white text-navy ring-1 ring-navy"
-                  : "border-line bg-white/60 text-ink hover:border-navy/40",
+                  ? "border-navy text-navy ring-navy bg-white ring-1"
+                  : "border-line text-ink hover:border-navy/40 bg-white/60",
               ].join(" ")}
             >
               <input
@@ -204,7 +212,11 @@ export function UnifiedEnquiryForm({
             {...register("phone")}
           />
         </Field>
-        <Field id="service" label="Service required *" error={errors.service?.message}>
+        <Field
+          id="service"
+          label="Service required *"
+          error={errors.service?.message}
+        >
           <select
             id="service"
             className={control}
@@ -213,7 +225,9 @@ export function UnifiedEnquiryForm({
             aria-describedby={errors.service ? "service-error" : undefined}
             {...register("service")}
           >
-            <option value="" disabled>Select a service</option>
+            <option value="" disabled>
+              Select a service
+            </option>
             <option>Event Safety Management</option>
             <option>HSE Training</option>
             <option>HSE Personnel Outsourcing</option>
@@ -260,14 +274,18 @@ export function UnifiedEnquiryForm({
               }
               {...register("participantCount", {
                 setValueAs: (value) =>
-                  value === "" || value === undefined ? undefined : Number(value),
+                  value === "" || value === undefined
+                    ? undefined
+                    : Number(value),
               })}
             />
           </Field>
         )}
         <Field
           id="message"
-          label={isQuote ? "Project or event description *" : "How can we help? *"}
+          label={
+            isQuote ? "Project or event description *" : "How can we help? *"
+          }
           error={errors.message?.message}
           className="sm:col-span-2"
         >
@@ -312,7 +330,8 @@ export function UnifiedEnquiryForm({
             className="text-navy decoration-amber font-bold underline decoration-2 underline-offset-2"
           >
             privacy policy
-          </Link>.
+          </Link>
+          .
         </span>
       </label>
       {errors.consent && (
@@ -336,8 +355,12 @@ export function UnifiedEnquiryForm({
           >
             <strong className="block">
               {submission.kind === "success"
-                ? isQuote ? "Quote request received" : "Enquiry received"
-                : isQuote ? "Quote request not sent" : "Enquiry not received"}
+                ? isQuote
+                  ? "Quote request received"
+                  : "Enquiry received"
+                : isQuote
+                  ? "Quote request not sent"
+                  : "Enquiry not received"}
             </strong>
             {submission.referenceNumber && (
               <span className="text-navy mt-1 block font-bold">
@@ -354,15 +377,23 @@ export function UnifiedEnquiryForm({
         type="submit"
       >
         {isSubmitting
-          ? isQuote ? "Submitting request…" : "Sending enquiry…"
-          : isQuote ? "Request a quote" : "Send enquiry"}
+          ? isQuote
+            ? "Submitting request…"
+            : "Sending enquiry…"
+          : isQuote
+            ? "Request a quote"
+            : "Send enquiry"}
       </button>
     </form>
   );
 }
 
 function Field({
-  id, label, error, className, children,
+  id,
+  label,
+  error,
+  className,
+  children,
 }: {
   id: string;
   label: string;
@@ -372,9 +403,15 @@ function Field({
 }) {
   return (
     <div className={className}>
-      <label htmlFor={id} className="text-navy text-sm font-bold">{label}</label>
+      <label htmlFor={id} className="text-navy text-sm font-bold">
+        {label}
+      </label>
       {children}
-      {error && <p id={id + "-error"} className="mt-1 text-sm text-red-700">{error}</p>}
+      {error && (
+        <p id={id + "-error"} className="mt-1 text-sm text-red-700">
+          {error}
+        </p>
+      )}
     </div>
   );
 }
