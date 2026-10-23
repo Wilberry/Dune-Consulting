@@ -187,22 +187,12 @@ export const unifiedEnquirySchema = z
       .max(5000),
     participantCount: quoteRequestSchema.shape.participantCount,
     additionalRequirements: quoteRequestSchema.shape.additionalRequirements,
-    consent: z.boolean(),
+    consent: consultationSchema.shape.consent,
     website: consultationSchema.shape.website,
     formStartedAt: consultationSchema.shape.formStartedAt,
     originPage: consultationSchema.shape.originPage,
   })
   .superRefine((value, context) => {
-    if (!value.consent) {
-      context.addIssue({
-        code: "custom",
-        path: ["consent"],
-        message:
-          value.intent === "quote"
-            ? "Please confirm that we may respond to your quote request."
-            : "Please confirm that we may respond to your enquiry.",
-      });
-    }
     if (value.intent === "quote" && value.message.length < 20) {
       context.addIssue({
         code: "custom",

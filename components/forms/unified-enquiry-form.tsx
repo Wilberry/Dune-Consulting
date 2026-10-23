@@ -317,7 +317,9 @@ export function UnifiedEnquiryForm({
       </label>
       {errors.consent && (
         <p id="consent-error" className="mt-1 text-sm text-red-700">
-          {errors.consent.message}
+          {isQuote
+            ? "Please confirm that we may respond to your quote request."
+            : errors.consent.message}
         </p>
       )}
 
