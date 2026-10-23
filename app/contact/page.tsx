@@ -41,7 +41,10 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
           {/* Contact details and the steps to a tailored proposal */}
           <div>
             <h2 className="text-navy text-2xl font-bold">Get in touch</h2>
-            <p className="text-muted mt-4 leading-7">Questions, project briefs or training needs — choose the right purpose in the form and our team will take it from there.</p>
+            <p className="text-muted mt-4 leading-7">
+              Questions, project briefs or training needs — choose the right
+              purpose in the form and our team will take it from there.
+            </p>
             <ul className="mt-8 space-y-5">
               <li className="flex items-start gap-3">
                 <MapPin
@@ -78,7 +81,10 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
           </div>
 
           {/* One adaptive form, retaining two separate API workflows */}
-          <UnifiedEnquiryForm key={initialIntent} initialIntent={initialIntent} />
+          <UnifiedEnquiryForm
+            key={initialIntent}
+            initialIntent={initialIntent}
+          />
         </Container>
       </section>
     </main>
