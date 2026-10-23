@@ -19,6 +19,15 @@ function getSupabaseConnectSources() {
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  async redirects() {
+    return [
+      {
+        source: "/request-quote",
+        destination: "/contact?type=quote",
+        permanent: true,
+      },
+    ];
+  },
   allowedDevOrigins: ["127.0.0.1"],
   async headers() {
     const isProduction = process.env.NODE_ENV === "production";
