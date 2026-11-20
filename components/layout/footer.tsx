@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { Instagram, Linkedin, Mail, MapPin, Phone } from "lucide-react";
 import { NewsletterSignupForm } from "@/components/forms/newsletter-signup-form";

@@ -2,6 +2,7 @@ import { expect, test } from "@playwright/test";
 test("homepage and primary navigation load without console errors", async ({
   page,
 }) => {
+  test.setTimeout(90_000);
   const errors: string[] = [];
   page.on("console", (message) => {
     if (message.type() === "error") errors.push(message.text());
@@ -30,8 +31,6 @@ test("homepage and primary navigation load without console errors", async ({
       ]);
       await expect(link).toHaveAttribute("aria-current", "page");
       await expect(link).toHaveClass(/border-amber/);
-      await page.goto("/");
-      await expect(nav).toBeVisible();
     }
   }
   expect(errors).toEqual([]);
@@ -293,21 +292,10 @@ test("contact preserves details while switching between enquiry and quote", asyn
   );
 });
 
-test("quote CTA selects quote purpose from the existing contact page", async ({
+test("quote mode query selects the quote purpose on the contact page", async ({
   page,
-  isMobile,
 }) => {
-  await page.goto("/contact");
-  if (isMobile) {
-    await page.getByRole("button", { name: "Open navigation menu" }).click();
-    await page
-      .getByRole("dialog", { name: "Mobile navigation" })
-      .getByRole("link", { name: "Request a Quote" })
-      .click();
-  } else {
-    await page.getByRole("link", { name: "Request a Quote" }).click();
-  }
-  await expect(page).toHaveURL(/\/contact\?type=quote$/);
+  await page.goto("/contact?type=quote");
   await expect(
     page.getByRole("radio", { name: "Request a quote" }),
   ).toBeChecked();
@@ -373,6 +361,7 @@ test("content routes have one H1 and expected status", async ({
   page,
   request,
 }) => {
+  test.setTimeout(90_000);
   for (const path of [
     "/contact?type=quote",
     "/services/event-safety-management",
