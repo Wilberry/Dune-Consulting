@@ -10,7 +10,6 @@ export function Hero() {
         <div className="flex flex-col items-center justify-center lg:items-start">
           <div className="mx-auto max-w-xl text-center lg:mx-0 lg:max-w-none lg:text-left">
             <p className="text-amber mb-6 flex flex-col items-center gap-3 text-xs font-extrabold tracking-[.18em] uppercase sm:flex-row sm:items-center">
-              <span className="bg-amber hidden h-px w-8 sm:block" />
               Health, Safety and Environment Consulting
             </p>
             <h1 className="mx-auto max-w-3xl text-4xl leading-[1.08] font-extrabold text-balance sm:text-6xl lg:mx-0 xl:text-7xl">
@@ -37,7 +36,7 @@ export function Hero() {
               {[
                 "Practical HSE Expertise",
                 "Qualified Safety Personnel",
-                "End-to-End Support",
+                "End to End Support",
               ].map((point) => (
                 <li className="flex items-center gap-2" key={point}>
                   <CheckCircle2 className="text-amber" size={18} />

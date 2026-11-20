@@ -28,3 +28,41 @@ test("normalizeFaqItems removes empty entries and preserves order", () => {
     { question: "Q3", answer: "A3" },
   ]);
 });
+
+test("normalizeFaqItems removes dash characters from displayed copy", () => {
+  const items = normalizeFaqItems([
+    {
+      question: "Can you plan pre-event safety?",
+      answer: "Yes—on-site support.",
+    },
+  ]);
+
+  assert.deepEqual(items, [
+    {
+      question: "Can you plan pre event safety?",
+      answer: "Yes on site support.",
+    },
+  ]);
+});
+
+test("normalizeFaqItems preserves database identity and admin metadata", () => {
+  const items = normalizeFaqItems([
+    {
+      id: "c72a0c95-e624-4bf1-85a6-a0e3c2a087bc",
+      question: "Can you help?",
+      answer: "Yes, we can provide practical support.",
+      sortOrder: 3,
+      isActive: false,
+    },
+  ]);
+
+  assert.deepEqual(items, [
+    {
+      id: "c72a0c95-e624-4bf1-85a6-a0e3c2a087bc",
+      question: "Can you help?",
+      answer: "Yes, we can provide practical support.",
+      sortOrder: 3,
+      isActive: false,
+    },
+  ]);
+});

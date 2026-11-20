@@ -1,4 +1,5 @@
 import { createPublicClient } from "@/lib/supabase/public";
+import { removeTextDashes } from "@/lib/utils";
 
 export type PublishedArticle = {
   id: string;
@@ -21,16 +22,20 @@ const articleSelect =
 function mapArticle(article: Record<string, unknown>): PublishedArticle {
   return {
     id: String(article.id),
-    title: String(article.title),
+    title: removeTextDashes(String(article.title)),
     slug: String(article.slug),
-    excerpt: String(article.excerpt ?? ""),
-    content: String(article.content ?? ""),
-    category: String(article.category ?? "HSE Insight"),
-    authorName: String(article.author_name ?? "Dune Consulting"),
+    excerpt: removeTextDashes(String(article.excerpt ?? "")),
+    content: removeTextDashes(String(article.content ?? "")),
+    category: removeTextDashes(String(article.category ?? "HSE Insight")),
+    authorName: removeTextDashes(
+      String(article.author_name ?? "Dune Consulting"),
+    ),
     featured: Boolean(article.featured),
-    seoTitle: article.seo_title ? String(article.seo_title) : null,
+    seoTitle: article.seo_title
+      ? removeTextDashes(String(article.seo_title))
+      : null,
     seoDescription: article.seo_description
-      ? String(article.seo_description)
+      ? removeTextDashes(String(article.seo_description))
       : null,
     publishedAt: String(article.published_at),
     coverImagePath: article.cover_image_url

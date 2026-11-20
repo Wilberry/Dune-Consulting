@@ -1,26 +1,19 @@
-"use client";
-
-import { usePathname } from "next/navigation";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
-import { ReviewBanner } from "@/components/layout/review-banner";
+import { getCompanyContactDetails } from "@/lib/company-contact";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { SiteChromeContent } from "./site-chrome-content";
 
-export function SiteChrome({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname();
-  const isAdmin = pathname === "/admin" || pathname.startsWith("/admin/");
-  const isMentee =
-    pathname === "/dashboard" || pathname.startsWith("/dashboard/");
-
-  if (isAdmin || isMentee) return children;
+export async function SiteChrome({ children }: { children: React.ReactNode }) {
+  const contactDetails = await getCompanyContactDetails();
 
   return (
-    <>
-      <ReviewBanner />
-      <Header />
-      <WhatsAppButton />
+    <SiteChromeContent
+      header={<Header />}
+      footer={<Footer contactDetails={contactDetails} />}
+      whatsapp={<WhatsAppButton phone={contactDetails.telephone} />}
+    >
       {children}
-      <Footer />
-    </>
+    </SiteChromeContent>
   );
 }

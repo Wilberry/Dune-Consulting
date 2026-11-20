@@ -237,7 +237,7 @@ export function MentorshipApplicationForm() {
             </option>
             <option>Student</option>
             <option>Recent graduate</option>
-            <option>Early-career HSE professional</option>
+            <option>Early career HSE professional</option>
             <option>Transitioning into HSE</option>
             <option>
               Experienced professional seeking broader HSE context

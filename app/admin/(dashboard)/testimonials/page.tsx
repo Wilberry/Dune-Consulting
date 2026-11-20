@@ -1,10 +1,17 @@
 import { TestimonialManager } from "@/components/admin/testimonial-manager";
 import { requireStaffUser } from "@/lib/admin/auth";
-import { getAdminTestimonialItems } from "@/lib/testimonials";
+import { getAdminTestimonialItems, type Testimonial } from "@/lib/testimonials";
 
 export default async function TestimonialAdminPage() {
   await requireStaffUser();
-  const items = await getAdminTestimonialItems();
+  let items: Testimonial[] = [];
+  let loadError = false;
+  try {
+    items = await getAdminTestimonialItems();
+  } catch (error) {
+    console.error("Admin feedback records could not be loaded", error);
+    loadError = true;
+  }
 
   return (
     <div className="mx-auto max-w-6xl">
@@ -20,7 +27,17 @@ export default async function TestimonialAdminPage() {
       </p>
 
       <div className="mt-8">
-        <TestimonialManager items={items} />
+        {loadError ? (
+          <p
+            className="rounded-xl border border-red-200 bg-red-50 p-5 text-sm leading-6 text-red-800"
+            role="alert"
+          >
+            Client feedback could not be loaded. Check the Supabase connection
+            and apply the pending database migrations before editing feedback.
+          </p>
+        ) : (
+          <TestimonialManager items={items} />
+        )}
       </div>
     </div>
   );

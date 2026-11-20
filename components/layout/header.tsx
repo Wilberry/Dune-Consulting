@@ -1,16 +1,28 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { Brand } from "./brand";
 import { Container } from "@/components/ui/container";
 import { navigation, serviceNavigation } from "@/data/navigation";
 import { cn } from "@/lib/utils";
 
+function isNavigationItemActive(pathname: string, href: string) {
+  if (href === "/") return pathname === "/";
+  if (href === "#") {
+    return pathname === "/services" || pathname.startsWith("/services/");
+  }
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
+
 export function Header() {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [authMode, setAuthMode] = useState<"register" | "login">("register");
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const mobileDialogRef = useRef<HTMLElement>(null);
@@ -58,7 +70,7 @@ export function Header() {
     <>
       <header
         className={cn(
-          "sticky top-0 z-50 border-b border-white/20 bg-white/75 shadow-[0_8px_30px_rgba(15,35,68,0.08)] backdrop-blur-xl transition-shadow",
+          "site-header-enter sticky top-0 z-50 border-b border-white/20 bg-white/75 shadow-[0_8px_30px_rgba(15,35,68,0.08)] backdrop-blur-xl transition-shadow",
           scrolled && "border-line shadow-sm",
         )}
       >
@@ -71,13 +83,20 @@ export function Header() {
             className="hidden items-center gap-1 lg:flex"
             aria-label="Main navigation"
           >
-            {navigation.map((item) =>
-              item.label === "Services" ? (
+            {navigation.map((item) => {
+              const active = isNavigationItemActive(pathname, item.href);
+              return item.label === "Services" ? (
                 <div key={item.href} className="group relative">
                   <button
                     type="button"
-                    className="text-ink hover:text-navy flex items-center gap-1 rounded px-3 py-3 text-sm font-semibold"
+                    className={cn(
+                      "text-ink hover:text-navy flex items-center gap-1 rounded-md border px-3 py-3 text-sm font-semibold",
+                      active
+                        ? "border-amber bg-amber/10 text-navy"
+                        : "border-transparent",
+                    )}
                     aria-label="Services menu"
+                    aria-current={active ? "page" : undefined}
                   >
                     Services
                     <ChevronDown size={14} aria-hidden="true" />
@@ -97,20 +116,25 @@ export function Header() {
               ) : (
                 <Link
                   key={item.href}
-                  className="text-ink hover:text-navy rounded px-3 py-3 text-sm font-semibold"
+                  className={cn(
+                    "text-ink hover:text-navy rounded-md border px-3 py-3 text-sm font-semibold",
+                    active
+                      ? "border-amber bg-amber/10 text-navy"
+                      : "border-transparent",
+                  )}
                   href={item.href}
+                  aria-current={active ? "page" : undefined}
                 >
                   {item.label}
                 </Link>
-              ),
-            )}
+              );
+            })}
           </nav>
-          <Link
-            href="/contact?type=quote"
-            className="bg-amber text-deep-navy hover:bg-amber-hover hidden rounded-md px-4 py-3 text-sm font-bold lg:block"
-          >
-            Request a Quote
-          </Link>
+          <MembershipAccess
+            mode={authMode}
+            onModeChange={setAuthMode}
+            className="hidden w-44 lg:flex"
+          />
           <button
             ref={menuButtonRef}
             className="text-navy flex h-10 w-10 items-center justify-center rounded p-2 lg:hidden"
@@ -163,13 +187,20 @@ export function Header() {
           className="mt-10 flex flex-col"
           aria-label="Mobile main navigation"
         >
-          {navigation.map((item) =>
-            item.label === "Services" ? (
+          {navigation.map((item) => {
+            const active = isNavigationItemActive(pathname, item.href);
+            return item.label === "Services" ? (
               <div key={item.href}>
                 <button
-                  className="border-line text-navy flex w-full items-center justify-between border-b py-4 text-left font-bold"
+                  className={cn(
+                    "flex w-full items-center justify-between rounded-md border px-3 py-4 text-left font-bold",
+                    active
+                      ? "border-amber bg-amber/10 text-navy"
+                      : "text-navy border-transparent",
+                  )}
                   onClick={() => setServicesOpen(!servicesOpen)}
                   aria-expanded={servicesOpen}
+                  aria-current={active ? "page" : undefined}
                 >
                   Services
                   <ChevronDown
@@ -199,22 +230,86 @@ export function Header() {
               <Link
                 key={item.href}
                 onClick={() => setOpen(false)}
-                className="border-line text-navy border-b py-4 font-bold"
+                className={cn(
+                  "rounded-md border px-3 py-4 font-bold",
+                  active
+                    ? "border-amber bg-amber/10 text-navy"
+                    : "text-navy border-transparent",
+                )}
                 href={item.href}
+                aria-current={active ? "page" : undefined}
               >
                 {item.label}
               </Link>
-            ),
-          )}
+            );
+          })}
         </nav>
-        <Link
-          href="/contact?type=quote"
-          onClick={() => setOpen(false)}
-          className="bg-amber text-deep-navy mt-8 block rounded-md px-5 py-4 text-center font-bold"
-        >
-          Request a Quote
-        </Link>
+        <MembershipAccess
+          mode={authMode}
+          onModeChange={setAuthMode}
+          className="mt-8 flex w-full max-w-[220px]"
+          onNavigate={() => setOpen(false)}
+        />
       </aside>
     </>
+  );
+}
+
+function MembershipAccess({
+  mode,
+  onModeChange,
+  className,
+  onNavigate,
+}: {
+  mode: "register" | "login";
+  onModeChange: (mode: "register" | "login") => void;
+  className?: string;
+  onNavigate?: () => void;
+}) {
+  const isLogin = mode === "login";
+  const label = isLogin ? "Login" : "Register";
+
+  return (
+    <div
+      role="group"
+      aria-label="Membership access"
+      className={cn(
+        "bg-amber shadow-amber/25 relative h-12 items-center rounded-full p-1 shadow-lg transition-shadow hover:shadow-xl",
+        className,
+      )}
+    >
+      <Link
+        href={isLogin ? "/dashboard/login" : "/dashboard/login?mode=signup"}
+        onClick={onNavigate}
+        className="text-deep-navy hover:text-deep-navy/75 absolute inset-y-1 flex items-center justify-center rounded-full text-sm font-extrabold transition-colors"
+        style={
+          isLogin
+            ? { left: "44px", right: "4px" }
+            : { left: "4px", right: "44px" }
+        }
+      >
+        {label}
+      </Link>
+      <button
+        type="button"
+        role="switch"
+        aria-label={`Switch to ${isLogin ? "register" : "login"}`}
+        aria-checked={isLogin}
+        onClick={() => onModeChange(isLogin ? "register" : "login")}
+        className="border-amber-hover absolute top-1 flex size-10 items-center justify-center rounded-full border-2 bg-white shadow-sm transition-[left,transform] duration-300 hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+        style={{
+          left: isLogin ? "4px" : "calc(100% - 44px)",
+        }}
+      >
+        <Image
+          src="/images/mainlogo.svg"
+          alt=""
+          aria-hidden="true"
+          width={28}
+          height={28}
+          className="h-7 w-7 object-contain"
+        />
+      </button>
+    </div>
   );
 }

@@ -1,6 +1,10 @@
-export function WhatsAppButton() {
-  const whatsappUrl =
-    "https://wa.me/2349066853199?text=Hello%20Dune%20Consulting%2C%20I%20would%20like%20to%20make%20an%20enquiry%20about%20your%20HSE%20services.";
+export function WhatsAppButton({ phone }: { phone: string }) {
+  let digits = phone.replace(/\D/g, "");
+  if (digits.startsWith("00")) digits = digits.slice(2);
+  const whatsappPhone = digits.startsWith("0")
+    ? `234${digits.slice(1)}`
+    : digits;
+  const whatsappUrl = `https://wa.me/${whatsappPhone}?text=Hello%20Dune%20Consulting%2C%20I%20would%20like%20to%20make%20an%20enquiry%20about%20your%20HSE%20services.`;
 
   return (
     <a

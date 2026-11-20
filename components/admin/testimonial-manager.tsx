@@ -1,11 +1,13 @@
 "use client";
 
 import { useActionState, useState } from "react";
+import Image from "next/image";
 import {
   deleteTestimonial,
   saveTestimonial,
   type TestimonialActionState,
 } from "@/app/admin/(dashboard)/testimonials/actions";
+import { DeleteItemForm } from "@/components/admin/delete-item-form";
 import type { Testimonial } from "@/lib/testimonials";
 
 const initialState: TestimonialActionState = { status: "idle" };
@@ -21,6 +23,7 @@ export function TestimonialManager({ items }: { items: Testimonial[] }) {
   return (
     <div className="space-y-8">
       <form
+        key={editingId ?? "new-testimonial"}
         action={formAction}
         className="border-line rounded-2xl border bg-white p-5 shadow-sm sm:p-7"
       >
@@ -88,16 +91,51 @@ export function TestimonialManager({ items }: { items: Testimonial[] }) {
               htmlFor="testimonial-image"
               className="text-navy text-sm font-bold"
             >
-              Avatar or photo URL
+              Profile photo URL
             </label>
             <input
               id="testimonial-image"
               name="image"
               defaultValue={draftItem?.image ?? ""}
-              placeholder="https://example.com/client-photo.jpg"
+              placeholder="https://example.com/clientphoto.jpg"
               maxLength={500}
               className="border-line text-ink mt-2 w-full rounded-lg border bg-white px-4 py-3"
             />
+          </div>
+
+          <div>
+            <label
+              htmlFor="testimonial-image-file"
+              className="text-navy text-sm font-bold"
+            >
+              Upload profile photo
+            </label>
+            <input
+              id="testimonial-image-file"
+              name="imageFile"
+              type="file"
+              accept="image/jpeg,image/png,image/webp,image/avif"
+              className="border-line text-ink mt-2 w-full rounded-lg border bg-white px-4 py-3"
+            />
+            <p className="text-muted mt-2 text-xs">
+              Upload a JPEG, PNG, WebP or AVIF image up to 5 MB. A new upload
+              replaces the photo URL above.
+            </p>
+            {draftItem?.image && (
+              <div className="mt-3 flex items-center gap-3">
+                <Image
+                  src={draftItem.image}
+                  alt={`Current profile photo for ${draftItem.name}`}
+                  width={56}
+                  height={56}
+                  unoptimized
+                  className="size-14 rounded-full object-cover"
+                />
+                <span className="text-muted text-sm">
+                  Current profile photo
+                </span>
+              </div>
+            )}
           </div>
 
           <div>
@@ -126,7 +164,7 @@ export function TestimonialManager({ items }: { items: Testimonial[] }) {
               htmlFor="testimonial-quote"
               className="text-navy text-sm font-bold"
             >
-              Review write-up
+              Review write up
             </label>
             <textarea
               id="testimonial-quote"
@@ -212,9 +250,12 @@ export function TestimonialManager({ items }: { items: Testimonial[] }) {
                   <div className="flex min-w-0 flex-1 items-start gap-4">
                     <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-full bg-slate-100">
                       {item.image ? (
-                        <img
+                        <Image
                           src={item.image}
                           alt={item.name}
+                          width={56}
+                          height={56}
+                          unoptimized
                           className="h-full w-full object-cover"
                         />
                       ) : (
@@ -243,20 +284,19 @@ export function TestimonialManager({ items }: { items: Testimonial[] }) {
                   <div className="flex shrink-0 gap-2">
                     <button
                       type="button"
-                      onClick={() => setEditingId(item.id ?? null)}
+                      disabled={!item.id}
+                      onClick={() => item.id && setEditingId(item.id)}
                       className="rounded-lg border border-slate-200 px-3 py-2 text-sm font-semibold text-slate-700"
                     >
                       Edit
                     </button>
-                    <form action={deleteTestimonial}>
-                      <input type="hidden" name="id" value={item.id ?? ""} />
-                      <button
-                        type="submit"
-                        className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm font-semibold text-red-700"
-                      >
-                        Delete
-                      </button>
-                    </form>
+                    {item.id && (
+                      <DeleteItemForm
+                        action={deleteTestimonial}
+                        id={item.id}
+                        label="Feedback"
+                      />
+                    )}
                   </div>
                 </div>
               </article>

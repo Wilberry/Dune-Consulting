@@ -96,7 +96,7 @@ export function AdminShell({
   const visibleNavigation = navigation.filter(
     (item) => !item.adminOnly || user.role === "admin",
   );
-  const displayName = user.fullName || "Dune Staff";
+  const displayName = user.fullName || "Dune Consulting Staff";
   const userInitial = (user.fullName || user.email || "D")
     .charAt(0)
     .toUpperCase();

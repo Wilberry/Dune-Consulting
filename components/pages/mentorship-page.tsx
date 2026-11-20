@@ -28,8 +28,8 @@ const learningAreas = [
   "Hazard identification and practical risk assessment",
   "Clear reporting, communication and briefings",
   "Workplace safety planning and operational thinking",
-  "Professional growth, reflection and next-step planning",
-  "Responsible decision-making in real-world environments",
+  "Professional growth, reflection and next step planning",
+  "Responsible decision making in real world environments",
 ];
 
 const outcomes = [
@@ -45,7 +45,7 @@ const mentorshipPackages = [
     price: "Free",
     availability: "Unlimited spots",
     description:
-      "A welcoming starting point for people looking to strengthen their HSE foundation through structured learning and mentor-led discussions.",
+      "A welcoming starting point for people looking to strengthen their HSE foundation through structured learning and mentor led discussions.",
     benefits: [
       "All five weekly live sessions",
       "Group Q&A with the mentor",
@@ -66,7 +66,7 @@ const mentorshipPackages = [
       "Everything in Foundation",
       "Access to recordings of every session",
       "Access to a private coaching community",
-      "Interactive coaching sessions and between-session support",
+      "Interactive coaching sessions and between session support",
     ],
     href: "/mentorship?package=Momentum#apply",
     highlighted: true,
@@ -76,14 +76,14 @@ const mentorshipPackages = [
     price: "₦100,000",
     availability: "5 spots only",
     description:
-      "A more personalised mentorship experience for participants seeking individual guidance and additional professional-development support.",
+      "A more personalised mentorship experience for participants seeking individual guidance and additional professional development support.",
     benefits: [
       "Everything in Momentum",
-      "One-to-one mentor access throughout the five-week programme and for one month afterwards",
+      "One to one mentor access throughout the five week programme and for one month afterwards",
       "Personal LinkedIn profile and CV review",
       "A LinkedIn recommendation from the mentor at the end of the programme",
       "First access to secure a spot when the next cohort opens",
-      "A dedicated one-to-one Microsoft Teams follow-up session 30 days after the programme",
+      "A dedicated one to one Microsoft Teams follow up session 30 days after the programme",
     ],
     href: "/mentorship?package=Elevation#apply",
     highlighted: false,
@@ -98,9 +98,9 @@ export function MentorshipPage() {
   return (
     <main id="main-content">
       <PageHero
-        eyebrow="Dune HSE Mentorship Program"
+        eyebrow="Dune Consulting HSE Mentorship Program"
         title="Your next chapter in HSE starts here."
-        copy="Strengthen your HSE knowledge, develop professional confidence and learn through a structured five-week mentorship experience. With live Saturday sessions, weekly assignments and mentor-led discussions, this programme is designed to support your professional growth."
+        copy="Strengthen your HSE knowledge, develop professional confidence and learn through a structured five week mentorship experience. With live Saturday sessions, weekly assignments and mentor led discussions, this programme is designed to support your professional growth."
         image="/images/site_safety_briefing.webp"
         cta={{ label: "View programme options", href: "#packages" }}
       />
@@ -127,7 +127,7 @@ export function MentorshipPage() {
               The Dune Consulting HSE Mentorship Programme is built for aspiring
               and developing HSE professionals who want more than theory. Over
               five weeks, mentees explore key safety principles, professional
-              responsibilities and practical decision-making through live
+              responsibilities and practical decision making through live
               sessions, guided assignments and focused discussion.
             </p>
             <p className="text-muted mt-4 leading-7">
@@ -149,7 +149,7 @@ export function MentorshipPage() {
                   className="text-success mt-0.5 shrink-0"
                   size={18}
                 />
-                Five-week mentorship experience
+                Five week mentorship experience
               </li>
               <li className="flex gap-3">
                 <CheckCircle2
@@ -194,7 +194,7 @@ export function MentorshipPage() {
             <ul className="mt-7 space-y-4">
               {[
                 "Students and recent graduates exploring HSE careers",
-                "Early-career safety professionals seeking practical context",
+                "Early career safety professionals seeking practical context",
                 "Professionals transitioning into HSE responsibilities",
                 "People preparing for broader operational safety roles",
               ].map((item) => (
@@ -341,7 +341,7 @@ export function MentorshipPage() {
           </div>
           <div>
             <SectionHeading
-              eyebrow="Why Learn With Dune"
+              eyebrow="Why Learn With Dune Consulting"
               title="Insight informed by practical delivery"
             />
             <FeatureGrid

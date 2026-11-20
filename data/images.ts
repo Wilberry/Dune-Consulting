@@ -167,7 +167,7 @@ export const siteImages: SiteImage[] = [
   ),
   image(
     "/images/mentorship/who-should-apply.jpg",
-    "Early-career safety professionals in discussion",
+    "Early career safety professionals in discussion",
     "Mentorship",
   ),
   image(

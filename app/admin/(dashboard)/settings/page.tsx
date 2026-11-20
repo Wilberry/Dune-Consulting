@@ -1,8 +1,11 @@
 import { ProfileForm } from "@/components/admin/profile-form";
+import { CompanyContactForm } from "@/components/admin/company-contact-form";
+import { getCompanyContactDetails } from "@/lib/company-contact";
 import { requireStaffUser } from "@/lib/admin/auth";
 
 export default async function AdminSettingsPage() {
   const user = await requireStaffUser();
+  const contactDetails = await getCompanyContactDetails();
 
   return (
     <div className="mx-auto max-w-7xl">
@@ -14,9 +17,18 @@ export default async function AdminSettingsPage() {
       </h1>
       <p className="text-muted mt-3 max-w-2xl leading-7">
         Update your staff display name. Email addresses and authorization roles
-        remain read-only in the dashboard.
+        remain read only in the dashboard. Update the public contact phone and
+        email below.
       </p>
       <ProfileForm user={user} />
+      <section className="mt-10">
+        <h2 className="text-navy text-xl font-bold">Public contact details</h2>
+        <p className="text-muted mt-2 max-w-2xl leading-7">
+          These details appear in the site footer, Contact page, and contact
+          links.
+        </p>
+        <CompanyContactForm contactDetails={contactDetails} />
+      </section>
     </div>
   );
 }

@@ -12,6 +12,9 @@ test("homepage and primary navigation load without console errors", async ({
   );
   if ((page.viewportSize()?.width ?? 0) >= 1024) {
     const nav = page.getByRole("navigation", { name: "Main navigation" });
+    const home = nav.getByRole("link", { name: "Home", exact: true });
+    await expect(home).toHaveAttribute("aria-current", "page");
+    await expect(home).toHaveClass(/border-amber/);
     for (const [label, path] of [
       ["About", "/about"],
       ["Portfolio", "/portfolio"],
@@ -25,6 +28,8 @@ test("homepage and primary navigation load without console errors", async ({
         page.waitForURL(new RegExp(`${path}$`)),
         link.click(),
       ]);
+      await expect(link).toHaveAttribute("aria-current", "page");
+      await expect(link).toHaveClass(/border-amber/);
       await page.goto("/");
       await expect(nav).toBeVisible();
     }
@@ -53,6 +58,55 @@ test("services menu supports pointer and keyboard", async ({
   await expect(page).toHaveURL(/event-safety-management$/);
 });
 
+test("membership navigation switches between registration and login", async ({
+  page,
+  isMobile,
+}) => {
+  await page.goto("/");
+
+  if (isMobile) {
+    await page.getByRole("button", { name: "Open navigation menu" }).click();
+  }
+
+  const nav = page.getByRole("navigation", {
+    name: isMobile ? "Mobile main navigation" : "Main navigation",
+  });
+  await expect(nav).toBeVisible();
+  const accessGroup = page.getByRole("group", { name: "Membership access" });
+  await expect(
+    accessGroup.getByRole("link", { name: "Register" }),
+  ).toHaveAttribute("href", "/dashboard/login?mode=signup");
+  await expect(accessGroup).toHaveClass(/bg-amber/);
+  await expect(accessGroup).not.toHaveClass(/bg-\[#7028d8\]/);
+
+  await accessGroup.getByRole("switch", { name: "Switch to login" }).click();
+  await expect(accessGroup.getByRole("switch")).toHaveAttribute(
+    "aria-checked",
+    "true",
+  );
+  const loginLink = accessGroup.getByRole("link", { name: "Login" });
+  await expect(loginLink).toHaveAttribute("href", "/dashboard/login");
+  await accessGroup.getByRole("switch", { name: "Switch to register" }).click();
+  await expect(accessGroup.getByRole("switch")).toHaveAttribute(
+    "aria-checked",
+    "false",
+  );
+  const registerLink = accessGroup.getByRole("link", { name: "Register" });
+  await expect(registerLink).toHaveAttribute(
+    "href",
+    "/dashboard/login?mode=signup",
+  );
+
+  await page.goto("/dashboard/login");
+  await expect(
+    page.getByRole("heading", { name: "Mentee sign in" }),
+  ).toBeVisible();
+  await page.goto("/dashboard/login?mode=signup");
+  await expect(
+    page.getByRole("heading", { name: "Create a mentee account" }),
+  ).toBeVisible();
+});
+
 test("mobile navigation manages focus, Escape, and scrolling", async ({
   page,
   isMobile,
@@ -70,7 +124,7 @@ test("mobile navigation manages focus, Escape, and scrolling", async ({
   await page.keyboard.press("Shift+Tab");
   await page.keyboard.press("Shift+Tab");
   await expect(
-    dialog.getByRole("link", { name: "Request a Quote" }),
+    dialog.getByRole("switch", { name: "Switch to login" }),
   ).toBeFocused();
   await page.keyboard.press("Escape");
   await expect(dialog).toHaveAttribute("aria-hidden", "true");

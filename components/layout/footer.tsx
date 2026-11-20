@@ -4,9 +4,14 @@ import { NewsletterSignupForm } from "@/components/forms/newsletter-signup-form"
 import { Container } from "@/components/ui/container";
 import { serviceNavigation } from "@/data/navigation";
 import { company } from "@/data/company";
+import type { CompanyContactDetails } from "@/lib/company-contact";
 import { Brand } from "./brand";
 
-export function Footer() {
+export function Footer({
+  contactDetails,
+}: {
+  contactDetails: CompanyContactDetails;
+}) {
   const year = new Date().getFullYear();
   return (
     <footer className="bg-deep-navy text-white">
@@ -98,19 +103,19 @@ export function Footer() {
               <li>
                 <a
                   className="flex items-start gap-3 transition hover:text-white"
-                  href={`tel:${company.telephoneHref}`}
+                  href={`tel:${contactDetails.telephoneHref}`}
                 >
                   <Phone className="text-amber mt-0.5 shrink-0" size={16} />
-                  <span>{company.telephone}</span>
+                  <span>{contactDetails.telephone}</span>
                 </a>
               </li>
               <li>
                 <a
                   className="flex items-start gap-3 transition hover:text-white"
-                  href={`mailto:${company.email}`}
+                  href={`mailto:${contactDetails.email}`}
                 >
                   <Mail className="text-amber mt-0.5 shrink-0" size={16} />
-                  <span>{company.email}</span>
+                  <span>{contactDetails.email}</span>
                 </a>
               </li>
             </ul>

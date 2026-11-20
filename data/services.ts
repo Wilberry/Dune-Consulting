@@ -10,18 +10,18 @@ export type Service = {
 
 export const services: Service[] = [
   {
-    title: "Event Safety Management",
-    description:
-      "End-to-end safety planning, risk assessment, coordination and on-site monitoring for professionally managed events.",
-    href: "/services/event-safety-management",
-    icon: ShieldCheck,
-  },
-  {
     title: "HSE Training",
     description:
       "Practical and customised workplace safety training designed to strengthen competence, emergency preparedness and confident response.",
     href: "/services/hse-training",
     icon: GraduationCap,
+  },
+  {
+    title: "Event Safety Management",
+    description:
+      "End to end safety planning, risk assessment, coordination and on site monitoring for professionally managed events.",
+    href: "/services/event-safety-management",
+    icon: ShieldCheck,
   },
   {
     title: "HSE Personnel Outsourcing",
@@ -33,7 +33,7 @@ export const services: Service[] = [
   {
     title: "HSE Mentorship Program",
     description:
-      "Structured professional guidance for early-career HSE practitioners seeking stronger workplace confidence, judgement and career direction.",
+      "Structured professional guidance for early career HSE practitioners seeking stronger workplace confidence, judgement and career direction.",
     href: "/mentorship",
     icon: Compass,
   },

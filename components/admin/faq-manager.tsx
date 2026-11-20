@@ -6,6 +6,7 @@ import {
   saveFaqItem,
   type FAQActionState,
 } from "@/app/admin/(dashboard)/faq/actions";
+import { DeleteItemForm } from "@/components/admin/delete-item-form";
 import type { FAQItem } from "@/lib/faq";
 
 const initialState: FAQActionState = { status: "idle" };
@@ -22,6 +23,7 @@ export function FAQManager({ items }: { items: FAQItem[] }) {
   return (
     <div className="space-y-8">
       <form
+        key={editingId ?? "new-faq"}
         action={formAction}
         className="border-line rounded-2xl border bg-white p-5 shadow-sm sm:p-7"
       >
@@ -162,20 +164,19 @@ export function FAQManager({ items }: { items: FAQItem[] }) {
                   <div className="flex shrink-0 gap-2">
                     <button
                       type="button"
-                      onClick={() => setEditingId(item.id ?? null)}
+                      disabled={!item.id}
+                      onClick={() => item.id && setEditingId(item.id)}
                       className="rounded-lg border border-slate-200 px-3 py-2 text-sm font-semibold text-slate-700"
                     >
                       Edit
                     </button>
-                    <form action={deleteFaqItem}>
-                      <input type="hidden" name="id" value={item.id ?? ""} />
-                      <button
-                        type="submit"
-                        className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm font-semibold text-red-700"
-                      >
-                        Delete
-                      </button>
-                    </form>
+                    {item.id && (
+                      <DeleteItemForm
+                        action={deleteFaqItem}
+                        id={item.id}
+                        label="FAQ"
+                      />
+                    )}
                   </div>
                 </div>
               </article>

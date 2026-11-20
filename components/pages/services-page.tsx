@@ -33,7 +33,7 @@ export function ServicesOverviewPage() {
           align="center-all"
           eyebrow="Our Services"
           title="Expert support shaped around your requirements"
-          copy="Choose a focused service or combine capabilities into an end-to-end HSE solution."
+          copy="Choose a focused service or combine capabilities into an end to end HSE solution."
         />
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-7">
           {services.map((service) => (
@@ -117,7 +117,7 @@ export function ServiceDetailPage({ slug }: { slug: string }) {
           <Callout title="Designed around your context">
             <p>
               Scope, resourcing and delivery are agreed around the environment,
-              audience, schedule and level of risk—never copied from an
+              audience, schedule and level of risk, never copied from an
               unrelated assignment.
             </p>
           </Callout>

@@ -9,7 +9,7 @@ export type Testimonial = {
 export const testimonials: Testimonial[] = [
   {
     quote:
-      "The Dune HSE Mentorship Program gave me the confidence to apply safety decisions in real event and workplace environments. The coaching was practical, direct and easy to follow.",
+      "The Dune Consulting HSE Mentorship Program gave me the confidence to apply safety decisions in real event and workplace environments. The coaching was practical, direct and easy to follow.",
     name: "Amina Yusuf",
     role: "HSE Graduate",
     image: "/images/executive_portrait.webp",
@@ -17,7 +17,7 @@ export const testimonials: Testimonial[] = [
   },
   {
     quote:
-      "Dune Consulting’s team helped us deliver a large conference with clarity and calm. Their event safety planning and on-site communication made the whole delivery far more reliable.",
+      "Dune Consulting’s team helped us deliver a large conference with clarity and calm. Their event safety planning and on site communication made the whole delivery far more reliable.",
     name: "Michael Ade",
     role: "Event Operations Manager",
     image: "/images/Hero.webp",

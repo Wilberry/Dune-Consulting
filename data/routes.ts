@@ -21,7 +21,7 @@ export const supportedRoutes = {
     path: "/services/event-safety-management",
     title: "Event Safety Management",
     description:
-      "End-to-end event safety planning, risk assessment and on-site coordination from Dune Consulting.",
+      "End to end event safety planning, risk assessment and on site coordination from Dune Consulting.",
   },
   "services/hse-training": {
     path: "/services/hse-training",
@@ -33,7 +33,7 @@ export const supportedRoutes = {
     path: "/services/personnel-outsourcing",
     title: "HSE Personnel Outsourcing",
     description:
-      "Qualified HSE professionals for temporary and long-term event, project and operational assignments.",
+      "Qualified HSE professionals for temporary and long term event, project and operational assignments.",
   },
   portfolio: {
     path: "/portfolio",
@@ -45,7 +45,7 @@ export const supportedRoutes = {
     path: "/mentorship",
     title: "HSE Mentorship Program | Dune Consulting",
     description:
-      "Join Dune Consulting's five-week HSE mentorship programme for practical safety learning, live Saturday sessions, assignments and mentor-led development support.",
+      "Join Dune Consulting's five week HSE mentorship programme for practical safety learning, live Saturday sessions, assignments and mentor led development support.",
   },
   insights: {
     path: "/insights",

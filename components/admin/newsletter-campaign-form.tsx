@@ -106,13 +106,14 @@ export function NewsletterCampaignForm({
               disabled={locked}
             />
             <p className="text-muted mt-2 text-xs leading-5">
-              Write the email body as trusted HTML. Dune&apos;s unsubscribe
-              footer is appended automatically when the campaign is sent.
+              Write the email body as trusted HTML. Dune Consulting&apos;s
+              unsubscribe footer is appended automatically when the campaign is
+              sent.
             </p>
           </Field>
 
           <Field
-            label="Plain-text body"
+            label="Plain text body"
             htmlFor="newsletter-campaign-text"
             error={errorFor("contentText")}
           >
@@ -135,9 +136,9 @@ export function NewsletterCampaignForm({
           <div className="border-line rounded-xl border bg-white p-5 shadow-sm">
             <h2 className="text-navy font-extrabold">Audience</h2>
             <p className="text-muted mt-2 text-sm leading-6">
-              Campaigns send to the configured Dune Newsletter segment. Supabase
-              subscribers must be active, deliverable and synchronized before
-              the send action is enabled operationally.
+              Campaigns send to the configured Dune Consulting Newsletter
+              segment. Supabase subscribers must be active, deliverable and
+              synchronized before the send action is enabled operationally.
             </p>
           </div>
 

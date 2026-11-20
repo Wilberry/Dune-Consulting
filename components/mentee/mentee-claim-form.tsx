@@ -40,7 +40,7 @@ export function MenteeClaimForm() {
       />
       <p className="text-muted max-w-lg text-xs leading-5">
         After approving your application, Dune Consulting staff will share a
-        one-use invitation with you privately. Enter it while signed in using
+        single use invitation with you privately. Enter it while signed in using
         the verified email on your application.
       </p>
       <button

@@ -52,12 +52,12 @@ export function AboutPage() {
               <p>
                 Dune Consulting is a Health, Safety and Environment consultancy
                 based in Lagos, Nigeria. We support organisations, event
-                producers and project teams with practical risk-management
+                producers and project teams with practical risk management
                 solutions.
               </p>
               <p>
                 We combine early risk planning, practical education, qualified
-                personnel and responsive on-site supervision to help clients
+                personnel and responsive on site supervision to help clients
                 protect people, maintain compliance and operate confidently.
               </p>
               <p>
@@ -92,7 +92,7 @@ export function AboutPage() {
             <div className="flex gap-4">
               <Eye className="text-amber-hover shrink-0" />
               <p>
-                To be a trusted reference for dependable, human-centred safety
+                To be a trusted reference for dependable, human centred safety
                 delivery across Nigeria and beyond.
               </p>
             </div>
@@ -104,7 +104,7 @@ export function AboutPage() {
           align="center-all"
           eyebrow="What Guides Us"
           title="Values reflected in how we work"
-          copy="Our values shape the details—from the questions we ask to the way our personnel show up on site."
+          copy="Our values shape the details, from the questions we ask to the way our personnel show up on site."
         />
         <div className="mt-10">
           <FeatureGrid items={values} columns={4} />
@@ -140,7 +140,7 @@ export function AboutPage() {
             />
             <ul className="mt-7 space-y-4">
               {[
-                "End-to-end support rather than disconnected activities",
+                "End to end support rather than disconnected activities",
                 "Recommendations designed for real operational environments",
                 "Responsive personnel who communicate with clarity",
                 "Safety integration that respects the audience and operation",
@@ -165,7 +165,7 @@ export function AboutPage() {
         <SectionHeading
           align="center-all"
           eyebrow="Industries We Serve"
-          title="Flexible support across people-led environments"
+          title="Flexible support across people led environments"
         />
         <div className="mt-10">
           <FeatureGrid items={industries} columns={4} />
@@ -203,7 +203,7 @@ export function AboutPage() {
               </p>
               <p className="text-muted text-sm">
                 Anthony is a Health, Safety and Environment professional,
-                corporate trainer, mentor and professional-development advocate.
+                corporate trainer, mentor and professional development advocate.
                 His work focuses on helping organisations improve safety
                 performance through practical HSE training, event safety
                 coordination and professional development.
@@ -213,9 +213,10 @@ export function AboutPage() {
               <div className="flex flex-col items-center gap-3 text-left sm:text-center lg:flex-row lg:items-start lg:text-left">
                 <Award className="text-amber-hover shrink-0" />
                 <p className="text-sm">
-                  Dune&apos;s leadership demonstrates commitment through
-                  consistent delivery of practical HSE results, professional
-                  development support and dependable client partnerships.
+                  Dune Consulting&apos;s leadership demonstrates commitment
+                  through consistent delivery of practical HSE results,
+                  professional development support and dependable client
+                  partnerships.
                 </p>
               </div>
             </Callout>

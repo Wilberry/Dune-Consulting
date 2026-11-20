@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { requireStaffUser } from "@/lib/admin/auth";
+import type { AdminActionState } from "@/lib/admin/action-state";
 import { createClient } from "@/lib/supabase/server";
 
 const faqSchema = z.object({
@@ -51,12 +52,16 @@ export async function saveFaqItem(
 
   try {
     if (parsed.data.id) {
-      const { error } = await supabase
+      const { data: updatedItem, error } = await supabase
         .from("faq_items")
         .update(payload)
-        .eq("id", parsed.data.id);
+        .eq("id", parsed.data.id)
+        .select("id")
+        .maybeSingle();
 
       if (error) throw error;
+      if (!updatedItem)
+        throw new Error("FAQ item was not found or accessible.");
     } else {
       const { data: existingItems, error: listError } = await supabase
         .from("faq_items")
@@ -97,21 +102,42 @@ export async function saveFaqItem(
   }
 }
 
-export async function deleteFaqItem(formData: FormData): Promise<void> {
+export async function deleteFaqItem(
+  _previousState: AdminActionState,
+  formData: FormData,
+): Promise<AdminActionState> {
   await requireStaffUser();
 
-  const id = String(formData.get("id") ?? "").trim();
-  if (!id) return;
+  const parsedId = z.uuid().safeParse(formData.get("id"));
+  if (!parsedId.success) {
+    return { status: "error", message: "This FAQ entry has an invalid ID." };
+  }
 
   try {
     const supabase = await createClient();
-    const { error } = await supabase.from("faq_items").delete().eq("id", id);
+    const { data: deletedItem, error } = await supabase
+      .from("faq_items")
+      .delete()
+      .eq("id", parsedId.data)
+      .select("id")
+      .maybeSingle();
 
     if (error) throw error;
+    if (!deletedItem) {
+      return {
+        status: "error",
+        message: "The FAQ entry was not found or could not be deleted.",
+      };
+    }
 
     revalidatePath("/admin/faq");
     revalidatePath("/");
+    return { status: "success", message: "FAQ entry deleted." };
   } catch (error) {
     console.error("FAQ item deletion failed", error);
+    return {
+      status: "error",
+      message: "The FAQ entry could not be deleted. Please try again.",
+    };
   }
 }

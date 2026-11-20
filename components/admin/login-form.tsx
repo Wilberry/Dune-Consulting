@@ -30,7 +30,7 @@ export function AdminLoginForm() {
 
     if (!parsed.success) {
       setError(
-        parsed.error.issues[0]?.message ?? "Review your sign-in details.",
+        parsed.error.issues[0]?.message ?? "Review your sign in details.",
       );
       return;
     }
@@ -62,7 +62,7 @@ export function AdminLoginForm() {
       ) {
         await supabase.auth.signOut();
         setError(
-          "This account is not authorized to access Dune administration.",
+          "This account is not authorized to access Dune Consulting administration.",
         );
         return;
       }
@@ -70,7 +70,7 @@ export function AdminLoginForm() {
       router.replace("/admin");
       router.refresh();
     } catch {
-      setError("Admin sign-in is not configured or could not be reached.");
+      setError("Admin sign in is not configured or could not be reached.");
     } finally {
       setLoading(false);
     }

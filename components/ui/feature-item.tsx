@@ -9,8 +9,8 @@ export function FeatureItem({
   icon: LucideIcon;
 }) {
   return (
-    <article className="text-center sm:text-left">
-      <div className="text-amber mx-auto mb-5 flex size-11 items-center justify-center rounded-full border border-white/20">
+    <article className="group text-center sm:text-left">
+      <div className="text-amber group-hover:border-amber mx-auto mb-5 flex size-11 items-center justify-center rounded-full border border-white/20 transition duration-300 group-hover:scale-110 sm:mx-0">
         <Icon size={21} aria-hidden="true" />
       </div>
       <h3 className="text-xl font-bold text-white">{title}</h3>

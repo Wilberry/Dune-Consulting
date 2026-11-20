@@ -29,7 +29,7 @@ export function LegalPage({ type }: { type: "privacy" | "terms" }) {
               <p className="mt-3">
                 Provide reviewed{" "}
                 {privacy
-                  ? "privacy and data-processing information"
+                  ? "privacy and data processing information"
                   : "website usage terms"}{" "}
                 before the site is launched publicly.
               </p>

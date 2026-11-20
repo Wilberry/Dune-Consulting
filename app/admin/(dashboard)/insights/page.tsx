@@ -61,8 +61,8 @@ export default async function AdminInsightsPage() {
         <div className="border-line mt-8 rounded-xl border bg-white p-8 text-center">
           <h2 className="text-navy text-lg font-bold">No articles yet</h2>
           <p className="text-muted mt-2 text-sm">
-            Create the first Dune Insight as a draft, review it, then publish it
-            when ready.
+            Create the first Dune Consulting Insight as a draft, review it, then
+            publish it when ready.
           </p>
         </div>
       ) : (

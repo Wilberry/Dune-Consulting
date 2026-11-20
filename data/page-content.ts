@@ -66,7 +66,7 @@ const sharedProcess = [
   },
   {
     title: "Report",
-    copy: "We document delivery, observations and clear next-step recommendations.",
+    copy: "We document delivery, observations and clear next step recommendations.",
   },
 ];
 
@@ -77,10 +77,10 @@ export const serviceDetails: Record<string, ServiceDetail> = {
     eyebrow: "Safe events, confidently delivered",
     image: "/images/conference_event.webp",
     summary:
-      "End-to-end safety planning and live operational support for events of every format and scale.",
+      "End to end safety planning and live operational support for events of every format and scale.",
     overview: [
       "Successful events depend on safety decisions made long before guests arrive. Dune Consulting works alongside organisers, venues, production teams and suppliers to identify risk early and turn requirements into practical operating plans.",
-      "From pre-event assessments to on-site supervision and post-event reporting, our approach protects people while preserving the intended audience experience.",
+      "From pre event assessments to on site supervision and post event reporting, our approach protects people while preserving the intended audience experience.",
     ],
     audiences: [
       "Conference and exhibition organisers",
@@ -88,7 +88,7 @@ export const serviceDetails: Record<string, ServiceDetail> = {
       "Brand activation teams",
       "Corporate event managers",
       "Venues and production partners",
-      "Community and public-event organisers",
+      "Community and public event organisers",
     ],
     benefits: [
       {
@@ -115,25 +115,25 @@ export const serviceDetails: Record<string, ServiceDetail> = {
       "Safety officer deployment",
       "Paramedic and ambulance coordination",
       "Fire equipment and personnel coordination",
-      "On-site compliance monitoring",
-      "Incident documentation and post-event reports",
+      "On site compliance monitoring",
+      "Incident documentation and post event reports",
     ],
     process: sharedProcess,
     faqs: [
       {
         question: "When should event safety planning begin?",
         answer:
-          "As early as possible. Early involvement allows safety requirements to influence venue, production, supplier and audience-flow decisions before they become costly to change.",
+          "As early as possible. Early involvement allows safety requirements to influence venue, production, supplier and audience flow decisions before they become costly to change.",
       },
       {
-        question: "Can Dune support only the event day?",
+        question: "Can Dune Consulting support only the event day?",
         answer:
-          "Yes, subject to a review of existing plans. For the strongest outcome, we recommend including a pre-event assessment and briefing.",
+          "Yes, subject to a review of existing plans. For the strongest outcome, we recommend including a pre event assessment and briefing.",
       },
       {
         question: "Do you coordinate emergency resources?",
         answer:
-          "Dune can coordinate appropriate medical, ambulance, fire and safety resources according to the event risk profile and approved plan.",
+          "Dune Consulting can coordinate appropriate medical, ambulance, fire and safety resources according to the event risk profile and approved plan.",
       },
     ],
     related: ["hse-training", "personnel-outsourcing"],
@@ -175,15 +175,15 @@ export const serviceDetails: Record<string, ServiceDetail> = {
       },
     ],
     features: [
-      "Training-needs assessment",
+      "Training needs assessment",
       "Custom course design",
       "Induction and refresher training",
-      "Emergency-response awareness",
+      "Emergency response awareness",
       "Risk assessment workshops",
       "Supervisor safety development",
       "Event crew safety briefings",
       "Attendance and completion records",
-      "Post-training recommendations",
+      "Post training recommendations",
     ],
     process: sharedProcess,
     faqs: [
@@ -193,7 +193,7 @@ export const serviceDetails: Record<string, ServiceDetail> = {
           "Yes. Course scope, examples, exercises and delivery format can be aligned with your operations, workforce and identified risks.",
       },
       {
-        question: "Do you offer on-site delivery?",
+        question: "Do you offer on site delivery?",
         answer:
           "Training can be delivered at an appropriate client venue or another agreed location, subject to the programme requirements.",
       },
@@ -214,7 +214,7 @@ export const serviceDetails: Record<string, ServiceDetail> = {
     summary:
       "Competent HSE professionals deployed to support projects, facilities, workplaces and events.",
     overview: [
-      "The need for capable HSE support can change quickly. Dune Consulting helps organisations fill short-term, project-based and longer-term safety roles without compromising expectations.",
+      "The need for capable HSE support can change quickly. Dune Consulting helps organisations fill short term, project based and longer term safety roles without compromising expectations.",
       "We focus on role clarity, appropriate experience, responsive communication and integration with the client team.",
     ],
     audiences: [
@@ -222,7 +222,7 @@ export const serviceDetails: Record<string, ServiceDetail> = {
       "Project delivery teams",
       "Growing businesses",
       "Organisations covering temporary vacancies",
-      "Companies with peak-period requirements",
+      "Companies with peak period requirements",
       "Teams needing specialist HSE support",
     ],
     benefits: [
@@ -245,20 +245,20 @@ export const serviceDetails: Record<string, ServiceDetail> = {
     features: [
       "Safety officers and supervisors",
       "Temporary HSE role coverage",
-      "Project-based deployments",
+      "Project based deployments",
       "Event safety personnel",
-      "Compliance-monitoring support",
+      "Compliance monitoring support",
       "Site inspection and reporting",
-      "Toolbox-talk facilitation",
+      "Toolbox talk facilitation",
       "Contractor safety coordination",
-      "Longer-term personnel arrangements",
+      "Longer term personnel arrangements",
     ],
     process: sharedProcess,
     faqs: [
       {
         question: "Can personnel be deployed for a single event?",
         answer:
-          "Yes. Assignments can range from a single event or shift to project-based and longer-term deployments.",
+          "Yes. Assignments can range from a single event or shift to project based and longer term deployments.",
       },
       {
         question: "How do you match personnel to an assignment?",
@@ -268,7 +268,7 @@ export const serviceDetails: Record<string, ServiceDetail> = {
       {
         question: "Who manages deployed personnel?",
         answer:
-          "Supervision and reporting lines are defined in the engagement scope so client and Dune responsibilities remain clear.",
+          "Supervision and reporting lines are defined in the engagement scope so client and Dune Consulting responsibilities remain clear.",
       },
     ],
     related: ["event-safety-management", "hse-training"],
@@ -310,7 +310,7 @@ export const industries: ContentFeature[] = [
   },
   {
     title: "Projects & field operations",
-    copy: "Flexible personnel and risk-management support.",
+    copy: "Flexible personnel and risk management support.",
     icon: Map,
   },
   {
@@ -322,13 +322,13 @@ export const industries: ContentFeature[] = [
 
 export const mentorshipBenefits: ContentFeature[] = [
   {
-    title: "Five-week programme",
+    title: "Five week programme",
     copy: "A structured learning journey designed to deepen practical HSE understanding over time.",
     icon: Compass,
   },
   {
     title: "Live Saturday sessions",
-    copy: "Join mentor-led discussions every Saturday via Microsoft Teams and ask questions in real time.",
+    copy: "Join mentor led discussions every Saturday via Microsoft Teams and ask questions in real time.",
     icon: Eye,
   },
   {

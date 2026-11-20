@@ -13,10 +13,26 @@ const profileSchema = z.object({
     .max(120, "Keep the name under 120 characters."),
 });
 
+const companyContactSchema = z.object({
+  phone: z
+    .string()
+    .trim()
+    .min(7, "Enter a valid phone number.")
+    .max(30, "Keep the phone number under 30 characters.")
+    .regex(/^\+?[0-9().\s]+$/, "Enter a valid phone number."),
+  email: z
+    .string()
+    .trim()
+    .max(254, "Keep the email address under 254 characters.")
+    .pipe(z.email("Enter a valid email address.")),
+});
+
 export type ProfileActionState = {
   status: "idle" | "success" | "error";
   message?: string;
 };
+
+export type CompanyContactActionState = ProfileActionState;
 
 export async function updateProfileName(
   _previousState: ProfileActionState,
@@ -46,4 +62,47 @@ export async function updateProfileName(
 
   revalidatePath("/admin", "layout");
   return { status: "success", message: "Profile name updated." };
+}
+
+export async function updateCompanyContactDetails(
+  _previousState: CompanyContactActionState,
+  formData: FormData,
+): Promise<CompanyContactActionState> {
+  await requireStaffUser();
+
+  const parsed = companyContactSchema.safeParse({
+    phone: formData.get("phone"),
+    email: formData.get("email"),
+  });
+  if (!parsed.success) {
+    return {
+      status: "error",
+      message:
+        parsed.error.issues[0]?.message ??
+        "Review the public contact information.",
+    };
+  }
+
+  const supabase = await createClient();
+  const { error } = await supabase.from("company_contact_settings").upsert(
+    {
+      id: 1,
+      contact_phone: parsed.data.phone,
+      contact_email: parsed.data.email,
+    },
+    { onConflict: "id" },
+  );
+
+  if (error) {
+    console.error("Admin company contact update failed", error.message);
+    return {
+      status: "error",
+      message: "The public contact details could not be updated.",
+    };
+  }
+
+  revalidatePath("/", "layout");
+  revalidatePath("/contact");
+  revalidatePath("/admin/settings");
+  return { status: "success", message: "Public contact details updated." };
 }

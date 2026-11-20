@@ -1,3 +1,5 @@
+import { removeTextDashes } from "@/lib/utils";
+
 export type FAQItem = {
   id?: string;
   question: string;
@@ -20,17 +22,17 @@ export const faqDefaultItems: FAQItem[] = [
   {
     question: "What HSE training programmes do you offer?",
     answer:
-      "We provide industry-relevant HSE training programmes ranging from introductory safety awareness to advanced professional development. Training may be delivered on-site, online, or at a designated training location, depending on the client’s needs.",
+      "We provide industry relevant HSE training programmes ranging from introductory safety awareness to advanced professional development. Training may be delivered on site, online, or at a designated training location, depending on the client’s needs.",
   },
   {
     question: "What is the HSE Mentorship Programme?",
     answer:
-      "The HSE Mentorship Programme supports aspiring and early-career safety professionals through practical guidance, career coaching, industry insights, and real-world knowledge from experienced HSE professionals.",
+      "The HSE Mentorship Programme supports aspiring and early career safety professionals through practical guidance, career coaching, industry insights, and real world knowledge from experienced HSE professionals.",
   },
   {
     question: "Do you provide HSE personnel for companies?",
     answer:
-      "Yes. We recruit, train, and deploy qualified HSE professionals for short-term, long-term, and project-based assignments, helping organisations access competent safety personnel when needed.",
+      "Yes. We recruit, train, and deploy qualified HSE professionals for short term, long term, and project based assignments, helping organisations access competent safety personnel when needed.",
   },
   {
     question: "What is Event Safety Management?",
@@ -66,13 +68,26 @@ export function normalizeFaqItems(
     .map((item) => {
       const question = String(item?.question ?? "").trim();
       const answer = String(item?.answer ?? "").trim();
-      return { question, answer };
+      const sortOrder = item?.sortOrder;
+      return {
+        id: typeof item?.id === "string" ? item.id : undefined,
+        question: removeTextDashes(question),
+        answer: removeTextDashes(answer),
+        sortOrder:
+          typeof sortOrder === "number" && Number.isFinite(sortOrder)
+            ? sortOrder
+            : undefined,
+        isActive:
+          typeof item?.isActive === "boolean" ? item.isActive : undefined,
+      };
     })
     .filter((item) => item.question.length > 0 && item.answer.length > 0)
     .map((item) => ({
-      ...item,
+      ...(item.id ? { id: item.id } : {}),
       question: item.question.replace(/\s+/g, " "),
       answer: item.answer.replace(/\s+/g, " "),
+      ...(item.sortOrder !== undefined ? { sortOrder: item.sortOrder } : {}),
+      ...(item.isActive !== undefined ? { isActive: item.isActive } : {}),
     }));
 }
 
@@ -110,31 +125,23 @@ export async function getFaqItems(): Promise<FAQItem[]> {
 }
 
 export async function getAdminFaqItems(): Promise<FAQItem[]> {
-  try {
-    const { createClient } = await import("@/lib/supabase/server");
-    const supabase = await createClient();
-    const { data, error } = await supabase
-      .from("faq_items")
-      .select("id, question, answer, sort_order, is_active")
-      .order("sort_order", { ascending: true, nullsFirst: false })
-      .order("created_at", { ascending: true });
+  const { createClient } = await import("@/lib/supabase/server");
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("faq_items")
+    .select("id, question, answer, sort_order, is_active")
+    .order("sort_order", { ascending: true, nullsFirst: false })
+    .order("created_at", { ascending: true });
 
-    if (error) throw error;
+  if (error) throw error;
 
-    return normalizeFaqItems(
-      (data ?? []).map((item) => ({
-        id: item.id,
-        question: item.question,
-        answer: item.answer,
-        sortOrder: item.sort_order,
-        isActive: item.is_active,
-      })),
-    );
-  } catch (error) {
-    console.warn(
-      "Unable to load admin FAQ items from Supabase. Falling back to the default seed.",
-      error,
-    );
-    return faqDefaultItems;
-  }
+  return normalizeFaqItems(
+    (data ?? []).map((item) => ({
+      id: item.id,
+      question: item.question,
+      answer: item.answer,
+      sortOrder: item.sort_order,
+      isActive: item.is_active,
+    })),
+  );
 }

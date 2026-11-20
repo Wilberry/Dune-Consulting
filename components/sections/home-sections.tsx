@@ -79,7 +79,7 @@ export function Clients() {
           <p className="text-muted mt-4 text-sm leading-7">
             Our event safety portfolio includes corporate gatherings,
             conferences, launches, festivals and large audience experiences
-            supported through practical planning, coordination and on-site
+            supported through practical planning, coordination and on site
             safety management.
           </p>
         </div>
@@ -106,7 +106,7 @@ export function ServicesSection() {
           align="center-all"
           eyebrow="What We Do"
           title="Complete HSE Support, From Planning to Execution"
-          copy="We combine risk planning, trained personnel, practical education and on-site supervision to help clients protect people and maintain operational compliance."
+          copy="We combine risk planning, trained personnel, practical education and on site supervision to help clients protect people and maintain operational compliance."
         />
         <Reveal>
           <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
@@ -155,15 +155,15 @@ export function AboutPreview() {
           <div>
             <div className="text-muted mt-6 space-y-4 text-center leading-7 lg:text-left">
               <p>
-                Dune Consulting is a Lagos-based Health, Safety and Environment
+                Dune Consulting is a Lagos based Health, Safety and Environment
                 consultancy supporting organisations, event producers and
-                project teams with practical risk-management solutions.
+                project teams with practical risk management solutions.
               </p>
               <p>
                 We believe effective safety should protect people without
-                unnecessarily disrupting operations or the event experience. Our
-                approach combines early planning, clear communication, trained
-                personnel and responsive on-site supervision.
+                unnecessarily disrupting operations. Our approach combines early
+                planning, clear communication, trained personnel and responsive
+                on site supervision.
               </p>
             </div>
             <ul className="mt-7 grid gap-3 sm:grid-cols-2">
@@ -178,7 +178,7 @@ export function AboutPreview() {
               ))}
             </ul>
             <Button className="mx-auto mt-8 lg:mx-0" href="/about" arrow>
-              Learn About Dune
+              Learn About Dune Consulting
             </Button>
           </div>
         </div>
@@ -190,13 +190,13 @@ export function AboutPreview() {
 export function WhyChooseUs() {
   const features = [
     {
-      title: "End-to-End Delivery",
+      title: "End to End Delivery",
       copy: "We support clients from initial assessment and planning through deployment, monitoring and reporting.",
       icon: Route,
     },
     {
       title: "Practical Expertise",
-      copy: "Our recommendations are designed for real operational environments, not merely for documents and checklists.",
+      copy: "Our services are designed for real operational environments, not merely for documents and checklists.",
       icon: Lightbulb,
     },
     {
@@ -215,8 +215,8 @@ export function WhyChooseUs() {
       <Container>
         <SectionHeading
           align="center-all"
-          eyebrow="The Dune Difference"
-          title="Why Organisations Choose Dune"
+          eyebrow="The Dune Consulting Difference"
+          title="Why Organisations Choose Dune Consulting"
           inverse
         />
         <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
@@ -318,9 +318,9 @@ export function Mentorship() {
               Build Practical Skills for a Career in HSE
             </h2>
             <p className="mt-5 leading-7 text-white/70">
-              The Dune HSE Mentorship Program supports emerging safety
-              professionals through structured guidance, practical learning and
-              career-focused development.
+              The Dune Consulting HSE Mentorship Program supports emerging
+              safety professionals through structured guidance, practical
+              learning and career focused development.
             </p>
             <ul className="mt-7 space-y-4">
               {benefits.map(([Icon, label]) => (

@@ -3,12 +3,12 @@ import type { Project } from "@/data/portfolio";
 import { ImagePlaceholder } from "./image-placeholder";
 export function ProjectCard({ project }: { project: Project }) {
   return (
-    <article className="group border-line flex h-full flex-col overflow-hidden rounded-xl border bg-white text-center transition hover:-translate-y-1 hover:shadow-xl sm:text-left">
+    <article className="group border-line hover:border-amber flex h-full flex-col overflow-hidden rounded-xl border bg-white text-center transition-all duration-300 hover:-translate-y-1 hover:shadow-xl sm:text-left">
       <div className="bg-off-white h-[220px] w-full overflow-hidden sm:h-[240px] lg:h-[280px]">
         <ImagePlaceholder
           src={project.image}
           alt={`${project.title} event artwork`}
-          className="h-full min-h-0 transition duration-300 group-hover:scale-105"
+          className="h-full min-h-0 transition-transform duration-700 group-hover:scale-105"
           fit="cover"
         />
       </div>

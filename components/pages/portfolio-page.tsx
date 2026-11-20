@@ -17,7 +17,7 @@ export function PortfolioPage() {
       <PageHero
         eyebrow="Our Event Portfolio"
         title="Selected Events and Organisations We Have Supported"
-        copy="Our event safety portfolio includes corporate gatherings, conferences, launches, festivals and large-audience experiences supported through practical planning, coordination and on-site safety management."
+        copy="Our event safety portfolio includes corporate gatherings, conferences, launches, festivals and large audience experiences supported through practical planning, coordination and on site safety management."
         image={featured.image}
         imageAlt={`${featured.title} event artwork`}
       />
@@ -50,7 +50,7 @@ export function PortfolioPage() {
         <SectionHeading
           eyebrow="Project Portfolio"
           title="Events and teams we have supported"
-          copy="Each entry is structured for approved imagery and project-specific detail."
+          copy="Each entry is structured for approved imagery and project specific detail."
         />
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {projects.map((project) => (

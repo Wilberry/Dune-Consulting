@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { requireStaffUser } from "@/lib/admin/auth";
+import type { AdminActionState } from "@/lib/admin/action-state";
 import { createClient } from "@/lib/supabase/server";
 
 const testimonialSchema = z.object({
@@ -36,6 +37,15 @@ export type TestimonialActionState = {
   message?: string;
 };
 
+const testimonialPhotoBucket = "testimonial-photos";
+const maxPhotoBytes = 5 * 1024 * 1024;
+const photoExtensions: Record<string, string> = {
+  "image/avif": "avif",
+  "image/jpeg": "jpg",
+  "image/png": "png",
+  "image/webp": "webp",
+};
+
 export async function saveTestimonial(
   _previousState: TestimonialActionState,
   formData: FormData,
@@ -51,6 +61,25 @@ export async function saveTestimonial(
     rating: formData.get("rating"),
   });
 
+  const photoEntry = formData.get("imageFile");
+  const photo =
+    photoEntry instanceof File && photoEntry.size > 0 ? photoEntry : null;
+  if (photoEntry && typeof photoEntry === "string" && photoEntry.length > 0) {
+    return { status: "error", message: "Choose a valid profile photo." };
+  }
+  if (photo && photo.size > maxPhotoBytes) {
+    return {
+      status: "error",
+      message: "Profile photos must be 5 MB or smaller.",
+    };
+  }
+  if (photo && !photoExtensions[photo.type]) {
+    return {
+      status: "error",
+      message: "Profile photos must be JPEG, PNG, WebP or AVIF.",
+    };
+  }
+
   if (!parsed.success) {
     return {
       status: "error",
@@ -60,22 +89,46 @@ export async function saveTestimonial(
   }
 
   const supabase = await createClient();
-  const payload = {
-    name: parsed.data.name,
-    role: parsed.data.role,
-    quote: parsed.data.quote,
-    image: parsed.data.image ?? null,
-    rating: parsed.data.rating,
-  };
-
+  let uploadedPath: string | null = null;
   try {
+    let image = parsed.data.image ?? null;
+    if (photo) {
+      const photoPath = `avatars/${crypto.randomUUID()}.${photoExtensions[photo.type]}`;
+      const { error: uploadError } = await supabase.storage
+        .from(testimonialPhotoBucket)
+        .upload(photoPath, new Uint8Array(await photo.arrayBuffer()), {
+          cacheControl: "3600",
+          contentType: photo.type,
+          upsert: false,
+        });
+
+      if (uploadError) throw uploadError;
+      uploadedPath = photoPath;
+      image = supabase.storage
+        .from(testimonialPhotoBucket)
+        .getPublicUrl(photoPath).data.publicUrl;
+    }
+
+    const payload = {
+      name: parsed.data.name,
+      role: parsed.data.role,
+      quote: parsed.data.quote,
+      image,
+      rating: parsed.data.rating,
+    };
+
     if (parsed.data.id) {
-      const { error } = await supabase
+      const { data: updatedItem, error } = await supabase
         .from("testimonials")
         .update(payload)
-        .eq("id", parsed.data.id);
+        .eq("id", parsed.data.id)
+        .select("id")
+        .maybeSingle();
 
       if (error) throw error;
+      if (!updatedItem) {
+        throw new Error("Client feedback was not found or accessible.");
+      }
     } else {
       const { data: existingItems, error: listError } = await supabase
         .from("testimonials")
@@ -90,13 +143,15 @@ export async function saveTestimonial(
           return Math.max(max, value);
         }, 0) + 1;
 
-      const { error } = await supabase.from("testimonials").insert([
-        {
+      const { error } = await supabase
+        .from("testimonials")
+        .insert({
           ...payload,
           sort_order: nextSortOrder,
           is_active: true,
-        },
-      ]);
+        })
+        .select("id")
+        .single();
 
       if (error) throw error;
     }
@@ -111,6 +166,17 @@ export async function saveTestimonial(
     };
   } catch (error) {
     console.error("Testimonial save failed", error);
+    if (uploadedPath) {
+      const { error: cleanupError } = await supabase.storage
+        .from(testimonialPhotoBucket)
+        .remove([uploadedPath]);
+      if (cleanupError) {
+        console.error(
+          "Uploaded testimonial photo cleanup failed",
+          cleanupError.message,
+        );
+      }
+    }
     return {
       status: "error",
       message: "The client feedback could not be saved. Please try again.",
@@ -118,21 +184,45 @@ export async function saveTestimonial(
   }
 }
 
-export async function deleteTestimonial(formData: FormData): Promise<void> {
+export async function deleteTestimonial(
+  _previousState: AdminActionState,
+  formData: FormData,
+): Promise<AdminActionState> {
   await requireStaffUser();
 
-  const id = String(formData.get("id") ?? "").trim();
-  if (!id) return;
+  const parsedId = z.uuid().safeParse(formData.get("id"));
+  if (!parsedId.success) {
+    return {
+      status: "error",
+      message: "This feedback entry has an invalid ID.",
+    };
+  }
 
   try {
     const supabase = await createClient();
-    const { error } = await supabase.from("testimonials").delete().eq("id", id);
+    const { data: deletedItem, error } = await supabase
+      .from("testimonials")
+      .delete()
+      .eq("id", parsedId.data)
+      .select("id")
+      .maybeSingle();
 
     if (error) throw error;
+    if (!deletedItem) {
+      return {
+        status: "error",
+        message: "Feedback was not found or could not be deleted.",
+      };
+    }
 
     revalidatePath("/admin/testimonials");
     revalidatePath("/");
+    return { status: "success", message: "Feedback deleted." };
   } catch (error) {
     console.error("Testimonial deletion failed", error);
+    return {
+      status: "error",
+      message: "Feedback could not be deleted. Please try again.",
+    };
   }
 }

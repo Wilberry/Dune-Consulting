@@ -1,3 +1,5 @@
+import { removeTextDashes } from "@/lib/utils";
+
 export type Testimonial = {
   id?: string;
   quote: string;
@@ -12,7 +14,7 @@ export type Testimonial = {
 export const testimonialDefaultItems: Testimonial[] = [
   {
     quote:
-      "The Dune HSE Mentorship Program gave me the confidence to apply safety decisions in real event and workplace environments. The coaching was practical, direct and easy to follow.",
+      "The Dune Consulting HSE Mentorship Program gave me the confidence to apply safety decisions in real event and workplace environments. The coaching was practical, direct and easy to follow.",
     name: "Amina Yusuf",
     role: "HSE Graduate",
     image: "/images/executive_portrait.webp",
@@ -20,7 +22,7 @@ export const testimonialDefaultItems: Testimonial[] = [
   },
   {
     quote:
-      "Dune Consulting’s team helped us deliver a large conference with clarity and calm. Their event safety planning and on-site communication made the whole delivery far more reliable.",
+      "Dune Consulting’s team helped us deliver a large conference with clarity and calm. Their event safety planning and on site communication made the whole delivery far more reliable.",
     name: "Michael Ade",
     role: "Event Operations Manager",
     image: "/images/Hero.webp",
@@ -40,13 +42,25 @@ export function normalizeTestimonials(
   items: Array<Partial<Testimonial> | null | undefined>,
 ): Testimonial[] {
   return items
-    .map((item) => ({
-      quote: String(item?.quote ?? "").trim(),
-      name: String(item?.name ?? "").trim(),
-      role: String(item?.role ?? "").trim(),
-      image: String(item?.image ?? "").trim(),
-      rating: Number(item?.rating ?? 0),
-    }))
+    .map((item) => {
+      const id = typeof item?.id === "string" ? item.id : undefined;
+      const sortOrder =
+        typeof item?.sortOrder === "number" && Number.isFinite(item.sortOrder)
+          ? item.sortOrder
+          : undefined;
+      const isActive =
+        typeof item?.isActive === "boolean" ? item.isActive : undefined;
+      return {
+        ...(id ? { id } : {}),
+        quote: String(item?.quote ?? "").trim(),
+        name: String(item?.name ?? "").trim(),
+        role: String(item?.role ?? "").trim(),
+        image: String(item?.image ?? "").trim(),
+        rating: Number(item?.rating ?? 0),
+        ...(sortOrder !== undefined ? { sortOrder } : {}),
+        ...(isActive !== undefined ? { isActive } : {}),
+      };
+    })
     .filter(
       (item) =>
         item.name.length > 0 &&
@@ -58,7 +72,7 @@ export function normalizeTestimonials(
     )
     .map((item) => ({
       ...item,
-      quote: item.quote.replace(/\s+/g, " "),
+      quote: removeTextDashes(item.quote).replace(/\s+/g, " "),
       name: item.name.replace(/\s+/g, " "),
       role: item.role.replace(/\s+/g, " "),
       image: item.image ? item.image.replace(/\s+/g, " ") : undefined,
@@ -102,34 +116,26 @@ export async function getTestimonialItems(): Promise<Testimonial[]> {
 }
 
 export async function getAdminTestimonialItems(): Promise<Testimonial[]> {
-  try {
-    const { createClient } = await import("@/lib/supabase/server");
-    const supabase = await createClient();
-    const { data, error } = await supabase
-      .from("testimonials")
-      .select("id, quote, name, role, image, rating, sort_order, is_active")
-      .order("sort_order", { ascending: true, nullsFirst: false })
-      .order("created_at", { ascending: true });
+  const { createClient } = await import("@/lib/supabase/server");
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("testimonials")
+    .select("id, quote, name, role, image, rating, sort_order, is_active")
+    .order("sort_order", { ascending: true, nullsFirst: false })
+    .order("created_at", { ascending: true });
 
-    if (error) throw error;
+  if (error) throw error;
 
-    return normalizeTestimonials(
-      (data ?? []).map((item) => ({
-        id: item.id,
-        quote: item.quote,
-        name: item.name,
-        role: item.role,
-        image: item.image,
-        rating: item.rating,
-        sortOrder: item.sort_order,
-        isActive: item.is_active,
-      })),
-    );
-  } catch (error) {
-    console.warn(
-      "Unable to load admin testimonials from Supabase. Falling back to the default seed.",
-      error,
-    );
-    return testimonialDefaultItems;
-  }
+  return normalizeTestimonials(
+    (data ?? []).map((item) => ({
+      id: item.id,
+      quote: item.quote,
+      name: item.name,
+      role: item.role,
+      image: item.image,
+      rating: item.rating,
+      sortOrder: item.sort_order,
+      isActive: item.is_active,
+    })),
+  );
 }

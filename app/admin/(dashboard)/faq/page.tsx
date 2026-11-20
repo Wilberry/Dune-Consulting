@@ -1,10 +1,17 @@
 import { FAQManager } from "@/components/admin/faq-manager";
 import { requireStaffUser } from "@/lib/admin/auth";
-import { getAdminFaqItems } from "@/lib/faq";
+import { getAdminFaqItems, type FAQItem } from "@/lib/faq";
 
 export default async function FAQAdminPage() {
   await requireStaffUser();
-  const items = await getAdminFaqItems();
+  let items: FAQItem[] = [];
+  let loadError = false;
+  try {
+    items = await getAdminFaqItems();
+  } catch (error) {
+    console.error("Admin FAQ records could not be loaded", error);
+    loadError = true;
+  }
 
   return (
     <div className="mx-auto max-w-6xl">
@@ -20,7 +27,17 @@ export default async function FAQAdminPage() {
       </p>
 
       <div className="mt-8">
-        <FAQManager items={items} />
+        {loadError ? (
+          <p
+            className="rounded-xl border border-red-200 bg-red-50 p-5 text-sm leading-6 text-red-800"
+            role="alert"
+          >
+            FAQ records could not be loaded. Check the Supabase connection and
+            apply the pending database migrations before editing FAQ content.
+          </p>
+        ) : (
+          <FAQManager items={items} />
+        )}
       </div>
     </div>
   );

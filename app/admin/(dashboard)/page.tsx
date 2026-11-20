@@ -108,7 +108,7 @@ export default async function AdminDashboardPage({
           <div>
             <div className="flex flex-wrap items-center gap-3">
               <p className="text-amber text-xs font-extrabold tracking-[0.18em] uppercase">
-                Dune Administration
+                Dune Consulting Administration
               </p>
               <span className="rounded-full border border-white/15 bg-white/10 px-3 py-1 text-[11px] font-bold tracking-[0.12em] text-white/80 uppercase">
                 {user.role}

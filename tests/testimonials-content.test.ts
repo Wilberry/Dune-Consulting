@@ -56,3 +56,44 @@ test("normalizeTestimonials removes incomplete entries and trims text", () => {
     },
   ]);
 });
+
+test("normalizeTestimonials removes dash characters from displayed quotes", () => {
+  const items = normalizeTestimonials([
+    {
+      name: "Jane Doe",
+      role: "Manager",
+      quote: "Pre-event planning—on-site support.",
+      rating: 5,
+    },
+  ]);
+
+  assert.equal(items[0]?.quote, "Pre event planning on site support.");
+});
+
+test("normalizeTestimonials preserves database identity and admin metadata", () => {
+  const items = normalizeTestimonials([
+    {
+      id: "c72a0c95-e624-4bf1-85a6-a0e3c2a087bc",
+      name: "Jane Doe",
+      role: "Manager",
+      quote: "Helpful feedback from a client.",
+      image: "/images/jane.webp",
+      rating: 5,
+      sortOrder: 2,
+      isActive: false,
+    },
+  ]);
+
+  assert.deepEqual(items, [
+    {
+      id: "c72a0c95-e624-4bf1-85a6-a0e3c2a087bc",
+      name: "Jane Doe",
+      role: "Manager",
+      quote: "Helpful feedback from a client.",
+      image: "/images/jane.webp",
+      rating: 5,
+      sortOrder: 2,
+      isActive: false,
+    },
+  ]);
+});

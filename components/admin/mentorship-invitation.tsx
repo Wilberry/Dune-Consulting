@@ -22,7 +22,7 @@ export function MentorshipInvitation({
     <section className="border-line mt-4 rounded-lg border bg-white p-4">
       <h3 className="text-navy text-sm font-bold">Secure mentee invitation</h3>
       <p className="text-muted mt-2 text-xs leading-5">
-        Generate a private 48-hour invitation code for this approved applicant.
+        Generate a private 48 hour invitation code for this approved applicant.
         Creating another code invalidates the earlier one.
       </p>
       <form action={action} className="mt-3">
@@ -43,7 +43,7 @@ export function MentorshipInvitation({
       {state.status === "created" && (
         <div className="mt-3 rounded-md border border-amber-300 bg-amber-50 p-3">
           <p className="text-navy text-xs font-bold">
-            Copy now — the code will not be shown again.
+            Copy now. The code will not be shown again.
           </p>
           <code className="mt-2 block text-xs break-all select-all">
             {state.code}

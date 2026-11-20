@@ -2,10 +2,17 @@ import type { Metadata } from "next";
 import { MenteeLoginForm } from "@/components/mentee/mentee-login-form";
 
 export const metadata: Metadata = {
-  title: "Mentee sign in",
+  title: "Mentee account access",
   robots: { index: false, follow: false },
 };
 
-export default function DashboardLoginPage() {
-  return <MenteeLoginForm />;
+export default async function DashboardLoginPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ mode?: string }>;
+}) {
+  const { mode } = await searchParams;
+  return (
+    <MenteeLoginForm initialMode={mode === "signup" ? "signup" : "signin"} />
+  );
 }
