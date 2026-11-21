@@ -15,7 +15,7 @@ export const serviceNavigation: NavigationItem[] = [
     label: "Event Safety Management",
     href: "/services/event-safety-management",
   },
-  { label: "HSE Training", href: "/services/hse-training" },
+  { label: "Bespoke HSE Training", href: "/services/hse-training" },
   {
     label: "HSE Personnel Outsourcing",
     href: "/services/personnel-outsourcing",

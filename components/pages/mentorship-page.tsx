@@ -4,14 +4,12 @@ import {
   BookOpen,
   Check,
   CheckCircle2,
-  ChevronRight,
   ClipboardList,
   MessageCircle,
   Play,
   Route,
   Target,
 } from "lucide-react";
-import { MentorshipApplicationForm } from "@/components/forms/mentorship-application-form";
 import { Button } from "@/components/ui/button";
 import { FeatureGrid } from "@/components/ui/feature-grid";
 import { ImagePlaceholder } from "@/components/ui/image-placeholder";
@@ -53,7 +51,7 @@ const mentorshipPackages = [
       "Eligibility for HSE training scholarships",
       "Certificate of participation",
     ],
-    href: "/mentorship?package=Foundation#apply",
+    href: "/mentorship/apply?package=Foundation#apply",
     highlighted: false,
   },
   {
@@ -68,7 +66,7 @@ const mentorshipPackages = [
       "Access to a private coaching community",
       "Interactive coaching sessions and between session support",
     ],
-    href: "/mentorship?package=Momentum#apply",
+    href: "/mentorship/apply?package=Momentum#apply",
     highlighted: true,
   },
   {
@@ -85,7 +83,7 @@ const mentorshipPackages = [
       "First access to secure a spot when the next cohort opens",
       "A dedicated one to one Microsoft Teams follow up session 30 days after the programme",
     ],
-    href: "/mentorship?package=Elevation#apply",
+    href: "/mentorship/apply?package=Elevation#apply",
     highlighted: false,
   },
 ] as const;
@@ -446,28 +444,6 @@ export function MentorshipPage() {
           </div>
         </Section>
       )}
-      <Section className="bg-off-white">
-        <div className="grid gap-10 lg:grid-cols-[.8fr_1.2fr] lg:items-start">
-          <div className="lg:sticky lg:top-28">
-            <SectionHeading
-              eyebrow="Applications"
-              title="Choose the package that fits your goals"
-            />
-            <p className="text-muted mt-5 leading-7">
-              The application helps us understand your current stage, motivation
-              and development goals before the next cohort is confirmed.
-            </p>
-            <p className="text-muted mt-4 leading-7">
-              Selecting a package reflects your interest in the programme. It
-              does not imply payment or guaranteed enrolment.
-            </p>
-            <div className="text-navy mt-5 inline-flex items-center gap-2 text-sm font-bold">
-              Explore the programme <ChevronRight size={16} />
-            </div>
-          </div>
-          <MentorshipApplicationForm />
-        </div>
-      </Section>
       <section className="bg-amber py-16">
         <div className="mx-auto flex max-w-[1440px] flex-col items-start justify-between gap-8 px-5 sm:px-8 lg:flex-row lg:items-center lg:px-10 xl:px-12">
           <div>
@@ -478,13 +454,12 @@ export function MentorshipPage() {
               Ready to take the next step in your HSE journey?
             </h2>
             <p className="text-deep-navy/70 mt-3">
-              Choose the package that fits your goals and apply to the programme
-              with the support, structure and guidance you need to keep moving
-              forward.
+              Apply for the programme with the support, structure and guidance
+              you need to keep moving forward.
             </p>
           </div>
           <Button
-            href="/mentorship?package=Foundation#apply"
+            href="/mentorship/apply?package=Foundation#apply"
             variant="secondary"
           >
             Apply for mentorship <ArrowRight size={17} />

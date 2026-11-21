@@ -30,6 +30,7 @@ export type ContentFeature = { title: string; copy: string; icon: LucideIcon };
 export type ServiceDetail = {
   slug: string;
   title: string;
+  overviewHeading?: string;
   eyebrow: string;
   eyebrowMobile?: string;
   summary: string;
@@ -140,7 +141,8 @@ export const serviceDetails: Record<string, ServiceDetail> = {
   },
   "hse-training": {
     slug: "hse-training",
-    title: "HSE Training",
+    title: "Bespoke HSE Training",
+    overviewHeading: "Practical HSE training that supports confident delivery",
     eyebrow: "Learning designed for real work",
     image: "/images/dune_training_outdoor_high_quality.webp",
     summary:
@@ -299,14 +301,14 @@ export const values: ContentFeature[] = [
 ];
 export const industries: ContentFeature[] = [
   {
-    title: "Events & entertainment",
-    copy: "Concerts, festivals, conferences, launches and activations.",
-    icon: Sparkles,
-  },
-  {
     title: "Corporate workplaces",
     copy: "Practical training and operational safety support for teams.",
     icon: Building2,
+  },
+  {
+    title: "Events & entertainment",
+    copy: "Concerts, festivals, conferences, launches and activations.",
+    icon: Sparkles,
   },
   {
     title: "Projects & field operations",

@@ -10,7 +10,7 @@ export type Service = {
 
 export const services: Service[] = [
   {
-    title: "HSE Training",
+    title: "Bespoke HSE Training",
     description:
       "Practical and customised workplace safety training designed to strengthen competence, emergency preparedness and confident response.",
     href: "/services/hse-training",

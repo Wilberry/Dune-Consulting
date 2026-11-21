@@ -103,7 +103,10 @@ export function ServiceDetailPage({ slug }: { slug: string }) {
           <SectionHeading
             align="center-all"
             eyebrow="Overview"
-            title={`Practical ${service.title.toLowerCase()} that supports confident delivery`}
+            title={
+              service.overviewHeading ??
+              `Practical ${service.title.toLowerCase()} that supports confident delivery`
+            }
           />
         </div>
         <div className="mt-12 grid gap-12 lg:grid-cols-[1.15fr_.85fr] lg:items-center">

@@ -25,9 +25,9 @@ export const supportedRoutes = {
   },
   "services/hse-training": {
     path: "/services/hse-training",
-    title: "HSE Training",
+    title: "Bespoke HSE Training",
     description:
-      "Practical and customised workplace safety training to strengthen competence, emergency preparedness and confident response.",
+      "Practical HSE training tailored to strengthen competence, emergency preparedness and confident response.",
   },
   "services/personnel-outsourcing": {
     path: "/services/personnel-outsourcing",
@@ -46,6 +46,12 @@ export const supportedRoutes = {
     title: "HSE Mentorship Program | Dune Consulting",
     description:
       "Join Dune Consulting's five week HSE mentorship programme for practical safety learning, live Saturday sessions, assignments and mentor led development support.",
+  },
+  "mentorship/apply": {
+    path: "/mentorship/apply",
+    title: "Apply for HSE Mentorship | Dune Consulting",
+    description:
+      "Apply for the Dune Consulting HSE Mentorship Programme and choose your preferred package.",
   },
   insights: {
     path: "/insights",

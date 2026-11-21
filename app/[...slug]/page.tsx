@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { AboutPage } from "@/components/pages/about-page";
 import { InsightsPage } from "@/components/pages/insights-page";
 import { LegalPage } from "@/components/pages/legal-page";
+import { MentorshipApplicationPage } from "@/components/pages/mentorship-application-page";
 import { MentorshipPage } from "@/components/pages/mentorship-page";
 import {
   PortfolioPage,
@@ -58,6 +59,7 @@ export default async function ContentPage({ params }: Props) {
   else if (key === "portfolio") content = <PortfolioPage />;
   else if (key.startsWith("portfolio/"))
     content = <ProjectDetailPage slug={slug[1]} />;
+  else if (key === "mentorship/apply") content = <MentorshipApplicationPage />;
   else if (key === "mentorship") content = <MentorshipPage />;
   else if (key === "insights") content = <InsightsPage />;
   else if (key === "privacy" || key === "terms")
