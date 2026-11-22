@@ -55,4 +55,12 @@ export const projects: Project[] = [
     image: "/images/portfolio/zedcrest-launchpad-2.jpg",
     href: "/portfolio/zedcrest-launchpad",
   },
+  {
+    slug: "cfg-africa-workplace-leadership",
+    title: "CFG Africa Workplace Leadership Bootcamp",
+    category: "HSE Training",
+    location: "Lagos, Nigeria",
+    image: "/images/portfolio/file_0000000026d882108ac29ed08e3a40ac.png",
+    href: "/portfolio/cfg-africa-workplace-leadership",
+  },
 ];

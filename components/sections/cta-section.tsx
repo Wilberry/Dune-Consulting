@@ -14,12 +14,7 @@ export function CTASection() {
             your organisation requires.
           </p>
         </div>
-        <div className="flex flex-wrap gap-3">
-          <Button href="/contact#consultation">Request a Consultation</Button>
-          <Button href="/contact" variant="light">
-            Contact Our Team
-          </Button>
-        </div>
+        <Button href="/contact#consultation">Request a Consultation</Button>
       </Container>
     </section>
   );

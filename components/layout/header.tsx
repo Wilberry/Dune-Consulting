@@ -247,7 +247,7 @@ export function Header() {
         <MembershipAccess
           mode={authMode}
           onModeChange={setAuthMode}
-          className="mt-8 flex w-full max-w-[220px]"
+          className="mx-auto mt-8 flex w-full max-w-[342px]"
           onNavigate={() => setOpen(false)}
         />
       </aside>

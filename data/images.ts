@@ -69,7 +69,7 @@ export const siteImages: SiteImage[] = [
   ),
   approvedImage(
     "/images/executive_portrait.webp",
-    "Portrait of the Lead Consultant, Anthony Igbinosun",
+    "Portrait of the Founder and Lead Consultant, Anthony O. Igbinosun",
     "About",
     "1130×1392px",
     "1130:1392",
@@ -216,6 +216,13 @@ export const siteImages: SiteImage[] = [
     "Portfolio",
     "1080×1350px",
     "4:5",
+  ),
+  approvedImage(
+    "/images/portfolio/file_0000000026d882108ac29ed08e3a40ac.png",
+    "CFG Africa Workplace Leadership Bootcamp training session",
+    "Portfolio",
+    "1671×941px",
+    "~16:9",
   ),
   approvedImage(
     "/images/training_room.webp",

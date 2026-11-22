@@ -1,7 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
 import {
-  ArrowRight,
   BadgeCheck,
   Check,
   ClipboardCheck,
@@ -33,13 +31,47 @@ import { projects } from "@/data/portfolio";
 import { services } from "@/data/services";
 import { statistics } from "@/data/statistics";
 
-const portfolioItems = [
-  "Jameson Distillery on Tour Lagos",
-  "Moonshot by TechCabal",
-  "Africa Finance Corporation Annual Staff Retreat 2026",
-  "Aproko Nation Fiesta",
-  "Martell x Davido Launch",
-  "Zedcrest Launchpad 2.0",
+const partnerLogos = [
+  {
+    name: "Zedcrest",
+    image: "/images/Partners logo/zedcrest@2x.png",
+  },
+  {
+    name: "Martell",
+    image: "/images/Partners logo/martell@2x.png",
+  },
+  {
+    name: "Fidelity",
+    image: "/images/Partners logo/fidelity@2x.png",
+  },
+  {
+    name: "Zikoko",
+    image: "/images/Partners logo/zikoko@2x.png",
+  },
+  {
+    name: "Traction Apps",
+    image: "/images/Partners logo/traction_apps@2x.png",
+  },
+  {
+    name: "CFG Africa",
+    image: "/images/Partners logo/cfg_africa@2x.png",
+  },
+  {
+    name: "KCoins",
+    image: "/images/Partners logo/koins@2x.png",
+  },
+  {
+    name: "Pernod Ricard India",
+    image: "/images/Partners logo/pernod_ricard_india@2x.png",
+  },
+  {
+    name: "TechCabal",
+    image: "/images/Partners logo/techcabal@2x.png",
+  },
+  {
+    name: "Gokada",
+    image: "/images/Partners logo/gokada@2x.png",
+  },
 ];
 const process = [
   [
@@ -74,7 +106,7 @@ export function Clients() {
             id="portfolio-preview-title"
             className="text-navy text-2xl font-extrabold sm:text-3xl"
           >
-            Selected Events and Organisations We Have Supported
+            Events and Organisations We Have Supported
           </h2>
           <p className="text-muted mt-4 text-sm leading-7">
             Our event safety portfolio includes corporate gatherings,
@@ -83,15 +115,34 @@ export function Clients() {
             safety management.
           </p>
         </div>
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
-          {portfolioItems.map((item) => (
-            <div
-              key={item}
-              className="border-line bg-off-white text-navy rounded-xl border px-4 py-4 text-sm font-semibold"
-            >
-              {item}
-            </div>
-          ))}
+        <div
+          className="partner-marquee mt-10"
+          aria-label="Partner organisations"
+        >
+          <div className="partner-track">
+            {[0, 1].map((copy) => (
+              <div
+                key={copy}
+                className="partner-copy"
+                aria-hidden={copy === 1 ? "true" : undefined}
+              >
+                {partnerLogos.map((partner) => (
+                  <div
+                    key={`${copy}-${partner.name}`}
+                    className="border-line bg-off-white flex h-24 min-w-[210px] items-center justify-center rounded-xl border px-5 sm:min-w-[250px]"
+                  >
+                    <Image
+                      src={partner.image}
+                      alt={`${partner.name} logo`}
+                      width={220}
+                      height={80}
+                      className="h-16 w-44 object-contain sm:w-[200px]"
+                    />
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
         </div>
       </Container>
     </section>
@@ -278,14 +329,29 @@ export function FeaturedProjects() {
         <div className="flex flex-col gap-5 sm:flex-row sm:items-end">
           <SectionHeading
             eyebrow="Our Work"
-            title="Selected Events and Projects"
+            title="Events and Projects"
             copy="A selection of events and organisations supported by Dune Consulting."
           />
         </div>
-        <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
-          {projects.map((project) => (
-            <ProjectCard key={project.title} project={project} />
-          ))}
+        <div className="works-marquee mt-14" aria-label="Selected projects">
+          <div className="works-track">
+            {[0, 1].map((copy) => (
+              <div
+                key={copy}
+                className="works-copy"
+                aria-hidden={copy === 1 ? "true" : undefined}
+              >
+                {projects.map((project) => (
+                  <div
+                    key={`${copy}-${project.slug}`}
+                    className="w-[280px] shrink-0 sm:w-[340px] lg:w-[380px]"
+                  >
+                    <ProjectCard project={project} />
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
         </div>
       </Container>
     </section>

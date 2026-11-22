@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
@@ -97,9 +98,6 @@ export function AdminShell({
     (item) => !item.adminOnly || user.role === "admin",
   );
   const displayName = user.fullName || "Dune Consulting Staff";
-  const userInitial = (user.fullName || user.email || "D")
-    .charAt(0)
-    .toUpperCase();
 
   async function logout() {
     setLoggingOut(true);
@@ -163,8 +161,14 @@ export function AdminShell({
 
         <div className="mt-auto rounded-2xl border border-white/10 bg-white/5 p-4">
           <div className="flex min-w-0 items-center gap-3">
-            <div className="bg-amber text-deep-navy flex size-10 shrink-0 items-center justify-center rounded-xl text-sm font-extrabold">
-              {userInitial}
+            <div className="relative size-10 shrink-0 overflow-hidden rounded-xl border border-white/15 bg-white/10">
+              <Image
+                src="/images/executive_portrait.webp"
+                alt="Anthony O. Igbinosun"
+                fill
+                sizes="40px"
+                className="object-cover object-top"
+              />
             </div>
             <div className="min-w-0">
               <p className="truncate text-sm font-bold text-white">
@@ -221,8 +225,14 @@ export function AdminShell({
                 {user.email}
               </p>
             </div>
-            <div className="bg-navy text-amber flex size-9 items-center justify-center rounded-xl text-xs font-extrabold shadow-sm">
-              {userInitial}
+            <div className="relative size-9 overflow-hidden rounded-xl border border-white/20 shadow-sm">
+              <Image
+                src="/images/executive_portrait.webp"
+                alt="Anthony O. Igbinosun"
+                fill
+                sizes="36px"
+                className="object-cover object-top"
+              />
             </div>
           </div>
         </header>

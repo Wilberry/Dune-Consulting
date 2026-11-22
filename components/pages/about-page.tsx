@@ -181,45 +181,79 @@ export function AboutPage() {
           />
         </div>
         <div className="mt-12 grid gap-10 lg:grid-cols-[340px_1fr] lg:items-start">
-          <div className="mx-auto h-[260px] w-[260px] overflow-hidden rounded-[18px] border border-white/10 shadow-xl sm:h-[300px] sm:w-[300px] lg:h-[340px] lg:w-[340px]">
-            <LeadConsultantPhoto
-              src="/images/executive_portrait.webp"
-              alt="Anthony Igbinosun, Lead Consultant"
-            />
-          </div>
-          <div className="space-y-8 text-center lg:text-left">
-            <div className="space-y-4 leading-7">
-              <h3 className="text-navy text-lg font-bold">Anthony Igbinosun</h3>
-              <p className="text-navy text-sm font-semibold">Lead Consultant</p>
-              <p>
-                <Link
-                  href="https://www.linkedin.com/in/anthonyigbinosun"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-navy hover:text-deep-navy decoration-amber text-sm font-semibold underline decoration-2 underline-offset-4 transition"
-                >
-                  Connect with Anthony on LinkedIn
-                </Link>
-              </p>
-              <p className="text-muted text-sm">
-                Anthony is a Health, Safety and Environment professional,
-                corporate trainer, mentor and professional development advocate.
-                His work focuses on helping organisations improve safety
-                performance through practical HSE training, event safety
-                coordination and professional development.
-              </p>
+          <div className="lg:sticky lg:top-28">
+            <div className="mx-auto h-[260px] w-[260px] overflow-hidden rounded-[18px] border border-white/10 shadow-xl sm:h-[300px] sm:w-[300px] lg:h-[340px] lg:w-[340px]">
+              <LeadConsultantPhoto
+                src="/images/executive_portrait.webp"
+                alt="Anthony O. Igbinosun, Founder and Lead Consultant"
+              />
             </div>
-            <Callout title="About leadership">
-              <div className="flex flex-col items-center gap-3 text-left sm:text-center lg:flex-row lg:items-start lg:text-left">
+            <div className="mx-auto mt-5 max-w-[340px] text-center lg:text-left">
+              <h3 className="text-navy text-xl font-bold">
+                Anthony O. Igbinosun
+              </h3>
+              <p className="text-navy mt-1 text-sm font-semibold">
+                Founder &amp; Lead Consultant
+              </p>
+              <Link
+                href="https://www.linkedin.com/in/anthonyigbinosun"
+                target="_blank"
+                rel="noreferrer"
+                className="text-navy hover:text-deep-navy decoration-amber mt-3 inline-block text-sm font-semibold underline decoration-2 underline-offset-4 transition"
+              >
+                Connect with Anthony on LinkedIn
+              </Link>
+            </div>
+          </div>
+          <div className="text-muted space-y-5 text-sm leading-7 sm:text-base">
+            <p>
+              Anthony O. Igbinosun is an accomplished Health, Safety and
+              Environment (HSE) professional, consultant, trainer and mentor
+              with about 14 years of experience across passenger transport,
+              logistics, construction and waste management. He is passionate
+              about helping organisations manage risk, strengthen safety
+              systems, protect people and achieve sustainable operational
+              excellence.
+            </p>
+            <p>
+              Anthony is the Founder and Lead Consultant of Dune Consulting,
+              through which he leads the delivery of HSE consultancy, training,
+              event safety management, HSE personnel outsourcing, risk
+              assessment, emergency preparedness and advisory services to
+              organisations across diverse sectors. His approach to consultancy
+              is rooted in the belief that safety must be practical,
+              commercially relevant and integrated into everyday business
+              operations.
+            </p>
+            <p>
+              Beyond corporate consultancy, Anthony is deeply committed to
+              developing the next generation of safety professionals. He founded
+              the Dune Consulting HSE Mentorship Programme, an initiative
+              designed to equip early career HSE professionals with the
+              knowledge, confidence, professional insight and practical skills
+              needed to navigate the workplace, grow their careers and become
+              impactful safety practitioners. Through structured mentorship,
+              professional development sessions and candid conversations about
+              the realities of the HSE profession, he seeks to bridge the gap
+              between academic knowledge, professional certifications and real
+              world practice.
+            </p>
+            <Callout title="Professional foundation">
+              <div className="flex flex-col gap-3 text-left sm:flex-row sm:items-start">
                 <Award className="text-amber-hover shrink-0" />
                 <p className="text-sm">
-                  Dune Consulting&apos;s leadership demonstrates commitment
-                  through consistent delivery of practical HSE results,
-                  professional development support and dependable client
-                  partnerships.
+                  Anthony holds an MSc in Health, Safety and Environment from
+                  the University of Sunderland and several professional
+                  qualifications in occupational health and safety, management
+                  systems auditing and risk assessment. He is also a member of
+                  IOSH &amp; TRATSEDI.
                 </p>
               </div>
             </Callout>
+            <Quote attribution="Anthony O. Igbinosun">
+              Safety should go beyond compliance. It should protect lives,
+              strengthen businesses and create lasting impact.
+            </Quote>
           </div>
         </div>
       </Section>

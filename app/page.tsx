@@ -3,6 +3,7 @@ import { CTASection } from "@/components/sections/cta-section";
 import { Hero } from "@/components/sections/hero";
 import {
   AboutPreview,
+  Clients,
   FeaturedProjects,
   FAQSection,
   Mentorship,
@@ -66,6 +67,7 @@ export default async function Home() {
         }}
       />
       <Hero />
+      <Clients />
       <ServicesSection />
       <AboutPreview />
       <WhyChooseUs />

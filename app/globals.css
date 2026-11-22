@@ -124,6 +124,65 @@ select {
   background-size: 36px 36px;
 }
 
+@keyframes partner-scroll {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes works-scroll {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.partner-marquee,
+.works-marquee {
+  width: 100%;
+  overflow: hidden;
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 4%,
+    black 96%,
+    transparent
+  );
+}
+
+.partner-track,
+.works-track,
+.partner-copy,
+.works-copy {
+  display: flex;
+  width: max-content;
+}
+
+.partner-track {
+  animation: partner-scroll 28s linear infinite;
+}
+
+.works-track {
+  animation: works-scroll 28s linear infinite;
+}
+
+.partner-copy,
+.works-copy {
+  flex-shrink: 0;
+  gap: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+.partner-marquee:hover .partner-track,
+.works-marquee:hover .works-track {
+  animation-play-state: paused;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -140,6 +199,11 @@ select {
   }
 
   .page-motion main section {
+    animation: none !important;
+  }
+
+  .partner-track,
+  .works-track {
     animation: none !important;
   }
 }

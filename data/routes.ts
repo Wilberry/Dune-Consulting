@@ -105,6 +105,12 @@ export const supportedRoutes = {
     description:
       "Dune Consulting provided event safety support for this approved portfolio engagement.",
   },
+  "portfolio/cfg-africa-workplace-leadership": {
+    path: "/portfolio/cfg-africa-workplace-leadership",
+    title: "CFG Africa Workplace Leadership Bootcamp",
+    description:
+      "Dune Consulting supported HSE training and professional development for this approved portfolio engagement.",
+  },
 } as const satisfies Record<string, SupportedRoute>;
 
 export type SupportedRouteKey = keyof typeof supportedRoutes;
