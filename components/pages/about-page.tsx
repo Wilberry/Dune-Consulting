@@ -1,10 +1,16 @@
-import { Award, CheckCircle2, Eye, Flag } from "lucide-react";
+import Image from "next/image";
+import {
+  Award,
+  CheckCircle2,
+  Eye,
+  Flag,
+  Quote as QuoteIcon,
+} from "lucide-react";
 import Link from "next/link";
 import { CTASection } from "@/components/sections/cta-section";
 import { Button } from "@/components/ui/button";
 import { FeatureGrid } from "@/components/ui/feature-grid";
 import { ImagePlaceholder } from "@/components/ui/image-placeholder";
-import { LeadConsultantPhoto } from "@/components/ui/lead-consultant-photo";
 import { PageHero } from "@/components/ui/page-hero";
 import { Callout, Quote } from "@/components/ui/primitives";
 import { Section } from "@/components/ui/section";
@@ -34,7 +40,7 @@ export function AboutPage() {
         eyebrow="About Dune Consulting"
         title="Health, Safety and Environment Consulting for Confident Operations"
         copy="At Dune Consulting, we believe safety is more than a compliance requirement. It is a business discipline that protects people, strengthens operations and supports sustainable performance."
-        image="/images/dune_team_high_quality.webp"
+        image="/images/about.jpeg"
         imageAlt="Dune Consulting team collaborating on HSE strategy for safe operations"
         cta={{ label: "Discuss Your HSE Needs", href: "/contact#consultation" }}
       />
@@ -171,7 +177,7 @@ export function AboutPage() {
           <FeatureGrid items={industries} columns={4} />
         </div>
       </Section>
-      <Section>
+      <Section className="bg-off-white">
         <div className="mx-auto max-w-4xl text-center">
           <SectionHeading
             align="center-all"
@@ -180,80 +186,116 @@ export function AboutPage() {
             copy="Dune Consulting is led by health, safety and environment professionals committed to sound judgement, clear communication and dependable client support."
           />
         </div>
-        <div className="mt-12 grid gap-10 lg:grid-cols-[340px_1fr] lg:items-start">
-          <div className="lg:sticky lg:top-28">
-            <div className="mx-auto h-[260px] w-[260px] overflow-hidden rounded-[18px] border border-white/10 shadow-xl sm:h-[300px] sm:w-[300px] lg:h-[340px] lg:w-[340px]">
-              <LeadConsultantPhoto
-                src="/images/executive_portrait.webp"
-                alt="Anthony O. Igbinosun, Founder and Lead Consultant"
-              />
-            </div>
-            <div className="mx-auto mt-5 max-w-[340px] text-center lg:text-left">
-              <h3 className="text-navy text-xl font-bold">
-                Anthony O. Igbinosun
-              </h3>
-              <p className="text-navy mt-1 text-sm font-semibold">
-                Founder &amp; Lead Consultant
-              </p>
-              <Link
-                href="https://www.linkedin.com/in/anthonyigbinosun"
-                target="_blank"
-                rel="noreferrer"
-                className="text-navy hover:text-deep-navy decoration-amber mt-3 inline-block text-sm font-semibold underline decoration-2 underline-offset-4 transition"
-              >
-                Connect with Anthony on LinkedIn
-              </Link>
+        <div className="border-line mt-12 grid overflow-hidden rounded-3xl border bg-white shadow-[0_24px_70px_rgba(16,35,63,0.12)] lg:grid-cols-[.78fr_1.22fr]">
+          <div className="bg-deep-navy relative isolate overflow-hidden p-6 sm:p-8 lg:p-10">
+            <div
+              aria-hidden="true"
+              className="border-amber/20 absolute -top-24 -right-24 -z-10 size-72 rounded-full border-[40px]"
+            />
+            <div
+              aria-hidden="true"
+              className="bg-amber/10 absolute -bottom-24 -left-20 -z-10 size-56 rounded-full blur-2xl"
+            />
+            <div className="relative mx-auto max-w-[390px]">
+              <div className="border-amber/30 rounded-2xl border p-1.5 shadow-2xl">
+                <div className="relative aspect-[4/4.7] overflow-hidden rounded-xl bg-white/10">
+                  <Image
+                    src="/images/executive_portrait.webp"
+                    alt="Anthony O. Igbinosun, Founder and Lead Consultant"
+                    fill
+                    sizes="(max-width: 1024px) 90vw, 390px"
+                    className="object-cover object-top"
+                  />
+                </div>
+              </div>
+              <div className="pt-7 text-center lg:text-left">
+                <div className="bg-amber mx-auto mb-4 h-1 w-12 rounded-full lg:mx-0" />
+                <h3 className="font-heading text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
+                  Anthony O. Igbinosun
+                </h3>
+                <p className="mt-2 text-sm font-semibold tracking-wide text-white/65">
+                  Founder &amp; Lead Consultant
+                </p>
+                <Link
+                  href="https://www.linkedin.com/in/anthonyigbinosun"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-amber mt-5 inline-flex items-center justify-center rounded-full border border-white/15 bg-white/5 px-4 py-2.5 text-sm font-semibold transition-colors hover:border-white/30 hover:text-white lg:justify-start"
+                >
+                  Connect with Anthony on LinkedIn
+                </Link>
+              </div>
             </div>
           </div>
-          <div className="text-muted space-y-5 text-sm leading-7 sm:text-base">
-            <p>
-              Anthony O. Igbinosun is an accomplished Health, Safety and
-              Environment (HSE) professional, consultant, trainer and mentor
-              with about 14 years of experience across passenger transport,
-              logistics, construction and waste management. He is passionate
-              about helping organisations manage risk, strengthen safety
-              systems, protect people and achieve sustainable operational
-              excellence.
-            </p>
-            <p>
-              Anthony is the Founder and Lead Consultant of Dune Consulting,
-              through which he leads the delivery of HSE consultancy, training,
-              event safety management, HSE personnel outsourcing, risk
-              assessment, emergency preparedness and advisory services to
-              organisations across diverse sectors. His approach to consultancy
-              is rooted in the belief that safety must be practical,
-              commercially relevant and integrated into everyday business
-              operations.
-            </p>
-            <p>
-              Beyond corporate consultancy, Anthony is deeply committed to
-              developing the next generation of safety professionals. He founded
-              the Dune Consulting HSE Mentorship Programme, an initiative
-              designed to equip early career HSE professionals with the
-              knowledge, confidence, professional insight and practical skills
-              needed to navigate the workplace, grow their careers and become
-              impactful safety practitioners. Through structured mentorship,
-              professional development sessions and candid conversations about
-              the realities of the HSE profession, he seeks to bridge the gap
-              between academic knowledge, professional certifications and real
-              world practice.
-            </p>
-            <Callout title="Professional foundation">
-              <div className="flex flex-col gap-3 text-left sm:flex-row sm:items-start">
-                <Award className="text-amber-hover shrink-0" />
-                <p className="text-sm">
-                  Anthony holds an MSc in Health, Safety and Environment from
-                  the University of Sunderland and several professional
-                  qualifications in occupational health and safety, management
-                  systems auditing and risk assessment. He is also a member of
-                  IOSH &amp; TRATSEDI.
-                </p>
-              </div>
-            </Callout>
-            <Quote attribution="Anthony O. Igbinosun">
-              Safety should go beyond compliance. It should protect lives,
-              strengthen businesses and create lasting impact.
-            </Quote>
+          <div className="space-y-7 p-6 sm:p-9 lg:p-12">
+            <div className="border-amber/30 border-l-2 pl-5 text-[15px] leading-7 text-slate-600 sm:pl-6 sm:text-base sm:leading-8">
+              <p>
+                Anthony O. Igbinosun is an accomplished Health, Safety and
+                Environment (HSE) professional, consultant, trainer and mentor
+                with about 14 years of experience across passenger transport,
+                logistics, construction and waste management. He is passionate
+                about helping organisations manage risk, strengthen safety
+                systems, protect people and achieve sustainable operational
+                excellence.
+              </p>
+            </div>
+            <div className="space-y-5 text-[15px] leading-7 text-slate-600 sm:text-base sm:leading-8">
+              <p>
+                Anthony is the Founder and Lead Consultant of Dune Consulting,
+                through which he leads the delivery of HSE consultancy,
+                training, event safety management, HSE personnel outsourcing,
+                risk assessment, emergency preparedness and advisory services to
+                organisations across diverse sectors. His approach to
+                consultancy is rooted in the belief that safety must be
+                practical, commercially relevant and integrated into everyday
+                business operations.
+              </p>
+              <p>
+                Beyond corporate consultancy, Anthony is deeply committed to
+                developing the next generation of safety professionals. He
+                founded the Dune Consulting HSE Mentorship Programme, an
+                initiative designed to equip early career HSE professionals with
+                the knowledge, confidence, professional insight and practical
+                skills needed to navigate the workplace, grow their careers and
+                become impactful safety practitioners. Through structured
+                mentorship, professional development sessions and candid
+                conversations about the realities of the HSE profession, he
+                seeks to bridge the gap between academic knowledge, professional
+                certifications and real world practice.
+              </p>
+            </div>
+            <div className="grid gap-5 xl:grid-cols-[1.05fr_.95fr]">
+              <Callout title="Professional foundation">
+                <div className="flex flex-col gap-3 text-left sm:flex-row sm:items-start">
+                  <span className="bg-amber/15 flex size-10 shrink-0 items-center justify-center rounded-xl">
+                    <Award className="text-amber-hover" size={20} />
+                  </span>
+                  <p className="text-sm">
+                    Anthony holds an MSc in Health, Safety and Environment from
+                    the University of Sunderland and several professional
+                    qualifications in occupational health and safety, management
+                    systems auditing and risk assessment. He is also a member of
+                    IOSH &amp; TRATSEDI.
+                  </p>
+                </div>
+              </Callout>
+              <Callout title="Leadership philosophy">
+                <div className="flex items-start gap-3">
+                  <span className="bg-amber/15 flex size-10 shrink-0 items-center justify-center rounded-xl">
+                    <QuoteIcon className="text-amber-hover" size={20} />
+                  </span>
+                  <div>
+                    <p className="text-navy text-sm leading-6 font-semibold">
+                      Safety should go beyond compliance. It should protect
+                      lives, strengthen businesses and create lasting impact.
+                    </p>
+                    <p className="text-muted mt-3 text-xs font-semibold">
+                      Anthony O. Igbinosun
+                    </p>
+                  </div>
+                </div>
+              </Callout>
+            </div>
           </div>
         </div>
       </Section>

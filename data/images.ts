@@ -114,9 +114,16 @@ export const siteImages: SiteImage[] = [
     "4:3",
   ),
   approvedImage(
-    "/images/dune_team_high_quality.webp",
-    "Dune Consulting safety professionals at work",
+    "/images/about.jpeg",
+    "Dune Consulting team collaborating on HSE strategy for safe operations",
     "About",
+    "2560×1440px",
+    "16:9",
+  ),
+  approvedImage(
+    "/images/dune_team_high_quality.webp",
+    "Dune Consulting safety professionals supporting personnel outsourcing",
+    "Personnel Outsourcing",
     "1536×1152px",
     "4:3",
   ),

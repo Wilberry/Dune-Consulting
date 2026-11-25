@@ -212,7 +212,7 @@ export const serviceDetails: Record<string, ServiceDetail> = {
     title: "HSE Personnel Outsourcing",
     eyebrow: "The right expertise, where you need it",
     eyebrowMobile: "Expertise where needed",
-    image: "/images/container_crane.webp",
+    image: "/images/dune_team_high_quality.webp",
     summary:
       "Competent HSE professionals deployed to support projects, facilities, workplaces and events.",
     overview: [

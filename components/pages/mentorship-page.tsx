@@ -22,12 +22,25 @@ import { mentorshipBenefits } from "@/data/page-content";
 import { extractYouTubeVideoId } from "@/lib/mentorship/youtube";
 
 const learningAreas = [
-  "The role and mindset of an HSE professional",
-  "Hazard identification and practical risk assessment",
-  "Clear reporting, communication and briefings",
-  "Workplace safety planning and operational thinking",
-  "Professional growth, reflection and next step planning",
-  "Responsible decision making in real world environments",
+  {
+    title: "Who You Are as an HSE Professional",
+    description: "Purpose, Identity & Legacy",
+  },
+  {
+    title: "Speaking the Business Language",
+    description: "Communicating and Making the Business Case for HSE",
+  },
+  {
+    title: "Office Politics",
+    description: "Influence, Relationships & Power",
+  },
+  {
+    title: "Emotional Intelligence, Negotiation & Conflict Resolution",
+  },
+  {
+    title: "Future Ready HSE Professional",
+    description: "Core Technical Competencies and Career Positioning",
+  },
 ];
 
 const outcomes = [
@@ -288,11 +301,15 @@ export function MentorshipPage() {
           ))}
         </div>
       </Section>
-      <Section className="bg-navy overflow-hidden">
-        <div className="grid gap-12 lg:grid-cols-[.75fr_1.25fr]">
-          <div>
-            <Badge inverse>Learning Areas</Badge>
-            <h2 className="mt-5 text-3xl font-extrabold text-white sm:text-4xl">
+      <Section className="bg-navy relative overflow-hidden">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -top-48 -right-40 size-[30rem] rounded-full border border-white/5"
+        />
+        <div className="relative grid gap-12 lg:grid-cols-[.72fr_1.28fr] lg:gap-16">
+          <div className="lg:pt-2">
+            <Badge inverse>HSE Mentorship Curriculum</Badge>
+            <h2 className="mt-5 text-3xl font-extrabold text-white sm:text-4xl lg:text-5xl">
               A practical curriculum for stronger foundations
             </h2>
             <p className="mt-5 leading-7 text-white/65">
@@ -301,18 +318,29 @@ export function MentorshipPage() {
               environments.
             </p>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid gap-4 sm:grid-cols-2 xl:gap-5">
             {learningAreas.map((area, index) => (
               <div
-                key={area}
-                className="rounded-xl border border-white/10 bg-white/5 p-5"
+                key={area.title}
+                className="group hover:border-amber/40 relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.045] p-5 shadow-[0_12px_30px_rgba(0,0,0,0.12)] transition duration-300 hover:-translate-y-1 hover:bg-white/[0.075] sm:p-6"
               >
-                <span className="font-heading text-amber text-sm font-extrabold">
-                  0{index + 1}
-                </span>
-                <h3 className="font-heading mt-3 font-bold text-white">
-                  {area}
+                <div className="flex items-center gap-3">
+                  <span className="bg-amber/15 text-amber ring-amber/20 flex size-10 shrink-0 items-center justify-center rounded-xl text-sm font-extrabold ring-1">
+                    0{index + 1}
+                  </span>
+                  <span className="text-[10px] font-extrabold tracking-[.18em] text-white/45 uppercase">
+                    Week
+                  </span>
+                </div>
+                <h3 className="font-heading mt-5 text-lg leading-6 font-bold text-white sm:text-xl">
+                  {area.title}
                 </h3>
+                {area.description && (
+                  <p className="mt-2 text-sm leading-6 text-white/60">
+                    {area.description}
+                  </p>
+                )}
+                <div className="bg-amber/70 mt-5 h-px w-10 transition-all duration-300 group-hover:w-16" />
               </div>
             ))}
           </div>
