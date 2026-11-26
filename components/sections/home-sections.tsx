@@ -99,16 +99,11 @@ export function Clients() {
     >
       <Container>
         <div className="mx-auto max-w-3xl text-center">
-          <p className="text-amber mb-3 text-xs font-extrabold tracking-[.18em] uppercase">
-            Our Event Portfolio
-          </p>
-          <h2
-            id="portfolio-preview-title"
-            className="text-navy text-2xl font-extrabold sm:text-3xl"
-          >
+          <p className="eyebrow mb-3">Our Event Portfolio</p>
+          <h2 id="portfolio-preview-title" className="section-title">
             Events and Organisations We Have Supported
           </h2>
-          <p className="text-muted mt-4 text-sm leading-7">
+          <p className="text-muted mt-4 text-base leading-7">
             Our event safety portfolio includes corporate gatherings,
             conferences, launches, festivals and large audience experiences
             supported through practical planning, coordination and on site
@@ -129,14 +124,14 @@ export function Clients() {
                 {partnerLogos.map((partner) => (
                   <div
                     key={`${copy}-${partner.name}`}
-                    className="border-line bg-off-white flex h-24 min-w-[210px] items-center justify-center rounded-xl border px-5 sm:min-w-[250px]"
+                    className="border-line bg-off-white flex h-20 min-w-44 items-center justify-center rounded-xl border px-4 sm:min-w-52"
                   >
                     <Image
                       src={partner.image}
                       alt={`${partner.name} logo`}
                       width={220}
                       height={80}
-                      className="h-16 w-44 object-contain sm:w-[200px]"
+                      className="h-11 w-32 object-contain sm:h-12 sm:w-36"
                     />
                   </div>
                 ))}
@@ -309,9 +304,7 @@ export function Impact() {
   return (
     <section className="bg-deep-navy py-16 sm:py-20">
       <Container>
-        <p className="text-amber mb-8 text-xs font-extrabold tracking-[.18em] uppercase">
-          Our Impact
-        </p>
+        <p className="eyebrow mb-8">Our Impact</p>
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {statistics.map((stat) => (
             <StatCard key={stat.label} stat={stat} />
@@ -377,10 +370,8 @@ export function Mentorship() {
             />
           </div>
           <div className="p-8 sm:p-12 lg:p-14">
-            <p className="text-amber mb-3 text-xs font-extrabold tracking-[.18em] uppercase">
-              HSE Mentorship Program
-            </p>
-            <h2 className="text-3xl font-extrabold sm:text-4xl">
+            <p className="eyebrow mb-3">HSE Mentorship Program</p>
+            <h2 className="section-title text-white">
               Build Practical Skills for a Career in HSE
             </h2>
             <p className="mt-5 leading-7 text-white/70">
@@ -525,10 +516,8 @@ export function NewsletterSection() {
     <section className="bg-navy py-16 sm:py-20 lg:py-24 xl:py-28">
       <div className="mx-auto grid max-w-[1440px] items-center gap-8 px-5 py-0 text-white sm:px-8 lg:grid-cols-[1fr_.8fr] lg:px-10 xl:px-12">
         <div>
-          <p className="text-amber text-xs font-extrabold tracking-[.18em] uppercase">
-            Newsletter
-          </p>
-          <h2 className="mt-3 text-3xl font-extrabold text-white sm:text-4xl">
+          <p className="eyebrow">Newsletter</p>
+          <h2 className="section-title mt-3 text-white">
             Practical HSE insight, delivered when it is ready.
           </h2>
           <p className="mt-3 text-white/70">

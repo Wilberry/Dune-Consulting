@@ -14,6 +14,7 @@ import { Badge, Callout, IconBox } from "@/components/ui/primitives";
 import { Section } from "@/components/ui/section";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { ServiceCard } from "@/components/ui/service-card";
+import { VideoShowcase } from "@/components/ui/video-showcase";
 import { serviceDetails } from "@/data/page-content";
 import { services } from "@/data/services";
 
@@ -172,6 +173,20 @@ export function ServiceDetailPage({ slug }: { slug: string }) {
             </div>
           ))}
         </div>
+        {service.slug === "hse-training" && (
+          <div className="mt-12 grid items-center gap-7 rounded-2xl border border-white/10 bg-white/[0.04] p-5 sm:p-7 lg:grid-cols-[.72fr_1.28fr] lg:gap-10">
+            <div>
+              <p className="eyebrow">Training in action</p>
+              <h3 className="section-title mt-3 text-white">
+                Practical learning, delivered in the workplace
+              </h3>
+            </div>
+            <VideoShowcase
+              src="/video/ZEDCREST BOOTCAMP HIGHLIGHTS.mp4"
+              title="Zedcrest bootcamp HSE training highlights"
+            />
+          </div>
+        )}
       </Section>
       <Section>
         <SectionHeading

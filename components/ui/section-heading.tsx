@@ -20,25 +20,14 @@ export function SectionHeading({
         align === "center-all" && "mx-auto text-center",
       )}
     >
-      {eyebrow && (
-        <p
-          className={`${inverse ? "text-amber" : "text-amber-text"} mb-3 text-xs font-extrabold tracking-[.18em] uppercase`}
-        >
-          {eyebrow}
-        </p>
-      )}
-      <h2
-        className={cn(
-          "text-3xl font-extrabold text-balance sm:text-4xl lg:text-5xl",
-          inverse ? "text-white" : "text-navy",
-        )}
-      >
+      {eyebrow && <p className="eyebrow mb-3">{eyebrow}</p>}
+      <h2 className={cn("section-title", inverse ? "text-white" : "text-navy")}>
         {title}
       </h2>
       {copy && (
         <p
           className={cn(
-            "mt-5 text-base leading-7 sm:text-lg",
+            "mt-5 text-base leading-7",
             inverse ? "text-white/70" : "text-muted",
           )}
         >

@@ -70,11 +70,17 @@ export function Header() {
     <>
       <header
         className={cn(
-          "site-header-enter sticky top-0 z-50 border-b border-white/20 bg-white/75 shadow-[0_8px_30px_rgba(15,35,68,0.08)] backdrop-blur-xl transition-shadow",
-          scrolled && "border-line shadow-sm",
+          "site-header-enter sticky top-0 z-50 -mb-[80px] px-3 pt-4 sm:-mb-[92px] sm:px-5 sm:pt-5",
+          scrolled && "pt-2",
         )}
       >
-        <Container className="flex h-16 items-center justify-between px-5 sm:h-[4.75rem] sm:px-6">
+        <Container
+          className={cn(
+            "to-amber/20 ring-navy/5 flex h-16 items-center justify-between rounded-2xl border border-white/70 bg-gradient-to-r from-white/95 via-white/85 px-4 shadow-[0_12px_36px_rgba(15,35,68,0.12)] ring-1 backdrop-blur-2xl transition-all duration-300 sm:h-[4.5rem] sm:rounded-full sm:px-6",
+            scrolled &&
+              "to-amber/25 from-white/90 via-white/80 shadow-[0_8px_28px_rgba(15,35,68,0.14)]",
+          )}
+        >
           <Brand
             logoClassName="h-10 w-auto sm:h-11"
             textClassName="text-sm font-semibold sm:text-base md:text-lg"

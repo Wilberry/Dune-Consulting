@@ -12,11 +12,11 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FeatureGrid } from "@/components/ui/feature-grid";
-import { ImagePlaceholder } from "@/components/ui/image-placeholder";
 import { PageHero } from "@/components/ui/page-hero";
 import { Badge } from "@/components/ui/primitives";
 import { Section } from "@/components/ui/section";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { VideoShowcase } from "@/components/ui/video-showcase";
 import { mentorshipTestimonials } from "@/data/mentorship-testimonials";
 import { mentorshipBenefits } from "@/data/page-content";
 import { extractYouTubeVideoId } from "@/lib/mentorship/youtube";
@@ -190,11 +190,14 @@ export function MentorshipPage() {
       </Section>
       <Section className="bg-off-white">
         <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
-          <div className="aspect-[5/4] overflow-hidden rounded-2xl shadow-lg">
-            <ImagePlaceholder
-              src="/images/first_aid_training.webp"
-              alt="First aid and HSE mentorship training in progress"
-              imgStyle={{ objectPosition: "10% center" }}
+          <div className="relative">
+            <div
+              aria-hidden="true"
+              className="bg-amber/15 absolute -inset-3 rounded-[1.5rem] blur-xl"
+            />
+            <VideoShowcase
+              src="/video/HSE MENTORSHIP PROGRAM.mp4"
+              title="Dune Consulting HSE Mentorship Programme"
             />
           </div>
           <div>
@@ -309,7 +312,7 @@ export function MentorshipPage() {
         <div className="relative grid gap-12 lg:grid-cols-[.72fr_1.28fr] lg:gap-16">
           <div className="lg:pt-2">
             <Badge inverse>HSE Mentorship Curriculum</Badge>
-            <h2 className="mt-5 text-3xl font-extrabold text-white sm:text-4xl lg:text-5xl">
+            <h2 className="section-title mt-5 text-white">
               A practical curriculum for stronger foundations
             </h2>
             <p className="mt-5 leading-7 text-white/65">

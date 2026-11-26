@@ -6,25 +6,29 @@ export function Hero() {
   return (
     <section className="bg-deep-navy relative overflow-hidden text-white">
       <div className="grid-pattern absolute inset-0" />
-      <Container className="relative grid items-center gap-12 py-20 lg:grid-cols-[1.1fr_.9fr] lg:items-start lg:gap-20 lg:py-28">
+      <Container className="relative grid items-center gap-12 pt-36 pb-20 lg:grid-cols-[1.1fr_.9fr] lg:items-start lg:gap-20 lg:pb-28">
         <div className="flex flex-col items-center justify-center lg:items-start">
           <div className="mx-auto max-w-xl text-center lg:mx-0 lg:max-w-none lg:text-left">
-            <p className="text-amber mb-6 flex flex-col items-center gap-3 text-xs font-extrabold tracking-[.18em] uppercase sm:flex-row sm:items-center">
+            <p className="eyebrow hero-enter hero-enter-delay-1 mb-6 flex flex-col items-center justify-center gap-3 text-center sm:flex-row sm:items-center lg:justify-start lg:text-left">
               Health, Safety and Environment Consulting
             </p>
-            <h1 className="mx-auto max-w-3xl text-4xl leading-[1.08] font-extrabold text-balance sm:text-6xl lg:mx-0 xl:text-7xl">
-              Safer Workplaces.
-              <br />
-              Safer Events.
-              <br />
-              <span className="text-amber">Stronger HSE Teams.</span>
+            <h1 className="page-title mx-auto max-w-3xl text-white lg:mx-0">
+              <span className="hero-enter hero-enter-delay-2 block">
+                Safer Workplaces.
+              </span>
+              <span className="hero-enter hero-enter-delay-3 block">
+                Safer Events.
+              </span>
+              <span className="text-amber hero-enter hero-enter-delay-4 block">
+                Stronger HSE Teams.
+              </span>
             </h1>
-            <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-white/72 sm:text-lg lg:mx-0">
+            <p className="hero-enter hero-enter-delay-5 mx-auto mt-6 max-w-2xl text-base leading-7 text-white/72 lg:mx-0">
               Dune Consulting helps organisations protect people, reduce risk
               and strengthen safety performance through practical HSE training,
               event safety management and competent outsourced professionals.
             </p>
-            <div className="mt-8 flex flex-wrap justify-center gap-3 lg:justify-start">
+            <div className="hero-enter hero-enter-delay-6 mt-8 flex flex-wrap justify-center gap-3 lg:justify-start">
               <Button href="/contact#consultation">
                 Discuss Your HSE Needs
               </Button>
@@ -32,7 +36,7 @@ export function Hero() {
                 Explore Our Services
               </Button>
             </div>
-            <ul className="mt-9 flex flex-col justify-center gap-3 text-sm font-semibold text-white/85 sm:flex-row sm:flex-wrap sm:gap-6 lg:justify-start">
+            <ul className="hero-enter hero-enter-delay-6 mt-9 flex flex-col justify-center gap-3 text-sm font-semibold text-white/85 sm:flex-row sm:flex-wrap sm:gap-6 lg:justify-start">
               {[
                 "Practical HSE Expertise",
                 "Qualified Safety Personnel",
@@ -46,7 +50,7 @@ export function Hero() {
             </ul>
           </div>
         </div>
-        <div className="flex flex-col gap-0">
+        <div className="hero-media-enter flex flex-col gap-0">
           <div className="relative h-[400px] overflow-hidden rounded-t-2xl border border-white/10 shadow-2xl">
             <ImagePlaceholder
               src="/images/Hero.webp"

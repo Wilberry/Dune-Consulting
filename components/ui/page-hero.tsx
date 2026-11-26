@@ -23,10 +23,10 @@ export function PageHero({
   return (
     <section className="grid-pattern bg-deep-navy overflow-hidden text-white">
       <Container
-        className={`grid items-center gap-10 py-14 sm:py-18 lg:gap-14 ${image ? "lg:grid-cols-[1.12fr_.88fr]" : ""}`}
+        className={`grid items-center gap-10 pt-36 pb-14 lg:gap-14 lg:pb-20 ${image ? "lg:grid-cols-[1.12fr_.88fr]" : ""}`}
       >
         <div className="flex flex-col items-center justify-center text-center lg:items-start lg:text-left">
-          <p className="text-amber text-xs font-extrabold tracking-[.18em] uppercase">
+          <p className="eyebrow hero-enter hero-enter-delay-1">
             {eyebrowMobile ? (
               <>
                 <span className="inline lg:hidden">{eyebrowMobile}</span>
@@ -36,20 +36,20 @@ export function PageHero({
               eyebrow
             )}
           </p>
-          <h1 className="mx-auto mt-4 max-w-3xl text-4xl leading-[1.08] font-extrabold text-balance sm:text-5xl lg:mx-0 lg:text-6xl">
+          <h1 className="page-title hero-enter hero-enter-delay-2 mx-auto mt-4 max-w-3xl lg:mx-0">
             {title}
           </h1>
-          <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-white/70 sm:text-lg lg:mx-0">
+          <p className="hero-enter hero-enter-delay-3 mx-auto mt-5 max-w-2xl text-base leading-7 text-white/70 lg:mx-0">
             {copy}
           </p>
           {cta && (
-            <div className="mt-7 flex w-full justify-center gap-3 lg:justify-start">
+            <div className="hero-enter hero-enter-delay-4 mt-7 flex w-full justify-center gap-3 lg:justify-start">
               <Button href={cta.href}>{cta.label}</Button>
             </div>
           )}
         </div>
         {image && (
-          <div className="aspect-[4/3] overflow-hidden rounded-xl border border-white/10 shadow-2xl">
+          <div className="hero-media-enter aspect-[4/3] overflow-hidden rounded-xl border border-white/10 shadow-2xl">
             <ImagePlaceholder
               src={image}
               alt={altText}
