@@ -10,6 +10,7 @@ import Link from "next/link";
 import { CTASection } from "@/components/sections/cta-section";
 import { Button } from "@/components/ui/button";
 import { FeatureGrid } from "@/components/ui/feature-grid";
+import { ImageSlider } from "@/components/ui/image-slider";
 import { ImagePlaceholder } from "@/components/ui/image-placeholder";
 import { PageHero } from "@/components/ui/page-hero";
 import { Callout, Quote } from "@/components/ui/primitives";
@@ -75,10 +76,7 @@ export function AboutPage() {
             <Quote>Safer Workplaces. Safer Events. Stronger HSE Teams.</Quote>
           </div>
           <div className="aspect-[5/4] overflow-hidden rounded-2xl shadow-xl">
-            <ImagePlaceholder
-              src="/images/ambulance_paramedic.webp"
-              alt="Ambulance paramedic and safety team preparing for an emergency response"
-            />
+            <ImageSlider />
           </div>
         </div>
       </Section>

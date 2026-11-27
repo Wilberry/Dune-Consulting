@@ -95,7 +95,12 @@ export function ServiceDetailPage({ slug }: { slug: string }) {
         eyebrowMobile={service.eyebrowMobile}
         title={service.title}
         copy={service.summary}
-        image={service.image}
+        image={service.slug === "hse-training" ? undefined : service.image}
+        video={
+          service.slug === "hse-training"
+            ? "/video/Bespoke%20training.mp4"
+            : undefined
+        }
         imageAlt={`${service.title} hero image showing practical HSE operations`}
         cta={{ label: "Discuss this service", href: "/contact#consultation" }}
       />
@@ -127,18 +132,8 @@ export function ServiceDetailPage({ slug }: { slug: string }) {
           </Callout>
         </div>
         {service.slug === "hse-training" && (
-          <div className="mt-14 rounded-3xl border border-[#e7e4da] bg-[#f7f6f1] p-5 sm:p-8 lg:p-10">
-            <div className="mx-auto max-w-2xl text-center">
-              <p className="eyebrow mb-3">Training in practice</p>
-              <h3 className="section-title">
-                Practical learning, captured in the classroom
-              </h3>
-              <p className="text-muted mt-4 text-base leading-7">
-                Explore moments from our HSE training sessions and workplace
-                learning programmes.
-              </p>
-            </div>
-            <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          <div className="mt-10 rounded-3xl border border-[#e7e4da] bg-[#f7f6f1] p-5 sm:p-8 lg:p-10">
+            <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
               {[
                 {
                   src: "/video/VID-20261115-WA0013.mp4",

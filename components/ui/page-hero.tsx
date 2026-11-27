@@ -8,6 +8,7 @@ export function PageHero({
   title,
   copy,
   image,
+  video,
   imageAlt,
   cta,
 }: {
@@ -16,14 +17,16 @@ export function PageHero({
   title: string;
   copy: string;
   image?: string;
+  video?: string;
   imageAlt?: string;
   cta?: { label: string; href: string };
 }) {
   const altText = imageAlt || `${eyebrow} image`;
+  const hasMedia = Boolean(image || video);
   return (
     <section className="grid-pattern bg-deep-navy overflow-hidden text-white">
       <Container
-        className={`grid items-center gap-10 pt-36 pb-14 lg:gap-14 lg:pb-20 ${image ? "lg:grid-cols-[1.12fr_.88fr]" : ""}`}
+        className={`grid items-center gap-10 pt-36 pb-14 lg:gap-14 lg:pb-20 ${hasMedia ? "lg:grid-cols-[1.12fr_.88fr]" : ""}`}
       >
         <div className="flex flex-col items-center justify-center text-center lg:items-start lg:text-left">
           <p className="eyebrow hero-enter hero-enter-delay-1">
@@ -48,13 +51,27 @@ export function PageHero({
             </div>
           )}
         </div>
-        {image && (
+        {hasMedia && (
           <div className="hero-media-enter aspect-[4/3] overflow-hidden rounded-xl border border-white/10 shadow-2xl">
-            <ImagePlaceholder
-              src={image}
-              alt={altText}
-              imgClassName="object-top sm:object-center"
-            />
+            {video ? (
+              <video
+                aria-label={altText}
+                autoPlay
+                className="size-full object-cover"
+                loop
+                muted
+                playsInline
+                src={video}
+              />
+            ) : (
+              image && (
+                <ImagePlaceholder
+                  src={image}
+                  alt={altText}
+                  imgClassName="object-top sm:object-center"
+                />
+              )
+            )}
           </div>
         )}
       </Container>

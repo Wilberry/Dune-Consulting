@@ -76,14 +76,15 @@ export function Header() {
       >
         <Container
           className={cn(
-            "to-amber/20 ring-navy/5 flex h-16 items-center justify-between rounded-2xl border border-white/70 bg-gradient-to-r from-white/95 via-white/85 px-4 shadow-[0_12px_36px_rgba(15,35,68,0.12)] ring-1 backdrop-blur-2xl transition-all duration-300 sm:h-[4.5rem] sm:rounded-full sm:px-6",
+            "mx-auto flex h-16 max-w-[1280px] items-center justify-between rounded-xl border border-white/20 bg-gradient-to-r from-[#29445f]/95 via-[#1b3551]/95 to-[#28435e]/95 px-4 shadow-[0_12px_36px_rgba(3,12,25,0.28)] ring-1 ring-white/10 backdrop-blur-2xl transition-all duration-300 sm:h-[4.5rem] sm:rounded-xl sm:px-6",
             scrolled &&
-              "to-amber/25 from-white/90 via-white/80 shadow-[0_8px_28px_rgba(15,35,68,0.14)]",
+              "from-[#1e3854]/96 via-[#142d49]/96 to-[#233f5b]/96 shadow-[0_8px_28px_rgba(3,12,25,0.34)]",
           )}
         >
           <Brand
+            variant="footer"
             logoClassName="h-10 w-auto sm:h-11"
-            textClassName="text-sm font-semibold sm:text-base md:text-lg"
+            textClassName="text-sm font-semibold text-white sm:text-base md:text-lg"
           />
           <nav
             className="hidden items-center gap-1 lg:flex"
@@ -96,7 +97,7 @@ export function Header() {
                   <button
                     type="button"
                     className={cn(
-                      "text-ink hover:text-navy flex items-center gap-1 rounded-md border px-3 py-3 text-sm font-semibold",
+                      "flex items-center gap-1 rounded-md border px-3 py-3 text-sm font-semibold text-white/90 transition-colors hover:text-white",
                       active
                         ? "border-amber bg-amber/10 text-navy"
                         : "border-transparent",
@@ -123,7 +124,7 @@ export function Header() {
                 <Link
                   key={item.href}
                   className={cn(
-                    "text-ink hover:text-navy rounded-md border px-3 py-3 text-sm font-semibold",
+                    "rounded-md border px-3 py-3 text-sm font-semibold text-white/90 transition-colors hover:text-white",
                     active
                       ? "border-amber bg-amber/10 text-navy"
                       : "border-transparent",
@@ -143,7 +144,7 @@ export function Header() {
           />
           <button
             ref={menuButtonRef}
-            className="text-navy flex h-10 w-10 items-center justify-center rounded p-2 lg:hidden"
+            className="flex h-10 w-10 items-center justify-center rounded p-2 text-white lg:hidden"
             onClick={() => setOpen(true)}
             aria-label="Open navigation menu"
             aria-expanded={open}
@@ -280,14 +281,14 @@ function MembershipAccess({
       role="group"
       aria-label="Membership access"
       className={cn(
-        "bg-amber shadow-amber/25 relative h-12 items-center rounded-full p-1 shadow-lg transition-shadow hover:shadow-xl",
+        "to-amber/25 hover:to-amber/30 relative h-12 items-center rounded-full border border-white/35 bg-gradient-to-br from-white/25 via-white/10 p-1 shadow-[inset_0_1px_0_rgba(255,255,255,0.28),0_8px_24px_rgba(3,12,25,0.2)] backdrop-blur-2xl transition-all hover:border-white/50 hover:from-white/30 hover:via-white/15",
         className,
       )}
     >
       <Link
         href={isLogin ? "/dashboard/login" : "/dashboard/login?mode=signup"}
         onClick={onNavigate}
-        className="text-deep-navy hover:text-deep-navy/75 absolute inset-y-1 flex items-center justify-center rounded-full text-sm font-extrabold transition-colors"
+        className="hover:text-amber absolute inset-y-1 flex items-center justify-center rounded-full text-sm font-extrabold text-white transition-colors"
         style={
           isLogin
             ? { left: "44px", right: "4px" }
@@ -302,7 +303,7 @@ function MembershipAccess({
         aria-label={`Switch to ${isLogin ? "register" : "login"}`}
         aria-checked={isLogin}
         onClick={() => onModeChange(isLogin ? "register" : "login")}
-        className="border-amber-hover absolute top-1 flex size-10 items-center justify-center rounded-full border-2 bg-white shadow-sm transition-[left,transform] duration-300 hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+        className="border-amber-hover absolute top-1 flex size-10 items-center justify-center rounded-full border-2 bg-white/90 shadow-[0_2px_8px_rgba(3,12,25,0.24)] backdrop-blur-md transition-[left,transform] duration-300 hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
         style={{
           left: isLogin ? "4px" : "calc(100% - 44px)",
         }}

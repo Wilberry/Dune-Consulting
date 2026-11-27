@@ -26,7 +26,12 @@ import {
   UsersRound,
 } from "lucide-react";
 
-export type ContentFeature = { title: string; copy: string; icon: LucideIcon };
+export type ContentFeature = {
+  title: string;
+  copy: string;
+  icon: LucideIcon;
+  image?: { src: string; alt: string; objectPosition?: "center" | "top" };
+};
 export type ServiceDetail = {
   slug: string;
   title: string;
@@ -96,16 +101,28 @@ export const serviceDetails: Record<string, ServiceDetail> = {
         title: "Stronger preparedness",
         copy: "Clear plans and responsibilities before event day.",
         icon: ClipboardCheck,
+        image: {
+          src: "/images/slide1/IMG-20261115-WA0006.jpg.jpeg",
+          alt: "Participants taking part in an event safety training session",
+        },
       },
       {
         title: "Coordinated response",
         copy: "Aligned safety, medical, fire and operational stakeholders.",
         icon: Radio,
+        image: {
+          src: "/images/ambulance_paramedic.webp",
+          alt: "Paramedic and safety team preparing for emergency response",
+        },
       },
       {
         title: "Visible assurance",
         copy: "Active supervision and dynamic risk management on site.",
         icon: ShieldCheck,
+        image: {
+          src: "/images/container_crane.webp",
+          alt: "Safety professional overseeing a container crane operation",
+        },
       },
     ],
     features: [
@@ -164,16 +181,29 @@ export const serviceDetails: Record<string, ServiceDetail> = {
         title: "Relevant learning",
         copy: "Content reflects your work environment and risk profile.",
         icon: Target,
+        image: {
+          src: "/images/slide1/IMG-20261115-WA0009.jpg.jpeg",
+          alt: "Participants taking part in practical HSE training",
+        },
       },
       {
         title: "Practical application",
         copy: "Activities connect knowledge to everyday decisions and actions.",
         icon: BookOpenCheck,
+        image: {
+          src: "/images/IMG-20261115-WA0012.jpg.jpeg",
+          alt: "Trainees applying safety procedures during practical training",
+          objectPosition: "top",
+        },
       },
       {
         title: "Clear accountability",
         copy: "Participants understand their role in safer operations.",
         icon: UserCheck,
+        image: {
+          src: "/images/IMG-20261121-WA0019.jpg.jpeg",
+          alt: "Team participating in a structured safety training session",
+        },
       },
     ],
     features: [

@@ -155,6 +155,47 @@ export const siteImages: SiteImage[] = [
     "2560×1441px",
     "16:9",
   ),
+  approvedImage(
+    "/images/IMG-20261115-WA0012.jpg.jpeg",
+    "Trainees applying safety procedures during practical training",
+    "HSE Training",
+    "1440×2560px",
+    "9:16",
+  ),
+  approvedImage(
+    "/images/IMG-20261121-WA0019.jpg.jpeg",
+    "Team participating in a structured safety training session",
+    "HSE Training",
+    "1000×563px",
+    "16:9",
+  ),
+  ...[
+    [
+      "ambulance_paramedic.webp",
+      "Ambulance paramedic and safety team preparing for an emergency response",
+    ],
+    ["IMG-20261115-WA0006.jpg.jpeg", "HSE training session in progress"],
+    [
+      "IMG-20261115-WA0009.jpg.jpeg",
+      "Participants taking part in practical HSE training",
+    ],
+    [
+      "IMG-20261115-WA0014.jpg.jpeg",
+      "Dune Consulting team supporting a safety operation",
+    ],
+    [
+      "IMG-20261115-WA0020.jpg.jpeg",
+      "Safety professionals collaborating during training",
+    ],
+  ].map(([filename, alt]) =>
+    approvedImage(
+      `/images/slide1/${filename}`,
+      alt,
+      "About",
+      "2560×1440px",
+      "16:9",
+    ),
+  ),
   image(
     "/images/services/event-safety-management.jpg",
     "Event safety personnel coordinating on site",

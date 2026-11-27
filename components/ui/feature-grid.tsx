@@ -1,7 +1,13 @@
+import Image from "next/image";
 import type { LucideIcon } from "lucide-react";
 import { IconBox } from "./primitives";
 import { cn } from "@/lib/utils";
-export type GridFeature = { title: string; copy: string; icon: LucideIcon };
+export type GridFeature = {
+  title: string;
+  copy: string;
+  icon: LucideIcon;
+  image?: { src: string; alt: string; objectPosition?: "center" | "top" };
+};
 export function FeatureGrid({
   items,
   columns = 3,
@@ -24,12 +30,27 @@ export function FeatureGrid({
         <article
           key={item.title}
           className={cn(
-            "rounded-xl border p-6 transition-all duration-200 hover:-translate-y-1",
+            "group rounded-xl border p-6 transition-all duration-200 hover:-translate-y-1",
             inverse
               ? "border-white/10 bg-white/5 hover:bg-white/8"
               : "border-line hover:border-amber bg-white hover:shadow-lg",
           )}
         >
+          {item.image && (
+            <div className="-mx-6 -mt-6 mb-5 aspect-[16/9] overflow-hidden rounded-t-xl">
+              <Image
+                src={item.image.src}
+                alt={item.image.alt}
+                width={960}
+                height={540}
+                sizes="(max-width: 1024px) 100vw, 33vw"
+                className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                style={{
+                  objectPosition: item.image.objectPosition ?? "center",
+                }}
+              />
+            </div>
+          )}
           <IconBox icon={item.icon} inverse={inverse} />
           <h3
             className={cn(
