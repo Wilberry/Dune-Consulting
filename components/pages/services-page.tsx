@@ -126,6 +126,57 @@ export function ServiceDetailPage({ slug }: { slug: string }) {
             </p>
           </Callout>
         </div>
+        {service.slug === "hse-training" && (
+          <div className="mt-14 rounded-3xl border border-[#e7e4da] bg-[#f7f6f1] p-5 sm:p-8 lg:p-10">
+            <div className="mx-auto max-w-2xl text-center">
+              <p className="eyebrow mb-3">Training in practice</p>
+              <h3 className="section-title">
+                Practical learning, captured in the classroom
+              </h3>
+              <p className="text-muted mt-4 text-base leading-7">
+                Explore moments from our HSE training sessions and workplace
+                learning programmes.
+              </p>
+            </div>
+            <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+              {[
+                {
+                  src: "/video/VID-20261115-WA0013.mp4",
+                  title: "Workplace training session",
+                },
+                {
+                  src: "/video/Training%2001.mp4",
+                  title: "Student practical session",
+                },
+                {
+                  src: "/video/CFG%20%20class.mp4",
+                  title: "Classroom session",
+                },
+              ].map((video, index) => (
+                <article
+                  key={video.src}
+                  className="group rounded-2xl border border-white/80 bg-white p-3 shadow-[0_14px_38px_rgba(16,35,63,0.08)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_20px_44px_rgba(16,35,63,0.13)] sm:p-4"
+                >
+                  <div className="overflow-hidden rounded-xl bg-[#08172b]">
+                    <VideoShowcase
+                      src={video.src}
+                      title={video.title}
+                      autoPlay={false}
+                    />
+                  </div>
+                  <div className="flex items-center gap-3 px-1 pt-4 pb-1">
+                    <span className="text-amber-text bg-amber/15 flex size-8 shrink-0 items-center justify-center rounded-full text-[10px] font-extrabold tracking-wide">
+                      0{index + 1}
+                    </span>
+                    <h4 className="font-heading text-navy text-base font-bold sm:text-lg">
+                      {video.title}
+                    </h4>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        )}
       </Section>
       <Section className="bg-off-white">
         <SectionHeading
@@ -184,6 +235,7 @@ export function ServiceDetailPage({ slug }: { slug: string }) {
             <VideoShowcase
               src="/video/ZEDCREST BOOTCAMP HIGHLIGHTS.mp4"
               title="Zedcrest bootcamp HSE training highlights"
+              autoPlay
             />
           </div>
         )}

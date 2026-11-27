@@ -76,10 +76,10 @@ export function PortfolioPage() {
                   </span>
                   <article
                     data-scroll-reveal
-                    className={`group border-navy/10 hover:border-amber/60 col-start-2 row-start-1 grid overflow-hidden rounded-2xl border bg-white/80 shadow-[0_14px_38px_rgba(16,35,63,0.07)] transition duration-500 hover:-translate-y-1 hover:shadow-[0_22px_48px_rgba(16,35,63,0.12)] md:col-span-1 md:row-start-1 md:grid-cols-[.9fr_1.1fr] ${
+                    className={`group border-navy/10 hover:border-amber/60 col-start-2 row-start-1 grid max-w-[85%] overflow-hidden rounded-2xl border bg-white/80 shadow-[0_14px_38px_rgba(16,35,63,0.07)] transition duration-500 hover:-translate-y-1 hover:shadow-[0_22px_48px_rgba(16,35,63,0.12)] md:col-span-1 md:row-start-1 md:grid-cols-[.9fr_1.1fr] ${
                       isReversed
-                        ? "md:col-start-1 md:mr-2"
-                        : "md:col-start-3 md:ml-1"
+                        ? "md:col-start-1 md:mr-2 md:justify-self-end"
+                        : "md:col-start-3 md:ml-1 md:justify-self-start"
                     }`}
                   >
                     <div

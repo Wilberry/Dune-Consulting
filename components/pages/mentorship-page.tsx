@@ -132,87 +132,42 @@ export function MentorshipPage() {
             title="A practical, structured path into stronger HSE thinking"
           />
         </div>
-        <div className="mt-12 grid gap-10 lg:grid-cols-[1.1fr_.9fr] lg:items-center">
-          <div>
-            <p className="text-muted leading-7">
-              The Dune Consulting HSE Mentorship Programme is built for aspiring
-              and developing HSE professionals who want more than theory. Over
-              five weeks, mentees explore key safety principles, professional
-              responsibilities and practical decision making through live
-              sessions, guided assignments and focused discussion.
-            </p>
-            <p className="text-muted mt-4 leading-7">
-              Sessions are delivered live every Saturday through Microsoft
-              Teams, with a group Q&A at the end of each session. Weekly
-              assignments help participants apply learning to real workplace and
-              event contexts, while the programme also supports eligibility for
-              HSE training scholarship opportunities and includes a certificate
-              of participation.
-            </p>
-          </div>
-          <div className="border-line bg-off-white rounded-2xl border p-6 shadow-sm">
-            <p className="text-navy text-xs font-extrabold tracking-[.16em] uppercase">
-              Programme Snapshot
-            </p>
-            <ul className="text-ink/80 mt-5 space-y-4 text-sm leading-6">
-              <li className="flex gap-3">
-                <CheckCircle2
-                  className="text-success mt-0.5 shrink-0"
-                  size={18}
-                />
-                Five week mentorship experience
-              </li>
-              <li className="flex gap-3">
-                <CheckCircle2
-                  className="text-success mt-0.5 shrink-0"
-                  size={18}
-                />
-                Live sessions every Saturday via Microsoft Teams
-              </li>
-              <li className="flex gap-3">
-                <CheckCircle2
-                  className="text-success mt-0.5 shrink-0"
-                  size={18}
-                />
-                Group Q&A and weekly assignments
-              </li>
-              <li className="flex gap-3">
-                <CheckCircle2
-                  className="text-success mt-0.5 shrink-0"
-                  size={18}
-                />
-                HSE training scholarship eligibility and certificate of
-                participation
-              </li>
-            </ul>
-          </div>
+        <div className="mx-auto mt-12 max-w-4xl text-center">
+          <p className="text-muted leading-7">
+            The Dune Consulting HSE Mentorship Programme is built for aspiring
+            and developing HSE professionals who want more than theory. Over
+            five weeks, mentees explore key safety principles, professional
+            responsibilities and practical decision making through live
+            sessions, guided assignments and focused discussion.
+          </p>
+          <p className="text-muted mt-4 leading-7">
+            Sessions are delivered live every Saturday through Microsoft Teams,
+            with a group Q&A at the end of each session. Weekly assignments help
+            participants apply learning to real workplace and event contexts,
+            while the programme also supports eligibility for HSE training
+            scholarship opportunities and includes a certificate of
+            participation.
+          </p>
         </div>
       </Section>
       <Section className="bg-off-white">
-        <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
-          <div className="relative">
-            <div
-              aria-hidden="true"
-              className="bg-amber/15 absolute -inset-3 rounded-[1.5rem] blur-xl"
-            />
-            <VideoShowcase
-              src="/video/HSE MENTORSHIP PROGRAM.mp4"
-              title="Dune Consulting HSE Mentorship Programme"
-            />
-          </div>
+        <div className="bg-navy grid items-center gap-7 rounded-2xl border border-white/10 p-5 sm:p-7 lg:grid-cols-[.85fr_1.15fr] lg:gap-10">
           <div>
-            <SectionHeading
-              eyebrow="Who Should Apply"
-              title="For people ready to grow with intention"
-            />
-            <ul className="mt-7 space-y-4">
+            <p className="eyebrow">Who Should Apply</p>
+            <h2 className="section-title mt-3 text-white">
+              For people ready to grow with intention
+            </h2>
+            <ul className="mt-6 grid gap-4">
               {[
                 "Students and recent graduates exploring HSE careers",
                 "Early career safety professionals seeking practical context",
                 "Professionals transitioning into HSE responsibilities",
                 "People preparing for broader operational safety roles",
               ].map((item) => (
-                <li key={item} className="flex gap-3 text-sm leading-6">
+                <li
+                  key={item}
+                  className="flex gap-3 text-sm leading-6 text-white/85"
+                >
                   <CheckCircle2
                     className="text-success mt-0.5 shrink-0"
                     size={19}
@@ -222,6 +177,11 @@ export function MentorshipPage() {
               ))}
             </ul>
           </div>
+          <VideoShowcase
+            src="/video/HSE MENTORSHIP PROGRAM.mp4"
+            title="Dune Consulting HSE Mentorship Programme"
+            autoPlay
+          />
         </div>
       </Section>
       <Section>

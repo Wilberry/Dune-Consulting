@@ -148,6 +148,13 @@ export const siteImages: SiteImage[] = [
     "1536×1024px",
     "3:2",
   ),
+  approvedImage(
+    "/images/insight.jpeg",
+    "HSE insights supporting safer workplaces and events",
+    "Insights",
+    "2560×1441px",
+    "16:9",
+  ),
   image(
     "/images/services/event-safety-management.jpg",
     "Event safety personnel coordinating on site",

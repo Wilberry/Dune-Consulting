@@ -3,14 +3,22 @@
 import { useState } from "react";
 import { Volume2, VolumeX } from "lucide-react";
 
-export function VideoShowcase({ src, title }: { src: string; title: string }) {
+export function VideoShowcase({
+  src,
+  title,
+  autoPlay = false,
+}: {
+  src: string;
+  title: string;
+  autoPlay?: boolean;
+}) {
   const [muted, setMuted] = useState(true);
 
   return (
     <div className="group bg-deep-navy relative isolate overflow-hidden rounded-2xl border border-white/15 shadow-[0_24px_70px_rgba(8,23,43,0.28)] ring-1 ring-black/5">
       <video
         aria-label={title}
-        autoPlay
+        autoPlay={autoPlay}
         controls
         loop
         muted={muted}

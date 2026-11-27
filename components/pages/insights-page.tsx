@@ -32,7 +32,7 @@ export async function InsightsPage() {
         eyebrow="Insights"
         title="Practical thinking for safer work and events."
         copy="Clear perspectives on risk management, HSE learning, operational safety and professional development."
-        image="/images/dune_insights_hero.webp"
+        image="/images/insight.jpeg"
         imageAlt="Dune Consulting HSE professionals sharing practical safety insight"
       />
 
