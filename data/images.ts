@@ -156,11 +156,11 @@ export const siteImages: SiteImage[] = [
     "16:9",
   ),
   approvedImage(
-    "/images/IMG-20261115-WA0012.jpg.jpeg",
+    "/images/IMG_20261127_134338.jpg.jpeg",
     "Trainees applying safety procedures during practical training",
     "HSE Training",
-    "1440×2560px",
-    "9:16",
+    "1440×1245px",
+    "16:13",
   ),
   approvedImage(
     "/images/IMG-20261121-WA0019.jpg.jpeg",

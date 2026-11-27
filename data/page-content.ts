@@ -191,7 +191,7 @@ export const serviceDetails: Record<string, ServiceDetail> = {
         copy: "Activities connect knowledge to everyday decisions and actions.",
         icon: BookOpenCheck,
         image: {
-          src: "/images/IMG-20261115-WA0012.jpg.jpeg",
+          src: "/images/IMG_20261127_134338.jpg.jpeg",
           alt: "Trainees applying safety procedures during practical training",
           objectPosition: "top",
         },
